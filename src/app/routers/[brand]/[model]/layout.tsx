@@ -12,8 +12,13 @@ import { Bot } from "lucide-react";
 type Props = { params: Promise<{ brand: string; model: string }>; children: React.ReactNode };
 
 export async function generateStaticParams() {
-  const paths = await RouterService.getAllModelPaths();
-  return paths.map((p) => ({ brand: p.brand, model: p.model }));
+  try {
+    const paths = await RouterService.getAllModelPaths();
+    return paths.map((p) => ({ brand: p.brand, model: p.model }));
+  } catch (error) {
+    console.warn("[Build] Skipping Model SSG — database unavailable.");
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ brand: string; model: string }> }): Promise<Metadata> {

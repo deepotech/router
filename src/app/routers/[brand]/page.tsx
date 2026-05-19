@@ -13,7 +13,12 @@ import { RelatedProblems } from "@/components/seo/RelatedProblems";
 type Props = { params: Promise<{ brand: string }> };
 
 export async function generateStaticParams() {
-  return RouterService.getAllBrandPaths();
+  try {
+    return await RouterService.getAllBrandPaths();
+  } catch (error) {
+    console.warn("[Build] Skipping Brand SSG — database unavailable.");
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

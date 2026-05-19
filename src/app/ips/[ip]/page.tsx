@@ -13,7 +13,12 @@ import { slugToIp } from "@/lib/utils";
 type Props = { params: Promise<{ ip: string }> };
 
 export async function generateStaticParams() {
-  return IpService.getAllPaths();
+  try {
+    return await IpService.getAllPaths();
+  } catch (error) {
+    console.warn("[Build] Skipping IP SSG — database unavailable.");
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
