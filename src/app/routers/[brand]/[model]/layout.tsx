@@ -21,7 +21,10 @@ export async function generateStaticParams() {
   }
 }
 
+import { hasDatabase } from "@/lib/server/env-safe";
+
 export async function generateMetadata({ params }: { params: Promise<{ brand: string; model: string }> }): Promise<Metadata> {
+  if (!hasDatabase) return {};
   const { brand: brandSlug, model: modelSlug } = await params;
   const routerModel = await RouterService.getModel(brandSlug, modelSlug);
   if (!routerModel || !routerModel.brand) return {};

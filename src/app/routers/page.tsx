@@ -15,8 +15,8 @@ export const metadata: Metadata = buildMetadata({
   canonical: "/routers",
 });
 
-// ISR — revalidate every 24 hours
-export const revalidate = 86400;
+// Force dynamic to prevent Prisma queries during Railway build phase
+export const dynamic = "force-dynamic";
 
 export default async function RoutersPage() {
   const brands = await RouterService.getAllBrands();

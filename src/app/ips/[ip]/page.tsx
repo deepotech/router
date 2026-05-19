@@ -21,7 +21,10 @@ export async function generateStaticParams() {
   }
 }
 
+import { hasDatabase } from "@/lib/server/env-safe";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  if (!hasDatabase) return {};
   const { ip: ipSlug } = await params;
   const ip = await IpService.getBySlug(ipSlug);
   if (!ip) return {};

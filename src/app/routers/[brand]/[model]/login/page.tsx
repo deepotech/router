@@ -10,7 +10,10 @@ type Props = { params: Promise<{ brand: string; model: string }> };
 
 export const revalidate = 86400;
 
+import { hasDatabase } from "@/lib/server/env-safe";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  if (!hasDatabase) return {};
   const { brand: brandSlug, model: modelSlug } = await params;
   const routerModel = await RouterService.getModel(brandSlug, modelSlug);
   if (!routerModel || !routerModel.brand) return {};

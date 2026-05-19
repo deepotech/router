@@ -95,7 +95,10 @@ function ProblemContent({ problem }: { problem: any }) {
 }
 
 
+import { hasDatabase } from "@/lib/server/env-safe";
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  if (!hasDatabase) return {};
   const { slug } = await params;
   const problem = await prisma.problem.findUnique({ where: { slug } });
   

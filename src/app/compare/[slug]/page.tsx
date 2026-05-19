@@ -9,7 +9,10 @@ type Props = { params: Promise<{ slug: string }> };
 
 export const revalidate = 86400; // Cache for 24h
 
+import { hasDatabase } from "@/lib/server/env-safe";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  if (!hasDatabase) return {};
   const { slug } = await params;
   const comparison = await ComparisonService.getComparisonBySlug(slug);
   

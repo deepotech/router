@@ -15,7 +15,8 @@ export const metadata: Metadata = buildMetadata({
   canonical: "/problems",
 });
 
-export const revalidate = 3600;
+// Force dynamic to prevent Prisma queries during Railway build phase
+export const dynamic = "force-dynamic";
 
 export default async function ProblemsPage() {
   const problems = await ProblemService.getAll();

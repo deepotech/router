@@ -10,11 +10,16 @@ import { IntentBreadcrumbs } from "@/components/retrieval/IntentBreadcrumbs";
 import { RetrievalAnswerBlock } from "@/components/retrieval/RetrievalAnswerBlock";
 import type { RetrievalResult } from "@/server/services/search-orchestrator.service";
 
+export const dynamic = "force-dynamic";
+
 interface SearchPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
+import { hasDatabase } from "@/lib/server/env-safe";
+
 export async function generateMetadata({ searchParams }: SearchPageProps): Promise<Metadata> {
+  if (!hasDatabase) return { title: "Search Results" };
   const resolvedParams = await searchParams;
   const q = typeof resolvedParams.q === "string" ? resolvedParams.q : "";
   return {
