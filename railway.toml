@@ -9,7 +9,7 @@ healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
 
-[services.worker]
+[services.selfless-generosity]
 startCommand = "npm run worker"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
