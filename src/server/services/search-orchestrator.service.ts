@@ -12,7 +12,7 @@ import { StorageTier } from "@prisma/client";
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? "";
 const isOpenRouter = OPENAI_API_KEY.startsWith("sk-or-");
 const openai = new OpenAI({
-  apiKey: OPENAI_API_KEY,
+  apiKey: OPENAI_API_KEY || "dummy-key-for-build",
   ...(isOpenRouter && { baseURL: "https://openrouter.ai/api/v1" })
 });
 
