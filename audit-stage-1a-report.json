@@ -1,0 +1,1740 @@
+{
+  "generatedAt": "2026-05-18T09:27:06.570Z",
+  "summary": {
+    "total": 33,
+    "approved": 22,
+    "needsReview": 3,
+    "rejected": 8,
+    "avgDensity": 100,
+    "avgQuality": 85,
+    "avgOverlap": 24,
+    "hallucinationFlags": 0
+  },
+  "rolloutHealth": {
+    "tier0HitPotential": "HIGH",
+    "tier1DeterministicCoverage": 29,
+    "semanticReuseProjection": "LOW",
+    "cacheabilityAvg": 88,
+    "canonicalHubCandidates": [
+      "192.168.1.1",
+      "Router Keeps Rebooting",
+      "DNS Server Not Responding",
+      "5GHz WiFi Missing",
+      "Internet Disconnects Randomly"
+    ],
+    "recommendation": "THROTTLE",
+    "nextCohortSize": 25,
+    "highestValueCluster": "Interference"
+  },
+  "entities": [
+    {
+      "id": 2,
+      "entityType": "PROBLEM",
+      "title": "Slow Internet Speed",
+      "slug": "slow-internet",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 43,
+      "densityScore": 100,
+      "qualityScore": 50,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.1,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 82,
+      "semanticUniqueness": 90,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Lacks heading structure.",
+        "Thin content (<150 words)"
+      ],
+      "strengths": [
+        "High retrieval density"
+      ]
+    },
+    {
+      "id": 6,
+      "entityType": "PROBLEM",
+      "title": "DNS Server Not Responding",
+      "slug": "dns-server-not-responding",
+      "status": "PUBLISHED",
+      "category": "DNS",
+      "wordCount": 417,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.1953125,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 80,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 13,
+      "entityType": "PROBLEM",
+      "title": "Router Keeps Rebooting",
+      "slug": "router-keeps-rebooting",
+      "status": "PUBLISHED",
+      "category": "Hardware",
+      "wordCount": 372,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.17753623188405798,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 95,
+      "semanticUniqueness": 82,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 10,
+      "entityType": "PROBLEM",
+      "title": "5GHz WiFi Missing",
+      "slug": "5ghz-wifi-missing",
+      "status": "PUBLISHED",
+      "category": "Interference / Configuration",
+      "wordCount": 464,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2098360655737705,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 79,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 7,
+      "entityType": "PROBLEM",
+      "title": "Internet Disconnects Randomly",
+      "slug": "internet-disconnects-randomly",
+      "status": "PUBLISHED",
+      "category": "Network Connectivity",
+      "wordCount": 249,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.19327731092436976,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 81,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 5,
+      "entityType": "PROBLEM",
+      "title": "Router Blinking Orange",
+      "slug": "router-blinking-orange",
+      "status": "PUBLISHED",
+      "category": "WAN Connectivity",
+      "wordCount": 366,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.22448979591836735,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 93,
+      "semanticUniqueness": 78,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 9,
+      "entityType": "PROBLEM",
+      "title": "Slow WiFi Speed",
+      "slug": "slow-wifi-speed",
+      "status": "PUBLISHED",
+      "category": "Interference",
+      "wordCount": 307,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.20306513409961685,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 80,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 11,
+      "entityType": "PROBLEM",
+      "title": "WiFi Keeps Disconnecting",
+      "slug": "wifi-keeps-disconnecting",
+      "status": "PUBLISHED",
+      "category": "Interference",
+      "wordCount": 461,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.20077220077220076,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 80,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 12,
+      "entityType": "PROBLEM",
+      "title": "Default Gateway is Not Available",
+      "slug": "default-gateway-not-available",
+      "status": "PUBLISHED",
+      "category": "Network Configuration",
+      "wordCount": 532,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.26515151515151514,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 92,
+      "semanticUniqueness": 73,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 1,
+      "entityType": "PROBLEM",
+      "title": "DNS Not Resolving",
+      "slug": "dns-not-resolving",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 42,
+      "densityScore": 100,
+      "qualityScore": 50,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.08,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 92,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Lacks heading structure.",
+        "Thin content (<150 words)"
+      ],
+      "strengths": [
+        "High retrieval density"
+      ]
+    },
+    {
+      "id": 3,
+      "entityType": "PROBLEM",
+      "title": "WiFi Connected But No Internet",
+      "slug": "wifi-connected-no-internet",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 69,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.11538461538461539,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 88,
+      "semanticUniqueness": 88,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Thin content (<150 words)"
+      ],
+      "strengths": [
+        "High retrieval density"
+      ]
+    },
+    {
+      "id": 8,
+      "entityType": "PROBLEM",
+      "title": "Router Login Page Not Opening",
+      "slug": "router-login-page-not-opening",
+      "status": "PUBLISHED",
+      "category": "Connectivity",
+      "wordCount": 512,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.24675324675324675,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 93,
+      "semanticUniqueness": 75,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 4,
+      "entityType": "PROBLEM",
+      "title": "WiFi Connected But No Internet",
+      "slug": "wifi-connected-but-no-internet",
+      "status": "PUBLISHED",
+      "category": "Network Configuration",
+      "wordCount": 360,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2623574144486692,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 92,
+      "semanticUniqueness": 74,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 3,
+      "entityType": "IP",
+      "title": "192.168.1.1",
+      "slug": "192-168-1-1",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 290,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.112,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 97,
+      "semanticUniqueness": 89,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "Valid IP address format ✓",
+        "Good technical signal density"
+      ]
+    },
+    {
+      "id": 1,
+      "entityType": "IP",
+      "title": "192.168.8.1",
+      "slug": "192-168-8-1",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 55,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.1,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 88,
+      "semanticUniqueness": 90,
+      "recommendation": "APPROVE",
+      "issues": [
+        "Content is too thin (under 150 words)."
+      ],
+      "strengths": [
+        "Valid IP address format ✓",
+        "Good technical signal density"
+      ]
+    },
+    {
+      "id": 4,
+      "entityType": "IP",
+      "title": "10.0.0.1",
+      "slug": "10-0-0-1",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 185,
+      "densityScore": 100,
+      "qualityScore": 50,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.06796116504854369,
+      "crawlRisk": "MEDIUM",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 93,
+      "recommendation": "REVIEW",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Lacks heading structure."
+      ],
+      "strengths": [
+        "Valid IP address format ✓",
+        "Good technical signal density"
+      ]
+    },
+    {
+      "id": 2,
+      "entityType": "IP",
+      "title": "192.168.0.1",
+      "slug": "192-168-0-1",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 158,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.12631578947368421,
+      "crawlRisk": "MEDIUM",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 87,
+      "semanticUniqueness": 87,
+      "recommendation": "REVIEW",
+      "issues": [
+        "Content is too thin (under 150 words)."
+      ],
+      "strengths": [
+        "Valid IP address format ✓",
+        "Good technical signal density"
+      ]
+    },
+    {
+      "id": 1,
+      "entityType": "ROUTER",
+      "title": "HG8245H5",
+      "slug": "hg8245h5",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 65,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.23076923076923078,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 84,
+      "semanticUniqueness": 77,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 2,
+      "entityType": "ROUTER",
+      "title": "DIR-842",
+      "slug": "dir-842",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 60,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.21621621621621623,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 85,
+      "semanticUniqueness": 78,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 3,
+      "entityType": "ROUTER",
+      "title": "RT-AX88U",
+      "slug": "rt-ax88u",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 58,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2619047619047619,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 74,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 4,
+      "entityType": "ROUTER",
+      "title": "ZXHN H298A",
+      "slug": "zxhn-h298a",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 50,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2727272727272727,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 73,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 6,
+      "entityType": "ROUTER",
+      "title": "Archer C6",
+      "slug": "archer-c6",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 140,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.26126126126126126,
+      "crawlRisk": "MEDIUM",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 74,
+      "recommendation": "REVIEW",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 9,
+      "entityType": "ROUTER",
+      "title": "AX73",
+      "slug": "tp-link-ax73",
+      "status": "PUBLISHED",
+      "category": "Networking Equipment Performance",
+      "wordCount": 360,
+      "densityScore": 100,
+      "qualityScore": 80,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.3269230769230769,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 84,
+      "semanticUniqueness": 67,
+      "recommendation": "APPROVE",
+      "issues": [
+        "Lacks heading structure."
+      ],
+      "strengths": [
+        "Strong technical density"
+      ]
+    },
+    {
+      "id": 13,
+      "entityType": "ROUTER",
+      "title": "RT-AX55",
+      "slug": "asus-rt-ax55",
+      "status": "PUBLISHED",
+      "category": "Networking & Connectivity",
+      "wordCount": 333,
+      "densityScore": 100,
+      "qualityScore": 80,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.3288590604026846,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 84,
+      "semanticUniqueness": 67,
+      "recommendation": "APPROVE",
+      "issues": [
+        "Lacks heading structure."
+      ],
+      "strengths": [
+        "Strong technical density"
+      ]
+    },
+    {
+      "id": 14,
+      "entityType": "ROUTER",
+      "title": "R7000",
+      "slug": "netgear-r7000",
+      "status": "PUBLISHED",
+      "category": "Router Performance and Features",
+      "wordCount": 310,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.41007194244604317,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 88,
+      "semanticUniqueness": 59,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "Strong technical density"
+      ]
+    },
+    {
+      "id": 10,
+      "entityType": "ROUTER",
+      "title": "HG8145V5",
+      "slug": "huawei-hg8145v5",
+      "status": "PUBLISHED",
+      "category": "Router Analysis",
+      "wordCount": 310,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.36879432624113473,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 89,
+      "semanticUniqueness": 63,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "Strong technical density"
+      ]
+    },
+    {
+      "id": 11,
+      "entityType": "ROUTER",
+      "title": "AX3",
+      "slug": "huawei-ax3",
+      "status": "PUBLISHED",
+      "category": "Networking Equipment Analysis",
+      "wordCount": 294,
+      "densityScore": 100,
+      "qualityScore": 80,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.34459459459459457,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 84,
+      "semanticUniqueness": 66,
+      "recommendation": "APPROVE",
+      "issues": [
+        "Lacks heading structure."
+      ],
+      "strengths": [
+        "Strong technical density"
+      ]
+    },
+    {
+      "id": 12,
+      "entityType": "ROUTER",
+      "title": "RT-AX58U",
+      "slug": "asus-rt-ax58u",
+      "status": "PUBLISHED",
+      "category": "Router Performance and Features",
+      "wordCount": 376,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.31952662721893493,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 90,
+      "semanticUniqueness": 68,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "Strong technical density"
+      ]
+    },
+    {
+      "id": 5,
+      "entityType": "ROUTER",
+      "title": "Archer AX73",
+      "slug": "archer-ax73",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 75,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2830188679245283,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 72,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 8,
+      "entityType": "ROUTER",
+      "title": "AX50",
+      "slug": "tp-link-ax50",
+      "status": "PUBLISHED",
+      "category": "Networking Equipment Analysis",
+      "wordCount": 431,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.33152173913043476,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 90,
+      "semanticUniqueness": 67,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "Strong technical density"
+      ]
+    },
+    {
+      "id": 7,
+      "entityType": "ROUTER",
+      "title": "Archer C6",
+      "slug": "tp-link-archer-c6",
+      "status": "PUBLISHED",
+      "category": "Networking Equipment",
+      "wordCount": 339,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.3668639053254438,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 89,
+      "semanticUniqueness": 63,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "Strong technical density"
+      ]
+    },
+    {
+      "id": 16,
+      "entityType": "ROUTER",
+      "title": "DIR-825",
+      "slug": "d-link-dir-825",
+      "status": "PUBLISHED",
+      "category": "Performance and Configuration",
+      "wordCount": 308,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.35135135135135137,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 89,
+      "semanticUniqueness": 65,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "Strong technical density"
+      ]
+    },
+    {
+      "id": 15,
+      "entityType": "ROUTER",
+      "title": "RAX50",
+      "slug": "netgear-rax50",
+      "status": "PUBLISHED",
+      "category": "Router Analysis",
+      "wordCount": 299,
+      "densityScore": 100,
+      "qualityScore": 80,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.3897058823529412,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 82,
+      "semanticUniqueness": 61,
+      "recommendation": "APPROVE",
+      "issues": [
+        "Lacks heading structure."
+      ],
+      "strengths": [
+        "Strong technical density"
+      ]
+    }
+  ],
+  "weakEntities": [
+    {
+      "id": 2,
+      "entityType": "PROBLEM",
+      "title": "Slow Internet Speed",
+      "slug": "slow-internet",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 43,
+      "densityScore": 100,
+      "qualityScore": 50,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.1,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 82,
+      "semanticUniqueness": 90,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Lacks heading structure.",
+        "Thin content (<150 words)"
+      ],
+      "strengths": [
+        "High retrieval density"
+      ]
+    },
+    {
+      "id": 1,
+      "entityType": "PROBLEM",
+      "title": "DNS Not Resolving",
+      "slug": "dns-not-resolving",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 42,
+      "densityScore": 100,
+      "qualityScore": 50,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.08,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 92,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Lacks heading structure.",
+        "Thin content (<150 words)"
+      ],
+      "strengths": [
+        "High retrieval density"
+      ]
+    },
+    {
+      "id": 4,
+      "entityType": "IP",
+      "title": "10.0.0.1",
+      "slug": "10-0-0-1",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 185,
+      "densityScore": 100,
+      "qualityScore": 50,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.06796116504854369,
+      "crawlRisk": "MEDIUM",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 93,
+      "recommendation": "REVIEW",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Lacks heading structure."
+      ],
+      "strengths": [
+        "Valid IP address format ✓",
+        "Good technical signal density"
+      ]
+    },
+    {
+      "id": 3,
+      "entityType": "PROBLEM",
+      "title": "WiFi Connected But No Internet",
+      "slug": "wifi-connected-no-internet",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 69,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.11538461538461539,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 88,
+      "semanticUniqueness": 88,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Thin content (<150 words)"
+      ],
+      "strengths": [
+        "High retrieval density"
+      ]
+    },
+    {
+      "id": 2,
+      "entityType": "IP",
+      "title": "192.168.0.1",
+      "slug": "192-168-0-1",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 158,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.12631578947368421,
+      "crawlRisk": "MEDIUM",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 87,
+      "semanticUniqueness": 87,
+      "recommendation": "REVIEW",
+      "issues": [
+        "Content is too thin (under 150 words)."
+      ],
+      "strengths": [
+        "Valid IP address format ✓",
+        "Good technical signal density"
+      ]
+    },
+    {
+      "id": 1,
+      "entityType": "ROUTER",
+      "title": "HG8245H5",
+      "slug": "hg8245h5",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 65,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.23076923076923078,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 84,
+      "semanticUniqueness": 77,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 2,
+      "entityType": "ROUTER",
+      "title": "DIR-842",
+      "slug": "dir-842",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 60,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.21621621621621623,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 85,
+      "semanticUniqueness": 78,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 3,
+      "entityType": "ROUTER",
+      "title": "RT-AX88U",
+      "slug": "rt-ax88u",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 58,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2619047619047619,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 74,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 4,
+      "entityType": "ROUTER",
+      "title": "ZXHN H298A",
+      "slug": "zxhn-h298a",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 50,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2727272727272727,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 73,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 6,
+      "entityType": "ROUTER",
+      "title": "Archer C6",
+      "slug": "archer-c6",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 140,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.26126126126126126,
+      "crawlRisk": "MEDIUM",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 74,
+      "recommendation": "REVIEW",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    }
+  ],
+  "bestEntities": [
+    {
+      "id": 3,
+      "entityType": "IP",
+      "title": "192.168.1.1",
+      "slug": "192-168-1-1",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 290,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.112,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 97,
+      "semanticUniqueness": 89,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "Valid IP address format ✓",
+        "Good technical signal density"
+      ]
+    },
+    {
+      "id": 13,
+      "entityType": "PROBLEM",
+      "title": "Router Keeps Rebooting",
+      "slug": "router-keeps-rebooting",
+      "status": "PUBLISHED",
+      "category": "Hardware",
+      "wordCount": 372,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.17753623188405798,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 95,
+      "semanticUniqueness": 82,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 6,
+      "entityType": "PROBLEM",
+      "title": "DNS Server Not Responding",
+      "slug": "dns-server-not-responding",
+      "status": "PUBLISHED",
+      "category": "DNS",
+      "wordCount": 417,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.1953125,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 80,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 10,
+      "entityType": "PROBLEM",
+      "title": "5GHz WiFi Missing",
+      "slug": "5ghz-wifi-missing",
+      "status": "PUBLISHED",
+      "category": "Interference / Configuration",
+      "wordCount": 464,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2098360655737705,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 79,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 7,
+      "entityType": "PROBLEM",
+      "title": "Internet Disconnects Randomly",
+      "slug": "internet-disconnects-randomly",
+      "status": "PUBLISHED",
+      "category": "Network Connectivity",
+      "wordCount": 249,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.19327731092436976,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 81,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 9,
+      "entityType": "PROBLEM",
+      "title": "Slow WiFi Speed",
+      "slug": "slow-wifi-speed",
+      "status": "PUBLISHED",
+      "category": "Interference",
+      "wordCount": 307,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.20306513409961685,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 80,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 11,
+      "entityType": "PROBLEM",
+      "title": "WiFi Keeps Disconnecting",
+      "slug": "wifi-keeps-disconnecting",
+      "status": "PUBLISHED",
+      "category": "Interference",
+      "wordCount": 461,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.20077220077220076,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 94,
+      "semanticUniqueness": 80,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 5,
+      "entityType": "PROBLEM",
+      "title": "Router Blinking Orange",
+      "slug": "router-blinking-orange",
+      "status": "PUBLISHED",
+      "category": "WAN Connectivity",
+      "wordCount": 366,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.22448979591836735,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 93,
+      "semanticUniqueness": 78,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 8,
+      "entityType": "PROBLEM",
+      "title": "Router Login Page Not Opening",
+      "slug": "router-login-page-not-opening",
+      "status": "PUBLISHED",
+      "category": "Connectivity",
+      "wordCount": 512,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.24675324675324675,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 93,
+      "semanticUniqueness": 75,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    },
+    {
+      "id": 12,
+      "entityType": "PROBLEM",
+      "title": "Default Gateway is Not Available",
+      "slug": "default-gateway-not-available",
+      "status": "PUBLISHED",
+      "category": "Network Configuration",
+      "wordCount": 532,
+      "densityScore": 100,
+      "qualityScore": 100,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.26515151515151514,
+      "crawlRisk": "LOW",
+      "tier0Potential": "HIGH",
+      "tier1Coverage": true,
+      "cacheabilityScore": 92,
+      "semanticUniqueness": 73,
+      "recommendation": "APPROVE",
+      "issues": [],
+      "strengths": [
+        "High retrieval density",
+        "Quality check passed",
+        "Low crawl risk"
+      ]
+    }
+  ],
+  "duplicateIntents": [
+    {
+      "titleA": "WiFi Connected But No Internet",
+      "titleB": "WiFi Connected But No Internet",
+      "similarity": 1
+    },
+    {
+      "titleA": "Archer C6",
+      "titleB": "Archer C6",
+      "similarity": 1
+    }
+  ],
+  "thinContentRisks": [
+    {
+      "id": 2,
+      "entityType": "PROBLEM",
+      "title": "Slow Internet Speed",
+      "slug": "slow-internet",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 43,
+      "densityScore": 100,
+      "qualityScore": 50,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.1,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 82,
+      "semanticUniqueness": 90,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Lacks heading structure.",
+        "Thin content (<150 words)"
+      ],
+      "strengths": [
+        "High retrieval density"
+      ]
+    },
+    {
+      "id": 1,
+      "entityType": "PROBLEM",
+      "title": "DNS Not Resolving",
+      "slug": "dns-not-resolving",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 42,
+      "densityScore": 100,
+      "qualityScore": 50,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.08,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 92,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Lacks heading structure.",
+        "Thin content (<150 words)"
+      ],
+      "strengths": [
+        "High retrieval density"
+      ]
+    },
+    {
+      "id": 3,
+      "entityType": "PROBLEM",
+      "title": "WiFi Connected But No Internet",
+      "slug": "wifi-connected-no-internet",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 69,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.11538461538461539,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 88,
+      "semanticUniqueness": 88,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Thin content (<150 words)"
+      ],
+      "strengths": [
+        "High retrieval density"
+      ]
+    },
+    {
+      "id": 1,
+      "entityType": "IP",
+      "title": "192.168.8.1",
+      "slug": "192-168-8-1",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 55,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.1,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": false,
+      "cacheabilityScore": 88,
+      "semanticUniqueness": 90,
+      "recommendation": "APPROVE",
+      "issues": [
+        "Content is too thin (under 150 words)."
+      ],
+      "strengths": [
+        "Valid IP address format ✓",
+        "Good technical signal density"
+      ]
+    },
+    {
+      "id": 1,
+      "entityType": "ROUTER",
+      "title": "HG8245H5",
+      "slug": "hg8245h5",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 65,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.23076923076923078,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 84,
+      "semanticUniqueness": 77,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 2,
+      "entityType": "ROUTER",
+      "title": "DIR-842",
+      "slug": "dir-842",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 60,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.21621621621621623,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 85,
+      "semanticUniqueness": 78,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 3,
+      "entityType": "ROUTER",
+      "title": "RT-AX88U",
+      "slug": "rt-ax88u",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 58,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2619047619047619,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 74,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 4,
+      "entityType": "ROUTER",
+      "title": "ZXHN H298A",
+      "slug": "zxhn-h298a",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 50,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2727272727272727,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 73,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 6,
+      "entityType": "ROUTER",
+      "title": "Archer C6",
+      "slug": "archer-c6",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 140,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.26126126126126126,
+      "crawlRisk": "MEDIUM",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 74,
+      "recommendation": "REVIEW",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    },
+    {
+      "id": 5,
+      "entityType": "ROUTER",
+      "title": "Archer AX73",
+      "slug": "archer-ax73",
+      "status": "PUBLISHED",
+      "category": null,
+      "wordCount": 75,
+      "densityScore": 100,
+      "qualityScore": 70,
+      "hallucinationFlag": false,
+      "hallucinationScore": 0,
+      "overlapScore": 0.2830188679245283,
+      "crawlRisk": "HIGH",
+      "tier0Potential": "MEDIUM",
+      "tier1Coverage": true,
+      "cacheabilityScore": 83,
+      "semanticUniqueness": 72,
+      "recommendation": "REJECT",
+      "issues": [
+        "Content is too thin (under 150 words).",
+        "Setup guide may be thin"
+      ],
+      "strengths": [
+        "Strong technical density",
+        "High semantic uniqueness"
+      ]
+    }
+  ],
+  "retrievalPerformance": {
+    "totalQueries": 6,
+    "tier1Hits": 2,
+    "tier2Hits": 4,
+    "fallbacks": 4,
+    "avgLatencyMs": 1334,
+    "tier1HitRate": 33,
+    "chunkIndexSize": 2,
+    "diagnosis": "CRITICAL: Tier 1 hit rate below 50%. Chunk index is too small. More semantic chunks needed."
+  }
+}

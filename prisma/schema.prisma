@@ -1,0 +1,387 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector(schema: "public")]
+}
+
+model Brand {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  slug        String        @unique
+  logo        String?
+  description String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  models      RouterModel[]
+
+  @@index([slug])
+  @@map("brands")
+}
+
+model RouterModel {
+  id                 Int                  @id @default(autoincrement())
+  brandId            Int
+  name               String
+  slug               String               @unique
+  loginIps           String[]
+  defaultUsername    String               @default("admin")
+  defaultPassword    String               @default("admin")
+  wifiSetupGuide     String
+  resetGuide         String
+  faqs               Json                 @default("[]")
+  imageUrl           String?
+  metaTitle          String?
+  metaDescription    String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  diagnosticCategory String?
+  generationMetrics  Json?
+  isPublished        Boolean              @default(false)
+  retrievalSummary   String?
+  semanticIntent     String?
+  status             ContentQualityStatus @default(STAGED)
+  datasetGovernance  Json?
+  decayScore         Float                @default(0.0)
+  lastRefreshedAt    DateTime?
+  locale             String               @default("en")
+  publishScheduledAt DateTime?
+  publishedAt        DateTime?
+  regionConfig       Json?
+  retrievalMetrics   Json?
+  brand              Brand                @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@index([brandId])
+  @@index([slug])
+  @@map("router_models")
+}
+
+model Problem {
+  id                 Int                  @id @default(autoincrement())
+  title              String
+  slug               String               @unique
+  category           ProblemCategory      @default(OTHER)
+  excerpt            String
+  content            String
+  causes             String[]
+  fixes              Json                 @default("[]")
+  faqs               Json                 @default("[]")
+  relatedSlugs       String[]
+  metaTitle          String?
+  metaDescription    String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  diagnosticCategory String?
+  generationMetrics  Json?
+  isPublished        Boolean              @default(false)
+  retrievalSummary   String?
+  semanticIntent     String?
+  status             ContentQualityStatus @default(STAGED)
+  datasetGovernance  Json?
+  decayScore         Float                @default(0.0)
+  lastRefreshedAt    DateTime?
+  locale             String               @default("en")
+  publishScheduledAt DateTime?
+  publishedAt        DateTime?
+  regionConfig       Json?
+  retrievalMetrics   Json?
+
+  @@index([slug])
+  @@index([category])
+  @@map("problems")
+}
+
+model IpAddress {
+  id                 Int                  @id @default(autoincrement())
+  address            String               @unique
+  slug               String               @unique
+  commonBrands       String[]
+  description        String
+  loginGuide         String
+  faqs               Json                 @default("[]")
+  metaTitle          String?
+  metaDescription    String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  diagnosticCategory String?
+  generationMetrics  Json?
+  isPublished        Boolean              @default(false)
+  retrievalSummary   String?
+  semanticIntent     String?
+  status             ContentQualityStatus @default(STAGED)
+  datasetGovernance  Json?
+  decayScore         Float                @default(0.0)
+  lastRefreshedAt    DateTime?
+  locale             String               @default("en")
+  publishScheduledAt DateTime?
+  publishedAt        DateTime?
+  regionConfig       Json?
+  retrievalMetrics   Json?
+
+  @@index([slug])
+  @@map("ip_addresses")
+}
+
+model ChatSession {
+  id        String   @id @default(cuid())
+  messages  Json     @default("[]")
+  locale    String   @default("en")
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("chat_sessions")
+}
+
+model BlogPost {
+  id              Int       @id @default(autoincrement())
+  title           String
+  slug            String    @unique
+  excerpt         String
+  content         String
+  coverImage      String?
+  tags            String[]
+  published       Boolean   @default(false)
+  metaTitle       String?
+  metaDescription String?
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([published])
+  @@map("blog_posts")
+}
+
+model AnalyticsEvent {
+  id        Int      @id @default(autoincrement())
+  eventType String
+  eventData Json     @default("{}")
+  userAgent String?
+  ipHash    String?
+  createdAt DateTime @default(now())
+
+  @@index([eventType])
+  @@index([createdAt])
+  @@map("analytics_events")
+}
+
+model EntityRelation {
+  id              Int        @id @default(autoincrement())
+  fromEntityType  EntityType
+  fromEntityId    Int
+  toEntityType    EntityType
+  toEntityId      Int
+  relationType    String
+  score           Float      @default(1.0)
+  createdAt       DateTime   @default(now())
+  confidenceScore Float      @default(1.0)
+
+  @@unique([fromEntityType, fromEntityId, toEntityType, toEntityId, relationType], name: "unique_relation")
+  @@index([fromEntityType, fromEntityId])
+  @@index([toEntityType, toEntityId])
+  @@map("entity_relations")
+}
+
+model EntityAuthority {
+  id              Int        @id @default(autoincrement())
+  entityType      EntityType
+  entityId        Int
+  centralityScore Float      @default(0.0)
+  inDegree        Int        @default(0)
+  outDegree       Int        @default(0)
+  lastCalculated  DateTime   @default(now())
+
+  @@unique([entityType, entityId])
+  @@map("entity_authorities")
+}
+
+model GraphMetric {
+  id             Int      @id @default(autoincrement())
+  totalEdges     Int
+  averageDensity Float
+  orphanEntities Int
+  createdAt      DateTime @default(now())
+
+  @@map("graph_metrics")
+}
+
+model RouterEmbedding {
+  id        Int                    @id @default(autoincrement())
+  routerId  Int                    @unique
+  embedding Unsupported("vector")?
+  updatedAt DateTime               @updatedAt
+
+  @@map("router_embeddings")
+}
+
+model ProblemEmbedding {
+  id        Int                    @id @default(autoincrement())
+  problemId Int                    @unique
+  embedding Unsupported("vector")?
+  updatedAt DateTime               @updatedAt
+
+  @@map("problem_embeddings")
+}
+
+model Author {
+  id          Int      @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  bio         String
+  avatarUrl   String?
+  credentials String[]
+  linkedinUrl String?
+  twitterUrl  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("authors")
+}
+
+model UgcSubmission {
+  id          Int                  @id @default(autoincrement())
+  routerId    Int?
+  title       String
+  content     String
+  status      ContentQualityStatus @default(PENDING_REVIEW)
+  authorName  String
+  authorEmail String?
+  upvotes     Int                  @default(0)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+
+  @@index([status])
+  @@map("ugc_submissions")
+}
+
+model Comparison {
+  id            Int      @id @default(autoincrement())
+  slug          String   @unique
+  routerAId     Int
+  routerBId     Int
+  winnerId      Int?
+  seoTitle      String
+  seoDesc       String
+  verdict       String
+  prosConsA     Json     @default("{}")
+  prosConsB     Json     @default("{}")
+  featureMatrix Json     @default("{}")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([routerAId, routerBId])
+  @@map("comparisons")
+}
+
+model SemanticChunk {
+  id            Int              @id @default(autoincrement())
+  chunkId       String           @unique
+  entityType    EntityType
+  entityId      Int
+  chunkType     ChunkType
+  title         String?
+  content       String
+  semanticHash  String           @unique
+  tokenEstimate Int              @default(0)
+  priorityScore Float            @default(1.0)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  embeddings    EmbeddingRecord?
+
+  @@index([entityType, entityId])
+  @@map("semantic_chunks")
+}
+
+model EmbeddingRecord {
+  id              Int                    @id @default(autoincrement())
+  chunkId         Int                    @unique
+  embedding       Unsupported("vector")?
+  storageTier     StorageTier            @default(HOT)
+  freshnessScore  Float                  @default(1.0)
+  lastRetrievedAt DateTime               @default(now())
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+  chunk           SemanticChunk          @relation(fields: [chunkId], references: [id], onDelete: Cascade)
+
+  @@index([storageTier])
+  @@map("embedding_records")
+}
+
+model RetrievalMetric {
+  id                Int      @id @default(autoincrement())
+  query             String
+  latencyMs         Int
+  fallbackTriggered Boolean  @default(false)
+  reranked          Boolean  @default(false)
+  tierUsed          Int
+  resultsReturned   Int
+  createdAt         DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("retrieval_metrics")
+}
+
+enum ProblemCategory {
+  WIFI
+  DNS
+  SPEED
+  CONNECTION
+  SECURITY
+  HARDWARE
+  OTHER
+}
+
+enum EntityType {
+  ROUTER
+  PROBLEM
+  TOOL
+  IP
+  GUIDE
+  COMPARISON
+}
+
+enum ContentQualityStatus {
+  DRAFT
+  PENDING_REVIEW
+  REJECTED_THIN
+  REJECTED_SPAM
+  APPROVED
+  STAGED
+  PUBLISHED
+  REVIEWED
+}
+
+enum ChunkType {
+  OVERVIEW
+  SYMPTOM
+  DIAGNOSTIC
+  FIX_STEP
+  WARNING
+  FAQ
+  RESET_GUIDE
+  LOGIN_GUIDE
+}
+
+enum StorageTier {
+  HOT
+  COLD
+}
+
+model RetrievalIntentRelation {
+  id                Int      @id @default(autoincrement())
+  sourceIntent      String
+  resolvedByChunkId String
+  resolutionScore   Float    @default(1.0)
+  reuseCount        Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([sourceIntent])
+  @@index([resolvedByChunkId])
+  @@map("retrieval_intent_relations")
+}

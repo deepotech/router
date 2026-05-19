@@ -1,0 +1,36 @@
+# RouterVia — .dockerignore
+# Keeps the Docker / Railway build context lean
+
+# Dependencies (reinstalled at build time)
+node_modules
+npm-debug.log*
+
+# Next.js build artifacts
+.next
+out
+
+# Local env files (secrets must come from Railway env vars)
+.env
+.env.local
+.env.*.local
+
+# Dev tools
+.git
+.gitignore
+README.md
+FINAL_PRODUCTION_READINESS_REPORT.md
+RAILWAY_DEPLOYMENT_GUIDE.md
+fix-domains.js
+fix.js
+audit-stage-1a-report.json
+
+# TypeScript build info
+*.tsbuildinfo
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Test / script artifacts
+coverage
+docs
