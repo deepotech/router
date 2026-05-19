@@ -19,27 +19,25 @@ const generationQueue = new Queue('content-generation', { connection });
 // ---------------------------------------------------------
 
 const COHORT_A = [
-  { entityType: 'IP', entityId: '192.168.1.1', intentCategory: 'login', query: '192.168.1.1 login' },
-  { entityType: 'IP', entityId: '192.168.0.1', intentCategory: 'login', query: '192.168.0.1 admin password reset' },
-  { entityType: 'IP', entityId: '10.0.0.1', intentCategory: 'login', query: '10.0.0.1 default credentials' },
-  { entityType: 'IP', entityId: '192.168.100.1', intentCategory: 'login', query: '192.168.100.1 router setup' },
-  { entityType: 'IP', entityId: '192.168.8.1', intentCategory: 'login', query: '192.168.8.1 admin page not loading' },
+  { entityType: 'IP', entityId: '192.168.31.1', intentCategory: 'login', query: '192.168.31.1 xiaomi router login' },
+  { entityType: 'IP', entityId: '192.168.29.1', intentCategory: 'login', query: '192.168.29.1 repeater setup' },
+  { entityType: 'IP', entityId: '192.168.10.1', intentCategory: 'login', query: '192.168.10.1 router admin login' },
 ];
 
 const COHORT_B = [
-  { entityType: 'PROBLEM', entityId: 'wifi-connected-no-internet', intentCategory: 'connectivity', query: 'wifi connected but no internet' },
-  { entityType: 'PROBLEM', entityId: 'router-blinking-orange', intentCategory: 'connectivity', query: 'router blinking orange' },
-  { entityType: 'PROBLEM', entityId: 'internet-disconnects-randomly', intentCategory: 'connectivity', query: 'internet disconnects randomly' },
-  { entityType: 'PROBLEM', entityId: 'wifi-slow-after-update', intentCategory: 'connectivity', query: 'wifi slow after firmware update' },
-  { entityType: 'PROBLEM', entityId: 'router-not-detecting-wan', intentCategory: 'connectivity', query: 'router not detecting WAN cable' },
+  { entityType: 'PROBLEM', entityId: 'wifi-keeps-disconnecting', intentCategory: 'connectivity', query: 'wifi keeps disconnecting every few minutes' },
+
+  { entityType: 'PROBLEM', entityId: 'ethernet-connected-no-internet', intentCategory: 'connectivity', query: 'ethernet connected but no internet' },
+
+  { entityType: 'PROBLEM', entityId: 'router-overheating', intentCategory: 'hardware', query: 'router overheating and shutting down' },
 ];
 
 const COHORT_C = [
-  { entityType: 'PROBLEM', entityId: 'firmware-recovery-mode', intentCategory: 'firmware', query: 'firmware recovery mode' },
-  { entityType: 'PROBLEM', entityId: 'router-stuck-after-update', intentCategory: 'firmware', query: 'router stuck after update' },
-  { entityType: 'PROBLEM', entityId: 'firmware-rollback', intentCategory: 'firmware', query: 'firmware rollback' },
-  { entityType: 'PROBLEM', entityId: 'emergency-recovery-setup', intentCategory: 'firmware', query: 'emergency recovery setup' },
-  { entityType: 'PROBLEM', entityId: 'reset-failed-flash', intentCategory: 'firmware', query: 'reset after failed firmware flash' },
+  { entityType: 'PROBLEM', entityId: 'openwrt-installation-failed', intentCategory: 'firmware', query: 'openwrt installation failed' },
+
+  { entityType: 'PROBLEM', entityId: 'router-boot-loop', intentCategory: 'firmware', query: 'router stuck in boot loop' },
+
+  { entityType: 'PROBLEM', entityId: 'corrupted-router-firmware', intentCategory: 'firmware', query: 'corrupted router firmware repair' },
 ];
 
 async function runSeed() {
@@ -55,7 +53,7 @@ async function runSeed() {
 
   // Combine cohorts and duplicate for scale (Simulating ~150 chunks across variants)
   const fullBatch = [...COHORT_A, ...COHORT_B, ...COHORT_C];
-  
+
   // Step 2: Semantic Diversity Check
   const isDiverse = SemanticDiversityService.validateBatchDiversity(fullBatch);
   if (!isDiverse) {
@@ -72,7 +70,7 @@ async function runSeed() {
   for (const jobData of fullBatch) {
     // 5-minute spacing between generations to prevent vector latency spikes
     // and allow the telemetry loop to catch overlap anomalies mid-batch.
-    delayMs += 5 * 60 * 1000; 
+    delayMs += 5 * 60 * 1000;
 
     await generationQueue.add('generate-semantic-chunk', {
       ...jobData,
