@@ -7,6 +7,9 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { Badge } from "@/components/ui/Badge";
 import { APP_URL } from "@/lib/constants";
 import { RelatedRouters } from "@/components/seo/RelatedRouters";
+import { RelatedArticles } from "@/components/seo/RelatedArticles";
+import { AnalyticsService } from "@/server/services/analytics.service";
+import { JsonLd, buildBreadcrumbSchema, buildProductSchema, generateSemanticArticleSchema } from "@/lib/seo/schema";
 import { Bot } from "lucide-react";
 
 type Props = { params: Promise<{ brand: string; model: string }>; children: React.ReactNode };
@@ -42,6 +45,9 @@ export default async function RouterModelLayout({ params, children }: Props) {
   const routerModel = await RouterService.getModel(brandSlug, modelSlug);
   if (!routerModel || !routerModel.brand) notFound();
 
+  // Log page view analytics event
+  AnalyticsService.logEvent("PAGE_VIEW", { url: `/routers/${brandSlug}/${modelSlug}`, title: routerModel.name });
+
   const brandName = routerModel.brand.name;
 
   const breadcrumbs = [
@@ -58,8 +64,31 @@ export default async function RouterModelLayout({ params, children }: Props) {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <Breadcrumb items={breadcrumbs} className="mb-8" />
+    <>
+      <JsonLd data={buildBreadcrumbSchema([{ label: "Home", href: "/" }, ...breadcrumbs], APP_URL)} />
+      <JsonLd
+        data={buildProductSchema({
+          name: `${brandName} ${routerModel.name}`,
+          description: routerModel.metaDescription || `Complete guide, manuals, and troubleshooting for the ${routerModel.name} router.`,
+          brand: brandName,
+          image: routerModel.imageUrl || undefined,
+          url: `${APP_URL}/routers/${brandSlug}/${modelSlug}`,
+        })}
+      />
+      <JsonLd
+        data={generateSemanticArticleSchema(
+          `${brandName} ${routerModel.name} Login & Setup Guide`,
+          routerModel.metaDescription || `Complete guide, manuals, and troubleshooting for the ${routerModel.name} router.`,
+          `${APP_URL}/routers/${brandSlug}/${modelSlug}`,
+          routerModel.createdAt,
+          routerModel.updatedAt,
+          routerModel.decayScore ?? 0.9,
+          "RouterVia",
+          APP_URL
+        )}
+      />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <Breadcrumb items={breadcrumbs} className="mb-8" />
 
       {/* Page Title */}
       <div className="mb-8">
@@ -146,6 +175,12 @@ export default async function RouterModelLayout({ params, children }: Props) {
 
       {/* Semantic Internal Linking */}
       <RelatedRouters brandId={routerModel.brandId} currentModelId={routerModel.id} brandName={brandName} brandSlug={brandSlug} />
+      <RelatedArticles
+        diagnosticCategory={routerModel.diagnosticCategory}
+        currentId={`router-${routerModel.id}`}
+        currentType="Firmware"
+      />
     </div>
+    </>
   );
 }

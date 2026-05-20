@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Wifi, Globe } from "lucide-react";
 import { APP_NAME } from "@/lib/constants";
+import { ArticlesService } from "@/server/services/articles.service";
 
 // =============================================================
-// Footer — server component
+// Footer — async Server Component
 // =============================================================
 
 const footerLinks = {
@@ -39,16 +40,39 @@ const footerLinks = {
   ],
 };
 
-export function Footer() {
+const FALLBACK_GUIDES = [
+  { id: "fallback-1", title: "192.168.1.1 Router Login Guide", href: "/ips/192-168-1-1" },
+  { id: "fallback-2", title: "192.168.0.1 Router Login Guide", href: "/ips/192-168-0-1" },
+  { id: "fallback-3", title: "WiFi Connected No Internet Fix", href: "/problems/wifi-connected-no-internet" },
+  { id: "fallback-4", title: "Slow Internet Connection Guide", href: "/problems/slow-internet" },
+  { id: "fallback-5", title: "DNS Server Not Responding Fix", href: "/problems/dns-not-resolving" },
+];
+
+export async function Footer() {
   const year = new Date().getFullYear();
+
+  // Fetch latest articles with try/catch and static fallback for build safety
+  let recentArticles = FALLBACK_GUIDES;
+  try {
+    const dynamicArticles = await ArticlesService.getLatestArticles({ limit: 5 });
+    if (dynamicArticles && dynamicArticles.length > 0) {
+      recentArticles = dynamicArticles.map((a) => ({
+        id: a.id,
+        title: a.title,
+        href: a.href,
+      }));
+    }
+  } catch (error) {
+    console.warn("[Footer] Failed to fetch dynamic recent articles, using fallback:", error);
+  }
 
   return (
     <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Top Row */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-12">
           {/* Brand */}
-          <div className="md:col-span-1">
+          <div className="sm:col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-[var(--brand-600)] flex items-center justify-center">
                 <Wifi size={16} className="text-white" aria-hidden="true" />
@@ -83,7 +107,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Links */}
+          {/* Static Link Columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
               <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">
@@ -103,6 +127,25 @@ export function Footer() {
               </ul>
             </div>
           ))}
+
+          {/* Dynamic Recent Guides Column */}
+          <div>
+            <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">
+              Recent Guides
+            </h3>
+            <ul className="space-y-2.5">
+              {recentArticles.map((article) => (
+                <li key={article.id}>
+                  <Link
+                    href={article.href}
+                    className="text-sm text-[var(--text-muted)] hover:text-[var(--brand-400)] transition-colors duration-[var(--transition-fast)] line-clamp-2"
+                  >
+                    {article.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Bottom Row */}
@@ -111,10 +154,18 @@ export function Footer() {
             © {year} {APP_NAME}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <a href="https://twitter.com" className="text-[var(--text-muted)] hover:text-[#1DA1F2] transition-colors" aria-label="Twitter">
+            <a
+              href="https://twitter.com"
+              className="text-[var(--text-muted)] hover:text-[#1DA1F2] transition-colors"
+              aria-label="Twitter"
+            >
               <Globe size={20} />
             </a>
-            <a href="https://github.com" className="text-[var(--text-muted)] hover:text-white transition-colors" aria-label="GitHub">
+            <a
+              href="https://github.com"
+              className="text-[var(--text-muted)] hover:text-white transition-colors"
+              aria-label="GitHub"
+            >
               <Globe size={20} />
             </a>
             <Link

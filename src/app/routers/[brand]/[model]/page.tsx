@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { HelpCircle, ChevronDown, BookOpen } from "lucide-react";
 import { RouterService } from "@/server/services/router.service";
-import { JsonLd, buildFaqSchema, buildProductSchema, buildBreadcrumbSchema } from "@/lib/seo/schema";
+import { JsonLd, buildFaqSchema, buildProductSchema, buildBreadcrumbSchema, generateSemanticArticleSchema } from "@/lib/seo/schema";
 import { APP_URL } from "@/lib/constants";
+import { RelatedArticles } from "@/components/seo/RelatedArticles";
 
 type Props = { params: Promise<{ brand: string; model: string }> };
 
@@ -34,6 +35,18 @@ export default async function RouterModelOverviewPage({ params }: Props) {
           { label: brandName, href: `/routers/${brandSlug}` },
           { label: routerModel.name, href: `/routers/${brandSlug}/${modelSlug}` },
         ], APP_URL)}
+      />
+      <JsonLd
+        data={generateSemanticArticleSchema(
+          `${brandName} ${routerModel.name} Setup & Login Guide`,
+          routerModel.metaDescription || `Complete guide, manuals, and troubleshooting for the ${routerModel.name} router.`,
+          `${APP_URL}/routers/${brandSlug}/${modelSlug}`,
+          routerModel.createdAt,
+          routerModel.updatedAt,
+          0.9,
+          "RouterVia",
+          "https://routervia.com"
+        )}
       />
 
       <div className="space-y-6">
@@ -69,6 +82,12 @@ export default async function RouterModelOverviewPage({ params }: Props) {
             </div>
           </section>
         )}
+
+        <RelatedArticles
+          diagnosticCategory={routerModel.diagnosticCategory}
+          currentId={`router-${routerModel.id}`}
+          currentType="Firmware"
+        />
       </div>
     </>
   );

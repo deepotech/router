@@ -47,5 +47,9 @@ function mapIp(ip: any): IpAddress {
     faqs: ip.faqs as IpAddress["faqs"],
     metaTitle: ip.metaTitle,
     metaDescription: ip.metaDescription,
+    createdAt: ip.createdAt,
+    updatedAt: ip.updatedAt,
+    diagnosticCategory: ip.diagnosticCategory,
+    decayScore: ip.decayScore,
   };
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { SearchOrchestratorService } from "@/server/services/search-orchestrator.service";
 import { QueryNormalizationService } from "@/server/services/query-normalization.service";
 import { prisma } from "@/server/db/prisma";
+import { AnalyticsService } from "@/server/services/analytics.service";
 
 /**
  * Unified Search API — single source of truth for all search surfaces.
@@ -19,6 +20,15 @@ export async function GET(req: NextRequest) {
 
   if (!query || query.trim().length < 2) {
     return NextResponse.json({ routers: [], problems: [], ips: [] });
+  }
+
+  // Safely log the search event in a non-blocking way
+  try {
+    AnalyticsService.logEvent("SEARCH", { query: query.trim() }, req).catch((err) => {
+      console.error("[Search Analytics] Non-blocking logEvent failed:", err);
+    });
+  } catch (error) {
+    console.error("[Search Analytics] Failed to initialize logEvent:", error);
   }
 
   try {

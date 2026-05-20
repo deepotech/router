@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/server/db/prisma";
+import { RelatedArticles } from "@/components/seo/RelatedArticles";
+import { AnalyticsService } from "@/server/services/analytics.service";
 import { EdgeCacheService } from "@/server/services/edge-cache.service";
 import { IndexationControlService } from "@/server/services/indexation-control.service";
 import { EntityType } from "@prisma/client";
@@ -11,6 +13,10 @@ import { IntentBreadcrumbs } from "@/components/retrieval/IntentBreadcrumbs";
 import { PeopleAlsoResolve } from "@/components/retrieval/PeopleAlsoResolve";
 import { RetrievalExplanation } from "@/components/retrieval/RetrievalExplanation";
 import { MarkdownRenderer } from "@/components/ui/MarkdownRenderer";
+import { buildProblemMetadata } from "@/lib/seo/metadata";
+import { JsonLd, buildBreadcrumbSchema, buildFaqSchema, generateSemanticArticleSchema } from "@/lib/seo/schema";
+import { APP_URL } from "@/lib/constants";
+import { RelatedRoutersForProblem } from "@/components/seo/RelatedRoutersForProblem";
 
 // ─── Inline Markdown Client Wrapper ─────────────────────────────────────────
 function MarkdownContent({ content }: { content: string }) {
@@ -132,14 +138,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!problem) return {};
 
   const robots = await IndexationControlService.getRobotsConfig(problem.status, 0.9);
+  
+  const baseMetadata = buildProblemMetadata({
+    title: problem.title,
+    slug: problem.slug,
+    excerpt: problem.metaDescription || problem.excerpt,
+  });
 
   return {
-    title: `${problem.title} - RouterVia Troubleshooting`,
-    description: problem.metaDescription || `Learn how to fix ${problem.title}.`,
-    alternates: {
-      canonical: `https://routervia.com/problems/${slug}`
-    },
-    robots
+    ...baseMetadata,
+    robots,
   };
 }
 
@@ -151,6 +159,11 @@ export default async function ProblemPage({ params }: { params: Promise<{ slug: 
   });
 
   if (!problem) notFound();
+
+  // Log page view analytics event
+  AnalyticsService.logEvent("PAGE_VIEW", { url: `/problems/${slug}`, title: problem.title });
+
+  const faqs: { question: string; answer: string }[] = Array.isArray(problem.faqs) ? (problem.faqs as any) : [];
 
   // Tier 0 -> Tier 3 Retrieval Cascade via Edge Cache
   const pageData = await EdgeCacheService.getCachedPageData(
@@ -189,42 +202,66 @@ export default async function ProblemPage({ params }: { params: Promise<{ slug: 
       {schemaString && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schemaString }} />
       )}
+      <JsonLd
+        data={generateSemanticArticleSchema(
+          problem.title,
+          problem.metaDescription || problem.excerpt,
+          `https://routervia.com/problems/${slug}`,
+          problem.createdAt,
+          problem.updatedAt,
+          problem.decayScore ?? 0.9,
+          "RouterVia",
+          "https://routervia.com"
+        )}
+      />
+      <JsonLd data={buildBreadcrumbSchema([{ label: "Home", href: "/" }, ...breadcrumbHierarchy], APP_URL)} />
+      {faqs.length > 0 && <JsonLd data={buildFaqSchema(faqs)} />}
+
       <main className="min-h-screen bg-neutral-950 text-neutral-200 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-8">
           
           <IntentBreadcrumbs hierarchy={breadcrumbHierarchy} />
 
           {/* Header & Trust Signals */}
-        <header className="space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight text-white">{problem.title}</h1>
-        </header>
+          <header className="space-y-4">
+            <h1 className="text-4xl font-bold tracking-tight text-white">{problem.title}</h1>
+          </header>
 
-        {/* Semantic Content Chunks */}
-        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 md:p-8 space-y-8">
-          
-          <RetrievalAnswerBlock 
-            quickAnswer={problem.excerpt || "Follow the verified technical steps below to stabilize the network connection."}
-            diagnosticSummary={Array.isArray(problem.causes) ? problem.causes.slice(0, 3) as string[] : []}
-            retrievalTierUsed={0}
-            semanticConfidence={0.92}
-            estimatedResolutionComplexity="MEDIUM"
-            recommendedNextStep={Array.isArray(problem.fixes) && problem.fixes.length > 0 ? (problem.fixes[0] as any).stepTitle : "Run diagnostic suite"}
+          {/* Semantic Content Chunks */}
+          <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 md:p-8 space-y-8">
+            
+            <RetrievalAnswerBlock 
+              quickAnswer={problem.excerpt || "Follow the verified technical steps below to stabilize the network connection."}
+              diagnosticSummary={Array.isArray(problem.causes) ? problem.causes.slice(0, 3) as string[] : []}
+              retrievalTierUsed={0}
+              semanticConfidence={0.92}
+              estimatedResolutionComplexity="MEDIUM"
+              recommendedNextStep={Array.isArray(problem.fixes) && problem.fixes.length > 0 ? (problem.fixes[0] as any).stepTitle : "Run diagnostic suite"}
+            />
+
+            <RetrievalExplanation 
+              resolutionRate={0.81}
+              relatedIssue={problem.title}
+              actionTaken="applying the canonical diagnostic steps"
+              confidenceScore={0.85}
+            />
+
+            <ProblemContent problem={problem} />
+          </div>
+
+          <PeopleAlsoResolve currentEntityId={problem.id} currentEntityType="PROBLEM" />
+
+          {/* Related Items Section for programmatic SEO & internal linking */}
+          <RelatedRoutersForProblem diagnosticCategory={problem.diagnosticCategory} />
+
+          <RelatedArticles
+            diagnosticCategory={problem.diagnosticCategory}
+            currentId={`problem-${problem.id}`}
+            currentType="Problem"
           />
 
-          <RetrievalExplanation 
-            resolutionRate={0.81}
-            relatedIssue={problem.title}
-            actionTaken="applying the canonical diagnostic steps"
-            confidenceScore={0.85}
-          />
-
-          <ProblemContent problem={problem} />
         </div>
-
-        <PeopleAlsoResolve currentEntityId={problem.id} currentEntityType="PROBLEM" />
-
-      </div>
-    </main>
+      </main>
     </>
   );
 }

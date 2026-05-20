@@ -3,12 +3,15 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { HelpCircle, ChevronDown, Wrench, AlertTriangle } from "lucide-react";
 import { IpService } from "@/server/services/ip.service";
+import { AnalyticsService } from "@/server/services/analytics.service";
 import { buildIpMetadata } from "@/lib/seo/metadata";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
-import { JsonLd, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/seo/schema";
+import { JsonLd, buildBreadcrumbSchema, buildFaqSchema, generateSemanticArticleSchema } from "@/lib/seo/schema";
 import { APP_URL } from "@/lib/constants";
 import { Badge } from "@/components/ui/Badge";
 import { slugToIp } from "@/lib/utils";
+import { RelatedProblemsForIp } from "@/components/seo/RelatedProblemsForIp";
+import { RelatedArticles } from "@/components/seo/RelatedArticles";
 
 type Props = { params: Promise<{ ip: string }> };
 
@@ -42,6 +45,9 @@ export default async function IpPage({ params }: Props) {
   const ip = await IpService.getBySlug(ipSlug);
   if (!ip) notFound();
 
+  // Log page view analytics event
+  AnalyticsService.logEvent("PAGE_VIEW", { url: `/ips/${ip.slug}`, title: ip.address });
+
   const breadcrumbs = [
     { label: "IP Addresses", href: "/ips" },
     { label: ip.address, href: `/ips/${ip.slug}` },
@@ -51,6 +57,18 @@ export default async function IpPage({ params }: Props) {
     <>
       <JsonLd data={buildBreadcrumbSchema([{ label: "Home", href: "/" }, ...breadcrumbs], APP_URL)} />
       {ip.faqs.length > 0 && <JsonLd data={buildFaqSchema(ip.faqs)} />}
+      <JsonLd
+        data={generateSemanticArticleSchema(
+          `${ip.address} Router Login Guide`,
+          ip.metaDescription || ip.description,
+          `https://routervia.com/ips/${ip.slug}`,
+          ip.createdAt,
+          ip.updatedAt,
+          ip.decayScore ?? 0.9,
+          "RouterVia",
+          "https://routervia.com"
+        )}
+      />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <Breadcrumb items={breadcrumbs} className="mb-8" />
@@ -122,6 +140,15 @@ export default async function IpPage({ params }: Props) {
                 </div>
               </section>
             )}
+
+            {/* Programmatic Internal Link Clusters */}
+            <RelatedProblemsForIp ipAddress={ip.address} diagnosticCategory={ip.diagnosticCategory} />
+            
+            <RelatedArticles
+              diagnosticCategory={ip.diagnosticCategory}
+              currentId={`ip-${ip.id}`}
+              currentType="IP"
+            />
           </div>
 
           {/* Sidebar */}

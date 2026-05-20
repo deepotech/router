@@ -130,5 +130,7 @@ function mapModel(model: any): RouterModel {
     metaDescription: model.metaDescription,
     createdAt: model.createdAt,
     updatedAt: model.updatedAt,
+    diagnosticCategory: model.diagnosticCategory,
+    decayScore: model.decayScore,
   };
 }

@@ -30,6 +30,8 @@ export interface RouterModel {
   metaDescription: string | null;
   createdAt: Date;
   updatedAt: Date;
+  diagnosticCategory: string | null;
+  decayScore: number | null;
 }
 
 // ---- Problems ----
@@ -78,6 +80,10 @@ export interface IpAddress {
   faqs: FAQ[];
   metaTitle: string | null;
   metaDescription: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  diagnosticCategory: string | null;
+  decayScore: number | null;
 }
 
 // ---- Shared ----
