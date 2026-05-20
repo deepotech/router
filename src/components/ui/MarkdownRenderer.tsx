@@ -10,7 +10,7 @@ function parseInline(text: string): React.ReactNode[] {
 
   while (remaining.length > 0) {
     // Bold + Italic ***text***
-    const boldItalic = remaining.match(/^(.*?)\*\*\*(.*?)\*\*\*/s);
+    const boldItalic = remaining.match(/^(.*?)\*\*\*(.*?)\*\*\*/);
     if (boldItalic) {
       if (boldItalic[1]) parts.push(<span key={key++}>{parseInline(boldItalic[1])}</span>);
       parts.push(<strong key={key++} className="font-bold italic text-white">{boldItalic[2]}</strong>);
@@ -19,7 +19,7 @@ function parseInline(text: string): React.ReactNode[] {
     }
 
     // Bold **text**
-    const bold = remaining.match(/^(.*?)\*\*(.*?)\*\*/s);
+    const bold = remaining.match(/^(.*?)\*\*(.*?)\*\*/);
     if (bold) {
       if (bold[1]) parts.push(<span key={key++}>{parseInline(bold[1])}</span>);
       parts.push(<strong key={key++} className="font-semibold text-white">{bold[2]}</strong>);
@@ -28,7 +28,7 @@ function parseInline(text: string): React.ReactNode[] {
     }
 
     // Italic *text*
-    const italic = remaining.match(/^(.*?)\*(.*?)\*/s);
+    const italic = remaining.match(/^(.*?)\*(.*?)\*/);
     if (italic) {
       if (italic[1]) parts.push(<span key={key++}>{italic[1]}</span>);
       parts.push(<em key={key++} className="italic text-neutral-300">{italic[2]}</em>);
@@ -37,7 +37,7 @@ function parseInline(text: string): React.ReactNode[] {
     }
 
     // Inline code `code`
-    const code = remaining.match(/^(.*?)`(.*?)`/s);
+    const code = remaining.match(/^(.*?)`(.*?)`/);
     if (code) {
       if (code[1]) parts.push(<span key={key++}>{parseInline(code[1])}</span>);
       parts.push(
