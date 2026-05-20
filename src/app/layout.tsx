@@ -71,9 +71,6 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "FdJqO1S1B1SIjLYoPg7T8LpxEgB3-JvDBMZQdNZZRpM",
-    other: {
-      "msvalidate.01": "58ACA590DE44B78968BA7E25B8C83CD6",
-    },
   },
 };
 
@@ -84,6 +81,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <meta name="msvalidate.01" content="58ACA590DE44B78968BA7E25B8C83CD6" />
+      </head>
       {/* Google Analytics */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-R1SGC424YM"
