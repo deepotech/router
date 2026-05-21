@@ -19,6 +19,7 @@
     "worker": "tsx src/server/jobs/workers/run-worker.ts"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.78",
     "@ai-sdk/openai": "^3.0.64",
     "@ai-sdk/react": "^3.0.186",
     "@prisma/client": "^6.19.3",
