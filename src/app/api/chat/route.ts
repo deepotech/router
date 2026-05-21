@@ -184,7 +184,7 @@ export async function POST(req: Request) {
           : undefined,
       });
 
-      selectedModel = openaiProvider("gpt-4o-mini");
+      selectedModel = openaiProvider.chat("gpt-4o-mini");
     } else {
       // ── Google Gemini branch (default) ──
       if (!hasGeminiKey) {
