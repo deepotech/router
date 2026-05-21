@@ -4,7 +4,7 @@ import { GlobalSearch } from "@/components/ui/GlobalSearch";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { APP_URL } from "@/lib/constants";
-import { HomepageStatsService } from "@/server/services/homepage-stats.service";
+import { StatsService } from "@/server/services/stats.service";
 import { ArticlesService } from "@/server/services/articles.service";
 import { TrendingService } from "@/server/services/trending.service";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -23,7 +23,7 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   // Fetch stats, latest articles, and trending searches in parallel
   const [stats, latestArticles, trendingSearches] = await Promise.all([
-    HomepageStatsService.getRealCounts(),
+    StatsService.getHomepageStats(),
     ArticlesService.getLatestArticles({ limit: 6 }),
     TrendingService.getTrendingSearches(6),
   ]);
@@ -90,7 +90,7 @@ export default async function HomePage() {
               </h1>
               
               <p className="text-lg md:text-xl text-[var(--text-secondary)] mb-10 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-                Search through our database of {stats.routers > 0 ? stats.routers : "many"} router models, {stats.ips > 0 ? stats.ips : "common"} IPs, and {stats.problems > 0 ? stats.problems : "various"} troubleshooting guides.
+                Search through our database of {stats.routerModels > 0 ? stats.routerModels : "many"} router models, {stats.ipAddresses > 0 ? stats.ipAddresses : "common"} IPs, and {stats.troubleshootingGuides > 0 ? stats.troubleshootingGuides : "various"} troubleshooting guides.
               </p>
 
               <div className="max-w-2xl mx-auto text-left relative z-50 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
@@ -227,15 +227,15 @@ export default async function HomePage() {
 
                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                  <div className="text-center">
-                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">{stats.routers}</div>
+                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">{stats.routerModels}</div>
                    <p className="text-[var(--text-secondary)] font-medium">Router Models</p>
                  </div>
                  <div className="text-center">
-                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">{stats.ips}</div>
+                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">{stats.ipAddresses}</div>
                    <p className="text-[var(--text-secondary)] font-medium">Mapped IPs</p>
                  </div>
                  <div className="text-center">
-                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">{stats.problems}</div>
+                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">{stats.troubleshootingGuides}</div>
                    <p className="text-[var(--text-secondary)] font-medium">Troubleshooting Guides</p>
                  </div>
                </div>
