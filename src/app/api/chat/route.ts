@@ -1,21 +1,23 @@
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText } from "ai";
-import { z } from "zod";
+import { convertToModelMessages, streamText, UIMessage } from "ai";
 
 // Allow streaming responses up to 60 seconds
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
-// ── Schema ─────────────────────────────────────────────────────────────────────
-const messageSchema = z.object({
-  role: z.enum(["user", "assistant"]),
-  content: z.string().max(4000),
-});
+// ── Helpers ─────────────────────────────────────────────────────────────────────
+function extractMessageText(message: UIMessage): string {
+  if (!message.parts || !Array.isArray(message.parts)) {
+    return "";
+  }
 
-const bodySchema = z.object({
-  messages: z.array(messageSchema).max(50),
-});
+  return message.parts
+    .filter((part) => part.type === "text")
+    .map((part: any) => part.text || "")
+    .join(" ")
+    .trim();
+}
 
 // ── System Prompt ──────────────────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are RouterVia, an expert AI networking assistant and WiFi troubleshooting specialist.
@@ -99,18 +101,16 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const parsed = bodySchema.safeParse(body);
+    const messages: UIMessage[] = body.messages;
 
     // 2. Body Validation
-    if (!parsed.success) {
-      console.warn(`[Chat API] [BAD REQUEST] Invalid body structure.`);
+    if (!messages || !Array.isArray(messages)) {
+      console.warn(`[Chat API] [BAD REQUEST] Invalid messages array.`);
       return new Response(
-        JSON.stringify({ error: "Invalid request body structure or message format." }),
+        JSON.stringify({ error: "Invalid messages array" }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
-
-    const { messages } = parsed.data;
 
     // 3. Prompt Guards
     if (messages.length === 0) {
@@ -121,15 +121,16 @@ export async function POST(req: Request) {
     }
 
     const latestMessage = messages[messages.length - 1];
+    const latestMessageText = extractMessageText(latestMessage);
 
-    if (!latestMessage.content.trim()) {
+    if (!latestMessageText) {
       return new Response(
         JSON.stringify({ error: "Your message content cannot be empty." }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
-    if (latestMessage.content.length > 4000) {
+    if (latestMessageText.length > 4000) {
       return new Response(
         JSON.stringify({
           error: "Message length exceeds maximum allowable limit of 4000 characters.",
@@ -213,7 +214,7 @@ export async function POST(req: Request) {
     );
 
     // 5. RAG Context Injection (future capability stub)
-    const ragContext = await injectRAGContext(latestMessage.content);
+    const ragContext = await injectRAGContext(latestMessageText);
     const enrichedSystemPrompt = ragContext
       ? `${SYSTEM_PROMPT}\n\n[RAG TROUBLESHOOTING CONTEXT]\n${ragContext}`
       : SYSTEM_PROMPT;
@@ -222,7 +223,7 @@ export async function POST(req: Request) {
     const result = streamText({
       model: selectedModel,
       system: enrichedSystemPrompt,
-      messages,
+      messages: await convertToModelMessages(messages),
       onChunk({ chunk }) {
         if (chunk.type === "text-delta") {
           // Compact streaming progress indicator
