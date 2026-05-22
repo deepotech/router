@@ -10,7 +10,7 @@ interface IpInfo {
   city?: string;
   region?: string;
   country?: string;
-  org?: string;
+  isp?: string;
   timezone?: string;
 }
 
@@ -25,22 +25,26 @@ export default function IpCheckerPage() {
   const [error, setError] = useState<string | null>(null);
 
   async function check() {
+    if (loading) return;
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("https://ipapi.co/json/");
-      if (!res.ok) throw new Error("Failed to fetch IP info");
+      const res = await fetch("/api/ip");
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.error || "Unable to retrieve IP information right now. Please try again in a few seconds.");
+      }
       const json = await res.json();
       setData({
         ip: json.ip,
         city: json.city,
         region: json.region,
-        country: json.country_name,
-        org: json.org,
+        country: json.country,
+        isp: json.isp,
         timezone: json.timezone,
       });
-    } catch {
-      setError("Could not fetch IP information. Please try again.");
+    } catch (err: any) {
+      setError(err instanceof Error && err.message ? err.message : "Unable to retrieve IP information right now. Please try again in a few seconds.");
     } finally {
       setLoading(false);
     }
@@ -96,7 +100,7 @@ export default function IpCheckerPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-left">
               {[
                 { icon: MapPin, label: "Location", value: [data.city, data.region, data.country].filter(Boolean).join(", ") },
-                { icon: Server, label: "ISP / Org", value: data.org },
+                { icon: Server, label: "ISP / Org", value: data.isp },
                 { icon: Globe, label: "Timezone", value: data.timezone },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="bg-[var(--bg-elevated)] rounded-xl p-4 border border-[var(--border-subtle)]">
