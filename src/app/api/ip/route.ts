@@ -1,6 +1,51 @@
 import { NextResponse } from "next/server";
+import https from "https";
 
 export const dynamic = "force-dynamic";
+
+function fetchIpDetails(url: string, timeoutMs: number = 8000): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const req = https.get(
+      url,
+      {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        }
+      },
+      (res) => {
+        if (res.statusCode !== 200) {
+          reject(new Error(`Failed to fetch IP details: HTTP ${res.statusCode}`));
+          return;
+        }
+
+        let rawData = "";
+        res.on("data", (chunk) => { rawData += chunk; });
+        res.on("end", () => {
+          try {
+            const parsedData = JSON.parse(rawData);
+            resolve(parsedData);
+          } catch (e) {
+            reject(new Error("Failed to parse JSON response from ipwho.is"));
+          }
+        });
+      }
+    );
+
+    const timeout = setTimeout(() => {
+      req.destroy();
+      reject(new Error("IP check request timed out"));
+    }, timeoutMs);
+
+    req.on("error", (err) => {
+      clearTimeout(timeout);
+      reject(err);
+    });
+
+    req.on("close", () => {
+      clearTimeout(timeout);
+    });
+  });
+}
 
 export async function GET(request: Request) {
   try {
@@ -22,23 +67,7 @@ export async function GET(request: Request) {
 
     console.log(`[IP API] Fetching location data for IP: "${normalizedIp || "local"}" (URL: ${url})`);
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => {
-      controller.abort();
-    }, 8000);
-
-    const response = await fetch(url, {
-      cache: "no-store",
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeout);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch IP details from ipwho.is: ${response.statusText}`);
-    }
-
-    const data = await response.json();
+    const data = await fetchIpDetails(url, 8000);
 
     if (data.success === false) {
       throw new Error(`ipwho.is API error: ${data.message || "Unknown error"}`);
