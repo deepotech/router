@@ -22,15 +22,6 @@ const footerLinks = {
     { label: "192.168.8.1", href: "/ips/192-168-8-1" },
     { label: "10.0.0.1", href: "/ips/10-0-0-1" },
   ],
-  "Fix Problems": [
-    {
-      label: "WiFi Connected No Internet",
-      href: "/problems/wifi-connected-no-internet",
-    },
-    { label: "Slow Internet", href: "/problems/slow-internet" },
-    { label: "DNS Not Resolving", href: "/problems/dns-not-resolving" },
-    { label: "All Problems", href: "/problems" },
-  ],
   Tools: [
     { label: "IP Checker", href: "/tools/ip-checker" },
     { label: "DNS Checker", href: "/tools/dns-checker" },
@@ -38,12 +29,29 @@ const footerLinks = {
     { label: "WiFi QR Generator", href: "/tools/wifi-qr" },
     { label: "Password Generator", href: "/tools/password-generator" },
   ],
-  "IP Tools": [
+  "Network & IP": [
     { label: "What Is My IP", href: "/what-is-my-ip" },
-    { label: "Check My IP", href: "/check-my-ip" },
-    { label: "My IP Address", href: "/my-ip" },
     { label: "Public IP Checker", href: "/public-ip-checker" },
-    { label: "IP Checker Tool", href: "/tools/ip-checker" },
+    { label: "Port Checker", href: "/port-checker" },
+    { label: "MAC Address Lookup", href: "/mac-address-lookup" },
+    { label: "Subnet Calculator", href: "/subnet-calculator" },
+  ],
+  "Gaming Net": [
+    { label: "NAT Type Checker", href: "/nat-type-checker" },
+    { label: "DNS Propagation", href: "/dns-propagation-checker" },
+    { label: "Best DNS for Gaming", href: "/best-dns-for-gaming" },
+  ],
+  "Router Fixes": [
+    { label: "WiFi Disconnects", href: "/wifi-keeps-disconnecting" },
+    { label: "Blinking Orange", href: "/router-blinking-orange" },
+    { label: "Connected No Access", href: "/internet-connected-no-access" },
+    { label: "WAN Not Detected", href: "/router-not-detecting-wan" },
+    { label: "Slow WiFi after Update", href: "/slow-wifi-after-update" },
+  ],
+  "DNS Tools": [
+    { label: "Best DNS for PS5", href: "/best-dns-for-ps5" },
+    { label: "Best DNS for Xbox", href: "/best-dns-for-xbox" },
+    { label: "DNS Lookup", href: "/dns-lookup" },
   ],
 };
 
@@ -77,7 +85,7 @@ export async function Footer() {
     <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Top Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-7 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-9 gap-10 mb-12">
           {/* Brand */}
           <div className="sm:col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
