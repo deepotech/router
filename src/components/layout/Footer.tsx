@@ -38,6 +38,13 @@ const footerLinks = {
     { label: "WiFi QR Generator", href: "/tools/wifi-qr" },
     { label: "Password Generator", href: "/tools/password-generator" },
   ],
+  "IP Tools": [
+    { label: "What Is My IP", href: "/what-is-my-ip" },
+    { label: "Check My IP", href: "/check-my-ip" },
+    { label: "My IP Address", href: "/my-ip" },
+    { label: "Public IP Checker", href: "/public-ip-checker" },
+    { label: "IP Checker Tool", href: "/tools/ip-checker" },
+  ],
 };
 
 const FALLBACK_GUIDES = [
@@ -70,7 +77,7 @@ export async function Footer() {
     <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Top Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-7 gap-10 mb-12">
           {/* Brand */}
           <div className="sm:col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
