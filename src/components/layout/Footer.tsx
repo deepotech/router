@@ -53,6 +53,13 @@ const footerLinks = {
     { label: "Best DNS for Xbox", href: "/best-dns-for-xbox" },
     { label: "DNS Lookup", href: "/dns-lookup" },
   ],
+  "Connection Fixes": [
+    { label: "Why Is My Router So Slow", href: "/why-is-my-router-so-slow" },
+    { label: "DNS Server Not Responding", href: "/dns-server-not-responding" },
+    { label: "Ethernet Connected No Internet", href: "/ethernet-connected-but-no-internet" },
+    { label: "Improve WiFi Signal", href: "/how-to-improve-wifi-signal" },
+    { label: "Gaming Router Settings", href: "/best-router-settings-for-gaming" },
+  ],
 };
 
 const FALLBACK_GUIDES = [
@@ -85,7 +92,7 @@ export async function Footer() {
     <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Top Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-9 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-10 gap-10 mb-12">
           {/* Brand */}
           <div className="sm:col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
