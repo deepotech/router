@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, Activity, Wifi, Shield, ArrowRight, Settings, Server, Globe, Info } from "lucide-react";
+import { BookOpen, Activity, Wifi, Shield, ArrowRight, Settings, Server, Globe, Info, CheckCircle2, AlertTriangle } from "lucide-react";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { APP_URL, ROUTER_BRANDS, COMMON_IPS } from "@/lib/constants";
 import { safeDb } from "@/lib/server/safe-db";
@@ -24,6 +24,17 @@ export interface TroubleshootingArticleShellProps {
     tip?: string;
   }[];
   children: React.ReactNode;
+  warningBanner?: {
+    title: string;
+    text: string;
+  };
+  quickFixChecklist?: string[];
+  commonCauses?: {
+    title: string;
+    desc: string;
+  }[];
+  whenToContactISP?: string;
+  severityLevel?: "low" | "medium" | "high";
 }
 
 export default async function TroubleshootingArticleShell({
@@ -34,6 +45,11 @@ export default async function TroubleshootingArticleShell({
   faqs,
   troubleshootingSteps,
   children,
+  warningBanner,
+  quickFixChecklist,
+  commonCauses,
+  whenToContactISP,
+  severityLevel,
 }: TroubleshootingArticleShellProps) {
   const mappedBreadcrumbs = breadcrumbs.map((b) => ({
     label: b.name,
@@ -152,6 +168,25 @@ export default async function TroubleshootingArticleShell({
             <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${catConfig.color}`}>
               <CatIcon size={12} /> {catConfig.label}
             </span>
+            {severityLevel && (
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                severityLevel === "high"
+                  ? "text-red-400 border-red-800/40 bg-red-950/20"
+                  : severityLevel === "medium"
+                  ? "text-amber-400 border-amber-800/40 bg-amber-950/20"
+                  : "text-emerald-400 border-emerald-800/40 bg-emerald-950/20"
+              }`}>
+                <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${
+                  severityLevel === "high"
+                    ? "bg-red-400"
+                    : severityLevel === "medium"
+                    ? "bg-amber-400"
+                    : "bg-emerald-400"
+                }`} />
+                <Activity size={10} />
+                {severityLevel === "high" ? "High Severity" : severityLevel === "medium" ? "Medium Severity" : "Low Severity"}
+              </span>
+            )}
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight mb-4">
             {h1}
@@ -159,6 +194,15 @@ export default async function TroubleshootingArticleShell({
           <p className="text-[var(--text-secondary)] text-base md:text-lg leading-relaxed max-w-3xl">
             {intro}
           </p>
+          {warningBanner && (
+            <div className="mt-5 flex gap-3 p-4 rounded-xl border border-amber-800/40 bg-amber-950/15 animate-fade-in-up">
+              <Info size={18} className="text-amber-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <h4 className="text-xs font-bold text-amber-400 mb-1">{warningBanner.title}</h4>
+                <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">{warningBanner.text}</p>
+              </div>
+            </div>
+          )}
         </header>
 
         {/* Two-Column Layout: Main Content & Sidebar */}
@@ -167,6 +211,44 @@ export default async function TroubleshootingArticleShell({
           <div className="lg:col-span-2 space-y-8">
             {/* Interactive Section or Inner Content */}
             <div className="w-full">{children}</div>
+
+            {/* Quick Fix Checklist */}
+            {quickFixChecklist && quickFixChecklist.length > 0 && (
+              <section aria-labelledby="checklist-title" className="glass-card p-6 border border-[var(--border-subtle)] rounded-2xl">
+                <h2 id="checklist-title" className="text-base font-bold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                  <CheckCircle2 size={16} className="text-emerald-400" />
+                  Quick Fix Checklist
+                </h2>
+                <ul className="space-y-2.5">
+                  {quickFixChecklist.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-xs text-[var(--text-secondary)] leading-relaxed">
+                      <span className="mt-0.5 w-5 h-5 rounded-full border border-emerald-800/40 bg-emerald-950/20 flex items-center justify-center flex-shrink-0">
+                        <span className="text-[9px] font-bold text-emerald-400">{idx + 1}</span>
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Common Causes Grid */}
+            {commonCauses && commonCauses.length > 0 && (
+              <section aria-labelledby="causes-title">
+                <h2 id="causes-title" className="text-base font-bold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                  <AlertTriangle size={16} className="text-amber-400" />
+                  Common Root Causes
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {commonCauses.map((cause, idx) => (
+                    <div key={idx} className="glass-card p-4 border border-[var(--border-subtle)] rounded-xl">
+                      <h3 className="text-xs font-bold text-[var(--text-primary)] mb-1">{cause.title}</h3>
+                      <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">{cause.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Structured Troubleshooting Flow */}
             <section aria-labelledby="steps-title" className="glass-card p-6 border border-[var(--border-subtle)] rounded-2xl">
@@ -195,6 +277,16 @@ export default async function TroubleshootingArticleShell({
                 ))}
               </ol>
             </section>
+
+            {/* When To Contact ISP */}
+            {whenToContactISP && (
+              <section aria-labelledby="isp-title" className="p-5 border border-blue-900/30 bg-blue-950/10 rounded-xl">
+                <h2 id="isp-title" className="text-sm font-bold text-blue-400 mb-2 flex items-center gap-1.5">
+                  <Globe size={15} /> When To Contact Your ISP
+                </h2>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{whenToContactISP}</p>
+              </section>
+            )}
 
             {/* Dynamic FAQs */}
             <section aria-labelledby="faqs-title" className="space-y-4">

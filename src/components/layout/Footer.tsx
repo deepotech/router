@@ -41,24 +41,30 @@ const footerLinks = {
     { label: "DNS Propagation", href: "/dns-propagation-checker" },
     { label: "Best DNS for Gaming", href: "/best-dns-for-gaming" },
   ],
-  "Router Fixes": [
-    { label: "WiFi Disconnects", href: "/wifi-keeps-disconnecting" },
-    { label: "Blinking Orange", href: "/router-blinking-orange" },
-    { label: "Connected No Access", href: "/internet-connected-no-access" },
+  "Router Problems": [
+    { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
+    { label: "Router Login Not Working", href: "/router-login-not-working" },
+    { label: "WiFi Keeps Disconnecting", href: "/wifi-keeps-disconnecting" },
+    { label: "Router Blinking Orange", href: "/router-blinking-orange" },
     { label: "WAN Not Detected", href: "/router-not-detecting-wan" },
-    { label: "Slow WiFi after Update", href: "/slow-wifi-after-update" },
+    { label: "TP-Link Disconnecting", href: "/tp-link-router-keeps-disconnecting" },
+    { label: "ASUS Red Light Fix", href: "/asus-router-red-light" },
+    { label: "TP-Link Login Issues", href: "/tp-link-login-not-working" },
+    { label: "ASUS Keeps Restarting", href: "/asus-router-keeps-restarting" },
   ],
-  "DNS Tools": [
+  "DNS Guides": [
+    { label: "Best DNS for Speed", href: "/best-dns-for-faster-internet" },
+    { label: "How to Change Router DNS", href: "/how-to-change-dns-on-router" },
+    { label: "DNS Server Not Responding", href: "/dns-server-not-responding" },
     { label: "Best DNS for PS5", href: "/best-dns-for-ps5" },
     { label: "Best DNS for Xbox", href: "/best-dns-for-xbox" },
-    { label: "DNS Lookup", href: "/dns-lookup" },
   ],
-  "Connection Fixes": [
-    { label: "Why Is My Router So Slow", href: "/why-is-my-router-so-slow" },
-    { label: "DNS Server Not Responding", href: "/dns-server-not-responding" },
+  "Internet Fixes": [
+    { label: "Phone Connected No Internet", href: "/wifi-connected-but-no-internet-phone" },
+    { label: "Modem Online Blinking", href: "/modem-online-light-blinking" },
+    { label: "Ethernet Slower than WiFi", href: "/ethernet-slower-than-wifi" },
+    { label: "Connected No Access", href: "/internet-connected-no-access" },
     { label: "Ethernet Connected No Internet", href: "/ethernet-connected-but-no-internet" },
-    { label: "Improve WiFi Signal", href: "/how-to-improve-wifi-signal" },
-    { label: "Gaming Router Settings", href: "/best-router-settings-for-gaming" },
   ],
   "Legal & Trust": [
     { label: "About Us", href: "/about" },

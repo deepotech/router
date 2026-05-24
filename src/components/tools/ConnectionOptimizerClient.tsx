@@ -26,7 +26,14 @@ export type OptimizerMode =
   | "dns-fix"
   | "ethernet-no-internet"
   | "gaming-settings"
-  | "wifi-signal";
+  | "wifi-signal"
+  | "router-restarts"
+  | "mobile-no-internet"
+  | "modem-sync"
+  | "router-admin"
+  | "dns-optimizer"
+  | "ethernet-speed"
+  | "dns-setup";
 
 interface ConnectionOptimizerClientProps {
   mode: OptimizerMode;
@@ -225,6 +232,244 @@ const OPTIMIZER_DATA: Record<OptimizerMode, {
           { label: "1 to 2 bars (Weak signal strength)", value: "low-bars" },
           { label: "3 bars (Moderate signal strength)", value: "mid-bars" },
           { label: "Full signal bars (but speeds fluctuate rapidly)", value: "full-bars" }
+        ]
+      }
+    ]
+  },
+  "router-restarts": {
+    title: "Router Power-Cycle Instability Diagnosis",
+    icon: AlertTriangle,
+    description: "Identify the root hardware, firmware, or ISP provisioning cause behind your router's random reboot cycles.",
+    questions: [
+      {
+        id: 1,
+        text: "How frequently does your router restart on its own?",
+        options: [
+          { label: "Multiple times per day (severe instability)", value: "frequent" },
+          { label: "Once every few days (intermittent issue)", value: "intermittent" },
+          { label: "Only during peak usage hours (load-triggered)", value: "peak" }
+        ]
+      },
+      {
+        id: 2,
+        text: "How old is the router, and do you notice it running very hot to the touch?",
+        options: [
+          { label: "Over 4 years old and feels very warm/hot", value: "old-hot" },
+          { label: "Under 3 years old but still overheating", value: "young-hot" },
+          { label: "Any age but temperature feels normal", value: "normal-temp" }
+        ]
+      },
+      {
+        id: 3,
+        text: "Did the random reboots begin after a firmware update or ISP equipment change?",
+        options: [
+          { label: "Yes — started right after a firmware update", value: "post-firmware" },
+          { label: "Yes — ISP swapped my modem or ONT recently", value: "post-isp-change" },
+          { label: "No — gradual onset over weeks or months", value: "gradual" }
+        ]
+      }
+    ]
+  },
+  "mobile-no-internet": {
+    title: "Mobile Device Wi-Fi Connectivity Analyzer",
+    icon: WifiOff,
+    description: "Diagnose why your phone connects to Wi-Fi but shows no internet — covering Android, iOS, VPN, and captive portal conflicts.",
+    questions: [
+      {
+        id: 1,
+        text: "What type of device is experiencing the Wi-Fi no-internet issue?",
+        options: [
+          { label: "Android phone or tablet", value: "android" },
+          { label: "iPhone or iPad (iOS/iPadOS)", value: "iphone" },
+          { label: "Both Android and iPhone on the same network", value: "both-platforms" }
+        ]
+      },
+      {
+        id: 2,
+        text: "Does the issue occur on this network only, or on all Wi-Fi networks?",
+        options: [
+          { label: "Only on my home/office Wi-Fi network", value: "network-specific" },
+          { label: "On all Wi-Fi networks I connect to", value: "all-networks" },
+          { label: "Intermittently — works sometimes, fails others", value: "intermittent" }
+        ]
+      },
+      {
+        id: 3,
+        text: "Is a VPN, Private Relay (iCloud), or mobile security app active on your device?",
+        options: [
+          { label: "Yes — I use a VPN app regularly", value: "vpn-active" },
+          { label: "Yes — iCloud Private Relay is enabled (iPhone)", value: "private-relay" },
+          { label: "No — no VPN or extra security apps running", value: "no-vpn" }
+        ]
+      }
+    ]
+  },
+  "modem-sync": {
+    title: "Modem Signal Synchronization Diagnostic",
+    icon: Layers,
+    description: "Analyze why your modem's online light is blinking and it cannot complete downstream channel bonding or upstream registration.",
+    questions: [
+      {
+        id: 1,
+        text: "What type of internet connection does your modem use?",
+        options: [
+          { label: "Cable/HFC (coaxial cable from wall)", value: "cable" },
+          { label: "Fiber optic (ONT device with ethernet or optical port)", value: "fiber" },
+          { label: "DSL (telephone line copper connection)", value: "dsl" }
+        ]
+      },
+      {
+        id: 2,
+        text: "How long has the modem been blinking without establishing sync?",
+        options: [
+          { label: "Just started — been blinking under 30 minutes", value: "new-onset" },
+          { label: "Several hours or since a power outage", value: "extended" },
+          { label: "Repeatedly drops and re-syncs throughout the day", value: "recurring" }
+        ]
+      },
+      {
+        id: 3,
+        text: "Are there cable TV splitters, old wall sockets, or long coax runs on your line?",
+        options: [
+          { label: "Yes — there are one or more cable splitters installed", value: "splitter" },
+          { label: "Old wiring — house built over 20 years ago", value: "old-wiring" },
+          { label: "No — direct clean coax run to the modem", value: "clean-line" }
+        ]
+      }
+    ]
+  },
+  "router-admin": {
+    title: "Router Admin Page Access Diagnostic",
+    icon: Shield,
+    description: "Troubleshoot why your router's admin dashboard (e.g. 192.168.1.1) is unreachable, timing out, or showing certificate errors.",
+    questions: [
+      {
+        id: 1,
+        text: "What happens when you try to open the router admin page in your browser?",
+        options: [
+          { label: "Page times out — connection refused or no response", value: "timeout" },
+          { label: "Browser shows SSL certificate error or 'Not Secure' warning", value: "ssl-error" },
+          { label: "Login page loads but credentials are rejected", value: "auth-fail" }
+        ]
+      },
+      {
+        id: 2,
+        text: "What is your current connection type when trying to access the admin page?",
+        options: [
+          { label: "Connected via Wi-Fi to the router", value: "wifi-connected" },
+          { label: "Connected via Ethernet cable directly to the router", value: "eth-connected" },
+          { label: "Trying to access remotely over the internet", value: "remote-access" }
+        ]
+      },
+      {
+        id: 3,
+        text: "Have you recently changed the router's IP address, subnet, or enabled AP mode?",
+        options: [
+          { label: "Yes — I modified LAN IP or subnet settings", value: "ip-changed" },
+          { label: "Yes — router is set to AP/bridge mode", value: "ap-mode" },
+          { label: "No — no configuration changes were made", value: "no-change" }
+        ]
+      }
+    ]
+  },
+  "dns-optimizer": {
+    title: "DNS Resolver Performance Optimizer",
+    icon: Server,
+    description: "Find the fastest, most private DNS resolver for your region — comparing Cloudflare, Google, Quad9, and ISP resolvers.",
+    questions: [
+      {
+        id: 1,
+        text: "What is your primary goal for changing your DNS resolver?",
+        options: [
+          { label: "Faster page load speeds and lower latency", value: "speed" },
+          { label: "Better privacy — no query logging or tracking", value: "privacy" },
+          { label: "Malware and phishing domain blocking", value: "security" }
+        ]
+      },
+      {
+        id: 2,
+        text: "What type of internet activity consumes most of your bandwidth?",
+        options: [
+          { label: "Online gaming (low-latency is critical)", value: "gaming" },
+          { label: "Video streaming and large file downloads", value: "streaming" },
+          { label: "General browsing and remote work", value: "general" }
+        ]
+      },
+      {
+        id: 3,
+        text: "Do you currently use DNS over HTTPS (DoH) or DNS over TLS (DoT)?",
+        options: [
+          { label: "No — using standard unencrypted DNS on port 53", value: "plain-dns" },
+          { label: "Yes — DoH or DoT is already configured", value: "encrypted-dns" },
+          { label: "Unsure — using whatever my router defaulted to", value: "unsure" }
+        ]
+      }
+    ]
+  },
+  "ethernet-speed": {
+    title: "Wired LAN Speed Bottleneck Analyzer",
+    icon: Activity,
+    description: "Diagnose why your Ethernet connection is slower than Wi-Fi — covering duplex mismatches, cable quality, NIC settings, and switch limits.",
+    questions: [
+      {
+        id: 1,
+        text: "What speed does your operating system report for the Ethernet link?",
+        options: [
+          { label: "100 Mbps (capped — Fast Ethernet negotiation)", value: "100mbps" },
+          { label: "1 Gbps (Gigabit) but throughput is still low", value: "1gbps-slow" },
+          { label: "Connection drops and re-negotiates frequently", value: "unstable" }
+        ]
+      },
+      {
+        id: 2,
+        text: "What Ethernet cable category are you using?",
+        options: [
+          { label: "Cat5 or older (max 100 Mbps at long runs)", value: "cat5" },
+          { label: "Cat5e or Cat6 (Gigabit capable)", value: "cat5e-cat6" },
+          { label: "Unknown — cable came with a device or router", value: "unknown-cable" }
+        ]
+      },
+      {
+        id: 3,
+        text: "Is Energy Efficient Ethernet (EEE) or Green Ethernet enabled in your NIC driver?",
+        options: [
+          { label: "Yes — EEE is enabled (default on most drivers)", value: "eee-on" },
+          { label: "No — I disabled it already", value: "eee-off" },
+          { label: "Unsure — I have not checked NIC advanced settings", value: "eee-unknown" }
+        ]
+      }
+    ]
+  },
+  "dns-setup": {
+    title: "Custom DNS Router Configuration Assistant",
+    icon: Settings,
+    description: "Step-by-step guidance to configure custom DNS resolvers on your specific router brand — including IPv6 fallback and propagation verification.",
+    questions: [
+      {
+        id: 1,
+        text: "Which router brand are you configuring DNS settings on?",
+        options: [
+          { label: "TP-Link (Archer, Deco, or TL series)", value: "tplink" },
+          { label: "ASUS (RT, ZenWifi, or ROG series)", value: "asus" },
+          { label: "Netgear (Nighthawk, Orbi, or R series)", value: "netgear" }
+        ]
+      },
+      {
+        id: 2,
+        text: "Which DNS resolver would you like to configure?",
+        options: [
+          { label: "Cloudflare DNS (1.1.1.1 / 1.0.0.1) — fastest & private", value: "cloudflare" },
+          { label: "Google DNS (8.8.8.8 / 8.8.4.4) — reliable & global", value: "google" },
+          { label: "Quad9 (9.9.9.9) — security & malware filtering", value: "quad9" }
+        ]
+      },
+      {
+        id: 3,
+        text: "Do you also need to configure IPv6 DNS resolvers?",
+        options: [
+          { label: "Yes — my ISP provides IPv6 connectivity", value: "ipv6-yes" },
+          { label: "No — IPv4 only network", value: "ipv6-no" },
+          { label: "Unsure — I do not know my IPv6 status", value: "ipv6-unsure" }
         ]
       }
     ]
@@ -683,6 +928,612 @@ export default function ConnectionOptimizerClient({ mode }: ConnectionOptimizerC
           technicalExplanation: "When two routers broadcast on the same frequency, they share time. When one router transmits, the other must wait, which reduces speed. Changing to an unused channel avoids these wait states."
         };
       }
+
+      case "router-restarts": {
+        const q1 = answers[1];
+        const q2 = answers[2];
+        const q3 = answers[3];
+
+        if (q2 === "old-hot" || q2 === "young-hot") {
+          return {
+            title: "Thermal SoC Overheating & Processor Throttling",
+            severity: "danger",
+            description: "Your router's silicon core is exceeding safe thermal thresholds, triggering automated hardware shutdowns to prevent permanent component failure.",
+            steps: [
+              {
+                title: "Relocate Router to an Open, Elevated Area",
+                priority: "High",
+                time: "5 mins",
+                description: "Ensure the router is not stored inside closed media cabinets, bookshelves, or on the floor. Place it on a flat, solid surface with unobstructed airflow.",
+                tip: "Avoid placing it directly on top of other heat-generating appliances like modems or consoles."
+              },
+              {
+                title: "Clear Dust From Ventilation Grilles",
+                priority: "Medium",
+                time: "10 mins",
+                description: "Use a can of compressed air to clear accumulated dust and debris from all side, bottom, and top ventilation holes of the router chassis.",
+              },
+              {
+                title: "Lower Wireless Transmit Power Settings",
+                priority: "Low",
+                time: "3 mins",
+                description: "Access the router admin panel, navigate to advanced wireless settings, and lower the radio transmit power from '100% / High' to 'Medium' to reduce RF amplifier heat generation.",
+              }
+            ],
+            technicalExplanation: "Dual and quad-core network SoCs run on modern arm/mips chips. When cooling vents are obstructed, thermal resistance causes the chip temperature to climb. Once the junction temperature (Tj) hits threshold safety limits (typically 95-105°C), the SoC triggers an hardware interrupt, cycling the power supply rails immediately to prevent silicon fusion."
+          };
+        }
+
+        if (q3 === "post-firmware") {
+          return {
+            title: "Corrupted Firmware Partition / Watchdog Kernel Panic",
+            severity: "warning",
+            description: "A recent firmware update has corrupted the secondary boot partition or triggered a severe memory leak inside the Linux routing kernel, causing spontaneous panic restarts.",
+            steps: [
+              {
+                title: "Clear NVRAM via Factory Hard Reset",
+                priority: "High",
+                time: "5 mins",
+                description: "Perform a hard factory reset by holding the physical reset button for 10-15 seconds while the router is powered on. This flushes orphaned configuration parameters left by the previous firmware version.",
+                tip: "A factory reset will erase all custom configurations, so make sure you know your ISP login details first."
+              },
+              {
+                title: "Flash Stable Firmware Build via Recovery Mode",
+                priority: "High",
+                time: "15 mins",
+                description: "Download the last stable, non-beta firmware release from the official manufacturer portal. Access the router firmware recovery screen (often via TFTP or a static IP on a wired LAN port) to flash the clean build.",
+              }
+            ],
+            technicalExplanation: "When router firmware updates, legacy configuration parameters stored in NVRAM often persist and fail to map to the new kernel variables. This causes pointer faults or dynamic memory buffer overflow loops (buffer bloat at kernel level). Once the Linux kernel halts or freezes, the hardware Watchdog Timer (WDT) chip ceases receiving pulse signals and interrupts the power loop to reboot."
+          };
+        }
+
+        if (q1 === "frequent") {
+          return {
+            title: "Failing Power Adapter / Capacitor Ripple Voltage Distortion",
+            severity: "danger",
+            description: "The external AC/DC power brick or internal power filtering capacitors are degraded, failing to deliver steady DC voltage under intense traffic loads.",
+            steps: [
+              {
+                title: "Inspect Power Adapter Specifications & Replace",
+                priority: "High",
+                time: "5 mins",
+                description: "Verify that the power adapter is the original unit. If replacing, ensure the new brick matches the exact voltage (usually 12V DC) and meets or exceeds the required amperage (e.g., 2.0A).",
+                tip: "Using an adapter with insufficient amperage causes the router to crash when CPU usage spikes."
+              },
+              {
+                title: "Bypass Surge Protectors & Extension Leads",
+                priority: "Medium",
+                time: "2 mins",
+                description: "Plug the AC/DC power brick directly into a dedicated wall outlet. Faulty surge protectors or heavily loaded power strips can introduce low-frequency AC voltage dips.",
+              }
+            ],
+            technicalExplanation: "Electrolytic capacitors inside the power adapter or router decay over time, increasing their Equivalent Series Resistance (ESR). When the router's radio amplifiers spike during high-bandwidth packet routing, the current draw increases. The degraded capacitors fail to buffer this load, causing DC voltage to sag below the minimum threshold (brownout), tripping the system reset controller."
+          };
+        }
+
+        return {
+          title: "ISP Provisioning Loop & WAN Dynamic Lease Timeouts",
+          severity: "info",
+          description: "Your router is dropping WAN synchronization with the ISP network terminal, interpreting DHCP lease timeout failures as gateway outages and rebooting to recover.",
+          steps: [
+            {
+              title: "Check Fiber ONT / Coax Modem Link Status",
+              priority: "High",
+              time: "5 mins",
+              description: "Ensure the Ethernet link between your router's WAN port and the modem/ONT is fully secure. Try replacing the interconnecting Ethernet patch cord with a certified Cat6 cable.",
+            },
+            {
+              title: "Configure WAN DHCP Query Frequency to Normal",
+              priority: "Medium",
+              time: "5 mins",
+              description: "Access your router's Advanced WAN settings. If available, change the DHCP query frequency from 'Aggressive Mode' to 'Normal / RFC Standard Mode' to prevent the ISP from flagging your router as a spam source.",
+              tip: "Aggressive DHCP probing can cause ISP servers to black-hole your MAC address temporarily."
+            }
+          ],
+          technicalExplanation: "If the physical WAN line has high attenuation, your modem or ONT experiences packet dropouts. When the router's WAN interface attempts to renew its dynamic IP lease and receives no response, the routing engine drops the interface. In some router operating systems (e.g. customized OpenWrt overlays), a prolonged lack of WAN lease response triggers a system-wide reboot safety cycle."
+        };
+      }
+
+      case "mobile-no-internet": {
+        const q1 = answers[1];
+        const q2 = answers[2];
+        const q3 = answers[3];
+
+        if (q3 === "vpn-active" || q3 === "private-relay") {
+          return {
+            title: "Encryption Layer Transport Failure / VPN Socket Deadlock",
+            severity: "warning",
+            description: "Your mobile device's VPN client or iOS iCloud Private Relay has crashed or failed its cryptographic handshake, blocking all outbound traffic over the Wi-Fi link.",
+            steps: [
+              {
+                title: "Disable iCloud Private Relay (iOS/iPadOS)",
+                priority: "High",
+                time: "2 mins",
+                description: "On iOS, navigate to Settings -> [Your Name] -> iCloud -> Private Relay and toggle it OFF. Test if standard web pages instantly load.",
+                tip: "iCloud Private Relay routes traffic through dual secure proxies; if one proxy node fails, Wi-Fi will show 'Connected, No Internet'."
+              },
+              {
+                title: "Force Kill VPN App & Reset Network Sockets",
+                priority: "High",
+                time: "3 mins",
+                description: "Disconnect your active VPN client, force close the application, and toggle Airplane Mode ON for 10 seconds to flush device routing tables.",
+              }
+            ],
+            technicalExplanation: "Mobile operating systems establish virtual tunnel interfaces (utun/tun) to route traffic through encrypted VPN sockets. If the VPN client drops its handshake or key-exchange parameters but keeps the tunnel interface active, the OS continues to route DNS and HTTP packets into a dead socket, causing the Wi-Fi driver to report no internet."
+          };
+        }
+
+        if (q1 === "android") {
+          return {
+            title: "Android Private DNS / DNS-over-TLS Handshake Block",
+            severity: "warning",
+            description: "Android's system-wide 'Private DNS' setting is attempting to resolve hostnames via DNS-over-TLS (DoT) on port 853, which is being blocked by your router's firewall.",
+            steps: [
+              {
+                title: "Toggle Private DNS to Automatic or Off on Android",
+                priority: "High",
+                time: "2 mins",
+                description: "On Android, navigate to Settings -> Network & Internet -> Private DNS. Change the setting from 'Private DNS provider hostname' to 'Automatic' or 'Off'.",
+                tip: "Custom secure DNS hosts like 'dns.adguard.com' will block all device traffic if their servers experience high load."
+              },
+              {
+                title: "Disable DNS Rebinding Protection on Router",
+                priority: "Medium",
+                time: "5 mins",
+                description: "Access your router's firewall settings and temporarily disable 'DNS Rebind Protection'. This allows Android to query secure local and external resolvers.",
+              }
+            ],
+            technicalExplanation: "Android utilizes system-level DNS-over-TLS (DoT) queries on TCP port 853. Many consumer routers or ISP firewalls block port 853 outbound as a security measure to prevent DNS bypass. When Android fails to establish a TLS handshake on port 853, it refuses to fall back to plain UDP port 53, reporting a lack of internet connectivity."
+          };
+        }
+
+        if (q1 === "iphone") {
+          return {
+            title: "iOS Private Wi-Fi MAC Randomization Conflict",
+            severity: "warning",
+            description: "Your iPhone's rotating virtual MAC address is conflicting with the router's DHCP lease pool or local security rules, causing the router to deny IP allocation.",
+            steps: [
+              {
+                title: "Disable Private Wi-Fi Address for This Network",
+                priority: "High",
+                time: "2 mins",
+                description: "On iOS, open Settings -> Wi-Fi. Tap the blue 'i' icon next to your connected network. Toggle 'Private Wi-Fi Address' and 'Limit IP Address Tracking' to OFF. Reconnect to the network.",
+                tip: "Disabling this for your home network is safe; keep it active on public hotspots for privacy."
+              },
+              {
+                title: "Clear DHCP Lease Table on Router",
+                priority: "Medium",
+                time: "5 mins",
+                description: "Access your router's LAN configuration page, locate the DHCP Clients list, and delete stale leases. This frees up allocated IP blocks.",
+              }
+            ],
+            technicalExplanation: "To prevent tracking, iOS randomizes its MAC address (Layer 2 identity). If a router has a small DHCP lease range (e.g. 50 addresses) with long lease times (e.g. 24 hours), dynamic MAC cycling quickly exhausts the entire IP pool. The router rejects new connection requests, cutting off internet access."
+          };
+        }
+
+        return {
+          title: "Captive Portal Hijack & Gateway Redirection Fault",
+          severity: "info",
+          description: "Your mobile device connected to a network requiring login but failed to capture the HTTP redirect command, leaving the device in an unauthenticated sandbox.",
+          steps: [
+            {
+              title: "Force-Open Captive Portal Login Screen",
+              priority: "High",
+              time: "2 mins",
+              description: "Open your mobile browser (e.g. Safari/Chrome) and manually type 'neverssl.com' or the router's gateway IP (e.g., '192.168.1.1') into the URL bar to trigger the redirection interface.",
+              tip: "Browsers that attempt to open HTTPS pages first will block captive portal redirections due to SSL security rules."
+            }
+          ],
+          technicalExplanation: "Captive portal gateways intercept all DNS queries and redirect port 80 (HTTP) traffic to a sandbox login page. If the mobile device immediately attempts an encrypted HTTPS transaction (port 443) or uses a secure local DNS cache, the SSL certificate match fails, preventing the gateway from redirecting the browser."
+        };
+      }
+
+      case "modem-sync": {
+        const q1 = answers[1];
+        const q2 = answers[2];
+        const q3 = answers[3];
+
+        if (q3 === "splitter") {
+          return {
+            title: "DOCSIS Signal Attenuation / Coaxial Splitter Attenuation",
+            severity: "danger",
+            description: "Your coaxial cabling line is experiencing severe signal loss (attenuation) and high noise floor levels, blocking the modem from locking upstream and downstream DOCSIS channels.",
+            steps: [
+              {
+                title: "Bypass Cable Splitters & Connect Directly",
+                priority: "High",
+                time: "5 mins",
+                description: "Locate the incoming coaxial line. Remove any multi-way cable TV splitters and connect the coax cable directly from the wall socket to the modem's coaxial port.",
+                tip: "Every splitter port drop introduces a -3.5dB to -7dB signal loss, which can push downstream power levels out of specification."
+              },
+              {
+                title: "Verify RG6 Cable Sheath & Shielding Integrity",
+                priority: "Medium",
+                time: "5 mins",
+                description: "Inspect the coaxial line for sharp bends, flat spots, or loose F-connector pins. Ensure the metal connectors are hand-tightened securely to the modem chassis.",
+              }
+            ],
+            technicalExplanation: "DOCSIS modems require downstream power levels between -15dBmV and +15dBmV, and Upstream Transmit power below 50dBmV. Unnecessary splitters attenuate RF signals. When downstream power drops below threshold levels or the Signal-to-Noise Ratio (SNR) drops under 30dB, the modem experiences bit errors, causing the 'Online' light to flash indefinitely."
+          };
+        }
+
+        if (q1 === "fiber") {
+          return {
+            title: "GPON Fiber ONT Registration Failure / Loss of Signal (LOS)",
+            severity: "danger",
+            description: "Your optical network terminal (ONT) has lost optical sync or is failing to register its serial number (PON key) with the ISP's local distribution exchange.",
+            steps: [
+              {
+                title: "Inspect Physical Fiber Patch Cord (SC/APC)",
+                priority: "High",
+                time: "3 mins",
+                description: "Examine the thin optical fiber patch cord (usually green tips) plugged into the ONT wall box. Ensure it is firmly clicked in and not sharply bent or coiled tightly.",
+                tip: "Optical fiber utilizes light refraction; a bend tighter than a coin will scatter the light, dropping the connection."
+              },
+              {
+                title: "Check ONT Indicator LEDs (LOS / PON)",
+                priority: "High",
+                time: "2 mins",
+                description: "Look at the ONT indicator lights. If the 'LOS' light is solid or blinking RED, the fiber line is physically cut or there is an exchange outage. If 'PON' is blinking green, it is seeking ISP auth.",
+              }
+            ],
+            technicalExplanation: "GPON networks operate on specific optical wavelengths (1490nm downstream / 1310nm upstream). The ONT registers at the ISP's Optical Line Terminal (OLT) using a unique Serial Number and Password (SLID). An LOS red light means the optical power has dropped below -28dBm (receiver sensitivity limit). This requires physical line patching from ISP engineers."
+          };
+        }
+
+        if (q2 === "recurring") {
+          return {
+            title: "Upstream Channel T3/T4 Timeouts (Node Congestion)",
+            severity: "warning",
+            description: "Your modem is losing upstream transmission channels due to transient RF noise leaking into the neighborhood cable node, dropping the dynamic connection.",
+            steps: [
+              {
+                title: "Contact ISP to Audit Upstream Power Levels",
+                priority: "High",
+                time: "10 mins",
+                description: "Call your ISP and request a diagnostic check of your line's 'Upstream T3/T4 Timeouts'. Ask them to verify if there is an ingress noise issue on your local tap/node.",
+                tip: "T3/T4 timeouts are concrete engineering logs that support level-2 ISP technicians in escalating your ticket."
+              }
+            ],
+            technicalExplanation: "A T3 timeout occurs when the modem sends a Ranging Request to the ISP termination system (CMTS) but receives no response. This is caused by high ingress noise (RF interference leaking into degraded shielding) on the upstream return path. The modem increases its upstream transmit power to compensate; if it exceeds 54dBmV, it drops channel bonding and resets."
+          };
+        }
+
+        return {
+          title: "Modem Firmware Unprovisioned State / ISP Auth Lockout",
+          severity: "danger",
+          description: "Your physical modem has lost its configuration profile (boot file) at the ISP provisioning server, blocking external network access.",
+          steps: [
+            {
+              title: "Perform a Hardware Power Cycle Cycle",
+              priority: "High",
+              time: "8 mins",
+              description: "Unplug your modem from the power wall outlet. Leave it disconnected for 2-3 minutes. This forces the ISP local CMTS to clear stale MAC bindings and re-register the device.",
+              tip: "Always power cycle your modem before your router to ensure proper IP handshakes."
+            }
+          ],
+          technicalExplanation: "During registration, the modem downloads a boot file via TFTP from the ISP network. If this file is corrupted or missing, the modem remains in a walled-garden unprovisioned status. Upstream and downstream physical links are active, but the authentication layer denies packet forwarding."
+        };
+      }
+
+      case "router-admin": {
+        const q1 = answers[1];
+        const q2 = answers[2];
+        const q3 = answers[3];
+
+        if (q2 === "remote-access") {
+          return {
+            title: "Access Isolation Policy Block / Remote Administration Disabled",
+            severity: "warning",
+            description: "Your router's security configuration prohibits loading the admin dashboard over remote, wireless, or isolated guest network connections.",
+            steps: [
+              {
+                title: "Connect via Physical Ethernet Patch Cable",
+                priority: "High",
+                time: "3 mins",
+                description: "Disable Wi-Fi on your computer. Connect a physical Ethernet cable from your computer's LAN port directly into one of the yellow LAN ports on your router.",
+                tip: "Ethernet connections bypass AP Isolation rules, ensuring access to the gateway."
+              },
+              {
+                title: "Ensure Connection is on the Primary Wi-Fi SSID",
+                priority: "High",
+                time: "2 mins",
+                description: "If Ethernet is unavailable, verify you are not connected to the 'Guest' network. Guest networks typically have AP Isolation enabled, blocking local dashboard access.",
+              }
+            ],
+            technicalExplanation: "AP Isolation (Access Point Isolation) blocks client devices from communicating with local network nodes, including the gateway's administration web server. This restricts guest clients to WAN-bound traffic only, keeping the administrative port 80/443 secure."
+          };
+        }
+
+        if (q1 === "ssl-error") {
+          return {
+            title: "Browser HSTS Policy Block & HTTPS Certificate Warning",
+            severity: "warning",
+            description: "Your web browser is blocking access to the admin page because the router's local SSL/TLS certificate is self-signed and lacks a trusted third-party signature.",
+            steps: [
+              {
+                title: "Bypass SSL Warnings in Chrome/Firefox/Safari",
+                priority: "High",
+                time: "1 min",
+                description: "On the browser error screen, click 'Advanced' or 'More Information'. Then click 'Proceed to [IP Address] (unsafe)' or 'Accept the Risk and Continue'.",
+                tip: "This warning is completely safe on a local network; your router cannot obtain a public SSL certificate because it uses a private IP address."
+              },
+              {
+                title: "Utilize Plain HTTP Protocol Port",
+                priority: "Medium",
+                time: "2 mins",
+                description: "Change the URL prefix in your browser address bar from 'https://' to 'http://' (for example: 'http://192.168.1.1'). This bypasses TLS handshakes.",
+              }
+            ],
+            technicalExplanation: "Modern web browsers enforce strict security rules, including HSTS (HTTP Strict Transport Security). Private IP addresses (RFC 1918) cannot have certificates signed by public Certificate Authorities. Consumer routers generate self-signed certificates, which browsers flag as untrusted, blocking the administrative portal."
+          };
+        }
+
+        if (q3 === "ap-mode" || q3 === "ip-changed") {
+          return {
+            title: "Subnet Gateway Mismatch & Secondary DHCP Loop",
+            severity: "danger",
+            description: "The router has been configured to Access Point (AP) or Bridge mode, disabling its built-in DHCP server and changing its IP address to match the primary gateway subnet.",
+            steps: [
+              {
+                title: "Find Router's New IP Address via Advanced IP Scanner",
+                priority: "High",
+                time: "5 mins",
+                description: "Install an IP scanner utility or check your primary modem's connected device table. Locate the secondary router's MAC address and note its new DHCP IP (e.g. 192.168.1.45).",
+                tip: "AP mode switches off routing, turning your router into a Layer 2 switch; its administration page is assigned a new IP by the main gateway."
+              },
+              {
+                title: "Perform an ARP -A Command Check",
+                priority: "Medium",
+                time: "3 mins",
+                description: "On Windows, open Command Prompt and run: 'arp -a'. Look for your router's MAC address to identify the current IP address assigned to it.",
+              }
+            ],
+            technicalExplanation: "When a router is switched to Access Point mode, its routing functions (NAT, DHCP, DNS forwarders) are disabled. The WAN port is bridged to the LAN switch. The administrative console releases its static IP and requests a lease from the main network router. Attempting to reach the old static IP (e.g. 192.168.1.1) will time out."
+          };
+        }
+
+        return {
+          title: "Browser Cache Conflict / DNS Hijack Block",
+          severity: "info",
+          description: "Your browser's DNS cache or local proxy configuration is attempting to route the admin page IP into a dead search tunnel or an external gateway.",
+          steps: [
+            {
+              title: "Open Gateway in Private / Incognito Mode",
+              priority: "High",
+              time: "1 min",
+              description: "Open an Incognito or Private Browsing window in your browser and attempt to load the gateway address (e.g. 'http://192.168.1.1'). This bypasses active browser caches.",
+            },
+            {
+              title: "Temporarily Disable Custom Proxy & VPN Client Settings",
+              priority: "High",
+              time: "2 mins",
+              description: "Open system network settings and ensure 'Use a proxy server' is toggled off. Active proxies will attempt to route local IP queries to external hosts, failing to resolve the admin page.",
+            }
+          ],
+          technicalExplanation: "Consumer browsers maintain aggressive internal cache databases. If a user previously searched for '192.168.1.1' as a text string, the browser may redirect future queries to a public search engine. Additionally, active system proxies attempt to route private subnets through external servers, blocking access to the local loopback."
+        };
+      }
+
+      case "dns-optimizer": {
+        const q1 = answers[1];
+        const q2 = answers[2];
+        const q3 = answers[3];
+
+        if (q1 === "speed" || q2 === "gaming") {
+          return {
+            title: "Ultra-Low Latency Public Resolvers",
+            severity: "success",
+            description: "Your primary bottleneck is high resolver latency from your ISP's recursive DNS servers. Shifting to global public networks will lower query resolution times.",
+            steps: [
+              {
+                title: "Configure Cloudflare / Google Hybrid DNS Setup",
+                priority: "High",
+                time: "5 mins",
+                description: "Set your router or primary network adapter DNS parameters to: Primary: 1.1.1.1 (Cloudflare - fastest latency) and Secondary: 8.8.8.8 (Google - highest uptime and reliability).",
+                tip: "Combining Cloudflare and Google ensures you have both speed and maximum failover protection."
+              },
+              {
+                title: "Verify Router DNS Propagation",
+                priority: "Medium",
+                time: "3 mins",
+                description: "Open Command Prompt and run 'nslookup google.com'. Check the 'Server' line to verify that queries are resolving through your new custom IPs.",
+              }
+            ],
+            technicalExplanation: "Cloudflare (1.1.1.1) and Google (8.8.8.8) operate massive global anycast networks, routing DNS queries to the geographically closest server node. ISP resolvers often use single-node architectures that experience heavy load, increasing latency from 15ms to 120ms+ during peak hours."
+          };
+        }
+
+        if (q1 === "privacy") {
+          return {
+            title: "Privacy-Focused Zero-Log DNS Resolvers",
+            severity: "info",
+            description: "You require DNS resolvers that protect your personal data by preventing logging, blocking ISP DNS hijacking, and refusing to sell browsing telemetry.",
+            steps: [
+              {
+                title: "Configure Mullvad or Quad9 Secure DNS",
+                priority: "High",
+                time: "5 mins",
+                description: "Configure your device or router to use Mullvad DNS (Primary: 194.242.2.2) or Quad9 (Primary: 9.9.9.9). These providers do not log your IP address or query history.",
+                tip: "Quad9 is a non-profit foundation based in Switzerland, protected by strict privacy laws."
+              }
+            ],
+            technicalExplanation: "Standard ISP resolvers track and log every website domain query you make, building a detailed profile of your web activity. Privacy-focused public resolvers strip your IP address from queries (EDNS Client Subnet deletion) and store logs strictly in RAM, wiping them every 24 hours to prevent tracking."
+          };
+        }
+
+        return {
+          title: "Malware, Phishing & Tracker Filtering DNS",
+          severity: "success",
+          description: "You require network-level threat intelligence to automatically block malicious domains, phishing links, and tracking scripts before they load.",
+          steps: [
+            {
+              title: "Apply Quad9 Threat Block DNS resolvers",
+              priority: "High",
+              time: "5 mins",
+              description: "Configure your DNS to use: Primary: 9.9.9.9 (Quad9 Secured). This resolver automatically blocks connections to known malware and scam domains.",
+              tip: "If you have children, consider AdGuard Family DNS (Primary: 94.140.14.15) to automatically block adult content."
+            }
+          ],
+          technicalExplanation: "Secure DNS resolvers maintain real-time threat feeds. When a browser requests the IP of a flagged phishing or malware domain, the resolver intercepts the query and returns a loopback block IP (0.0.0.0), neutralizing the threat before any malicious payload can download."
+        };
+      }
+
+      case "ethernet-speed": {
+        const q1 = answers[1];
+        const q2 = answers[2];
+        const q3 = answers[3];
+
+        if (q1 === "100mbps" || q2 === "cat5") {
+          return {
+            title: "Fast Ethernet Link Cap (100 Mbps Physical Limitation)",
+            severity: "danger",
+            description: "Your wired LAN connection is capped at 100 Mbps because your Ethernet cable has physical damage, lacks 8 active pins, or is connected to a Fast Ethernet port.",
+            steps: [
+              {
+                title: "Upgrade to a Certified Cat6 or Cat8 Ethernet Cable",
+                priority: "High",
+                time: "3 mins",
+                description: "Replace the existing network cable with a certified Cat6, Cat6A, or Cat8 cable. Ensure the cable is marked 'UTP / STP Gigabit Capable' on its outer jacket.",
+                tip: "Legacy Cat5 or damaged cables with split copper pairs cannot negotiate Gigabit speeds, falling back to a 100 Mbps cap."
+              },
+              {
+                title: "Verify Router Port Gigabit Specifications",
+                priority: "High",
+                time: "5 mins",
+                description: "Confirm that your router's LAN ports support 10/100/1000 Mbps speeds. Connect the cable strictly to a port labeled 'Gigabit' or '1G/2.5G LAN'.",
+              }
+            ],
+            technicalExplanation: "Gigabit Ethernet (1000BASE-T) requires all 4 twisted pairs (8 copper wires) in an RJ45 cable to negotiate and transmit data. Legacy Fast Ethernet (100BASE-TX) only requires 2 pairs (4 wires). If a single wire inside the cable is broken or dirty, the network card's physical layer interface (PHY) fails the 1000 Mbps handshake and negotiates down to the 100 Mbps cap."
+          };
+        }
+
+        if (q3 === "eee-on") {
+          return {
+            title: "Energy Efficient Ethernet (EEE) Latency & Speed Throttling",
+            severity: "warning",
+            description: "Your network card's green power-saving features are active, causing the controller to enter low-power sleep states that throttle peak data throughput.",
+            steps: [
+              {
+                title: "Disable EEE / Green Ethernet in Windows Device Manager",
+                priority: "High",
+                time: "4 mins",
+                description: "In Windows, search for Device Manager -> Expand 'Network Adapters' -> Right-click your Ethernet card -> Properties -> Advanced tab. Locate 'Energy Efficient Ethernet' and change it to DISABLED.",
+                tip: "Also disable 'Green Ethernet' and 'Ultra Low Power Mode' if present in the advanced properties list."
+              }
+            ],
+            technicalExplanation: "Energy Efficient Ethernet (IEEE 802.3az) shuts down the network physical layer (PHY) transmitter when no data is being sent. When a high-bandwidth download starts, the transmitter wakes up. This sleep-wake transition introduces packet micro-delays and buffer sizing conflicts in some drivers, capping throughput below your maximum line speed."
+          };
+        }
+
+        return {
+          title: "Network Card Driver & TCP Window Auto-Tuning Mismatch",
+          severity: "info",
+          description: "Your operating system's TCP receive window size is static, or your network card driver is using outdated buffer parameters that bottleneck throughput.",
+          steps: [
+            {
+              title: "Enable TCP Window Auto-Tuning via Command Prompt",
+              priority: "High",
+              time: "3 mins",
+              description: "Open Command Prompt as Administrator and run: 'netsh interface tcp set global autotuninglevel=normal'. Restart your computer.",
+              tip: "Disabling Auto-Tuning restricts Windows from dynamically resizing packet buffers, capping speeds on high-bandwidth lines."
+            },
+            {
+              title: "Update Ethernet Controller Drivers",
+              priority: "Medium",
+              time: "5 mins",
+              description: "Visit the website of your motherboard or NIC manufacturer (Realtek, Intel, Killer) and download the latest stand-alone driver installer.",
+            }
+          ],
+          technicalExplanation: "The TCP Receive Window (RWIN) dictates how much data a device can accept before sending an acknowledgement (ACK) packet. On high-speed, high-latency connections, a small static RWIN forces the sending server to halt transmission while waiting for ACKs, creating a speed bottleneck."
+        };
+      }
+
+      case "dns-setup": {
+        const q1 = answers[1];
+        const q2 = answers[2];
+        const q3 = answers[3];
+
+        if (q1 === "tplink") {
+          return {
+            title: "TP-Link Custom DNS & IPv6 Configuration Guide",
+            severity: "success",
+            description: "Step-by-step instructions to configure custom DNS servers on TP-Link Archer, Deco, and standard router models.",
+            steps: [
+              {
+                title: "Access TP-Link Admin Interface",
+                priority: "High",
+                time: "2 mins",
+                description: "Open your web browser and navigate to 'http://192.168.0.1' or 'http://tplinkwifi.net'. Enter your admin password to log in.",
+                tip: "For Deco mesh systems, you must configure DNS settings through the Deco mobile app."
+              },
+              {
+                title: "Configure TP-Link DHCP Server DNS Settings",
+                priority: "High",
+                time: "5 mins",
+                description: "Navigate to Advanced -> Network -> DHCP Server. Locate the Primary and Secondary DNS fields, enter your desired public DNS IPs, and click Save.",
+              }
+            ],
+            technicalExplanation: "TP-Link routers allow DNS configuration on both the WAN port and the LAN DHCP server. Configuring DNS on the DHCP Server page is recommended; it pushes the custom DNS servers directly to your client devices, bypassing the router's internal proxy relay for faster performance."
+          };
+        }
+
+        if (q1 === "asus") {
+          return {
+            title: "ASUS Router WAN & LAN DNS Configuration Guide",
+            severity: "success",
+            description: "Step-by-step instructions to configure custom DNS servers on ASUS ZenWi-Fi, ROG, and RT-series routers.",
+            steps: [
+              {
+                title: "Access ASUS Admin Interface",
+                priority: "High",
+                time: "2 mins",
+                description: "Open your web browser and navigate to 'http://192.168.50.1' or 'http://router.asus.com'. Enter your credentials to log in.",
+              },
+              {
+                title: "Configure WAN DNS settings on ASUS",
+                priority: "High",
+                time: "5 mins",
+                description: "Under Advanced Settings, navigate to WAN -> Internet Connection. Scroll down to WAN DNS Setting. Set 'Connect to DNS Server automatically' to NO, enter your DNS IPs, and click Apply.",
+                tip: "ASUS routers run a local DNS caching daemon; WAN DNS updates are cached locally to speed up home networks."
+              }
+            ],
+            technicalExplanation: "ASUSWRT firmware uses a DNS forwarder service (dnsmasq) to manage queries. By setting DNS on the WAN interface, all client queries are sent to the router at 192.168.50.1, which then forwards them to your public DNS servers. This enables local caching of common hostnames, reducing query overhead."
+          };
+        }
+
+        return {
+          title: "Netgear Custom WAN DNS Configuration Guide",
+          severity: "success",
+          description: "Step-by-step instructions to configure custom DNS servers on Netgear Nighthawk and Orbi router models.",
+          steps: [
+            {
+              title: "Access Netgear Admin Interface",
+              priority: "High",
+              time: "2 mins",
+              description: "Open your web browser and navigate to 'http://192.168.1.1' or 'http://routerlogin.net'. Enter your admin credentials.",
+            },
+            {
+              title: "Configure Netgear Internet DNS settings",
+              priority: "High",
+              time: "5 mins",
+              description: "Navigate to the Basic tab -> Internet. Under 'Domain Name Server (DNS) Address', select 'Use These DNS Servers'. Enter your custom primary and secondary DNS IPs, and click Apply.",
+              tip: "Netgear routers will reboot their network interface cards when applying WAN DNS updates, temporarily pausing the connection."
+            }
+          ],
+          technicalExplanation: "Netgear routers register WAN DNS settings inside their routing table config space. When applying WAN DNS changes, the router flushes the DHCP client daemon on the WAN port and requests a new DHCP handshake from your modem to bind the DNS updates."
+        };
+      }
+
+      default:
+        return {
+          title: "Diagnostic Unavailable",
+          severity: "info",
+          description: "No diagnostic data is available for this mode. Please restart the assessment.",
+          steps: [],
+          technicalExplanation: "An unrecognized diagnostic mode was provided."
+        };
     }
   };
 
