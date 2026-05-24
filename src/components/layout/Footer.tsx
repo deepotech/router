@@ -60,6 +60,13 @@ const footerLinks = {
     { label: "Improve WiFi Signal", href: "/how-to-improve-wifi-signal" },
     { label: "Gaming Router Settings", href: "/best-router-settings-for-gaming" },
   ],
+  "Legal & Trust": [
+    { label: "About Us", href: "/about" },
+    { label: "Contact Us", href: "/contact" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms-of-service" },
+    { label: "Disclaimer", href: "/disclaimer" },
+  ],
 };
 
 const FALLBACK_GUIDES = [
@@ -92,7 +99,7 @@ export async function Footer() {
     <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Top Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-10 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-11 gap-10 mb-12">
           {/* Brand */}
           <div className="sm:col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
@@ -191,13 +198,13 @@ export async function Footer() {
               <Globe size={20} />
             </a>
             <Link
-              href="/privacy"
+              href="/privacy-policy"
               className="text-sm text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
-              href="/terms"
+              href="/terms-of-service"
               className="text-sm text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
             >
               Terms of Service
