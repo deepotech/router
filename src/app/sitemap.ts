@@ -186,6 +186,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${APP_URL}/router-not-assigning-ip-addresses`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/default-gateway-not-available`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${APP_URL}/ethernet-connected-but-no-internet`,
       lastModified: now,
       changeFrequency: "weekly",

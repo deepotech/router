@@ -65,6 +65,8 @@ const footerLinks = {
     { label: "Ethernet Slower than WiFi", href: "/ethernet-slower-than-wifi" },
     { label: "Connected No Access", href: "/internet-connected-no-access" },
     { label: "Ethernet Connected No Internet", href: "/ethernet-connected-but-no-internet" },
+    { label: "Router Not Assigning IP", href: "/router-not-assigning-ip-addresses" },
+    { label: "Default Gateway Unavailable", href: "/default-gateway-not-available" },
   ],
   "Legal & Trust": [
     { label: "About Us", href: "/about" },

@@ -36,7 +36,7 @@ async function publishBatch() {
 
   // 2. Promote qualifying Problems
   const problems = await prisma.problem.findMany({
-    where: { status: 'STAGED' },
+    where: { status: 'REVIEWED' },
     select: { id: true, title: true, slug: true, content: true, fixes: true, excerpt: true }
   });
 
@@ -60,13 +60,13 @@ async function publishBatch() {
 
   // 3. Promote qualifying IPs
   const ips = await prisma.ipAddress.findMany({
-    where: { status: 'STAGED' },
+    where: { status: 'REVIEWED' },
     select: { id: true, address: true, slug: true, loginGuide: true, description: true }
   });
 
-  const qualifyingIPs = ips.filter(i =>
-    i.loginGuide && i.loginGuide.length > 100 &&
-    i.description && i.description.length > 20
+  const qualifyingIPs = ips.filter(ip =>
+    ip.loginGuide && ip.loginGuide.length > 100 &&
+    ip.description && ip.description.length > 20
   );
 
   console.log(`\nIPs: ${qualifyingIPs.length}/${ips.length} qualify for publishing.`);
@@ -84,7 +84,7 @@ async function publishBatch() {
 
   // 4. Promote qualifying Routers
   const routers = await prisma.routerModel.findMany({
-    where: { status: 'STAGED' },
+    where: { status: 'REVIEWED' },
     select: { id: true, name: true, slug: true, wifiSetupGuide: true, resetGuide: true }
   });
 
