@@ -56,6 +56,7 @@ const footerLinks = {
     { label: "Best DNS for Speed", href: "/best-dns-for-faster-internet" },
     { label: "How to Change Router DNS", href: "/how-to-change-dns-on-router" },
     { label: "DNS Server Not Responding", href: "/dns-server-not-responding" },
+    { label: "Chrome DNS Probe Error", href: "/dns-probe-finished-no-internet" },
     { label: "Best DNS for PS5", href: "/best-dns-for-ps5" },
     { label: "Best DNS for Xbox", href: "/best-dns-for-xbox" },
   ],
@@ -67,6 +68,7 @@ const footerLinks = {
     { label: "Ethernet Connected No Internet", href: "/ethernet-connected-but-no-internet" },
     { label: "Router Not Assigning IP", href: "/router-not-assigning-ip-addresses" },
     { label: "Default Gateway Unavailable", href: "/default-gateway-not-available" },
+    { label: "Find Router IP", href: "/how-to-find-router-ip-address" },
   ],
   "Legal & Trust": [
     { label: "About Us", href: "/about" },

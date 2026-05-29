@@ -186,7 +186,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${APP_URL}/dns-probe-finished-no-internet`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${APP_URL}/router-not-assigning-ip-addresses`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/how-to-find-router-ip-address`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,
