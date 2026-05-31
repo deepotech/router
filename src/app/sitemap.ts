@@ -216,6 +216,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${APP_URL}/packet-loss-test`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/how-to-fix-packet-loss`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${APP_URL}/best-router-settings-for-gaming`,
       lastModified: now,
       changeFrequency: "weekly",

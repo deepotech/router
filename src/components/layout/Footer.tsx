@@ -69,6 +69,8 @@ const footerLinks = {
     { label: "Router Not Assigning IP", href: "/router-not-assigning-ip-addresses" },
     { label: "Default Gateway Unavailable", href: "/default-gateway-not-available" },
     { label: "Find Router IP", href: "/how-to-find-router-ip-address" },
+    { label: "Packet Loss Test Guide", href: "/packet-loss-test" },
+    { label: "How to Fix Packet Loss", href: "/how-to-fix-packet-loss" },
   ],
   "Legal & Trust": [
     { label: "About Us", href: "/about" },

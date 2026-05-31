@@ -33,7 +33,8 @@ export type OptimizerMode =
   | "router-admin"
   | "dns-optimizer"
   | "ethernet-speed"
-  | "dns-setup";
+  | "dns-setup"
+  | "latency";
 
 interface ConnectionOptimizerClientProps {
   mode: OptimizerMode;
@@ -470,6 +471,40 @@ const OPTIMIZER_DATA: Record<OptimizerMode, {
           { label: "Yes — my ISP provides IPv6 connectivity", value: "ipv6-yes" },
           { label: "No — IPv4 only network", value: "ipv6-no" },
           { label: "Unsure — I do not know my IPv6 status", value: "ipv6-unsure" }
+        ]
+      }
+    ]
+  },
+  "latency": {
+    title: "Latency & Packet Loss Diagnostic",
+    icon: Activity,
+    description: "Diagnose and optimize high ping, jitter, and packet loss affecting gaming, video streaming, and real-time remote applications.",
+    questions: [
+      {
+        id: 1,
+        text: "What is your primary issue or where does it occur?",
+        options: [
+          { label: "Online Gaming (Valorant, Fortnite, CS2, etc.)", value: "gaming" },
+          { label: "Video Calls & Streaming (Zoom, Teams, Netflix)", value: "streaming" },
+          { label: "Frequent dropouts and slow loading across all sites", value: "general" }
+        ]
+      },
+      {
+        id: 2,
+        text: "How is your device physically connected to the network?",
+        options: [
+          { label: "Wi-Fi Connection (Wireless)", value: "wifi" },
+          { label: "Wired Ethernet Cable (Direct to Router)", value: "ethernet" },
+          { label: "Wi-Fi Extender / Powerline Adapter", value: "extender" }
+        ]
+      },
+      {
+        id: 3,
+        text: "When does the latency or packet loss occur?",
+        options: [
+          { label: "Constantly, even when no other network activity", value: "constant" },
+          { label: "During peak evening hours or when others are downloading", value: "congested" },
+          { label: "Only during specific multiplayer gaming match sessions", value: "servers" }
         ]
       }
     ]
@@ -1523,6 +1558,112 @@ export default function ConnectionOptimizerClient({ mode }: ConnectionOptimizerC
             }
           ],
           technicalExplanation: "Netgear routers register WAN DNS settings inside their routing table config space. When applying WAN DNS changes, the router flushes the DHCP client daemon on the WAN port and requests a new DHCP handshake from your modem to bind the DNS updates."
+        };
+      }
+
+      case "latency": {
+        const q1 = answers[1];
+        const q2 = answers[2];
+        const q3 = answers[3];
+
+        if (q2 === "wifi") {
+          return {
+            title: "Wireless RF Jitter & Packet Loss",
+            severity: "warning",
+            description: "Your latency issues are primarily driven by wireless RF path degradation. Half-duplex wireless transmission, beacon frame collisions, and structural obstructions trigger packet drops that present as micro-stuttering.",
+            steps: [
+              {
+                title: "Migrate to a Wired Cat6 Ethernet Connection",
+                priority: "High",
+                time: "3 mins",
+                description: "Wireless connections are susceptible to electromagnetic interference. Connecting via Cat6 Ethernet cable eliminates Layer 1 frame corruption and delivers consistent sub-1ms local hop times.",
+                tip: "If a direct cable run is physically impossible, consider a MoCA adapter over coax rather than wireless range extenders."
+              },
+              {
+                title: "Isolate 5 GHz Channels & Set Width to 40 MHz",
+                priority: "Medium",
+                time: "5 mins",
+                description: "Access your router admin portal, navigate to Wireless Settings, select 5 GHz band, and lock the channel width to 40 MHz rather than 80 or 160 MHz. This reduces noise susceptibility and overlaps.",
+              },
+              {
+                title: "Disable Location Services & Network Scans",
+                priority: "Medium",
+                time: "2 mins",
+                description: "On Windows/macOS, background scanning for new Wi-Fi networks every 60 seconds causes periodic 100-300ms ping spikes. Disable Wi-Fi scanning during active gaming.",
+              }
+            ],
+            technicalExplanation: "Wi-Fi relies on CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance). When interference occurs or multiple devices try to transmit, the router drops the corrupted frame at the PHY layer. Re-transmissions require the TCP/IP stack to wait, resulting in jitter spikes and high packet loss."
+          };
+        }
+
+        if (q3 === "congested") {
+          return {
+            title: "Bufferbloat & Local Link Congestion",
+            severity: "danger",
+            description: "Your packet loss is caused by bufferbloat. When other devices on your LAN perform heavy uploads or downloads, your router's buffers overflow, delay-queuing your latency-sensitive packets.",
+            steps: [
+              {
+                title: "Enable FQ-CoDEL or SQM (Smart Queue Management)",
+                priority: "High",
+                time: "10 mins",
+                description: "Log into your router admin page. Under advanced settings, look for QoS, Smart Queue Management (SQM), or FQ-CoDEL. Enable it and set upload/download limits to 90% of your provisioned speed.",
+                tip: "This prevents your devices from saturating the buffer queue, keeping ping times perfectly flat during downloads."
+              },
+              {
+                title: "Enable Hardware Accelerated NAT (Cut-Through Forwarding)",
+                priority: "Medium",
+                time: "5 mins",
+                description: "If your router's CPU is hitting 100% load during speed tests, disable deep packet inspection (DPI) and ensure NAT Acceleration / Cut-Through Forwarding is enabled in LAN settings.",
+              }
+            ],
+            technicalExplanation: "Bufferbloat occurs when network link capacity is saturated, and the router stores excess packets in oversized buffers. This introduces artificial queuing delay, inflating ping times. Once the buffer fills completely, the tail-drop policy drops incoming packets, leading to immediate packet loss."
+          };
+        }
+
+        if (q1 === "gaming" || q3 === "servers") {
+          return {
+            title: "ISP Routing Path Congestion or Bad Game Server Hops",
+            severity: "info",
+            description: "The local network path to the router is optimal. Your packet loss and latency are happening upstream on the WAN link, caused by inefficient routing between your ISP and the game server's data center.",
+            steps: [
+              {
+                title: "Run a MTR / Pathping Diagnostic",
+                priority: "High",
+                time: "5 mins",
+                description: "Open command prompt and run 'pathping' or download WinMTR. Target the game server's IP address. This will pinpoint exactly which upstream network peer or hop is losing packets.",
+                tip: "If packet loss starts at the second or third hop, it is an ISP routing issue; if it's only on the last hop, the game server itself is overloaded."
+              },
+              {
+                title: "Configure a Low-Latency DNS Resolver",
+                priority: "Medium",
+                time: "3 mins",
+                description: "Change your DNS settings to Cloudflare (1.1.1.1) or Google DNS (8.8.8.8). While this won't change in-game pathing directly, it speeds up initial socket handshakes and resolver queries.",
+              }
+            ],
+            technicalExplanation: "BGP (Border Gateway Protocol) routing path selection is dictated by commercial peering agreements rather than geographic proximity. If your ISP routes traffic to a remote peering exchange before reaching the server, ping will spike. Upstream congestion at these interchanges triggers tail-drops and packet loss."
+          };
+        }
+
+        return {
+          title: "Upstream WAN Line Fault (ISP Side Link Failure)",
+          severity: "danger",
+          description: "A continuous packet loss signature suggests a Layer 1 or Layer 2 physical fault on the ISP transmission line. Corroded coaxial cabling, optical fiber macrobends, or bad DSL pairs are dropping frames before they reach the router.",
+          steps: [
+            {
+              title: "Access Modem Diagnostic Page",
+              priority: "High",
+              time: "3 mins",
+              description: "Open a browser and navigate to 192.168.100.1. Review downstream SNR (should be >33dB) and upstream power level (should be <50dBmV). Look for T3 or T4 timeout events in the modem log.",
+              tip: "High T3/T4 counts mean the modem is losing sync due to electrical noise on the street cable. This requires an ISP technician visit."
+            },
+            {
+              title: "Verify MTU Size Settings",
+              priority: "Medium",
+              time: "5 mins",
+              description: "Navigate to your router's WAN configuration page and verify the MTU (Maximum Transmission Unit). For standard cable connections, use 1500; for PPPoE/DSL, set it to 1492 to prevent fragmenting.",
+            }
+          ],
+          technicalExplanation: "When physical line noise degrades the signal-to-noise ratio, the modem's forward error correction (FEC) is overwhelmed. The modem fails to decode the incoming frames, discarding them completely. This presents as persistent, non-load-related packet loss across all devices."
         };
       }
 
