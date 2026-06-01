@@ -102,6 +102,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${APP_URL}/port-forwarding-not-working`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${APP_URL}/minecraft-port-forwarding`,
       lastModified: now,
       changeFrequency: "weekly",
@@ -223,6 +229,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${APP_URL}/how-to-fix-packet-loss`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/high-ping-fix`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/double-nat-detected`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/nat-type-strict`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,

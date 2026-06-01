@@ -40,6 +40,10 @@ const footerLinks = {
     { label: "NAT Type Checker", href: "/nat-type-checker" },
     { label: "DNS Propagation", href: "/dns-propagation-checker" },
     { label: "Best DNS for Gaming", href: "/best-dns-for-gaming" },
+    { label: "Port Forwarding Not Working", href: "/port-forwarding-not-working" },
+    { label: "High Ping Fix", href: "/high-ping-fix" },
+    { label: "Double NAT Detected", href: "/double-nat-detected" },
+    { label: "NAT Type Strict Fix", href: "/nat-type-strict" },
   ],
   "Router Problems": [
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
