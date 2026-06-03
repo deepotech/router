@@ -50,6 +50,7 @@ const footerLinks = {
     { label: "Gaming Packet Loss Fix", href: "/gaming-packet-loss-fix" },
     { label: "Gaming Jitter Fix", href: "/gaming-jitter-fix" },
     { label: "Gaming Lag Spikes Fix", href: "/gaming-lag-spikes-fix" },
+    { label: "Bufferbloat Fix", href: "/bufferbloat-fix" },
   ],
   "Router Problems": [
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
