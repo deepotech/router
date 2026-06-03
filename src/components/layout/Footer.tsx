@@ -44,6 +44,7 @@ const footerLinks = {
     { label: "High Ping Fix", href: "/high-ping-fix" },
     { label: "Double NAT Detected", href: "/double-nat-detected" },
     { label: "NAT Type Strict Fix", href: "/nat-type-strict" },
+    { label: "Best Router Settings for Gaming", href: "/best-router-settings-for-gaming" },
   ],
   "Router Problems": [
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },

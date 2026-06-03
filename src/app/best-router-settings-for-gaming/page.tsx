@@ -16,6 +16,7 @@ import {
   HardDrive,
   Gamepad2,
   BarChart3,
+  BookOpen,
 } from "lucide-react";
 
 // =============================================================
@@ -29,19 +30,17 @@ export const metadata: Metadata = buildMetadata({
   canonical: "/best-router-settings-for-gaming",
   keywords: [
     "best router settings for gaming",
-    "gaming router optimization",
+    "gaming router settings",
+    "router optimization for gaming",
     "reduce gaming lag",
-    "optimize router for gaming",
-    "qos for gaming",
-    "bufferbloat fix",
-    "open nat port forwarding",
-    "mtu size gaming ping",
-    "gaming dns settings",
-    "router gaming mode",
-    "band steering gaming",
-    "5ghz gaming settings",
-    "router firewall gaming",
+    "best gaming network settings",
     "gaming router configuration",
+    "qos gaming",
+    "bufferbloat",
+    "nat type",
+    "packet loss gaming",
+    "low latency gaming",
+    "gaming wifi settings",
   ],
 });
 
@@ -55,90 +54,90 @@ const breadcrumbs = [
 ];
 
 // =============================================================
-// Troubleshooting Steps
+// Troubleshooting Steps (Renders at the top of the shell)
 // =============================================================
 
 const troubleshootingSteps = [
   {
-    title: "Enable UPnP or Configure Manual Port Forwarding",
+    title: "Prioritize Gaming Traffic using QoS Capping",
     description:
-      "Log into your router admin panel. Navigate to Advanced > NAT Forwarding > UPnP (TP-Link), WAN > UPnP (ASUS), or ADVANCED > UPnP (Netgear). Enable UPnP and reboot your router and console. UPnP allows game consoles to automatically register port mappings in the NAT table, opening your connection to an Open or Moderate NAT type without manual configuration. If UPnP alone is insufficient, assign your console a static IP and manually forward platform-specific ports.",
-    tip: "If you have two Xbox consoles or two PS5 units on the same network, UPnP may conflict over port 3074. In this case, disable UPnP and use static port forwarding with different port offsets for each console.",
+      "Log into your router admin panel and navigate to the QoS or Traffic Control tab. Run a local speed test to measure your bandwidth. Set the QoS upload and download limits to exactly 85% to 90% of your maximum provisioned line speed. Capping bandwidth prevents the router's buffer from saturating (bufferbloat) when other devices on the network initiate bulk downloads or cloud backups. Assign your gaming console or PC Highest or Real-time priority.",
+    tip: "A common mistake is setting QoS limits to 100% or higher. This defeats the queue-management mechanism. The 10% headroom is required for the queue-management algorithms to process gaming packets immediately.",
   },
   {
-    title: "Configure QoS to Prioritize Gaming Traffic",
+    title: "Open Your Ports: Enable UPnP or Setup Manual Port Forwarding",
     description:
-      "Enable Quality of Service (QoS) in your router admin panel. Run a speed test to determine your actual line speeds. Set QoS bandwidth caps to 85-90% of your maximum upload and download speeds — this headroom prevents the router's buffer from filling up (bufferbloat). Add a high-priority rule targeting your gaming console or PC by its MAC address or local IP. Set the gaming device priority to Highest, and assign streaming and downloads to Low or Background priority.",
-    tip: "Setting QoS to 100% of your speed defeats its purpose. The 10-15% headroom is critical — it allows the router to process gaming packets without queuing them behind download traffic.",
+      "Access the WAN, NAT Forwarding, or Advanced settings on your router. Enable Universal Plug and Play (UPnP) to allow game clients to open inbound ports automatically. If UPnP is disabled for security reasons or fails to establish an Open NAT type, configure manual port forwarding. Assign your gaming device a static IP address through DHCP Reservation, then forward the necessary platform-specific ports (e.g., UDP 3074 for general console gaming).",
+    tip: "If you run multiple consoles of the same brand in a single household (like two Xboxes), UPnP can struggle to route port 3074. Set custom network ports in each console's advanced settings to prevent collisions.",
   },
   {
-    title: "Set MTU to Optimal Size for Your Connection Type",
+    title: "Select a Dedicated 5 GHz or 6 GHz Wi-Fi Channel",
     description:
-      "Find MTU settings under WAN > Connection Type or Advanced > WAN in your router panel. For cable and fiber connections, set MTU to 1500 bytes (the ethernet maximum). For PPPoE DSL connections, set MTU to 1492 (accounting for 8-byte PPPoE header overhead). For VPN-routed connections, reduce to 1380-1420. Mismatched MTU causes packets to fragment, doubling the routing workload and adding 10-30ms latency per hop.",
-    tip: "To find the perfect MTU for your line: open Command Prompt and run 'ping -l 1472 -f 8.8.8.8'. If you get 'Packet needs to be fragmented', reduce the payload size by 10 until you get a reply. Add 28 to that value for your ideal MTU.",
+      "If a wired connection is impossible, disable Band Steering (which dynamically switches your connection between 2.4 GHz and 5 GHz bands). Create a separate, dedicated SSID for your 5 GHz or 6 GHz band and connect only your gaming hardware to it. Use a Wi-Fi analyzer tool to locate the least crowded channel in your area. Avoid channels 52-144 if you live near an airport to prevent DFS radar avoidance drops, and lock your channel width to 80 MHz.",
+    tip: "Avoid 160 MHz channel width for gaming. While it boasts higher peak throughput, it has fewer available channels, forcing the router onto DFS bands which can disconnect you for up to a minute if radar signals are detected.",
   },
   {
-    title: "Switch to Dedicated 5 GHz or 6 GHz Band for Gaming Devices",
+    title: "Configure the Router MTU for Maximum Payload Size",
     description:
-      "Log into your router's wireless settings. Disable Band Steering (auto-band selection) to prevent the router from moving your gaming device between 2.4 GHz and 5 GHz bands mid-session. Create a dedicated SSID for the 5 GHz or 6 GHz band. Connect only your gaming console or PC to this SSID. Set the Wi-Fi channel to a non-overlapping channel: channels 36, 40, 44, or 48 for 5 GHz. Enable 80 MHz channel width for maximum throughput.",
-    tip: "If you have a tri-band router (2.4 GHz + 5 GHz + 5 GHz or 6 GHz), dedicate the second 5 GHz or 6 GHz band exclusively to gaming devices. Connect backhaul, IoT devices, and phones to the other bands.",
+      "Navigate to your router's WAN setup page and inspect the Maximum Transmission Unit (MTU) value. For standard cable or fiber connections using DHCP, ensure it is set to 1500. For DSL connections using PPPoE protocol encapsulation, reduce the MTU to 1492 to accommodate the 8-byte PPPoE header. Mismatched MTU values force your packet packets to undergo fragmenting at each hop, degrading ping by 15-30ms.",
+    tip: "Verify your optimal MTU using the ping command: 'ping -l 1472 -f 8.8.8.8'. If the ping reports that the packet needs to be fragmented, decrease the payload size (-l value) by 10 and re-test until you get a successful response.",
   },
 ];
 
 // =============================================================
-// FAQ Data
+// FAQ Data (10 detailed technical FAQs)
 // =============================================================
 
 const faqs = [
   {
-    question: "What is the single most impactful router setting for gaming?",
+    question: "Does configuring QoS on my router reduce my ping?",
     answer:
-      "For most gamers, QoS (Quality of Service) configuration has the largest impact. It prevents bufferbloat — the condition where heavy downloads spike your ping from 20ms to 300ms. Enable QoS, set bandwidth limits to 90% of your line speed, and prioritize your gaming device. This alone can reduce ping spikes by 70-90% under household load.",
+      "QoS does not reduce your baseline ping under idle network conditions (e.g., if you have a 15ms ping to a local server, QoS won't lower it to 10ms). However, QoS prevents ping spikes (bufferbloat) under active network load. When other devices stream video, download patches, or sync backups, QoS ensures that your time-sensitive UDP gaming packets bypass the bulk queue. This keeps your ping stable at its baseline value, eliminating spikes from 20ms to 300ms.",
   },
   {
-    question: "Should I use 2.4 GHz or 5 GHz for gaming?",
+    question: "Should I disable UPnP for security reasons and use Port Forwarding instead?",
     answer:
-      "Always use 5 GHz or 6 GHz for gaming over Wi-Fi. The 2.4 GHz band is heavily congested (it shares spectrum with microwaves, Bluetooth, and neighboring networks) and has higher latency due to interference retransmissions. The 5 GHz band offers lower latency, higher throughput, and far less interference. If your router or console supports Wi-Fi 6E, the 6 GHz band is even better — it is virtually interference-free on residential networks.",
+      "From a strict cybersecurity perspective, manual port forwarding is more secure than UPnP because UPnP allows any software inside your network to open inbound ports without administrator approval. For maximum security, assign a static IP to your gaming device and configure manual port forwarding rules, then disable UPnP. However, for households with multiple consoles playing the same game, UPnP is often necessary because it can handle dynamic mapping allocations that static rules cannot.",
   },
   {
-    question: "Does enabling Gaming Mode on my router actually help?",
+    question: "Is wired Ethernet always superior to Wi-Fi for gaming?",
     answer:
-      "Router 'Gaming Mode' or 'Accelerator' features vary by manufacturer and are often marketing labels. On ASUS routers, Game Acceleration uses a traffic shaping algorithm to prioritize UDP gaming packets. On Netgear Nighthawk routers, Gaming Mode prioritizes ports associated with known game titles. These features are effective when implemented properly, but manual QoS configuration with correct bandwidth limits is usually more reliable and measurable.",
+      "Yes, a physical Ethernet connection is always superior. Category 6 (Cat6) or Cat5e cables support full-duplex transmission (sending and receiving data simultaneously) and are immune to the electromagnetic interference, physical obstructions, and channel congestion that plague wireless signals. Even the fastest Wi-Fi 6E or Wi-Fi 7 connections are half-duplex (devices must take turns transmitting), which introduces jitter, packet loss, and variable latency overhead.",
   },
   {
-    question: "What MTU size should I use for online gaming?",
+    question: "Does changing my DNS server on the router improve live gameplay latency?",
     answer:
-      "For standard cable or fiber broadband, use MTU 1500. For PPPoE DSL connections, use MTU 1492. If you are on a VPN or experience consistent fragmentation, reduce to 1420 or 1380. You can test your optimal MTU by running 'ping -l 1472 -f 8.8.8.8' in Windows Command Prompt and reducing the payload size until the ping succeeds without fragmentation, then add 28 bytes.",
+      "No, changing your DNS server does not improve your live, in-game ping. DNS (Domain Name System) is only responsible for translating domain names (like play.ea.com) into numeric IP addresses. Once your console or PC establishes a connection to the matchmaking server, all real-time game traffic travels directly to that IP address, bypassing the DNS resolver completely. However, a fast DNS like Cloudflare (1.1.1.1) will speed up lobby loads, matchmaking checks, and initial game server connections.",
   },
   {
-    question: "What is bufferbloat and how does it destroy gaming performance?",
+    question: "What MTU size should I use on my router for gaming?",
     answer:
-      "Bufferbloat occurs when your router's transmit buffer fills up with packets (typically from a large download or upload). When the buffer is full, new packets — including your real-time game state packets — must queue behind bulk traffic. This queue creates latency spikes of 100-500ms that appear as lag, rubber-banding, and desync in gameplay. QoS with bandwidth capping (setting limits at 85-90% of line speed) prevents the buffer from reaching capacity, eliminating the queue.",
+      "For cable, fiber, and general ethernet connections, the standard MTU should be set to 1500. If your ISP uses PPPoE (common with DSL and some fiber connections), you must reduce it to 1492. Setting the MTU too low can trigger unnecessary packet fragmentation, increasing packet header overhead. Setting it too high will cause routers along the path to discard or fragment the packet, adding processing latency and packet loss.",
   },
   {
-    question: "Should I disable SIP ALG for gaming?",
+    question: "What is the difference between Open NAT, Moderate NAT, and Strict NAT?",
     answer:
-      "Yes, always disable SIP ALG on any router used for gaming. SIP ALG (Application Layer Gateway) was designed for VoIP traffic but frequently intercepts and modifies UDP packets that it misidentifies as SIP signaling. This corrupts port forwarding rules, breaks UPnP mappings, and causes intermittent NAT type failures. SIP ALG provides no benefit for gaming and should be disabled immediately.",
+      "An Open NAT (Type 1 on PlayStation, Open on Xbox/PC) means your gaming device can accept inbound connections from any other device. You can host lobbies and connect to anyone. Moderate NAT (Type 2) means some ports are open, but others are blocked. You can connect to most players but may struggle to host or connect to Strict NAT players. Strict NAT (Type 3) means all inbound ports are blocked; your traffic is routed through slow relay servers, which adds significant latency and breaks voice chat.",
   },
   {
-    question: "Does changing my DNS improve gaming ping?",
+    question: "Should I enable or disable SIP ALG on my gaming router?",
     answer:
-      "DNS servers affect the time it takes to resolve domain names (like game server hostnames) but do not reduce in-game ping to the actual game server. However, a slow or unreliable DNS can add 50-200ms to initial game connection establishment and session reconnects. Use a fast DNS resolver like Cloudflare (1.1.1.1), Google (8.8.8.8), or gaming-optimized resolvers. DNS does not affect in-game RTT once the connection is established.",
+      "You should always disable SIP ALG (Session Initiation Protocol Application Layer Gateway). Although it was designed to improve voice-over-IP (VoIP) connections, it frequently misinterprets game packet structures, modifying their headers and breaking UDP port bindings. This leads to random disconnections, lobby errors, and can force your NAT type to become Strict. SIP ALG is found in the ALG, Firewall, or Security tabs of your router settings.",
   },
   {
-    question: "Is wired or wireless better for competitive gaming?",
+    question: "Does enabling DMZ on my router protect my gaming PC?",
     answer:
-      "Wired Ethernet is always superior for competitive gaming. A Cat6 wired connection provides consistent 1ms latency, zero interference, and zero packet loss under normal conditions. Wi-Fi introduces variable latency (typically 1-30ms overhead), interference-related retransmissions (which add random spikes), and half-duplex behavior on most Wi-Fi implementations. If cables are not possible, use 5 GHz or 6 GHz Wi-Fi with a dedicated SSID and place the router within 10 meters of the gaming device.",
+      "No, enabling DMZ (Demilitarized Zone) on a Windows PC is extremely dangerous. DMZ forwards all inbound traffic that doesn't match an active port forwarding rule directly to the target device, completely bypassing your router's firewall. While this guarantees an Open NAT, it exposes all ports on your PC to the open internet, making it highly vulnerable to scanning and exploitation. DMZ should only be used as a last resort on dedicated gaming consoles (PS5, Xbox, Switch), which run closed operating systems.",
   },
   {
-    question: "What channel width should I set for gaming Wi-Fi?",
+    question: "Should I enable or disable UPnP if I have multiple consoles?",
     answer:
-      "For 5 GHz gaming, use 80 MHz channel width. This provides excellent throughput while remaining stable. Avoid 160 MHz — while faster, it has fewer available channels and causes interference with radar systems on DFS channels, which triggers automatic channel switches that drop your connection momentarily. For 2.4 GHz, use 20 MHz channel width to avoid overlap with neighboring networks.",
+      "You should enable UPnP if you have multiple consoles of the same type playing the same game. If you try to manually forward port 3074 to one console, the second console will be blocked and will fall back to Moderate or Strict NAT. UPnP handles this by dynamically mapping alternative ports (like 53584) to the second console, allowing both to play simultaneously. If UPnP conflicts occur, configure manual port selection in the advanced network menu of each console.",
   },
   {
-    question: "Should I enable MIMO and beamforming on my router?",
+    question: "How does co-channel interference affect Wi-Fi gaming?",
     answer:
-      "Yes. Enable MU-MIMO (Multi-User MIMO) and beamforming on all routers that support them. MU-MIMO allows your router to communicate with multiple devices simultaneously rather than sequentially, reducing queue wait times. Beamforming directs the wireless signal toward your gaming device rather than broadcasting omnidirectionally, improving signal strength and stability. Both features are beneficial and have no downside.",
+      "Co-channel interference occurs when multiple nearby routers broadcast on the same wireless channel. On the 2.4 GHz band, there are only three non-overlapping channels (1, 6, and 11), meaning your router is likely sharing a channel with your neighbors. When two routers transmit simultaneously on the same channel, they trigger collisions, forcing your devices to discard the packet and request a retransmission. These retransmissions introduce lag spikes, jitter, and packet loss in online games.",
   },
 ];
 
@@ -148,28 +147,28 @@ const faqs = [
 
 const commonCauses = [
   {
-    title: "Bufferbloat from Full Upload Buffer",
-    desc: "Router transmit buffer fills under heavy upload load, queuing game packets behind bulk traffic and spiking ping to 200-500ms.",
+    title: "Bufferbloat under Network Load",
+    desc: "Your router's memory buffer fills up with files, streams, or downloads, queuing your time-sensitive game packets and spiking latency from 20ms to 400ms.",
   },
   {
-    title: "Strict NAT Blocking Peer Connections",
-    desc: "UPnP disabled or port forwarding unconfigured, forcing game traffic through relay servers and adding 30-80ms relay latency.",
+    title: "Strict NAT Routing Through Relays",
+    desc: "Missing port maps force your game traffic to route through third-party relay servers instead of directly to peers, adding up to 80ms of latency.",
   },
   {
-    title: "2.4 GHz Band Congestion",
-    desc: "Gaming device on the crowded 2.4 GHz band experiencing interference from neighboring networks and household appliances.",
+    title: "Wi-Fi Spectrum Congestion",
+    desc: "Playing on 2.4 GHz causes wireless packet collisions and retransmissions due to interference from neighbor Wi-Fi networks and appliances.",
   },
   {
-    title: "MTU Fragmentation",
-    desc: "Incorrect MTU size causing packets to fragment at every hop, adding processing overhead and 10-30ms per router in the path.",
+    title: "Incorrect MTU and Packet Fragmentation",
+    desc: "Mismatched WAN MTU sizes force routers to split single game packets into multiple fragments, doubling routing overhead and causing packet loss.",
   },
   {
-    title: "SIP ALG Corrupting NAT Tables",
-    desc: "SIP Application Layer Gateway intercepting and rewriting UDP game packets, breaking port forwarding and UPnP maps silently.",
+    title: "Aggressive Router Firewalls (SIP ALG)",
+    desc: "SIP ALG modifies the header contents of UDP game packets, corrupting active NAT tables and causing random lobby drops or disconnects.",
   },
   {
-    title: "DNS Resolver Latency on Connection Establish",
-    desc: "Slow ISP DNS adding 100-300ms to initial game server hostname resolution and matchmaking service lookups.",
+    title: "Slow DNS Query Resolutions",
+    desc: "Congested ISP DNS servers delay the initial lookup of matchmaking nodes, causing long lobby wait times and initial connection errors.",
   },
 ];
 
@@ -178,14 +177,14 @@ const commonCauses = [
 // =============================================================
 
 const quickFixChecklist = [
-  "Enable UPnP in router admin panel — reboot router and console to register fresh port mappings.",
-  "Configure QoS: set bandwidth limits to 90% of your line speed and prioritize your gaming device.",
-  "Disable SIP ALG under Firewall or NAT ALG settings to prevent silent port map corruption.",
-  "Set MTU to 1500 (cable/fiber) or 1492 (PPPoE DSL) under WAN connection settings.",
-  "Dedicate the 5 GHz or 6 GHz band to your gaming device with a separate SSID.",
-  "Set Wi-Fi channel to 36, 40, 44, or 48 (5 GHz) using a fixed non-overlapping channel.",
-  "Change DNS to 1.1.1.1 / 1.0.0.1 (Cloudflare) or 8.8.8.8 / 8.8.4.4 (Google).",
-  "Disable Band Steering to prevent mid-session band switching on your gaming device.",
+  "Verify your physical connection: Use a Cat6 Ethernet cable instead of Wi-Fi for 1ms stable routing.",
+  "Access your router admin interface and enable UPnP under NAT or Advanced settings.",
+  "Configure QoS: Cap upload and download limits to 90% of your line speed to prevent bufferbloat.",
+  "Disable SIP ALG in the firewall or ALG settings to stop packet header manipulation.",
+  "Switch to 5 GHz or 6 GHz Wi-Fi, lock the channel to 36-48 (UNII-1), and set channel width to 80 MHz.",
+  "Disable Band Steering to prevent your gaming device from switching wireless bands mid-game.",
+  "Set WAN MTU to 1500 for cable/fiber connections, or 1492 for PPPoE DSL networks.",
+  "Update router DNS to public anycast resolvers: Cloudflare (1.1.1.1) and Google (8.8.8.8).",
 ];
 
 // =============================================================
@@ -196,556 +195,663 @@ export default function BestRouterSettingsForGamingPage() {
   return (
     <TroubleshootingArticleShell
       h1="Best Router Settings for Gaming: The Complete Optimization Guide"
-      intro="Most gamers focus on their internet speed while ignoring the router settings that actually control gaming performance. Raw bandwidth is rarely the bottleneck — bufferbloat, Strict NAT, mismatched MTU, and congested Wi-Fi bands are. This technical guide walks through every router setting that directly impacts gaming latency, packet loss, NAT type, and connection stability, with step-by-step instructions for all major router brands."
+      intro="For online gaming, speed is a secondary metric; latency, jitter, and packet loss are what dictate victory. Raw bandwidth (Mbps) is rarely the bottleneck because competitive gaming consumes less than 150 Kbps. The actual causes of lag, rubberbanding, and disconnected sessions are router-level configuration issues like bufferbloat, Strict NAT, and packet fragmentation. This guide covers every setting that impacts gaming networking, complete with menu paths for major router brands."
       category="nat"
       breadcrumbs={breadcrumbs}
       faqs={faqs}
       troubleshootingSteps={troubleshootingSteps}
       warningBanner={{
-        title: "Wired Connection Recommended",
-        text: "All software optimizations in this guide assume a stable physical connection. If you are using Wi-Fi, results may vary based on RF environment. For competitive gaming, a Cat6 wired Ethernet connection is always the recommended baseline.",
+        title: "Physical Layer Prerequisite",
+        text: "Software optimizations can only refine your connection. If your physical link is inherently unstable due to faulty cabling, signal attenuation, or co-channel interference, software settings cannot fully compensate. We highly recommend connecting your gaming PC or console via a Cat6 Ethernet cable prior to applying these optimizations.",
       }}
       quickFixChecklist={quickFixChecklist}
       commonCauses={commonCauses}
-      whenToContactISP="Contact your ISP if your router's WAN IP is in the CGNAT 100.64.0.0/10 range (preventing port forwarding), if bufferbloat persists despite QoS configuration (indicating modem-level buffering), or if your connection shows high jitter on a wired connection (indicating instability between the modem and DSLAM/OLT)."
+      whenToContactISP="Contact your ISP if you suspect your WAN IP lies behind a Carrier-Grade NAT (CGNAT) which prevents port forwarding, if your baseline ping to local hops remains high on a wired connection, or if you continue to experience packet loss at the first hop outside your home network (indicating physical line issues with the fiber node or copper junction)."
       severityLevel="low"
     >
-      <div className="space-y-10">
-
+      <div className="space-y-12">
         {/* SECTION 1: Quick AI Answer */}
         <section
           className="glass-card p-6 border border-cyan-950/20 bg-cyan-950/5 rounded-2xl relative overflow-hidden"
           aria-label="Quick AI Answer"
         >
           <div className="absolute top-0 right-0 bg-[var(--brand-500)]/10 text-[var(--brand-400)] text-[10px] font-mono uppercase tracking-wider px-3 py-1 rounded-bl-lg font-bold">
-            Quick AI Response Summary
+            Quick Summary
           </div>
           <h2 className="text-xs font-bold text-[var(--brand-400)] mb-3 uppercase tracking-wide">
-            The 5 Router Settings That Actually Improve Gaming Performance
+            The Optimal Gaming Settings Blueprint
           </h2>
-          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            The five settings with the most measurable impact on gaming performance are: <strong>(1) QoS with bandwidth capping</strong> to eliminate bufferbloat, <strong>(2) UPnP or manual port forwarding</strong> to open NAT type, <strong>(3) correct MTU size</strong> to stop packet fragmentation, <strong>(4) dedicated 5 GHz band</strong> with fixed non-overlapping channel for Wi-Fi users, and <strong>(5) SIP ALG disabled</strong> to stop silent NAT corruption. Wired Ethernet eliminates Wi-Fi variables entirely and should always be the first step.
-          </p>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              To achieve the lowest latency and zero jitter, apply these core settings inside your router's administration interface:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
+              <li><strong>Connection:</strong> Use a wired Ethernet cable (or 5GHz/6GHz Wi-Fi locked to a non-DFS channel like 36-48).</li>
+              <li><strong>QoS:</strong> Enable Smart Queue Management (SQM) or Adaptive QoS and cap bandwidth to 85-90% of your speed.</li>
+              <li><strong>NAT/Ports:</strong> Enable UPnP, or assign a static IP and configure manual Port Forwarding (target Open NAT).</li>
+              <li><strong>MTU:</strong> Verify payload size and set MTU to 1500 (cable/fiber) or 1492 (PPPoE DSL).</li>
+              <li><strong>Firewall/ALG:</strong> Disable SIP ALG to prevent corruption of UDP game states.</li>
+            </ul>
+          </div>
         </section>
 
         {/* Interactive Tool */}
         <section aria-label="Interactive Router Optimization Tool">
           <div className="mb-4">
             <h2 className="text-base font-bold text-[var(--text-primary)]">
-              Interactive Router Configuration Wizard
+              Interactive Latency Optimizer
             </h2>
             <p className="text-xs text-[var(--text-muted)] mt-1">
-              Analyze your current router configuration, detect gaming bottlenecks, and receive a personalized optimization checklist.
+              Select your primary gaming platform and connection type to identify latent bottlenecks, calculate optimal MTU, and receive targeted configuration steps.
             </p>
           </div>
-          <ConnectionOptimizerClient mode="router-admin" />
+          <ConnectionOptimizerClient mode="latency" />
         </section>
 
-        {/* SECTION 2: What Actually Causes Gaming Lag */}
+        {/* SECTION 2: Gaming Symptoms Table */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Activity size={18} className="text-cyan-400" />
-            2. What Actually Causes Gaming Lag: The Real Bottlenecks
+            1. Diagnostic Matrix: Common Gaming Symptoms
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            Most gamers blame their internet speed for lag. In reality, internet speed (Mbps) is almost never the cause of gaming latency. Online gaming consumes remarkably little bandwidth — a typical first-person shooter like Valorant or Call of Duty uses 50-150 Kbps of upstream data. Even a 5 Mbps connection is more than sufficient.
+            Diagnosing the correct networking bottleneck is half the battle. Use this symptom matrix to identify your issue and jump straight to the relevant router optimization:
           </p>
-          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            The real causes of gaming lag are router-level issues:
-          </p>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
             <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
               <thead>
                 <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
-                  <th className="px-4 py-3 text-left">Root Cause</th>
                   <th className="px-4 py-3 text-left">Symptom</th>
-                  <th className="px-4 py-3 text-left">Fix</th>
-                  <th className="px-4 py-3 text-left">Impact</th>
+                  <th className="px-4 py-3 text-left">Likely Network Cause</th>
+                  <th className="px-4 py-3 text-left">Recommended Setting</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
                 <tr>
-                  <td className="px-4 py-3 font-semibold">Bufferbloat</td>
-                  <td className="px-4 py-3">Ping spikes to 300ms+ during downloads</td>
-                  <td className="px-4 py-3">QoS with bandwidth cap at 90%</td>
-                  <td className="px-4 py-3 text-red-500 font-bold">Critical</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">High Ping (Consistent)</td>
+                  <td className="px-4 py-3">Sub-optimal routing paths, high geographical distance, or wrong DNS resolution.</td>
+                  <td className="px-4 py-3">Switch DNS to Cloudflare/Google; verify game server location.</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold">Strict NAT Type</td>
-                  <td className="px-4 py-3">Matchmaking fails, voice chat drops, relay routing</td>
-                  <td className="px-4 py-3">UPnP or manual port forwarding</td>
-                  <td className="px-4 py-3 text-red-500 font-bold">Critical</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Sudden Lag Spikes (Jitter)</td>
+                  <td className="px-4 py-3">Bufferbloat from other devices downloading or uploading files.</td>
+                  <td className="px-4 py-3">Configure QoS (Smart Queue Management) to 90% bandwidth cap.</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold">MTU Fragmentation</td>
-                  <td className="px-4 py-3">Consistent +20ms ping, packet loss at server</td>
-                  <td className="px-4 py-3">Set MTU 1500 (cable) or 1492 (PPPoE)</td>
-                  <td className="px-4 py-3 text-yellow-400 font-bold">High</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Character Rubberbanding</td>
+                  <td className="px-4 py-3">Wireless packet collisions, signal interference, or severe packet loss.</td>
+                  <td className="px-4 py-3">Connect via wired Cat6 Ethernet; switch to 5 GHz with 80MHz channel width.</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold">Wi-Fi Interference (2.4 GHz)</td>
-                  <td className="px-4 py-3">Variable ping, spike every 10-30 seconds</td>
-                  <td className="px-4 py-3">Switch to 5 GHz dedicated band</td>
-                  <td className="px-4 py-3 text-yellow-400 font-bold">High</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Voice Chat Drops / Lobby Failures</td>
+                  <td className="px-4 py-3">Strict NAT type blocking inbound peer-to-peer (P2P) connections.</td>
+                  <td className="px-4 py-3">Enable UPnP; forward port 3074; disable SIP ALG in firewall.</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold">SIP ALG Corruption</td>
-                  <td className="px-4 py-3">Random NAT type changes, intermittent disconnects</td>
-                  <td className="px-4 py-3">Disable SIP ALG in firewall settings</td>
-                  <td className="px-4 py-3 text-yellow-400 font-bold">Medium</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Packet Loss (In-Game Stats)</td>
+                  <td className="px-4 py-3">MTU payload fragmentation or faulty ISP node routing.</td>
+                  <td className="px-4 py-3">Tune MTU (1500/1492) based on fragmentation testing.</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold">ISP DNS Latency</td>
-                  <td className="px-4 py-3">Slow game server connect / lobby joins</td>
-                  <td className="px-4 py-3">Use 1.1.1.1 or 8.8.8.8 DNS</td>
-                  <td className="px-4 py-3 text-blue-400 font-bold">Low</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Matchmaking Errors / Slow Queues</td>
+                  <td className="px-4 py-3">Strict NAT forcing connections through distant relay servers.</td>
+                  <td className="px-4 py-3">Setup DHCP static reservation and configure manual port forwarding.</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        {/* SECTION 3: QoS Deep Dive */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <BarChart3 size={18} className="text-cyan-400" />
-            3. QoS Configuration: Eliminating Bufferbloat
-          </h2>
-          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            <strong>Bufferbloat</strong> is the most damaging and most overlooked cause of gaming lag. When a household member starts a large upload (backup, video upload, cloud sync), your router fills its transmit buffer with bulk data packets. Your gaming packets must queue behind this bulk traffic. The queue delay translates directly into ping spikes — you'll see your in-game ping jump from 20ms to 200-500ms instantly.
-          </p>
-          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            <strong>QoS (Quality of Service)</strong> prevents this by limiting total bandwidth and prioritizing gaming traffic. The key insight most guides miss: <strong>you must cap bandwidth below your actual line speed</strong>. Setting QoS to 100% of your speed does nothing — the buffer still fills up. Capping at 85-90% keeps the queue empty, allowing real-time gaming packets to transmit without waiting.
-          </p>
-
-          <h3 className="text-sm font-bold text-[var(--text-primary)]">QoS Configuration by Router Brand:</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h4 className="text-sm font-bold text-[var(--text-primary)]">TP-Link (Archer / AX Series)</h4>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Navigate to <strong>Advanced &gt; QoS</strong>. Enable QoS. Enter your upload and download speeds (set to 90% of your measured speed test values). Under <strong>By Device</strong>, add your gaming console by IP and set priority to <strong>Highest</strong>. Under <strong>By Application</strong>, add gaming to high priority and downloads to low.
-              </p>
-            </div>
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h4 className="text-sm font-bold text-[var(--text-primary)]">ASUS (RT-AX / ROG Series)</h4>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Navigate to <strong>Adaptive QoS &gt; QoS</strong>. Enable Adaptive QoS. Set the operating mode to <strong>Customize</strong>. Set your total bandwidth (90% of line speed). Drag <strong>Gaming</strong> to the top priority slot. Alternatively, enable <strong>Game Acceleration</strong> (ASUS Aura Game Boost) for automatic traffic classification.
-              </p>
-            </div>
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h4 className="text-sm font-bold text-[var(--text-primary)]">Netgear (Nighthawk / Orbi)</h4>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Navigate to <strong>ADVANCED &gt; Setup &gt; QoS Setup</strong>. Enable WMM (Wi-Fi Multimedia) and Upstream QoS. Enable <strong>Gaming Mode</strong> which automatically prioritizes gaming UDP streams. Set bandwidth limits manually by clicking <strong>Setup QoS Rule</strong> and adding your console by MAC address.
-              </p>
-            </div>
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h4 className="text-sm font-bold text-[var(--text-primary)]">Huawei / ZTE (ISP Gateways)</h4>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Navigate to <strong>Advanced &gt; QoS &gt; Traffic Control</strong>. Add a new rule. Set the source IP to your gaming device's static IP, set the protocol to UDP (for game traffic), set priority to <strong>High</strong>, and leave TCP flows for downloads at <strong>Normal</strong> or <strong>Low</strong>. Apply and reboot.
-              </p>
-            </div>
-          </div>
-
-          <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl font-mono text-xs text-[var(--text-muted)] space-y-3">
-            <h4 className="text-xs font-bold text-[var(--text-primary)] font-sans">Measure Bufferbloat Before and After QoS:</h4>
-            <div className="space-y-2">
-              <div><strong>Tool:</strong> Visit <code>waveform.com/tools/bufferbloat</code> or run a DSLReports Speed Test.</div>
-              <div><strong>Grade A or B:</strong> Bufferbloat is under control. Gaming latency will be stable.</div>
-              <div><strong>Grade C, D, or F:</strong> Severe bufferbloat. Enable QoS and retest.</div>
-              <div><strong>Windows PowerShell Test:</strong></div>
-            </div>
-            <pre className="text-green-400 overflow-x-auto">{`# Baseline ping while idle
-ping -n 20 8.8.8.8
-
-# Start a large download (any large file), then re-run:
-ping -n 20 8.8.8.8
-
-# If ping jumps by 50ms+ under load: bufferbloat confirmed.
-# Enable QoS and re-test.`}</pre>
-          </div>
-        </section>
-
-        {/* SECTION 4: NAT Settings */}
+        {/* SECTION 3: How Gaming Traffic Travels */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Network size={18} className="text-cyan-400" />
-            4. NAT Type Settings: Open vs. Moderate vs. Strict
+            2. The Journey of a Gaming Packet: Latency Mechanics
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            Your NAT type determines how your router handles inbound gaming connections. Strict NAT forces your game to use relay servers instead of direct peer-to-peer connections, adding 30-80ms of relay overhead and causing matchmaking and voice chat failures.
+            Understanding what happens between clicking a button and seeing an action on-screen is critical. A gaming packet is tiny (usually 50–150 bytes of UDP payload containing coordinate offsets and action states), but it must make a round-trip journey to the game server and back. This journey is divided into four distinct legs:
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-xs md:text-sm text-[var(--text-muted)]">
-            <li>
-              <strong className="text-green-400">Step 1 — Enable UPnP:</strong> The fastest NAT fix for most setups. Navigate to Advanced &gt; NAT Forwarding &gt; UPnP (TP-Link) or WAN &gt; UPnP (ASUS). Enable it, reboot your router and console, and run the console's network test. Most setups achieve Moderate or Open NAT immediately.
-            </li>
-            <li>
-              <strong className="text-yellow-400">Step 2 — Static IP + Port Forwarding:</strong> If UPnP fails or you have multiple consoles, assign each a static IP via DHCP reservation and create manual port forwarding rules. Xbox: TCP/UDP 3074, UDP 88, 500, 3544, 4500. PS5: TCP 3478-3480, UDP 3478-3479.
-            </li>
-            <li>
-              <strong className="text-orange-400">Step 3 — Resolve Double NAT:</strong> If your router's WAN IP is a private address (192.168.x.x or 10.x.x.x), you have Double NAT. Enable Bridge Mode on the ISP modem or set your router to AP Mode. Port forwarding cannot work through double NAT layers. See our{" "}
-              <Link href="/double-nat-detected" className="text-[var(--brand-400)] hover:underline">Double NAT fix guide</Link>.
-            </li>
-            <li>
-              <strong className="text-red-400">Step 4 — DMZ as Last Resort:</strong> Assign your console a static IP and place it in the router's DMZ (Demilitarized Zone). This forwards all inbound traffic to the console, guaranteeing Open NAT. Safe for gaming consoles; never use on PCs or NAS devices.
-            </li>
-          </ul>
-          <p className="text-xs text-[var(--text-muted)]">
-            For a complete NAT troubleshooting workflow, see our{" "}
-            <Link href="/nat-type-strict" className="text-[var(--brand-400)] hover:underline">NAT Type Strict fix guide</Link>.
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+            <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-[var(--text-primary)]">1. The Client (PC/Console)</h4>
+              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                The game engine packs your actions into a UDP packet. Operating system parameters (like TCP ACK frequency, network throttling, and driver queue sizes) dictate how fast the network card pushes this frame.
+              </p>
+            </div>
+            <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-[var(--text-primary)]">2. The Router (Local Hop)</h4>
+              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                The router inspects the destination header, translates the local IP to a public IP (NAT), applies firewall rules, queues the packet, and transmits it. This is where configurations like QoS, UPnP, and MTU operate.
+              </p>
+            </div>
+            <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-[var(--text-primary)]">3. The ISP & Transit Nodes</h4>
+              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                Your ISP routes the packet through fiber optic backbones, switches, and peering exchanges. Peering agreements, fiber congestion, and routing paths dictate the latency of this leg.
+              </p>
+            </div>
+            <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-[var(--text-primary)]">4. The Game Server</h4>
+              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                The server receives the action, simulates it in the global state, and broadcasts the result back. Server tick rate (e.g., 64Hz or 128Hz) determines how fast the server processes your packet.
+              </p>
+            </div>
+          </div>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            The total round-trip time (RTT) is the sum of these four legs. While you cannot control the ISP's routing or the game server's location, <strong>the local router is the primary source of controllable latency spikes</strong>. Under load, a misconfigured router can inflate a 15ms base ping to over 400ms due to packet queuing (bufferbloat) and transmission retries (Wi-Fi packet collisions).
           </p>
         </section>
 
-        {/* SECTION 5: MTU Optimization */}
+        {/* SECTION 4: Router Settings That Matter Most */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Cpu size={18} className="text-cyan-400" />
-            5. MTU Optimization: Stop Packet Fragmentation
+            <BarChart3 size={18} className="text-cyan-400" />
+            3. Hierarchy of Impact: Router Settings Prioritization
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            The <strong>MTU (Maximum Transmission Unit)</strong> defines the largest packet your network can transmit without splitting it into fragments. When a packet exceeds the MTU, it is fragmented into two smaller packets at each router hop — doubling the processing workload and adding latency at each point.
+            Not all router settings are created equal. Changing your DNS will have a negligible effect compared to fixing a Strict NAT or setting up Smart Queue Management (SQM) QoS. Use this hierarchy table to guide your optimization efforts:
           </p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs text-[var(--text-secondary)]">
+          <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+            <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
               <thead>
-                <tr className="border-b border-[var(--border-subtle)] text-[var(--text-muted)] font-mono">
-                  <th className="py-2.5 pr-4 font-semibold uppercase">Connection Type</th>
-                  <th className="py-2.5 px-4 font-semibold uppercase">Recommended MTU</th>
-                  <th className="py-2.5 pl-4 font-semibold uppercase">Reason</th>
+                <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                  <th className="px-4 py-3 text-left">Priority</th>
+                  <th className="px-4 py-3 text-left">Feature / Setting</th>
+                  <th className="px-4 py-3 text-left">Primary Benefit for Gaming</th>
+                  <th className="px-4 py-3 text-left">Estimated Impact</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[var(--border-subtle)]">
+              <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
                 <tr>
-                  <td className="py-3 pr-4 font-bold">Cable / Fiber (DHCP)</td>
-                  <td className="py-3 px-4 text-green-400 font-mono">1500</td>
-                  <td className="py-3 pl-4">Standard Ethernet maximum — no overhead</td>
+                  <td className="px-4 py-3 text-red-400 font-mono font-bold">1 (Critical)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">QoS Capping (Bufferbloat)</td>
+                  <td className="px-4 py-3">Prevents ping spikes and jitter during household downloads/uploads.</td>
+                  <td className="px-4 py-3 text-red-500 font-bold">Eliminates 90% of lag spikes</td>
                 </tr>
                 <tr>
-                  <td className="py-3 pr-4 font-bold">PPPoE (DSL / FTTH)</td>
-                  <td className="py-3 px-4 text-yellow-400 font-mono">1492</td>
-                  <td className="py-3 pl-4">1500 minus 8-byte PPPoE header</td>
+                  <td className="px-4 py-3 text-red-400 font-mono font-bold">2 (Critical)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">UPnP / Port Forwarding</td>
+                  <td className="px-4 py-3">Opens NAT to avoid relays, enabling voice chat and peer matchmaking.</td>
+                  <td className="px-4 py-3 text-red-500 font-bold">Opens NAT, drops ping by 30-80ms</td>
                 </tr>
                 <tr>
-                  <td className="py-3 pr-4 font-bold">WireGuard VPN</td>
-                  <td className="py-3 px-4 text-orange-400 font-mono">1420</td>
-                  <td className="py-3 pl-4">1500 minus WireGuard tunnel overhead (60-80 bytes)</td>
+                  <td className="px-4 py-3 text-yellow-400 font-mono font-bold">3 (High)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Physical Ethernet Connection</td>
+                  <td className="px-4 py-3">Replaces half-duplex Wi-Fi, eliminating wireless packet collisions.</td>
+                  <td className="px-4 py-3 text-yellow-400 font-bold">Prevents packet loss completely</td>
                 </tr>
                 <tr>
-                  <td className="py-3 pr-4 font-bold">OpenVPN</td>
-                  <td className="py-3 px-4 text-orange-400 font-mono">1380</td>
-                  <td className="py-3 pl-4">1500 minus OpenVPN encryption overhead (~120 bytes)</td>
+                  <td className="px-4 py-3 text-yellow-400 font-mono font-bold">4 (High)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi Band & DFS Settings</td>
+                  <td className="px-4 py-3">Bypasses co-channel interference and prevents dynamic radar disconnects.</td>
+                  <td className="px-4 py-3 text-yellow-400 font-bold">Stabilizes Wi-Fi jitter</td>
                 </tr>
                 <tr>
-                  <td className="py-3 pr-4 font-bold">Satellite (Starlink)</td>
-                  <td className="py-3 px-4 text-blue-400 font-mono">1500</td>
-                  <td className="py-3 pl-4">Starlink handles fragmentation internally</td>
+                  <td className="px-4 py-3 text-blue-400 font-mono font-bold">5 (Medium)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">MTU Optimization</td>
+                  <td className="px-4 py-3">Prevents path packet fragmentation, reducing router CPU load.</td>
+                  <td className="px-4 py-3 text-blue-400 font-bold">Saves 10-20ms of routing overhead</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-blue-400 font-mono font-bold">6 (Low)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">DNS Servers Configuration</td>
+                  <td className="px-4 py-3">Speeds up initial domain queries for faster matchmaking lobbies.</td>
+                  <td className="px-4 py-3 text-blue-400 font-bold">Improves connection time only</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl font-mono text-xs text-green-400 space-y-2">
-            <div className="text-[var(--text-primary)] font-sans font-bold text-xs">Find Your Optimal MTU (Windows):</div>
-            <pre className="overflow-x-auto">{`# Start at payload 1472 (1472 + 28 IP/ICMP headers = 1500 MTU)
-ping -l 1472 -f 8.8.8.8
-
-# If "Packet needs to be fragmented" error:
-ping -l 1452 -f 8.8.8.8
-ping -l 1432 -f 8.8.8.8
-
-# When ping succeeds without fragmentation:
-# Your MTU = that payload size + 28
-
-# Set MTU in router WAN settings to this value.`}</pre>
-          </div>
         </section>
 
-        {/* SECTION 6: Wi-Fi Band & Channel Optimization */}
+        {/* SECTION 5: Best QoS Settings */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Wifi size={18} className="text-cyan-400" />
-            6. Wi-Fi Band, Channel & Width Optimization for Gaming
+            <BarChart3 size={18} className="text-cyan-400" />
+            4. Smart Queue Management & Best QoS Settings
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            If wired Ethernet is not possible, proper Wi-Fi configuration can substantially reduce wireless latency. The most impactful settings are band selection, channel selection, and channel width:
+            Quality of Service (QoS) configurations differ dramatically based on router hardware. Basic QoS (found in old or cheap routers) uses simple packet prioritization based on port numbers or IP ranges. If a download is saturating your connection, basic QoS will still struggle to keep gaming latency low because it doesn't solve the underlying buffer queuing.
           </p>
-          <div className="space-y-4">
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            Modern optimization relies on <strong>Smart Queue Management (SQM)</strong>. SQM uses active queue management algorithms to keep your network buffers empty:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="text-sm font-bold text-green-400">Band Selection: Always Use 5 GHz or 6 GHz</h3>
+              <h4 className="text-xs font-bold text-cyan-400 font-mono">FQ-CoDel (Fair Queueing Controlled Delay)</h4>
               <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                The 2.4 GHz band operates in the same spectrum as Bluetooth devices, microwave ovens, and baby monitors. It is shared by virtually every Wi-Fi network in your neighborhood, causing severe co-channel interference. This interference causes retransmissions that add random latency spikes. The 5 GHz band has 25 non-overlapping channels (vs. 3 on 2.4 GHz), far less interference, and lower base latency. Wi-Fi 6E's 6 GHz band is interference-free on most residential networks.
+                FQ-CoDel breaks down your network traffic into separate sub-queues (one for each data flow). It automatically prioritizes packets from small, low-bandwidth flows (like UDP gaming packets) while penalizing large bulk flows (like downloads). It actively discards packets from bloated queues to force TCP scaling, keeping overall buffers empty.
               </p>
             </div>
             <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="text-sm font-bold text-yellow-400">Channel Selection: Use Fixed Non-Overlapping Channels</h3>
+              <h4 className="text-xs font-bold text-emerald-400 font-mono">CAKE (Common Applications Kept Enhanced)</h4>
               <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Set your router to a fixed Wi-Fi channel rather than Auto. Auto-channel selection can switch channels mid-session when it detects interference, dropping your connection for 1-3 seconds. For 5 GHz, use channels <strong>36, 40, 44, or 48</strong> (UNII-1 band — these do not require DFS radar avoidance and never trigger automatic channel switches). For 2.4 GHz, use channels <strong>1, 6, or 11</strong> only (the three non-overlapping channels).
-              </p>
-            </div>
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="text-sm font-bold text-blue-400">Channel Width: Use 80 MHz for 5 GHz Gaming</h3>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                80 MHz channel width provides excellent throughput (up to 433 Mbps per stream) while maintaining stable channel availability. Avoid 160 MHz — it uses DFS channels that are subject to radar detection interruptions, causing your router to switch channels automatically. For 2.4 GHz, always use 20 MHz to avoid overlap with neighboring networks.
-              </p>
-            </div>
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="text-sm font-bold text-purple-400">Disable Band Steering for Gaming Devices</h3>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Band Steering automatically moves devices between 2.4 GHz and 5 GHz based on signal strength. While useful for phones and laptops, it is harmful for gaming — a mid-session band switch drops the connection for 1-5 seconds. Disable Band Steering globally or create a separate SSID for the 5 GHz band and connect your gaming device only to that SSID. This locks it to 5 GHz permanently.
+                CAKE is a more advanced successor to FQ-CoDel. It handles bandwidth shaping internally and incorporates host fairness (preventing a single laptop from hogging the connection). It automatically parses diffserv markings to classify gaming traffic and manages overhead calculations for DSL, cable, and fiber encapsulation natively.
               </p>
             </div>
           </div>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            For step-by-step instructions on setting up advanced queuing algorithms on compatible firmware, read our comprehensive guide on{" "}
+            <Link href="/best-qos-settings-for-gaming" className="text-[var(--brand-400)] hover:underline">Best QoS Settings for Gaming</Link>.
+          </p>
         </section>
 
-        {/* SECTION 7: DNS for Gaming */}
+        {/* SECTION 6: Bufferbloat Explained */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Globe size={18} className="text-cyan-400" />
-            7. DNS Configuration for Faster Game Server Resolution
+            <Activity size={18} className="text-cyan-400" />
+            5. Bufferbloat: The Latency Silent Killer
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            DNS does not directly reduce in-game ping, but slow DNS resolution adds measurable delay to game server connection establishment, lobby joins, and matchmaking lookups. ISP DNS resolvers are often congested and slow — switching to a fast resolver reduces these delays by 50-200ms.
+            To understand why bandwidth capping is necessary, we must understand <strong>Bufferbloat</strong>. Routers are designed with physical memory buffers. When data arrives from your devices faster than your internet line can transmit it, the excess packets are written to this memory buffer to prevent packet loss.
           </p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs text-[var(--text-secondary)]">
-              <thead>
-                <tr className="border-b border-[var(--border-subtle)] text-[var(--text-muted)] font-mono">
-                  <th className="py-2.5 pr-4 font-semibold uppercase">DNS Provider</th>
-                  <th className="py-2.5 px-4 font-semibold uppercase">Primary</th>
-                  <th className="py-2.5 px-4 font-semibold uppercase">Secondary</th>
-                  <th className="py-2.5 pl-4 font-semibold uppercase">Best For</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[var(--border-subtle)]">
-                <tr>
-                  <td className="py-3 pr-4 font-bold text-orange-400">Cloudflare</td>
-                  <td className="py-3 px-4 font-mono">1.1.1.1</td>
-                  <td className="py-3 px-4 font-mono">1.0.0.1</td>
-                  <td className="py-3 pl-4">Fastest globally, privacy-focused</td>
-                </tr>
-                <tr>
-                  <td className="py-3 pr-4 font-bold text-blue-400">Google</td>
-                  <td className="py-3 px-4 font-mono">8.8.8.8</td>
-                  <td className="py-3 px-4 font-mono">8.8.4.4</td>
-                  <td className="py-3 pl-4">Extremely reliable, wide anycast coverage</td>
-                </tr>
-                <tr>
-                  <td className="py-3 pr-4 font-bold text-green-400">Quad9</td>
-                  <td className="py-3 px-4 font-mono">9.9.9.9</td>
-                  <td className="py-3 px-4 font-mono">149.112.112.112</td>
-                  <td className="py-3 pl-4">Malware-blocking, privacy-focused</td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl space-y-3">
+            <h4 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wide">
+              Concrete Example: The Saturation Queue
+            </h4>
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+              Suppose you have a fiber plan with 20 Mbps upload speed. If a smart home camera starts uploading a high-definition recording, it will attempt to push data at 25 Mbps. Your router receives 25 Mbps of data but can only send 20 Mbps. The extra 5 Mbps of packets must wait in the router's memory queue.
+            </p>
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+              If the buffer is large, it can hold up to 500 milliseconds (half a second) of queued data. When you click to shoot in your game, your game packet arrives at the router. Instead of transmitting immediately, it must wait behind the queued security camera packets. The result: your ping jumps from 20ms to 420ms, causing immediate lag and desync.
+            </p>
           </div>
-          <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-            Set DNS on your <strong>router</strong> (not just the console) so all devices benefit. In your router admin panel, find the WAN or Internet settings and enter the primary and secondary DNS. For console-specific DNS optimization, see our{" "}
-            <Link href="/best-dns-for-gaming" className="text-[var(--brand-400)] hover:underline">Best DNS for Gaming guide</Link>.
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            By capping your router's total speed at 90% of your actual line rate (e.g., setting the router's limit to 18 Mbps on a 20 Mbps line), the bottleneck is moved from the ISP's modem (which has unmanaged buffers) to the router itself. The router's SQM algorithm can now actively drop or queue bulk traffic before it ever saturates the line, keeping the buffer completely empty and maintaining a flat ping.
           </p>
         </section>
 
-        {/* SECTION 8: SIP ALG & Firewall Settings */}
+        {/* SECTION 7: NAT Configuration */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Shield size={18} className="text-cyan-400" />
-            8. Firewall & SIP ALG Settings That Break Gaming
+            6. Deep NAT Configuration: Open, Moderate & Strict
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            Several router security features that are beneficial for general use cause significant problems for gaming:
+            Network Address Translation (NAT) is what allows multiple devices in your home to share a single public IP address. However, NAT can interfere with multiplayer games that rely on inbound socket connections for matchmaking, voice communication, and hosting:
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-xs md:text-sm text-[var(--text-muted)]">
-            <li>
-              <strong>SIP ALG (Application Layer Gateway):</strong> Intercepts and rewrites UDP packets it misidentifies as VoIP SIP signals. This corrupts port forwarding rules and UPnP maps silently. <strong>Disable SIP ALG immediately</strong> on any gaming router. Found under: Firewall &gt; ALG (TP-Link), WAN &gt; NAT Passthrough (ASUS), ADVANCED &gt; Security &gt; WAN Setup (Netgear).
-            </li>
-            <li>
-              <strong>DoS / DDoS Protection (overly aggressive):</strong> Routers with strict DoS protection can throttle or block UDP gaming traffic, mistaking high-frequency game state packets for a flood attack. If you experience disconnections after extended gaming sessions, reduce DoS sensitivity or disable UDP flood protection.
-            </li>
-            <li>
-              <strong>IGMP Snooping:</strong> Can block UPnP discovery multicast packets (239.255.255.250), preventing consoles from registering dynamic port mappings. If UPnP fails to open NAT, disable IGMP Snooping under LAN settings and retry.
-            </li>
-            <li>
-              <strong>IPv6 Firewall (when IPv6 is active):</strong> If your network uses IPv6, ensure the IPv6 firewall has exceptions for gaming traffic. Some routers default to blocking all unsolicited IPv6 inbound traffic, which can cause NAT-type issues on platforms that prefer IPv6.
-            </li>
-          </ul>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div className="p-4 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-green-400">Open NAT (Type 1)</h4>
+              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                All inbound traffic on game-specific ports is allowed to reach your console. You can connect to all players, host lobbies, and hear voice chat without restriction.
+              </p>
+            </div>
+            <div className="p-4 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-yellow-400">Moderate NAT (Type 2)</h4>
+              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                Some ports are forwarded, allowing communication with most players. You may struggle to connect to players with Strict NAT, and you cannot host custom sessions.
+              </p>
+            </div>
+            <div className="p-4 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-red-400">Strict NAT (Type 3)</h4>
+              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                All inbound ports are closed. Your game must route through third-party relay servers, adding up to 80ms of latency, disabling voice chat, and breaking matchmaking queues.
+              </p>
+            </div>
+          </div>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            If your router reports a Strict NAT type, follow our guide on{" "}
+            <Link href="/nat-type-strict" className="text-[var(--brand-400)] hover:underline">Fixing Strict NAT Types</Link> to configure exceptions. Additionally, if your router's upstream interface is assigned a private IP address by your ISP, see our guide on{" "}
+            <Link href="/double-nat-detected" className="text-[var(--brand-400)] hover:underline">Resolving Double NAT Networks</Link> to bridge your gateway settings.
+          </p>
         </section>
 
-        {/* SECTION 9: Advanced Wireless Settings */}
+        {/* SECTION 8: Port Forwarding Settings */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Zap size={18} className="text-cyan-400" />
-            9. Advanced Wireless Settings for Wi-Fi Gaming
+            <Network size={18} className="text-cyan-400" />
+            7. Manual Port Forwarding for Stable Lobby Connections
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            If you must use Wi-Fi for gaming, configure these advanced wireless parameters:
+            When UPnP fails, manual port forwarding is required. Port forwarding maps specific external internet ports directly to your gaming console or PC. This bypasses the NAT firewall for those specific channels.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-3">
+            <h4 className="text-xs font-bold text-[var(--text-primary)]">Common Port Configurations by Platform</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div className="space-y-1">
+                <span className="font-bold text-[var(--text-primary)]">PC Gaming (Steam, Battle.net)</span>
+                <p className="text-[11px] text-[var(--text-muted)] font-mono">
+                  TCP: 27015-27030, 27036 | UDP: 27015, 27031-27036
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-bold text-[var(--text-primary)]">Xbox Series X / S</span>
+                <p className="text-[11px] text-[var(--text-muted)] font-mono">
+                  TCP: 3074 | UDP: 88, 500, 3074, 3544, 4500
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-bold text-[var(--text-primary)]">PlayStation 5 (PS5)</span>
+                <p className="text-[11px] text-[var(--text-muted)] font-mono">
+                  TCP: 3478-3480 | UDP: 3074, 3478-3479
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-bold text-[var(--text-primary)]">Nintendo Switch</span>
+                <p className="text-[11px] text-[var(--text-muted)] font-mono">
+                  UDP: 1024-65535 (P2P Matchmaking Range)
+                </p>
+              </div>
+            </div>
+          </div>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            Remember: to configure manual port forwarding, you must first assign a static local IP to your device to prevent the rules from breaking when your router restarts. If your manual rules are not registering, read our guide on{" "}
+            <Link href="/port-forwarding-not-working" className="text-[var(--brand-400)] hover:underline">Troubleshooting Port Forwarding Issues</Link>.
+          </p>
+        </section>
+
+        {/* SECTION 9: Ethernet vs Wi-Fi */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Wifi size={18} className="text-cyan-400" />
+            8. Ethernet vs. Wi-Fi: The Physical Layer Truth
+          </h2>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            The difference between wired Ethernet and wireless Wi-Fi is not about throughput (speed); it is about media access control. Ethernet cables support full-duplex communication over dedicated copper lines, whereas Wi-Fi is a shared, half-duplex medium:
+          </p>
+          <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+            <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
+              <thead>
+                <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                  <th className="px-4 py-3 text-left">Metric</th>
+                  <th className="px-4 py-3 text-left">Wired (Cat6 Ethernet)</th>
+                  <th className="px-4 py-3 text-left">Wireless (Wi-Fi 6E / 7)</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Base Latency Overhead</td>
+                  <td className="px-4 py-3 text-green-400 font-mono font-bold">&lt; 1 ms</td>
+                  <td className="px-4 py-3 text-yellow-400 font-mono">1.5 - 5 ms</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Jitter (Latency Variance)</td>
+                  <td className="px-4 py-3 text-green-400 font-mono font-bold">&lt; 0.2 ms</td>
+                  <td className="px-4 py-3 text-red-400 font-mono">2.0 - 45 ms (interference spikes)</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Packet Loss (Idle Network)</td>
+                  <td className="px-4 py-3 text-green-400 font-mono font-bold">0.00%</td>
+                  <td className="px-4 py-3 text-yellow-400 font-mono">0.02% - 1.5%</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Transmission Mode</td>
+                  <td className="px-4 py-3 font-semibold">Full-Duplex (simultaneous Tx/Rx)</td>
+                  <td className="px-4 py-3 text-[var(--text-muted)]">Half-Duplex (wait-to-talk collision avoidance)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            On Wi-Fi, your device must listen to the air before sending data to ensure no other device is transmitting (using CSMA/CA). If another device transmits, your device must wait, adding random queue delays. If a collision occurs anyway, the packet is discarded and retransmitted, resulting in a sudden 30-100ms lag spike in your game.
+          </p>
+        </section>
+
+        {/* SECTION 10: Best Wi-Fi Settings for Gaming */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Wifi size={18} className="text-cyan-400" />
+            9. Wireless Band Configuration: Channel Locking & Width
+          </h2>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            If you cannot route an Ethernet cable, configure these specific Wi-Fi settings to minimize wireless jitter:
+          </p>
+          <div className="space-y-4">
             <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="text-sm font-bold text-[var(--text-primary)]">Enable MU-MIMO</h3>
+              <h3 className="text-sm font-bold text-green-400">Avoid DFS (Dynamic Frequency Selection) Channels</h3>
               <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Multi-User MIMO allows your router to communicate with multiple devices simultaneously. Without it, devices take turns using the wireless medium, adding queue delay. Enable MU-MIMO under Advanced Wireless settings on all routers that support Wi-Fi 5 (802.11ac) or newer.
+                DFS channels (52-144 on the 5 GHz band) share frequency spectrum with weather radar and military systems. If your router detects a radar sweep on a DFS channel, it is legally required to disconnect all devices immediately and switch to a non-DFS channel. This causes a sudden 30-second disconnect. <strong>Lock your 5 GHz SSID to channels 36, 40, 44, or 48 (UNII-1 band)</strong> to avoid DFS shutdowns.
               </p>
             </div>
             <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="text-sm font-bold text-[var(--text-primary)]">Enable Beamforming</h3>
+              <h3 className="text-sm font-bold text-yellow-400">Lock Channel Width to 80 MHz for 5 GHz</h3>
               <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Beamforming focuses the wireless signal toward your gaming device rather than broadcasting omnidirectionally. This improves RSSI (signal strength) and reduces interference. Explicit beamforming (requires compatible client) is more effective than implicit beamforming.
-              </p>
-            </div>
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="text-sm font-bold text-[var(--text-primary)]">Disable Airtime Fairness</h3>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Airtime Fairness gives every device equal airtime regardless of connection speed. This causes fast Wi-Fi 6 devices (your gaming console) to wait for slow legacy devices (IoT sensors, old phones). Disable it to let faster devices use the channel efficiently.
-              </p>
-            </div>
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="text-sm font-bold text-[var(--text-primary)]">Set Transmit Power to High</h3>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Under Advanced Wireless settings, set transmit power to High or 100%. Low transmit power causes your gaming device to stay associated with the router at a lower MCS rate, reducing throughput and increasing retry rates. Higher power maintains a cleaner signal at distance.
+                Setting your 5 GHz channel width to 160 MHz increases peak speed but doubles the frequency footprint, making the signal highly susceptible to co-channel interference. An 80 MHz channel width strikes the perfect balance for gaming, providing stable throughput and lower co-channel collisions.
               </p>
             </div>
           </div>
         </section>
 
-        {/* SECTION 10: Router Hardware Recommendations */}
-        <section className="space-y-4">
+        {/* SECTION 11: Router Brand Settings */}
+        <section className="space-y-6">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <HardDrive size={18} className="text-cyan-400" />
-            10. When Router Hardware Is the Bottleneck
+            <Settings size={18} className="text-cyan-400" />
+            10. Exact Menu Paths by Router Brand
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            Software optimization has limits. If your router's CPU is too slow to process QoS rules at wire speed, or if its NAT hardware offload is disabled, even the best settings won't help. Signs that your hardware is the bottleneck:
+            Every router manufacturer organizes their menu settings differently. Locate your brand below to find the exact configuration options:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-xs md:text-sm text-[var(--text-muted)]">
-            <li><strong>Consistently high CPU usage</strong> in the router's admin panel (&gt;70% idle).</li>
-            <li><strong>Ping spikes only when QoS is enabled</strong> — the router CPU cannot classify traffic at full line speed.</li>
-            <li><strong>Throughput drops below your plan speed</strong> when connecting multiple devices simultaneously.</li>
-            <li><strong>Router age over 4-5 years</strong> — older routers lack hardware NAT acceleration found in modern SoCs.</li>
-          </ul>
+          <div className="space-y-4">
+            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="text-sm font-bold text-[var(--text-primary)]">TP-Link (Archer / Deco Series)</h4>
+              <ul className="list-disc pl-5 text-xs text-[var(--text-muted)] space-y-1">
+                <li><strong>QoS:</strong> Advanced &gt; QoS &gt; Enable QoS. Cap values at 90% of speed.</li>
+                <li><strong>UPnP:</strong> Advanced &gt; NAT Forwarding &gt; UPnP &gt; Enable.</li>
+                <li><strong>SIP ALG:</strong> Advanced &gt; Security &gt; ALG &gt; Disable SIP ALG.</li>
+                <li><strong>Wi-Fi Channels:</strong> Advanced &gt; Wireless &gt; Wireless Settings &gt; Choose 5GHz &gt; Lock Channel to 36 &gt; Width to 80MHz.</li>
+              </ul>
+            </div>
+            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="text-sm font-bold text-[var(--text-primary)]">ASUS (RT / ROG Merlin Series)</h4>
+              <ul className="list-disc pl-5 text-xs text-[var(--text-muted)] space-y-1">
+                <li><strong>QoS:</strong> Adaptive QoS &gt; QoS &gt; Enable QoS &gt; Choose Custom &gt; Drag Gaming to top.</li>
+                <li><strong>UPnP:</strong> WAN &gt; Connection &gt; Enable UPnP &gt; Yes.</li>
+                <li><strong>SIP ALG:</strong> WAN &gt; NAT Passthrough &gt; SIP Passthrough &gt; Set to Disable.</li>
+                <li><strong>Wi-Fi Channels:</strong> Wireless &gt; General &gt; Band: 5GHz &gt; Control Channel: 44 &gt; Width: 80MHz.</li>
+              </ul>
+            </div>
+            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="text-sm font-bold text-[var(--text-primary)]">Netgear (Nighthawk / RAX Series)</h4>
+              <ul className="list-disc pl-5 text-xs text-[var(--text-muted)] space-y-1">
+                <li><strong>QoS:</strong> ADVANCED &gt; Setup &gt; QoS Setup &gt; Enable WMM &amp; Turn on Upstream QoS.</li>
+                <li><strong>UPnP:</strong> ADVANCED &gt; Advanced Setup &gt; UPnP &gt; Turn on UPnP.</li>
+                <li><strong>SIP ALG:</strong> ADVANCED &gt; Security &gt; WAN Setup &gt; Check Disable SIP ALG.</li>
+                <li><strong>Wi-Fi Channels:</strong> ADVANCED &gt; Setup &gt; Wireless Settings &gt; Channel: 48 &gt; Mode: Up to 1733Mbps (80MHz).</li>
+              </ul>
+            </div>
+            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="text-sm font-bold text-[var(--text-primary)]">Linksys (MR / Max-Stream Series)</h4>
+              <ul className="list-disc pl-5 text-xs text-[var(--text-muted)] space-y-1">
+                <li><strong>QoS:</strong> Device Prioritization &gt; Enable &gt; Add your gaming console to High Priority List.</li>
+                <li><strong>UPnP:</strong> Connectivity &gt; Administration &gt; Check UPnP Enabled.</li>
+                <li><strong>SIP ALG:</strong> Security &gt; Firewall &gt; ALG &gt; Uncheck SIP.</li>
+                <li><strong>Wi-Fi Channels:</strong> Wi-Fi Settings &gt; Advanced &gt; 5GHz &gt; Lock Channel to 40 &gt; Width to 80MHz.</li>
+              </ul>
+            </div>
+            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="text-sm font-bold text-[var(--text-primary)]">Huawei (HG / EG / AX Series Gateways)</h4>
+              <ul className="list-disc pl-5 text-xs text-[var(--text-muted)] space-y-1">
+                <li><strong>QoS:</strong> Advanced &gt; QoS &gt; Traffic Control &gt; Add Rule &gt; Source IP to Console IP &gt; Priority to High.</li>
+                <li><strong>UPnP:</strong> Advanced &gt; Application &gt; UPnP &gt; Enable UPnP.</li>
+                <li><strong>SIP ALG:</strong> Security &gt; ONT Security &gt; Application Layer Gateway &gt; Disable SIP.</li>
+                <li><strong>Wi-Fi Channels:</strong> My Wi-Fi &gt; Advanced Wi-Fi Settings &gt; 5GHz channel &gt; Choose 36 &gt; Width: 80MHz.</li>
+              </ul>
+            </div>
+            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="text-sm font-bold text-[var(--text-primary)]">ZTE (F670 / ZXHN Gateways)</h4>
+              <ul className="list-disc pl-5 text-xs text-[var(--text-muted)] space-y-1">
+                <li><strong>QoS:</strong> Internet &gt; QoS &gt; Queue Classification &gt; Prioritize UDP ports 3074 / 27015.</li>
+                <li><strong>UPnP:</strong> Application &gt; UPnP &gt; Enable UPnP.</li>
+                <li><strong>SIP ALG:</strong> Application &gt; ALG &gt; Uncheck SIP.</li>
+                <li><strong>Wi-Fi Channels:</strong> Local Network &gt; WLAN &gt; WLAN Advanced &gt; 5G Channel: 48 &gt; Bandwidth: 80MHz.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 12: DNS Settings for Gaming */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Globe size={18} className="text-cyan-400" />
+            11. DNS Servers & Resolution Lookup Latency
+          </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            For gaming-specific hardware, look for routers with dedicated gaming processors (ASUS ROG series, Netgear Nighthawk Pro, TP-Link Archer GX), hardware NAT offload, and 1.5-2.4 GHz dual-core or quad-core CPUs. These handle QoS classification at multi-gigabit speeds without CPU bottlenecks.
+            As explained in the FAQ, changing your DNS resolver (like Cloudflare 1.1.1.1 or Google 8.8.8.8) does not lower your in-game round-trip ping. However, public DNS resolvers are highly optimized compared to local ISP resolvers, and they use global anycast networks to resolve server queries instantly.
+          </p>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            By switching your router's upstream DNS, you resolve matchmaking hostnames, authentication checkpoints, and session lobbies much faster. Learn more and run tests using our detailed guide on{" "}
+            <Link href="/best-dns-for-gaming" className="text-[var(--brand-400)] hover:underline">Best DNS for Gaming</Link>.
           </p>
         </section>
 
-        {/* SECTION 11: Windows Gaming Network Optimizations */}
+        {/* SECTION 13: MTU Optimization */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Terminal size={18} className="text-cyan-400" />
-            11. Windows Network Stack Optimizations for PC Gaming
+            <Cpu size={18} className="text-cyan-400" />
+            12. Tuning MTU & Preventing Packet Fragmentation
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            Beyond router settings, Windows has network stack parameters that affect gaming latency:
+            If your Maximum Transmission Unit (MTU) setting is larger than your ISP's threshold, your router must split outgoing packets into two fragments. The second packet carries the remaining bytes but incurs a full secondary header (20 bytes IP header + 8 bytes UDP header). This is called <strong>packet fragmentation</strong>.
           </p>
-          <pre className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl font-mono text-xs text-green-400 overflow-x-auto">
-{`# Run as Administrator in PowerShell
-
-# Disable Nagle's Algorithm (reduces TCP buffering latency)
-Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\*" `
-  + `-Name "TcpAckFrequency" -Value 1 -Type DWord
-
-# Disable TCP Auto-Tuning (can cause issues with gaming UDP flows)
-netsh interface tcp set global autotuninglevel=disabled
-
-# Set DNS to Cloudflare for faster resolution
-Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses ("1.1.1.1","1.0.0.1")
-
-# Flush DNS cache after changing DNS servers
-Clear-DnsClientCache
-
-# Disable Network Throttling Index (removes artificial throughput limit)
-Set-ItemProperty -Path "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile" \`
-  -Name "NetworkThrottlingIndex" -Value 0xffffffff -Type DWord
-
-# Set SystemResponsiveness to 0 for maximum gaming priority
-Set-ItemProperty -Path "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile" \`
-  -Name "SystemResponsiveness" -Value 0 -Type DWord`}
-          </pre>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            Fragmentation increases router processing overhead, multiplies packet headers, and introduces packet drop risks (if either fragment is lost, the entire original payload is discarded).
+          </p>
+          <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl font-mono text-xs text-cyan-400 space-y-3">
+            <h4 className="text-xs font-bold text-[var(--text-primary)] font-sans">Testing for Fragmentation (Windows Command Prompt)</h4>
+            <p className="text-xs text-[var(--text-muted)] font-sans">
+              Run this command to send a packet with a payload size of 1472 bytes and the 'Do Not Fragment' (-f) flag set:
+            </p>
+            <pre className="bg-black/30 p-3 rounded-lg overflow-x-auto">ping 8.8.8.8 -f -l 1472</pre>
+            <p className="text-xs text-[var(--text-muted)] font-sans">
+              If you receive the error <code>Packet needs to be fragmented but DF set</code>, your current network path cannot support a 1500-byte MTU. Decrease the payload size (-l value) by 10 (e.g. 1462, 1452, 1442) until the ping succeeds. <strong>Add 28 to your successful payload value</strong> to get your optimal MTU. Set this value in your router's WAN menu.
+            </p>
+          </div>
         </section>
 
-        {/* SECTION 12: Console-Specific Quick Optimizations */}
+        {/* SECTION 14: Gaming Console Optimization */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Gamepad2 size={18} className="text-cyan-400" />
-            12. Console-Specific Network Settings
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-3">
-              <h3 className="text-sm font-bold text-green-400">Xbox Series X/S Optimal Settings</h3>
-              <ul className="list-disc pl-4 space-y-2 text-xs text-[var(--text-muted)]">
-                <li>Settings &gt; General &gt; Network Settings &gt; Test NAT Type — target Open.</li>
-                <li>Set static IP via Settings &gt; General &gt; Network &gt; Advanced Settings &gt; IP Settings &gt; Manual.</li>
-                <li>Use DNS: 1.1.1.1 / 1.0.0.1 in Advanced Settings &gt; DNS Settings.</li>
-                <li>Enable Settings &gt; General &gt; Network &gt; Allow Xbox to manage bandwidth — lets Xbox optimize connection automatically.</li>
-              </ul>
-            </div>
-            <div className="glass-card p-5 border border-[var(--border-subtle)] rounded-xl space-y-3">
-              <h3 className="text-sm font-bold text-blue-400">PlayStation 5 Optimal Settings</h3>
-              <ul className="list-disc pl-4 space-y-2 text-xs text-[var(--text-muted)]">
-                <li>Settings &gt; Network &gt; Connection Status &gt; Test Internet Connection — target NAT Type 2.</li>
-                <li>Settings &gt; Network &gt; Set Up Internet Connection &gt; Advanced &gt; IP Address: Manual (static IP outside DHCP pool).</li>
-                <li>Set DNS: Primary 1.1.1.1, Secondary 1.0.0.1.</li>
-                <li>MTU: Set to 1500 (automatic is usually correct; reduce to 1480 if experiencing disconnects).</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 13: Verification & Benchmarking */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Settings size={18} className="text-cyan-400" />
-            13. Verify Your Optimizations: Before & After Testing
+            13. Console Network Settings: Xbox, PS5 & Switch
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            After applying router optimizations, run these tests to confirm improvements:
+            Apply these configurations directly inside your console's network setting submenus to optimize interaction with your router:
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
             <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h4 className="font-bold text-[var(--text-primary)]">Bufferbloat Test</h4>
-              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
-                Visit <code>waveform.com/tools/bufferbloat</code>. Run the test before and after enabling QoS. Your grade should improve from D/F to A/B. Ping under load should drop from 200-500ms to under 30ms.
-              </p>
+              <h4 className="font-bold text-green-400">Xbox Series X / S</h4>
+              <ul className="list-disc pl-4 space-y-1.5 text-[11px] text-[var(--text-muted)]">
+                <li>General &gt; Network Settings &gt; Advanced Settings &gt; DNS Settings &gt; Set Manual: 1.1.1.1 / 1.0.0.1.</li>
+                <li>Advanced Settings &gt; Alternate Port Selection &gt; Choose Manual and select a port other than 3074 if multiple Xboxes are active.</li>
+                <li>Go to Advanced Settings &gt; IP Settings &gt; Manual to set a static IP.</li>
+              </ul>
             </div>
             <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h4 className="font-bold text-[var(--text-primary)]">NAT Type Test</h4>
-              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
-                Use our <Link href="/nat-type-checker" className="text-[var(--brand-400)] hover:underline">NAT Type Checker</Link> or run the network test on your console. Target: Open or Moderate. Use our <Link href="/port-checker" className="text-[var(--brand-400)] hover:underline">Port Checker</Link> to verify forwarded ports are open.
-              </p>
+              <h4 className="font-bold text-blue-400">PlayStation 5 (PS5)</h4>
+              <ul className="list-disc pl-4 space-y-1.5 text-[11px] text-[var(--text-muted)]">
+                <li>Settings &gt; Network &gt; Set Up Internet Connection &gt; Hover over network &gt; Press Options &gt; Advanced Settings.</li>
+                <li>Set IP Address to Manual, enter static IP outside DHCP range.</li>
+                <li>Set DNS to Cloudflare: Primary 1.1.1.1, Secondary 1.0.0.1.</li>
+                <li>Set MTU to 1500 (standard fiber/cable) or 1492 (PPPoE DSL).</li>
+              </ul>
             </div>
             <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h4 className="font-bold text-[var(--text-primary)]">Ping Stability Test</h4>
-              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
-                Run <code>ping -t 8.8.8.8</code> in Windows for 2 minutes while a household member streams 4K video. Good result: ping stays under 30ms with no spikes above 50ms. Spikes indicate QoS is not configured correctly.
-              </p>
+              <h4 className="font-bold text-red-400">Nintendo Switch</h4>
+              <ul className="list-disc pl-4 space-y-1.5 text-[11px] text-[var(--text-muted)]">
+                <li>System Settings &gt; Internet &gt; Internet Settings &gt; Select Network &gt; Change Settings.</li>
+                <li>Set DNS to Manual: Primary 8.8.8.8, Secondary 8.8.4.4.</li>
+                <li>Set MTU to 1400 (Nintendo defaults to 1400 which aligns with their P2P relay encapsulation).</li>
+                <li>If matchmaking fails consistently, enable static IP and place the Switch in DMZ.</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Related Guides */}
+        {/* SECTION 15: PC Gaming Optimization */}
         <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)]">
-            Related Gaming & NAT Guides
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Terminal size={18} className="text-cyan-400" />
+            14. PC Gaming Client Configurations
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              { href: "/nat-type-strict", title: "NAT Type Strict Fix", desc: "Fix Strict NAT with UPnP, port forwarding, and DMZ on all router brands." },
-              { href: "/double-nat-detected", title: "Double NAT Detected Fix", desc: "Resolve cascaded NAT blocking port forwarding and peer connections." },
-              { href: "/high-ping-fix", title: "High Ping Fix Guide", desc: "Diagnose bufferbloat, routing issues, and ISP-level latency problems." },
-              { href: "/port-forwarding-not-working", title: "Port Forwarding Not Working", desc: "Fix UPnP conflicts, CGNAT, and NAT table mapping failures." },
-              { href: "/best-dns-for-gaming", title: "Best DNS for Gaming", desc: "Benchmarked DNS resolvers for lowest latency game server resolution." },
-              { href: "/nat-type-checker", title: "NAT Type Checker", desc: "Live tool to detect your current NAT filtering type and open ports." },
-            ].map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="glass-card p-4 border border-[var(--border-subtle)] rounded-xl hover:border-[var(--brand-800)] transition-all duration-200 group"
-              >
-                <h3 className="text-sm font-semibold text-[var(--text-primary)] group-hover:text-[var(--brand-400)] transition-colors">
-                  {link.title}
-                </h3>
-                <p className="text-[11px] text-[var(--text-muted)] mt-1 leading-relaxed">{link.desc}</p>
-              </Link>
-            ))}
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            PC gaming launchers can saturate your network buffers in the background. Apply these client-level settings to protect your active sessions:
+          </p>
+          <ul className="list-disc pl-6 space-y-2.5 text-xs md:text-sm text-[var(--text-muted)]">
+            <li>
+              <strong>Steam:</strong> Settings &gt; Downloads &gt; check <strong>Limit download speed</strong>. Set this cap to 80% of your maximum download speed. Also, uncheck <strong>Allow downloads during gameplay</strong> to prevent sudden game patches from spawning mid-match.
+            </li>
+            <li>
+              <strong>Riot Games (Valorant / League of Legends):</strong> Configure Riot Client settings to close completely during gameplay instead of minimizing to the tray, which stops telemetry background uploads.
+            </li>
+            <li>
+              <strong>Battle.net (Blizzard):</strong> Settings &gt; Downloads &gt; under <strong>Network Bandwidth</strong>, check <strong>Limit download speed of latest updates</strong> and cap it to 5000 KB/s (40 Mbps) to avoid buffer saturation.
+            </li>
+          </ul>
+        </section>
+
+        {/* SECTION 16: Advanced Diagnostics */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Terminal size={18} className="text-cyan-400" />
+            15. Advanced Diagnostics: Pinpointing Hops
+          </h2>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            When latency spikes occur, use these operating system diagnostics tools to identify exactly where the packets are delaying:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+            <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-[var(--text-primary)] font-sans">Windows Command Prompt</h4>
+              <p className="text-[11px] text-green-400 leading-relaxed">
+                <code>tracert 8.8.8.8</code>
+                <br />
+                Traces the IP address of each router hop. If hop 1 (router) is &gt;2ms, you have local Wi-Fi or cable issues.
+                <br /><br />
+                <code>pathping 8.8.8.8</code>
+                <br />
+                Calculates packet loss statistics over a 120-second window for each hop.
+              </p>
+            </div>
+            <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-[var(--text-primary)] font-sans">macOS Terminal</h4>
+              <p className="text-[11px] text-green-400 leading-relaxed">
+                <code>networkQuality</code>
+                <br />
+                Executes Apple's native bufferbloat and responsiveness test, reporting responsiveness in RPM (Roundtrips Per Minute).
+                <br /><br />
+                <code>traceroute 8.8.8.8</code>
+                <br />
+                Tracks routing hops to target destination.
+              </p>
+            </div>
+            <div className="p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
+              <h4 className="font-bold text-[var(--text-primary)] font-sans">Linux CLI</h4>
+              <p className="text-[11px] text-green-400 leading-relaxed">
+                <code>mtr -e 8.8.8.8</code>
+                <br />
+                Combines ping and traceroute into a live, interactive diagnostic chart showing real-time jitter and packet loss on each hop.
+                <br /><br />
+                <code>tracepath 8.8.8.8</code>
+                <br />
+                Traces network path and detects MTU bottlenecks.
+              </p>
+            </div>
           </div>
         </section>
 
+        {/* SECTION 17: When Your ISP Is The Problem */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Globe size={18} className="text-cyan-400" />
+            16. When the Latency Bottleneck Lies with Your ISP
+          </h2>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            If you have configured a wired connection, set up SQM QoS, and verified your MTU values, but still experience lag spikes, the issue lies outside your house. Common ISP-level bottlenecks include:
+          </p>
+          <ul className="list-disc pl-6 space-y-2.5 text-xs md:text-sm text-[var(--text-muted)]">
+            <li>
+              <strong>Peering Congestion:</strong> Your ISP routes traffic through cheap, congested transit exchanges. Even if your speed is high, your gaming packets sit in queues at these exchange points. Check our{" "}
+              <Link href="/high-ping-fix" className="text-[var(--brand-400)] hover:underline">High Ping Fix Guide</Link> to diagnose ISP routes.
+            </li>
+            <li>
+              <strong>Path Inefficiencies:</strong> Your ISP routes traffic to a game server 100 miles away by sending it through a transit city 400 miles away. Read our{" "}
+              <Link href="/packet-loss-test" className="text-[var(--brand-400)] hover:underline">Packet Loss Diagnostic Guide</Link> to isolate routing paths.
+            </li>
+            <li>
+              <strong>First-Hop Congestion (Node Over-Subscription):</strong> Your local neighborhood fiber cabinet or cable node is overloaded with active users during peak hours (7 PM to 11 PM). See our{" "}
+              <Link href="/how-to-fix-packet-loss" className="text-[var(--brand-400)] hover:underline">Packet Loss Resolution Guide</Link> for escalation scripts to send to your ISP.
+            </li>
+          </ul>
+        </section>
       </div>
     </TroubleshootingArticleShell>
   );
