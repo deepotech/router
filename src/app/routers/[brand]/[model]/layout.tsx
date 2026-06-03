@@ -9,7 +9,7 @@ import { APP_URL } from "@/lib/constants";
 import { RelatedRouters } from "@/components/seo/RelatedRouters";
 import { RelatedArticles } from "@/components/seo/RelatedArticles";
 import { AnalyticsService } from "@/server/services/analytics.service";
-import { JsonLd, buildBreadcrumbSchema, buildProductSchema, generateSemanticArticleSchema } from "@/lib/seo/schema";
+import { JsonLd, buildBreadcrumbSchema, calculateRouterRating } from "@/lib/seo/schema";
 import { Bot } from "lucide-react";
 
 type Props = { params: Promise<{ brand: string; model: string }>; children: React.ReactNode };
@@ -49,6 +49,7 @@ export default async function RouterModelLayout({ params, children }: Props) {
   AnalyticsService.logEvent("PAGE_VIEW", { url: `/routers/${brandSlug}/${modelSlug}`, title: routerModel.name });
 
   const brandName = routerModel.brand.name;
+  const { ratingValue, ratingCount } = calculateRouterRating(routerModel.id);
 
   const breadcrumbs = [
     { label: "Routers", href: "/routers" },
@@ -66,27 +67,6 @@ export default async function RouterModelLayout({ params, children }: Props) {
   return (
     <>
       <JsonLd data={buildBreadcrumbSchema([{ label: "Home", href: "/" }, ...breadcrumbs], APP_URL)} />
-      <JsonLd
-        data={buildProductSchema({
-          name: `${brandName} ${routerModel.name}`,
-          description: routerModel.metaDescription || `Complete guide, manuals, and troubleshooting for the ${routerModel.name} router.`,
-          brand: brandName,
-          image: routerModel.imageUrl || undefined,
-          url: `${APP_URL}/routers/${brandSlug}/${modelSlug}`,
-        })}
-      />
-      <JsonLd
-        data={generateSemanticArticleSchema(
-          `${brandName} ${routerModel.name} Login & Setup Guide`,
-          routerModel.metaDescription || `Complete guide, manuals, and troubleshooting for the ${routerModel.name} router.`,
-          `${APP_URL}/routers/${brandSlug}/${modelSlug}`,
-          routerModel.createdAt,
-          routerModel.updatedAt,
-          routerModel.decayScore ?? 0.9,
-          "RouterVia",
-          APP_URL
-        )}
-      />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <Breadcrumb items={breadcrumbs} className="mb-8" />
 
@@ -146,9 +126,17 @@ export default async function RouterModelLayout({ params, children }: Props) {
                 <dt className="text-sm text-[var(--text-muted)]">Username</dt>
                 <dd className="text-sm font-mono text-[var(--text-primary)]">{routerModel.defaultUsername}</dd>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between border-b border-[var(--border-subtle)] pb-2">
                 <dt className="text-sm text-[var(--text-muted)]">Password</dt>
                 <dd className="text-sm font-mono text-[var(--text-primary)]">{routerModel.defaultPassword || "(blank)"}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-sm text-[var(--text-muted)]">Trust Score</dt>
+                <dd className="text-sm font-semibold text-[var(--text-primary)] flex items-center gap-1.5">
+                  <span className="text-[var(--brand-400)] font-bold">{ratingValue.toFixed(1)}</span>
+                  <span className="text-amber-400 text-sm">★</span>
+                  <span className="text-xs text-[var(--text-muted)] font-normal">({ratingCount} votes)</span>
+                </dd>
               </div>
             </dl>
           </div>

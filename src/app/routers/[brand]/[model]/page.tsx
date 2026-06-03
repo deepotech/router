@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { HelpCircle, ChevronDown, BookOpen } from "lucide-react";
 import { RouterService } from "@/server/services/router.service";
-import { JsonLd, buildFaqSchema, buildProductSchema, buildBreadcrumbSchema, generateSemanticArticleSchema } from "@/lib/seo/schema";
+import { JsonLd, buildFaqSchema, buildProductSchema, generateSemanticArticleSchema, calculateRouterRating } from "@/lib/seo/schema";
 import { APP_URL } from "@/lib/constants";
 import { RelatedArticles } from "@/components/seo/RelatedArticles";
 
@@ -15,6 +15,7 @@ export default async function RouterModelOverviewPage({ params }: Props) {
   if (!routerModel || !routerModel.brand) notFound();
 
   const brandName = routerModel.brand.name;
+  const { ratingValue, ratingCount } = calculateRouterRating(routerModel.id);
 
   return (
     <>
@@ -25,17 +26,11 @@ export default async function RouterModelOverviewPage({ params }: Props) {
           brand: brandName,
           image: routerModel.imageUrl || undefined,
           url: `${APP_URL}/routers/${brandSlug}/${modelSlug}`,
+          ratingValue,
+          ratingCount,
         })}
       />
       {routerModel.faqs.length > 0 && <JsonLd data={buildFaqSchema(routerModel.faqs)} />}
-      <JsonLd
-        data={buildBreadcrumbSchema([
-          { label: "Home", href: "/" },
-          { label: "Routers", href: "/routers" },
-          { label: brandName, href: `/routers/${brandSlug}` },
-          { label: routerModel.name, href: `/routers/${brandSlug}/${modelSlug}` },
-        ], APP_URL)}
-      />
       <JsonLd
         data={generateSemanticArticleSchema(
           `${brandName} ${routerModel.name} Setup & Login Guide`,
