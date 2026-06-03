@@ -48,6 +48,7 @@ const footerLinks = {
     { label: "Best QoS Settings for Gaming", href: "/best-qos-settings-for-gaming" },
     { label: "Open NAT Type", href: "/open-nat-type" },
     { label: "Gaming Packet Loss Fix", href: "/gaming-packet-loss-fix" },
+    { label: "Gaming Jitter Fix", href: "/gaming-jitter-fix" },
   ],
   "Router Problems": [
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
