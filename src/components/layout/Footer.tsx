@@ -46,6 +46,7 @@ const footerLinks = {
     { label: "NAT Type Strict Fix", href: "/nat-type-strict" },
     { label: "Best Router Settings for Gaming", href: "/best-router-settings-for-gaming" },
     { label: "Best QoS Settings for Gaming", href: "/best-qos-settings-for-gaming" },
+    { label: "Open NAT Type", href: "/open-nat-type" },
   ],
   "Router Problems": [
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
