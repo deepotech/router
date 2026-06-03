@@ -52,6 +52,7 @@ const footerLinks = {
     { label: "Gaming Lag Spikes Fix", href: "/gaming-lag-spikes-fix" },
     { label: "Bufferbloat Fix", href: "/bufferbloat-fix" },
     { label: "Bufferbloat Test", href: "/bufferbloat-test" },
+    { label: "Gaming Network Optimization", href: "/gaming-network-optimization" },
   ],
   "Router Problems": [
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
