@@ -55,6 +55,7 @@ const footerLinks = {
     { label: "Gaming Network Optimization", href: "/gaming-network-optimization" },
     { label: "Best Router for Gaming", href: "/best-router-for-gaming" },
     { label: "Gaming Router vs Normal Router", href: "/gaming-router-vs-normal-router" },
+    { label: "Ethernet vs WiFi Gaming", href: "/ethernet-vs-wifi-gaming" },
   ],
   "Router Problems": [
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
