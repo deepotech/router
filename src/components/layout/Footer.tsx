@@ -57,6 +57,11 @@ const footerLinks = {
     { label: "Gaming Router vs Normal Router", href: "/gaming-router-vs-normal-router" },
     { label: "Ethernet vs WiFi Gaming", href: "/ethernet-vs-wifi-gaming" },
     { label: "WiFi 6 for Gaming", href: "/wifi-6-for-gaming" },
+    { label: "WiFi 7 for Gaming", href: "/wifi-7-for-gaming" },
+    { label: "Best Mesh WiFi for Gaming", href: "/best-mesh-wifi-for-gaming" },
+    { label: "Cat6 vs Cat8 for Gaming", href: "/cat6-vs-cat8-for-gaming" },
+    { label: "Powerline Adapter for Gaming", href: "/powerline-adapter-for-gaming" },
+    { label: "Gaming Switch vs Router", href: "/gaming-switch-vs-router" },
   ],
   "Router Problems": [
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
