@@ -264,6 +264,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${APP_URL}/best-router-for-gaming`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${APP_URL}/open-nat-type`,
       lastModified: now,
       changeFrequency: "weekly",

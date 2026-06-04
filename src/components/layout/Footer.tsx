@@ -53,6 +53,7 @@ const footerLinks = {
     { label: "Bufferbloat Fix", href: "/bufferbloat-fix" },
     { label: "Bufferbloat Test", href: "/bufferbloat-test" },
     { label: "Gaming Network Optimization", href: "/gaming-network-optimization" },
+    { label: "Best Router for Gaming", href: "/best-router-for-gaming" },
   ],
   "Router Problems": [
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
