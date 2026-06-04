@@ -4,7 +4,6 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
 import ConnectionOptimizerClient from "@/components/tools/ConnectionOptimizerClient";
 import {
-  Cpu,
   Zap,
   Wifi,
   Settings,
@@ -22,7 +21,8 @@ import {
   Gauge,
   Sliders,
   AlertCircle,
-  HelpCircle
+  Layers,
+  Cpu,
 } from "lucide-react";
 
 // =============================================================
@@ -30,21 +30,24 @@ import {
 // =============================================================
 
 export const metadata: Metadata = buildMetadata({
-  title: "Ethernet vs. Wi-Fi for Gaming: Ping, Jitter & Latency Guide | RouterVia",
+  title: "Ethernet vs Wi-Fi Gaming: Latency, Jitter & Packet Loss Guide | RouterVia",
   description:
-    "Is Ethernet actually better than Wi-Fi for gaming? Compare ping, packet loss, and jitter. Learn how Wi-Fi 7 compares to Cat6, and explore MoCA vs. Powerline adapters.",
+    "Is Ethernet really better for gaming? We compare wired vs wireless latency, jitter, packet loss, and bufferbloat across Wi-Fi 5, 6, 6E, and 7 with real-world gaming benchmarks.",
   canonical: "/ethernet-vs-wifi-gaming",
   keywords: [
     "ethernet vs wifi gaming",
     "is ethernet better for gaming",
-    "ethernet or wifi for gaming",
-    "gaming ethernet vs wireless",
+    "gaming ethernet vs wifi",
+    "wired vs wireless gaming",
     "best connection for gaming",
-    "gaming latency ethernet",
-    "wifi gaming lag",
+    "ethernet latency gaming",
+    "wifi gaming latency",
     "ethernet packet loss",
-    "ethernet gaming setup",
-    "wired gaming connection",
+    "wifi packet loss gaming",
+    "ethernet jitter gaming",
+    "wifi interference gaming",
+    "wired connection gaming",
+    "gaming network optimization",
   ],
 });
 
@@ -54,29 +57,29 @@ export const metadata: Metadata = buildMetadata({
 
 const breadcrumbs = [
   { name: "Gaming Tools", url: "/nat-type-checker" },
-  { name: "Ethernet vs WiFi Gaming", url: "/ethernet-vs-wifi-gaming" },
+  { name: "Ethernet vs Wi-Fi Gaming", url: "/ethernet-vs-wifi-gaming" },
 ];
 
 // =============================================================
-// Common Causes of Connection Lag
+// Common Causes
 // =============================================================
 
 const commonCauses = [
   {
-    title: "Radio Frequency Attenuation",
-    desc: "Plaster walls, concrete floors, and metal studs absorb electromagnetic waves, causing signal decay and wireless packet loss.",
-  },
-  {
     title: "Half-Duplex Airtime Contention",
-    desc: "Wireless routers operate on a shared medium where devices must wait for the channel to clear before transmitting, creating jitter.",
+    desc: "Wi-Fi devices share the same radio channel and must wait for it to be silent before transmitting, creating unpredictable queue delays.",
   },
   {
-    title: "Coaxial & Electrical Path Interference",
-    desc: "Powerline adapters suffer from circuit noise caused by heavy household appliances, corrupting data frames at Layer 2.",
+    title: "RF Interference & Signal Decay",
+    desc: "Microwaves, Bluetooth headsets, and neighboring routers corrupt wireless frames at the physical layer, forcing costly retransmissions.",
   },
   {
-    title: "Congested Wi-Fi Channels",
-    desc: "Neighboring networks on the same 2.4GHz or 5GHz channel collide, forcing retransmissions and high latency spikes.",
+    title: "DFS Channel Switching",
+    desc: "Wi-Fi 5GHz DFS channels must yield to radar signals. When triggered, the router drops all connections for up to 60 seconds to scan for interference.",
+  },
+  {
+    title: "Mesh Roaming Handoffs",
+    desc: "When moving between mesh nodes, the device temporarily disconnects during re-association, causing a latency spike of 500ms to 2,000ms mid-match.",
   },
 ];
 
@@ -85,697 +88,606 @@ const commonCauses = [
 // =============================================================
 
 const quickFixChecklist = [
-  "Connect your PC or console directly to your router with a Cat6 Ethernet cable to immediately bypass wireless interference.",
-  "If routing cables through walls is impossible, use MoCA adapters to send Ethernet signals over coaxial television lines.",
-  "Upgrade to a Wi-Fi 6E or Wi-Fi 7 system to utilize the clear, non-overlapping 6GHz wireless band.",
-  "Disable green power saving settings on your network adapter to prevent local port state delays.",
-  "Use a dynamic queue manager (SQM) on your router to prevent downloads from saturating your bandwidth.",
-  "Run a pathping diagnostic to verify if packet loss is occurring locally or at your ISP routing nodes.",
+  "Connect your gaming device with a Cat6 Ethernet cable for guaranteed zero-interference packet delivery.",
+  "If cabling is impossible, use MoCA 2.5 adapters over existing coaxial lines — adds less than 1ms latency.",
+  "Switch your Wi-Fi band to 6GHz (Wi-Fi 6E/7) which is interference-free and uncrowded.",
+  "Enable Smart Queue Management (SQM / CAKE) on your router to prevent bufferbloat under load.",
+  "Assign your gaming device a Static IP and place it in the highest QoS priority class.",
+  "Disable 'Green Ethernet' / 'Energy Efficient Ethernet (EEE)' on your network adapter to prevent port sleep delays.",
 ];
 
 // =============================================================
-// Step-by-Step Optimization (Renders inside Troubleshooting flow)
+// Troubleshooting Steps
 // =============================================================
 
 const troubleshootingSteps = [
   {
-    title: "Analyze Your Baseline Connection Path",
+    title: "Run a Continuous Ping Test to Isolate Local vs External Lag",
     description:
-      "Locate the physical path between your gaming rig and the router. Measure the cable distance for Ethernet or the number of wall barriers for Wi-Fi. Check if your network interface cards support gigabit and multi-gigabit speeds.",
-    tip: "Use Cat6 copper cables for runs under 100 feet. Avoid cheap flat CCA (Copper Clad Aluminum) cables as they break easily and increase line resistance.",
+      "Open a terminal and run: ping -t 8.8.8.8 (Windows) or ping 8.8.8.8 (macOS/Linux). Run this for 5 minutes while actively streaming video on another device. Note any spikes above your baseline. If spikes only occur under local load, your issue is bufferbloat — fixable with QoS. If they occur at all times, it is an ISP routing problem.",
+    tip: "Simultaneously ping your router gateway (usually 192.168.1.1) and compare. If gateway ping is stable but external ping spikes, the bottleneck is your ISP link — not your Wi-Fi.",
   },
   {
-    title: "Measure Ping Stability and Jitter",
+    title: "Measure Jitter with a Bufferbloat Test",
     description:
-      "Run a continuous ping test in your terminal (ping -t 1.1.1.1 on Windows or ping 1.1.1.1 on macOS) for 5 minutes. Count the number of spikes and calculate the difference between your highest and lowest response times.",
-    tip: "Jitter should ideally be below 2ms. If you see swings of 20ms or more on Wi-Fi, wireless congestion is actively affecting your matchmaking quality.",
+      "Visit waveform.com/tools/bufferbloat and run the test. It measures your latency increase under full download and upload load. An Ethernet connection with SQM active should score an 'A' grade (+0ms to +5ms). Wi-Fi without QoS typically scores 'C' or 'D' (+50ms to +200ms).",
+    tip: "If your bufferbloat grade is poor on both Ethernet and Wi-Fi, the problem is your router's queue management — not the cable type.",
   },
   {
-    title: "Configure QoS Priority for Your Connection Type",
+    title: "Check for Physical Layer Packet Loss",
     description:
-      "Log into your router's admin dashboard. Go to the QoS or Traffic Control section. Reserve a static IP for your gaming machine, and map its MAC address to the highest priority class to ensure it bypasses household bandwidth bottlenecks.",
-    tip: "If you are on Wi-Fi, make sure WMM (Wi-Fi Multimedia) remains active, as it is required for high-speed wireless packet queuing.",
+      "Run: pathping 8.8.8.8 (Windows) or mtr 8.8.8.8 (Linux/macOS). Look for packet loss at hop 1 (your router). If loss appears at the first hop, it indicates a physical cable fault, a faulty network card, or wireless interference at the driver level.",
+    tip: "On Wi-Fi, even 0.5% packet loss at the first hop will cause noticeable hitching in games using 128-tick rate servers.",
   },
   {
-    title: "Implement Alternate Wired Solutions",
+    title: "Configure QoS and Upload Queue Management",
     description:
-      "If a direct Ethernet run is not possible, locate coaxial outlets near your router and PC. Connect MoCA (Multimedia over Coax) adapters to convert television cabling into a high-speed, low-latency wired backhaul.",
-    tip: "Ensure your MoCA adapters are at least MoCA 2.0 or 2.5 to guarantee gigabit speeds and less than 1ms added latency.",
+      "Log into your router admin panel. Enable Smart Queue Management (SQM) and select CAKE as the queue discipline. Set the upload and download caps to 90% of your measured speed test results. This prevents your modem's buffer from saturating, which is the leading cause of ping spikes under load.",
+    tip: "For full SQM configuration instructions, see our dedicated guide on Best QoS Settings for Gaming.",
   },
 ];
 
 // =============================================================
-// FAQ Data (10 Questions)
+// FAQ Data
 // =============================================================
 
 const faqs = [
   {
-    question: "Is Ethernet faster than Wi-Fi?",
+    question: "Is Ethernet always better than Wi-Fi for gaming?",
     answer:
-      "Yes. In terms of latency, packet delivery speed, and overall throughput stability, Ethernet is consistently faster. While Wi-Fi 7 can match Ethernet's raw transfer speeds under ideal conditions, it cannot match Ethernet's physical reliability, which guarantees full-duplex operation and zero interference.",
+      "Yes, in terms of raw latency stability and reliability, Ethernet is always superior. Wired connections operate in full-duplex mode with zero interference, delivering sub-millisecond local latency and 0% packet loss. However, Wi-Fi 7 with Multi-Link Operation (MLO) on the 6GHz band can approach Ethernet performance under ideal conditions — but only when there is no interference and no other devices active.",
+  },
+  {
+    question: "Can Wi-Fi 7 beat Ethernet for gaming?",
+    answer:
+      "Under perfect lab conditions, Wi-Fi 7 with MLO active can deliver sub-millisecond local latency — close to Ethernet. However, real homes have walls, microwaves, Bluetooth devices, and neighboring networks that degrade wireless performance. In real-world competitive gaming environments, Ethernet remains more reliable.",
   },
   {
     question: "Does Ethernet reduce ping?",
     answer:
-      "Yes, Ethernet reduces local ping. It eliminates the 2ms to 15ms of wireless processing delay, encryption overhead, and airtime wait times that occur when transmitting data over Wi-Fi. However, it cannot reduce your external ping from your house to the remote game server.",
+      "Ethernet reduces your local network latency (the time your packet takes to travel from your PC to your router) by 2ms to 15ms compared to Wi-Fi. It cannot reduce your external ping from your home to the game server. However, Ethernet prevents your ping from spiking under household load, which is what most gamers call 'lag'.",
+  },
+  {
+    question: "Does Ethernet eliminate packet loss?",
+    answer:
+      "Yes. Local packet loss on a wired Ethernet connection is virtually 0%. The copper wiring is fully shielded, and data is protected by the Ethernet frame CRC checksum. If packet loss appears on your wired connection, it originates from your ISP or the external routing path, not your local network.",
   },
   {
     question: "Is Cat8 worth it for gaming?",
     answer:
-      "No. Cat8 cables are designed for data center environments to support 40Gbps speeds over short distances. They are heavily shielded, stiff, and require specialized grounded RJ45 jacks. For home gaming networks, a high-quality Cat6 or Cat6a cable is more than sufficient and much easier to route.",
+      "No. Cat8 cables support 40Gbps speeds over very short distances (under 30 meters) and require fully shielded, grounded RJ45 connectors. They are designed for data center server rack connections. For home gaming over distances under 100 meters, Cat6 or Cat6a is more than sufficient — and far more flexible and easier to route.",
   },
   {
-    question: "Can Wi-Fi 7 match Ethernet?",
+    question: "Is Wi-Fi 6 good enough for esports?",
     answer:
-      "Under perfect line-of-sight conditions with Multi-Link Operation (MLO) active, Wi-Fi 7 can approach Ethernet's performance. It can deliver sub-millisecond local latency. However, as soon as walls, distance, or competing devices are introduced, Wi-Fi 7 is still subject to packet collisions, making it less stable than a physical cable.",
+      "Wi-Fi 6 is a significant improvement over Wi-Fi 5, especially in crowded environments thanks to OFDMA scheduling. However, it still operates on the congested 5GHz band, which is shared with neighboring networks. For competitive esports where every millisecond matters, a wired connection is still preferable.",
   },
   {
-    question: "Does Ethernet reduce packet loss?",
+    question: "Does Ethernet improve hit registration in FPS games?",
     answer:
-      "Yes. Ethernet operates over copper wires where signal corruption is extremely rare. Wi-Fi transmits data through shared airwaves where signal blockages, distance, and radio noise cause packets to drop. Over Ethernet, local packet loss is virtually 0%.",
+      "Yes. In high-tick-rate shooters like Valorant (128-tick) and CS2, your client sends coordinate and input packets to the server many times per second. If any of these packets are delayed or lost over Wi-Fi, the server processes a stale state — causing your shots to miss even though they appear to connect on your screen. Ethernet's guaranteed delivery prevents this desync.",
   },
   {
-    question: "Should I buy a Powerline adapter?",
+    question: "What is the best connection type for gaming?",
     answer:
-      "Only as a last resort. Powerline adapters send data through your home's electrical wiring. Electrical lines are not shielded and are highly susceptible to noise from appliances (vacuum cleaners, phone chargers). This noise can cause random packet loss and latency spikes.",
+      "Ranked best to worst: 1) Direct Ethernet (Cat6/Cat6a), 2) MoCA 2.5 over coaxial cable, 3) Wi-Fi 7 (6GHz band, MLO), 4) Wi-Fi 6E (6GHz band), 5) Wi-Fi 6 (5GHz band), 6) Powerline (AV2000), 7) Wi-Fi 5 (2.4GHz band).",
   },
   {
-    question: "What is a MoCA adapter and is it good for gaming?",
+    question: "Is Powerline better than Wi-Fi for gaming?",
     answer:
-      "MoCA (Multimedia over Coax) adapters convert your home's existing coaxial television outlets into a wired network. Unlike electrical wiring, coaxial lines are heavily shielded and designed to carry high-frequency data. MoCA 2.5 adapters offer gigabit speeds and stability matching a direct Ethernet run.",
+      "Powerline adapters are generally more stable than Wi-Fi under heavy household wireless congestion, since they bypass airtime contention. However, electrical wiring is not shielded and is highly susceptible to noise from appliances. In most homes, modern Wi-Fi 6E or Wi-Fi 7 on the 6GHz band will outperform Powerline in terms of latency and jitter.",
   },
   {
-    question: "Why does my ping spike on Wi-Fi?",
+    question: "Can Ethernet fix lag spikes?",
     answer:
-      "Wi-Fi ping spikes are caused by airtime contention and interference. Because Wi-Fi is a shared medium (half-duplex), only one device can transmit on a channel at a time. If another device begins loading a webpage, your gaming PC must wait for the channel to clear, causing a temporary delay.",
-  },
-  {
-    question: "Does the length of the Ethernet cable affect ping?",
-    answer:
-      "Not within home limits. Ethernet cables support full speeds and sub-millisecond latency for runs up to 328 feet (100 meters). You will not see any latency increase from using a 50-foot or 100-foot cable compared to a 3-foot cable.",
-  },
-  {
-    question: "Is mesh Wi-Fi good for competitive gaming?",
-    answer:
-      "Mesh Wi-Fi is great for coverage, but not ideal for competitive gaming. Every hop between mesh nodes introduces a latency penalty (typically 2ms to 5ms per hop) and increases the chances of wireless packet loss. If you use mesh, ensure you connect your PC to the satellite node with an Ethernet cable.",
+      "Ethernet can fix lag spikes caused by local wireless interference, airtime contention, or mesh roaming handoffs. It cannot fix lag spikes caused by ISP congestion, game server overload, or poor routing between your ISP and the game server's data center.",
   },
 ];
+
+// =============================================================
+// Page Component
+// =============================================================
 
 export default function EthernetVsWifiGamingPage() {
   return (
     <TroubleshootingArticleShell
-      h1="Ethernet vs. Wi-Fi for Gaming: Jitter & Low Ping Analysis"
-      intro="Are you trying to decide between routing a physical Ethernet cable to your console or playing on your home Wi-Fi? For online multiplayer gaming, your choice of connection directly impacts your matchmaking latency, packet loss, and registry of shots. In this technical comparison, we examine the physics of wired vs. wireless play, review adapters, and benchmark real-world performance."
+      h1="Ethernet vs. Wi-Fi for Gaming: The Complete Latency & Packet Loss Guide"
+      intro="Should you run an Ethernet cable to your gaming PC or console, or is your home Wi-Fi good enough? The answer depends on your specific setup, the games you play, and what network problems you are experiencing. In this in-depth technical guide, we analyze the physics of wired and wireless connections, measure latency and jitter across Wi-Fi standards, compare cable categories, and provide real-world gaming benchmark data to help you make the right decision."
       category="wifi"
       breadcrumbs={breadcrumbs}
       faqs={faqs}
       troubleshootingSteps={troubleshootingSteps}
       warningBanner={{
-        title: "The Half-Duplex Wireless Bottleneck",
-        text: "Unlike Ethernet, which is full-duplex (sending and receiving data simultaneously on separate copper threads), all Wi-Fi standards are half-duplex. Wireless devices must compete for airtime, meaning your gaming packet must wait if another device is transmitting. This is the root cause of Wi-Fi lag spikes.",
+        title: "Half-Duplex: The Core Wi-Fi Limitation for Gaming",
+        text: "All Wi-Fi standards — including Wi-Fi 7 — are half-duplex on the wireless medium. Your device cannot send and receive packets simultaneously over the air. It must wait for the channel to be free before transmitting. This fundamental physics constraint introduces unpredictable airtime wait times that Ethernet completely avoids by using separate wire pairs for transmit and receive.",
       }}
       quickFixChecklist={quickFixChecklist}
       commonCauses={commonCauses}
-      whenToContactISP="Contact your ISP if you experience packet loss and latency spikes when connected directly to your modem via Ethernet, indicating a physical line fault on the coaxial/fiber feed leading to your home."
+      whenToContactISP="Contact your ISP if packet loss and latency spikes persist even when your gaming PC is connected directly to the modem via Ethernet, bypassing your router entirely. This indicates a fault on the physical line between your home and the ISP exchange."
       severityLevel="medium"
     >
       <div className="space-y-12">
 
         {/* SECTION 1: Quick AI Answer */}
         <section
-          className="glass-card p-6 border border-cyan-950/20 bg-cyan-950/5 rounded-2xl relative overflow-hidden space-y-4"
+          className="glass-card p-6 border border-cyan-950/20 bg-cyan-950/5 rounded-2xl relative overflow-hidden space-y-5"
           aria-label="Quick AI Answer"
         >
           <div className="absolute top-0 right-0 bg-[var(--brand-500)]/10 text-[var(--brand-400)] text-[10px] font-mono uppercase tracking-wider px-3 py-1 rounded-bl-lg font-bold">
-            Verdicts Breakdown
+            AI Summary
           </div>
           <h2 className="text-sm font-bold text-[var(--brand-400)] uppercase tracking-wide flex items-center gap-1.5">
-            <Zap size={16} /> Quick AI Answer: Ethernet vs. Wi-Fi
+            <Zap size={16} /> Quick Answer: Ethernet vs. Wi-Fi by Use Case
           </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              For the lowest possible response times and maximum connection stability, a wired connection is always the recommended option:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
-              <li><strong>Competitive Gaming:</strong> <em>Ethernet is Mandatory</em>. Bypasses wireless channel delays and guarantees 0% packet loss.</li>
-              <li><strong>Casual Gaming:</strong> <em>Wi-Fi is Good Enough</em> (if utilizing the 5GHz or 6GHz bands close to the router).</li>
-              <li><strong>Streaming + Gaming:</strong> <em>Ethernet is Highly Recommended</em>. Prevents local packet buffer bottlenecks.</li>
-              <li><strong>Mobile Gaming:</strong> <em>Wi-Fi 6/6E/7 is Recommended</em>. Use the 6GHz band to avoid interference from appliances.</li>
-            </ul>
-          </div>
-          
-          {/* User Type Table */}
-          <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl mt-4">
+          <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
+            <li><strong>Competitive Gaming (Valorant, CS2, Warzone):</strong> Ethernet is mandatory. Wireless jitter and packet loss will cost you gunfights.</li>
+            <li><strong>Casual Gaming (RPGs, turn-based, indie):</strong> Wi-Fi on 5GHz or 6GHz is acceptable.</li>
+            <li><strong>Streaming + Gaming simultaneously:</strong> Ethernet is strongly recommended to prevent upload saturation over a shared wireless medium.</li>
+            <li><strong>Console / Mobile in another room:</strong> Wi-Fi 6E or 7 on the 6GHz band; use MoCA adapters if coaxial outlets are nearby.</li>
+          </ul>
+
+          <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
             <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
               <thead>
                 <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
                   <th className="px-4 py-3 text-left">User Type</th>
                   <th className="px-4 py-3 text-left">Recommended Connection</th>
-                  <th className="px-4 py-3 text-left">Target Latency (Local)</th>
+                  <th className="px-4 py-3 text-left">Reason</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
                 <tr>
                   <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Casual Gamer</td>
-                  <td className="px-4 py-3">Wi-Fi (5GHz / 6GHz)</td>
-                  <td className="px-4 py-3 font-mono">5 - 15 ms</td>
+                  <td className="px-4 py-3">Wi-Fi 6 / 6E (5GHz or 6GHz)</td>
+                  <td className="px-4 py-3 text-[var(--text-muted)]">Low packet rate; occasional jitter is non-critical.</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Competitive Gamer</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Competitive FPS Player</td>
                   <td className="px-4 py-3 font-semibold text-emerald-400">Wired Ethernet (Cat6)</td>
-                  <td className="px-4 py-3 font-mono">&lt; 1 ms</td>
+                  <td className="px-4 py-3 text-[var(--text-muted)]">128-tick servers demand zero jitter and &lt;1ms local latency.</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Streamer</td>
                   <td className="px-4 py-3 font-semibold text-emerald-400">Wired Ethernet (Cat6)</td>
-                  <td className="px-4 py-3 font-mono">&lt; 1 ms</td>
+                  <td className="px-4 py-3 text-[var(--text-muted)]">Upload stream competes with game packets on half-duplex Wi-Fi.</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Esports Player</td>
+                  <td className="px-4 py-3 font-semibold text-emerald-400">Wired Ethernet (Cat6a)</td>
+                  <td className="px-4 py-3 text-[var(--text-muted)]">Consistent sub-millisecond local latency; no airtime variance.</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Large Household</td>
-                  <td className="px-4 py-3">Ethernet (or Wi-Fi 7 with MLO)</td>
-                  <td className="px-4 py-3 font-mono">1 - 5 ms</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Small Apartment</td>
-                  <td className="px-4 py-3">Wi-Fi (6GHz band)</td>
-                  <td className="px-4 py-3 font-mono">2 - 8 ms</td>
+                  <td className="px-4 py-3">Ethernet + Wi-Fi 7 (per device)</td>
+                  <td className="px-4 py-3 text-[var(--text-muted)]">Wire gaming PCs; use Wi-Fi 7 for phones and casual devices.</td>
                 </tr>
               </tbody>
             </table>
           </div>
+
+          {/* ── 5-Metric Comparison Matrix ── */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wide mt-2">Full Metric Comparison Matrix</h3>
+            <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+              <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
+                <thead>
+                  <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                    <th className="px-4 py-3 text-left">Metric</th>
+                    <th className="px-4 py-3 text-left">Ethernet</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 5</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 6</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 7</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Local Latency</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.5 ms</td>
+                    <td className="px-4 py-3 text-red-500">8 – 15 ms</td>
+                    <td className="px-4 py-3 text-amber-500">4 – 10 ms</td>
+                    <td className="px-4 py-3 text-emerald-400">1 – 3 ms</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Jitter</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.2 ms</td>
+                    <td className="px-4 py-3 text-red-500">5 – 25 ms</td>
+                    <td className="px-4 py-3 text-amber-500">2 – 10 ms</td>
+                    <td className="px-4 py-3 text-emerald-400">0.5 – 2 ms</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Packet Loss (local)</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">~0%</td>
+                    <td className="px-4 py-3 text-red-500">0.5 – 3%</td>
+                    <td className="px-4 py-3 text-amber-500">0.1 – 1%</td>
+                    <td className="px-4 py-3 text-emerald-400">&lt; 0.1%</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Stability Under Load</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">Excellent</td>
+                    <td className="px-4 py-3 text-red-500">Poor</td>
+                    <td className="px-4 py-3 text-amber-500">Fair</td>
+                    <td className="px-4 py-3 text-emerald-400">Good</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Competitive Gaming Score</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">★★★★★</td>
+                    <td className="px-4 py-3 text-red-500">★★☆☆☆</td>
+                    <td className="px-4 py-3 text-amber-500">★★★☆☆</td>
+                    <td className="px-4 py-3 text-emerald-400">★★★★☆</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </section>
 
-        {/* Interactive Tool Section */}
-        <section className="space-y-4" aria-label="Interactive Router Configuration Tool">
+        {/* Interactive Tool */}
+        <section className="space-y-4" aria-label="Interactive Latency Optimizer">
           <div>
             <h2 className="text-base font-bold text-[var(--text-primary)] flex items-center gap-2">
               <Sliders size={18} className="text-cyan-400" />
-              Configure Connection Latency Target
+              Analyze Your Connection Latency Profile
             </h2>
             <p className="text-xs text-[var(--text-muted)] mt-1">
-              Select your current physical connection layout and local hardware limits below to calculate your latency budget, optimal cables, and configuration checklist.
+              Select your connection type and bandwidth to calculate your latency budget, jitter targets, and optimal QoS queue configuration.
             </p>
           </div>
           <ConnectionOptimizerClient mode="latency" />
         </section>
 
-        {/* SECTION 2: Ethernet vs WiFi Overview */}
+        {/* SECTION 2: What Actually Happens When You Press a Key? */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Gamepad2 size={18} className="text-cyan-400" />
+            1. What Actually Happens When You Press a Key?
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Every action you take in a multiplayer game — pressing W to move, clicking to shoot — triggers a precise chain of events. Understanding this chain reveals exactly where Wi-Fi and Ethernet diverge:
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            {[
+              { step: "1", label: "Input Registered", desc: "Your keyboard or mouse generates an interrupt. The game client processes your input and packs it into a small UDP datagram (typically 64 to 512 bytes)." },
+              { step: "2", label: "Local Transmission", desc: "The packet travels from your PC to your router. Over Ethernet: &lt;0.1ms. Over Wi-Fi: the device must wait for the channel to clear (0ms to 15ms variable delay)." },
+              { step: "3", label: "Router NAT & Queue", desc: "Your router translates your private IP to your public IP and places the packet in its outbound queue. With SQM active, game UDP packets jump to the front." },
+              { step: "4", label: "ISP Routing", desc: "The packet travels through your ISP's network, bouncing between routing nodes to reach the game server's data center." },
+              { step: "5", label: "Server Processing", desc: "The game server processes your input, updates the world state, and sends back a response packet containing all other player coordinates." },
+              { step: "6", label: "Return Path", desc: "The server's response travels the reverse path. On Wi-Fi, this return packet also waits for the channel — doubling the wireless delay in the Round-Trip Time (RTT)." },
+            ].map((item) => (
+              <div key={item.step} className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-[var(--brand-600)]/20 border border-[var(--brand-800)] flex items-center justify-center text-[10px] font-bold text-[var(--brand-400)]">{item.step}</span>
+                  <h4 className="font-bold text-[var(--text-primary)] text-xs">{item.label}</h4>
+                </div>
+                <p className="text-[11px] text-[var(--text-muted)] leading-relaxed" dangerouslySetInnerHTML={{ __html: item.desc }} />
+              </div>
+            ))}
+          </div>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            The key insight: Wi-Fi introduces variable delay at <strong>steps 2 and 6</strong>. Because the delay is unpredictable (sometimes 1ms, sometimes 15ms), your character moves inconsistently on the server — causing desync and missed shots. Ethernet makes steps 2 and 6 near-instant and deterministic.
+          </p>
+        </section>
+
+        {/* SECTION 3: Technical Level Comparison */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Network size={18} className="text-cyan-400" />
-            1. Connection Standards Overview
+            2. Ethernet vs. Wi-Fi at the Technical Level
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              The performance difference between Ethernet and Wi-Fi originates at the physical and data-link layers of the networking stack:
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-muted)]">
+              <li>
+                <strong>Layer 1 (Physical):</strong> Ethernet encodes data as electrical signals on shielded copper pairs. Wi-Fi encodes data as radio wave modulations in open air. Radio waves are subject to distance attenuation, reflections, and absorption by physical materials.
+              </li>
+              <li>
+                <strong>Layer 2 (Data Link / MAC):</strong> Ethernet uses CSMA/CD (Carrier Sense Multiple Access with Collision Detection) on a private per-port segment. Because modern switches give each device a dedicated port, there are effectively zero collisions. Wi-Fi uses CSMA/CA (Collision Avoidance) where every device must listen for channel silence before transmitting, adding random backoff wait times.
+              </li>
+              <li>
+                <strong>Full-Duplex vs. Half-Duplex:</strong> Ethernet connections operate in full-duplex mode — dedicated wire pairs carry outbound traffic while other pairs carry inbound traffic simultaneously. Wi-Fi is half-duplex: the same radio channel is used for both sending and receiving, and devices must take turns.
+              </li>
+              <li>
+                <strong>Airtime Contention:</strong> Every active Wi-Fi device on your router competes for airtime. If your laptop begins uploading photos, your gaming console&apos;s next packet must wait until the upload burst is complete.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        {/* SECTION 4: Latency Comparison Table */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Activity size={18} className="text-cyan-400" />
+            3. Latency Comparison Across Connection Types
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            Comparing the fundamental physical differences between wired and wireless communication reveals why Ethernet remains the standard for performance:
+            Local network latency (the hop between your device and router) adds directly to your total in-game ping. Here is how each technology performs:
           </p>
+          <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+            <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
+              <thead>
+                <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                  <th className="px-4 py-3 text-left">Scenario</th>
+                  <th className="px-4 py-3 text-left">Ethernet (Cat6)</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 5</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 6</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 7</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Idle Latency (local hop)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 0.5 ms</td>
+                  <td className="px-4 py-3">8 – 15 ms</td>
+                  <td className="px-4 py-3">4 – 10 ms</td>
+                  <td className="px-4 py-3 text-emerald-400">1 – 3 ms</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Loaded Latency (network busy)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 1 ms *</td>
+                  <td className="px-4 py-3 text-red-500">80 – 250 ms</td>
+                  <td className="px-4 py-3 text-amber-500">25 – 80 ms</td>
+                  <td className="px-4 py-3">5 – 20 ms</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Average Gaming Latency Added</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">0.3 – 0.8 ms</td>
+                  <td className="px-4 py-3 text-red-500">12 – 30 ms</td>
+                  <td className="px-4 py-3 text-amber-500">5 – 15 ms</td>
+                  <td className="px-4 py-3">2 – 5 ms</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Worst-Case Spike</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 2 ms</td>
+                  <td className="px-4 py-3 text-red-500">300+ ms (microwave)</td>
+                  <td className="px-4 py-3 text-amber-500">50 – 150 ms</td>
+                  <td className="px-4 py-3">10 – 30 ms</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-[10px] text-[var(--text-muted)]">* With SQM/CAKE active. Without QoS, Ethernet loaded latency can still spike to 50ms+ due to bufferbloat on the WAN interface. If your ping is consistently high on all connection types (including direct Ethernet), check our <Link href="/high-ping-fix" className="text-[var(--brand-400)] hover:underline font-semibold">High Ping Fix Guide</Link>.</p>
+        </section>
+
+        {/* SECTION 5: Jitter Comparison */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Gauge size={18} className="text-cyan-400" />
+            4. Jitter: Why Wi-Fi Feels Inconsistent
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Jitter is the variation in packet arrival timing. If your ping averages 30ms but oscillates between 15ms and 65ms, your jitter is 50ms. In game engines, high jitter causes your opponent&apos;s character to stutter, your own movement to feel &quot;floaty&quot;, and hit registration to become unreliable.
+            </p>
+            <p>
+              <strong>Why Wi-Fi causes jitter:</strong> Every time a device transmits on Wi-Fi, it must first sense the medium, then wait a random backoff period before sending. This random wait time (DIFS + contention window) varies from packet to packet, causing each packet to arrive at slightly different intervals. Ethernet has no backoff period, so packets arrive at perfectly consistent intervals.
+            </p>
+            <p>
+              To diagnose and eliminate jitter from your gaming session, follow our dedicated guide:{" "}
+              <Link href="/gaming-jitter-fix" className="text-[var(--brand-400)] hover:underline font-semibold">
+                How to Fix Gaming Jitter
+              </Link>.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 6: Packet Loss Comparison */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <AlertCircle size={18} className="text-cyan-400" />
+            5. Packet Loss: RF Interference vs. Physical Copper
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Packet loss occurs when a data frame fails to reach its destination. Over Ethernet, local packet loss is virtually zero — the copper wire is fully shielded and protected against electromagnetic interference.
+            </p>
+            <p>
+              Over Wi-Fi, packet loss happens regularly due to:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
+              <li><strong>Radio Frequency Interference:</strong> Nearby appliances (cordless phones, microwave ovens, baby monitors) transmit on overlapping frequencies, corrupting wireless frames.</li>
+              <li><strong>Signal Attenuation:</strong> As distance and physical obstacles increase, signal strength drops. Below a certain Signal-to-Noise Ratio (SNR), the router is forced to retransmit frames.</li>
+              <li><strong>Retransmission Overhead:</strong> Wi-Fi uses automatic retransmission (ARQ). When a frame is corrupted, the sending device resends it. This doubles the airtime used and adds latency.</li>
+            </ul>
+            <p>
+              To accurately measure your current packet loss and identify its source, use our{" "}
+              <Link href="/packet-loss-test" className="text-[var(--brand-400)] hover:underline font-semibold">
+                Packet Loss Test Tool
+              </Link>{" "}and follow our{" "}
+              <Link href="/gaming-packet-loss-fix" className="text-[var(--brand-400)] hover:underline font-semibold">
+                Gaming Packet Loss Fix Guide
+              </Link>.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 7: Bufferbloat Under Load */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Layers size={18} className="text-cyan-400" />
+            6. Bufferbloat Under Load
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Bufferbloat occurs when your router&apos;s transmit buffer fills up under load, adding hundreds of milliseconds of latency to every outgoing packet — including gaming UDP frames.
+            </p>
+            <p>
+              This problem occurs on <em>both</em> Ethernet and Wi-Fi connections, but Wi-Fi makes it significantly worse because:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
+              <li>Wireless throughput fluctuates with signal quality. When the router must lower the connection rate due to signal degradation, the queue backs up faster.</li>
+              <li>Wi-Fi adds its own internal retransmission queues on top of the router&apos;s WAN queue.</li>
+            </ul>
+            <p>
+              The fix is identical on both connection types: enable Smart Queue Management (SQM) using CAKE or FQ-CoDel on your router. For full configuration instructions, see our guide on{" "}
+              <Link href="/best-qos-settings-for-gaming" className="text-[var(--brand-400)] hover:underline font-semibold">
+                Best QoS Settings for Gaming
+              </Link>.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 8: Why Wi-Fi Causes Random Lag Spikes */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <AlertTriangle size={18} className="text-cyan-400" />
+            7. Why Wi-Fi Causes Random Lag Spikes
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Sudden lag spikes on Wi-Fi are rarely caused by the game server. The most common sources of wireless lag spikes are:
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-muted)]">
+              <li><strong>Microwave Oven Interference:</strong> Consumer microwave ovens emit strong 2.45GHz radiation that overlaps directly with the 2.4GHz Wi-Fi band. Running a microwave can cause 100% packet loss for several seconds.</li>
+              <li><strong>Bluetooth Frequency Hopping:</strong> Bluetooth operates on the same 2.4GHz spectrum using frequency hopping. Multiple active Bluetooth devices create persistent interference that raises your wireless error rate.</li>
+              <li><strong>Neighbor Wi-Fi Overlap:</strong> In apartment buildings, dozens of overlapping Wi-Fi networks on the same channels create contention and collisions, especially during peak evening hours.</li>
+              <li><strong>Mesh Network Roaming:</strong> When a mesh device hands off your connection from one node to another, it forces a re-association that can take 500ms to 2,000ms — enough to disconnect you from a competitive lobby.</li>
+              <li><strong>DFS Channel Events:</strong> 5GHz Wi-Fi channels in the DFS (Dynamic Frequency Selection) range (channels 52-144) must yield to radar systems. When triggered, the router must scan all channels for 60 seconds, dropping all wireless connections during this scan.</li>
+            </ul>
+            <p>
+              For a detailed diagnosis and fix for gaming lag spikes, see:{" "}
+              <Link href="/gaming-lag-spikes-fix" className="text-[var(--brand-400)] hover:underline font-semibold">
+                Gaming Lag Spikes Fix Guide
+              </Link>.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 9: Wi-Fi Standards Comparison */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Wifi size={18} className="text-cyan-400" />
+            8. Wi-Fi 5 vs. 6 vs. 6E vs. 7 for Gaming
+          </h2>
           <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
             <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
               <thead>
                 <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
                   <th className="px-4 py-3 text-left">Feature</th>
-                  <th className="px-4 py-3 text-left">Ethernet</th>
-                  <th className="px-4 py-3 text-left">Wi-Fi (Wireless)</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 5</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 6</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 6E</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 7</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Duplex Mode</td>
-                  <td className="px-4 py-3 text-emerald-400 font-semibold">Full-Duplex (Simultaneous Send/Receive)</td>
-                  <td className="px-4 py-3 text-amber-500">Half-Duplex (Wait for Channel to Clear)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">OFDMA Support</td>
+                  <td className="px-4 py-3 text-red-500">No</td>
+                  <td className="px-4 py-3 text-emerald-400">Yes</td>
+                  <td className="px-4 py-3 text-emerald-400">Yes</td>
+                  <td className="px-4 py-3 text-emerald-400">Yes (320MHz)</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Signal Medium</td>
-                  <td className="px-4 py-3">Shielded Copper Wires</td>
-                  <td className="px-4 py-3">Open Radio Frequency Airwaves</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Multi-Link Operation (MLO)</td>
+                  <td className="px-4 py-3 text-red-500">No</td>
+                  <td className="px-4 py-3 text-red-500">No</td>
+                  <td className="px-4 py-3 text-red-500">No</td>
+                  <td className="px-4 py-3 text-emerald-400 font-bold">Yes (5GHz + 6GHz)</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Local Ping Penalty</td>
-                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 1 ms</td>
-                  <td className="px-4 py-3 text-red-500">2 ms - 20+ ms (Varies with interference)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">6GHz Band Access</td>
+                  <td className="px-4 py-3 text-red-500">No</td>
+                  <td className="px-4 py-3 text-red-500">No</td>
+                  <td className="px-4 py-3 text-emerald-400">Yes</td>
+                  <td className="px-4 py-3 text-emerald-400">Yes</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Local Packet Loss</td>
-                  <td className="px-4 py-3 text-emerald-400 font-semibold">Virtually 0%</td>
-                  <td className="px-4 py-3 text-red-500">0.5% - 5%+ (Channel collisions)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Typical Gaming Latency Added</td>
+                  <td className="px-4 py-3 text-red-500">12 – 30 ms</td>
+                  <td className="px-4 py-3 text-amber-500">5 – 15 ms</td>
+                  <td className="px-4 py-3">2 – 6 ms</td>
+                  <td className="px-4 py-3 text-emerald-400 font-bold">1 – 3 ms</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Susceptibility to Noise</td>
-                  <td className="px-4 py-3">Zero (Immune to external RF noise)</td>
-                  <td className="px-4 py-3 text-red-500">High (Appliances, neighboring Wi-Fi)</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Interference Resistance</td>
+                  <td className="px-4 py-3 text-red-500">Low (crowded bands)</td>
+                  <td className="px-4 py-3 text-amber-500">Medium</td>
+                  <td className="px-4 py-3 text-emerald-400">High (clean 6GHz)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-bold">Highest (MLO redundancy)</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        {/* SECTION 3: How Ethernet Works */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Cpu size={18} className="text-cyan-400" />
-            2. How Ethernet Works: The Wired Advantage
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Ethernet interfaces communicate using physical twisted pairs of copper wiring. This design provides three core advantages:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-muted)]">
-              <li>
-                <strong>Full-Duplex Mode:</strong> Dedicated copper threads are assigned for transmitting data while other threads are dedicated for receiving data. Your network card does not have to pause upload requests when downloading data.
-              </li>
-              <li>
-                <strong>Dedicated Path:</strong> The connection between your PC and the router switch port is private. No other device on the network can inject noise or intercept packets on that physical segment.
-              </li>
-              <li>
-                <strong>Twisted-Pair Shielding:</strong> Cat6 and higher cables feature twisted wire pairs wrapped in foil shielding. This physical design cancels out electromagnetic interference from power lines and nearby electronics.
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        {/* SECTION 4: How WiFi Works */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Wifi size={18} className="text-cyan-400" />
-            3. How Wi-Fi Works: Shared Airwaves
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Wi-Fi operates on open radio frequencies (2.4GHz, 5GHz, and 6GHz bands). Because the physical medium is shared, wireless networks are subject to several limitations:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-muted)]">
-              <li>
-                <strong>Half-Duplex Transmission:</strong> Wi-Fi devices must utilize the same channel frequency for both sending and receiving. A client card must listen to ensure the channel is silent before transmitting.
-              </li>
-              <li>
-                <strong>Airtime Contention:</strong> If multiple devices are active on your Wi-Fi, they must take turns. If your laptop starts downloading a file, your gaming console&apos;s packets must wait in the router queue, creating latency.
-              </li>
-              <li>
-                <strong>RF Obstructions:</strong> Radio waves decay as they travel through walls, floors, and glass. This decay forces your wireless card to slow its connection rate and resend corrupted packets.
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        {/* SECTION 5: Latency Comparison */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Activity size={18} className="text-cyan-400" />
-            4. Latency Comparison (RTT Analysis)
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Round-Trip Time (RTT) measures the total duration a packet takes to reach the server and return.
-            </p>
-            <p>
-              Over a wired Ethernet connection, the local hop from your PC to the router takes less than 1 millisecond. This latency remains constant regardless of file transfers or active downloads.
-            </p>
-            <p>
-              On Wi-Fi, the local hop adds 2ms to 8ms under ideal conditions. If other devices are active on the network, this delay can increase to 30ms or more. This local delay is added directly to your in-game ping.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 6: Jitter Comparison */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Gauge size={18} className="text-cyan-400" />
-            5. Jitter Comparison
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Jitter is the variance in packet arrival times. A stable connection delivers packets at consistent intervals (e.g. 20ms, 20ms, 20ms).
-            </p>
-            <p>
-              Ethernet delivers packets with near-zero jitter (typically &lt;0.5ms deviation).
-            </p>
-            <p>
-              Because Wi-Fi relies on shared airwaves, packet delivery times fluctuate as other devices transmit data. This jitter makes your crosshair adjustments feel inconsistent in fast-paced shooter games.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 7: Packet Loss Comparison */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <AlertCircle size={18} className="text-cyan-400" />
-            6. Packet Loss Comparison
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Packet loss occurs when data is corrupted or dropped during transmission.
-            </p>
-            <p>
-              On Ethernet, local packet loss is virtually non-existent. Unless a cable is physically damaged, electrical data is protected by line shielding.
-            </p>
-            <p>
-              On Wi-Fi, packets can be corrupted by radio noise from household electronics or overlapping channels. When a packet is corrupted, the router discards it. Since games use UDP, this dropped packet is not resent, causing your character to warp or shots to not register.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 8: Lag Spikes Comparison */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <AlertTriangle size={18} className="text-cyan-400" />
-            7. Lag Spikes Comparison
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              A lag spike is a sudden, massive increase in latency (e.g., ping jumping from 30ms to 400ms for a brief moment).
-            </p>
-            <p>
-              On Ethernet, lag spikes are rare unless your ISP line itself is congested.
-            </p>
-            <p>
-              On Wi-Fi, lag spikes occur frequently when background tasks (like a mobile photo backup or a smart TV streaming 4K video) start. These high-throughput bursts saturate the shared wireless channel, forcing your gaming packets to wait in queue.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 9: Competitive Gaming Performance */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Gamepad2 size={18} className="text-cyan-400" />
-            8. Competitive Gaming Performance
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Competitive shooters like *Valorant*, *CS2*, *Warzone*, *Fortnite*, and *Apex Legends* operate on high tick rate servers (64Hz to 128Hz). Your network card must send and receive data at these fast frequencies to register movements accurately.
-            </p>
-            <p>
-              If you play on Wi-Fi, any minor packet delay or collision can cause you to miss a shot or rubberband during firefights. A wired Ethernet connection ensures that every input is sent to the server without delay.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 10: Streaming + Gaming */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Sliders size={18} className="text-cyan-400" />
-            9. Bandwidth Contention: Streaming + Gaming
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Broadcasting your gameplay to Twitch or YouTube requires a stable, high-bandwidth upload stream (typically 6 Mbps to 8 Mbps).
-            </p>
-            <p>
-              Doing this over Wi-Fi while playing is risky. Because wireless transmission is half-duplex, your upload stream competes with your game client&apos;s download packets on the same frequency, causing immediate ping spikes.
-            </p>
-            <p>
-              Ethernet resolves this bottleneck by sending upload stream data and download game packets simultaneously on separate physical wire pairs.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 11: WiFi 5 vs WiFi 6 vs WiFi 6E vs WiFi 7 */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Wifi size={18} className="text-cyan-400" />
-            10. Wi-Fi Standards Comparison
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-4">
-            <p>
-              Wi-Fi technology has improved significantly with recent standards. Understanding these changes helps determine if wireless can meet your needs:
-            </p>
-
-            <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
-              <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
-                <thead>
-                  <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
-                    <th className="px-4 py-3 text-left">Standard</th>
-                    <th className="px-4 py-3 text-left">Frequency Bands</th>
-                    <th className="px-4 py-3 text-left">OFDMA / MLO Support</th>
-                    <th className="px-4 py-3 text-left">Gaming Latency (Local)</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi 5 (802.11ac)</td>
-                    <td className="px-4 py-3">2.4 GHz, 5 GHz</td>
-                    <td className="px-4 py-3">No (High airtime delays)</td>
-                    <td className="px-4 py-3 text-red-500">8 - 25 ms</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi 6 (802.11ax)</td>
-                    <td className="px-4 py-3">2.4 GHz, 5 GHz</td>
-                    <td className="px-4 py-3">OFDMA (Improves multi-client queueing)</td>
-                    <td className="px-4 py-3 text-amber-500">4 - 12 ms</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi 6E (802.11ax)</td>
-                    <td className="px-4 py-3">2.4 GHz, 5 GHz, 6 GHz</td>
-                    <td className="px-4 py-3">OFDMA + Clean 6GHz channels</td>
-                    <td className="px-4 py-3 text-emerald-500">2 - 6 ms</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi 7 (802.11be)</td>
-                    <td className="px-4 py-3">2.4 GHz, 5 GHz, 6 GHz</td>
-                    <td className="px-4 py-3">MLO (Multi-Link Operation active)</td>
-                    <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 1 ms - 3 ms</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 12: Ethernet Cable Types */}
+        {/* SECTION 10: Ethernet Cable Categories */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Settings size={18} className="text-cyan-400" />
-            11. Ethernet Cable Types
+            9. Ethernet Cable Categories: What Gamers Actually Need
           </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-4">
-            <p>
-              Not all Ethernet cables are the same. Choose the right category (Cat) to avoid performance limits:
-            </p>
-
-            <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
-              <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
-                <thead>
-                  <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
-                    <th className="px-4 py-3 text-left">Cable Category</th>
-                    <th className="px-4 py-3 text-left">Max Speed Limit</th>
-                    <th className="px-4 py-3 text-left">Frequency Bandwidth</th>
-                    <th className="px-4 py-3 text-left">Gaming Recommendation</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat5e</td>
-                    <td className="px-4 py-3">1 Gbps (1,000 Mbps)</td>
-                    <td className="px-4 py-3 font-mono">100 MHz</td>
-                    <td className="px-4 py-3 text-amber-500">Good (Sufficient for basic plans)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat6</td>
-                    <td className="px-4 py-3">10 Gbps (up to 165 ft)</td>
-                    <td className="px-4 py-3 font-mono">250 MHz</td>
-                    <td className="px-4 py-3 text-emerald-400 font-bold">Best (Sweet spot for home gaming)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat6a</td>
-                    <td className="px-4 py-3">10 Gbps (full 328 ft)</td>
-                    <td className="px-4 py-3 font-mono">500 MHz</td>
-                    <td className="px-4 py-3 text-emerald-400">Excellent (Recommended for in-wall routing)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat7</td>
-                    <td className="px-4 py-3">10 Gbps</td>
-                    <td className="px-4 py-3 font-mono">600 MHz</td>
-                    <td className="px-4 py-3 text-red-500">Not Recommended (Proprietary GG45 jacks)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat8</td>
-                    <td className="px-4 py-3">40 Gbps</td>
-                    <td className="px-4 py-3 font-mono">2000 MHz</td>
-                    <td className="px-4 py-3 text-amber-500">Overkill (Designed for data centers)</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 13: Powerline Adapters */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <HardDrive size={18} className="text-cyan-400" />
-            12. Powerline Adapters: Electrical Circuit Limitations
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Powerline adapters send network data over your home&apos;s electrical wiring.
-            </p>
-            <p>
-              <strong>Pros:</strong> No need to run new cables. Easy plug-and-play setup.
-            </p>
-            <p>
-              <strong>Cons:</strong> Electrical wires are not shielded. Heavy appliances (dryers, refrigerators) inject electromagnetic noise, causing random packet loss and latency spikes. Performance also drops if the signal has to cross between different circuit breakers.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 14: MoCA Adapters */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Server size={18} className="text-cyan-400" />
-            13. MoCA Adapters: The Coaxial Alternative
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              MoCA (Multimedia over Coax) adapters convert existing coaxial television outlets into high-speed wired network connections.
-            </p>
-            <p>
-              Unlike electrical wires, television coaxial cables are heavily shielded and designed to carry high-frequency data.
-            </p>
-            <p>
-              Using MoCA 2.5 adapters provides performance that matches a direct Ethernet run. They deliver full gigabit speeds and add less than 1 millisecond of local latency, making them an excellent choice if you cannot drill holes for Ethernet.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 15: Mesh WiFi Gaming */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Wifi size={18} className="text-cyan-400" />
-            14. Mesh Wi-Fi Systems: Coverage vs. Jitter
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Mesh Wi-Fi systems use multiple nodes to blanket large homes in wireless coverage.
-            </p>
-            <p>
-              While mesh is excellent for coverage, it is not ideal for competitive gaming. Every hop between mesh nodes introduces a latency penalty (typically 2ms to 5ms) and increases the risk of packet loss.
-            </p>
-            <p>
-              If you must play on a mesh network, connect your PC or console to the satellite mesh node using an Ethernet cable to bypass the final wireless hop.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 16: When WiFi Is Good Enough */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <CheckCircle2 size={18} className="text-cyan-400" />
-            15. When Wi-Fi Is Good Enough
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              You do not always need an Ethernet cable. Wi-Fi is sufficient if you meet these conditions:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
-              <li>You play casual, turn-based, or non-competitive games (e.g. *Civilization*, *Hearthstone*).</li>
-              <li>You play in the same room as the router with a clear line of sight.</li>
-              <li>You are connected to the clean 5GHz or 6GHz band (Wi-Fi 6/6E/7).</li>
-              <li>You live alone and have no other active devices sharing the wireless channel.</li>
-            </ul>
-          </div>
-        </section>
-
-        {/* SECTION 17: When Ethernet Is Mandatory */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Shield size={18} className="text-cyan-400" />
-            16. When Ethernet Is Mandatory
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              A physical Ethernet cable is required if you are in any of these scenarios:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
-              <li>You play competitive shooters (e.g., *Valorant*, *CS2*, *Warzone*) where registration accuracy matters.</li>
-              <li>You stream your gameplay to Twitch or YouTube while playing.</li>
-              <li>You live in a congested apartment complex with dozens of overlapping neighbor Wi-Fi networks.</li>
-              <li>You have a multi-gigabit fiber connection and want to utilize your full bandwidth.</li>
-            </ul>
-          </div>
-        </section>
-
-        {/* SECTION 18: Real-World Benchmarks */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Activity size={18} className="text-cyan-400" />
-            17. Real-World Benchmarks
-          </h2>
-          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            Real-world performance differences across common gaming connection types highlight the benefits of wiring your setup:
-          </p>
-
           <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
             <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
               <thead>
                 <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
-                  <th className="px-4 py-3 text-left">Connection Type</th>
-                  <th className="px-4 py-3 text-left">Local Latency</th>
-                  <th className="px-4 py-3 text-left">Jitter under Network Load</th>
-                  <th className="px-4 py-3 text-left">Typical Packet Loss Rate</th>
+                  <th className="px-4 py-3 text-left">Cable Type</th>
+                  <th className="px-4 py-3 text-left">Max Speed</th>
+                  <th className="px-4 py-3 text-left">Max Distance</th>
+                  <th className="px-4 py-3 text-left">Gaming Verdict</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Direct Ethernet (Cat6)</td>
-                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 1 ms</td>
-                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 0.5 ms</td>
-                  <td className="px-4 py-3 text-emerald-400 font-semibold">0.0%</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat5e</td>
+                  <td className="px-4 py-3">1 Gbps</td>
+                  <td className="px-4 py-3">100 m (328 ft)</td>
+                  <td className="px-4 py-3 text-amber-500">Acceptable (limited to 1 Gbps)</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">MoCA 2.5 Adapter</td>
-                  <td className="px-4 py-3">1 - 2 ms</td>
-                  <td className="px-4 py-3">&lt; 1.0 ms</td>
-                  <td className="px-4 py-3">&lt; 0.1%</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat6</td>
+                  <td className="px-4 py-3">10 Gbps (up to 55 m)</td>
+                  <td className="px-4 py-3">100 m (328 ft)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-bold">Best for Gaming</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi 7 (6GHz Band, MLO)</td>
-                  <td className="px-4 py-3">1 - 3 ms</td>
-                  <td className="px-4 py-3">2 - 5 ms</td>
-                  <td className="px-4 py-3">0.1% - 0.5%</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat6a</td>
+                  <td className="px-4 py-3">10 Gbps</td>
+                  <td className="px-4 py-3">100 m (328 ft)</td>
+                  <td className="px-4 py-3 text-emerald-400">Recommended for in-wall/in-floor runs</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi 6 (5GHz Band)</td>
-                  <td className="px-4 py-3">3 - 8 ms</td>
-                  <td className="px-4 py-3 text-amber-500">8 - 25 ms</td>
-                  <td className="px-4 py-3 text-amber-500">0.5% - 2.0%</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat7</td>
+                  <td className="px-4 py-3">10 Gbps</td>
+                  <td className="px-4 py-3">100 m (328 ft)</td>
+                  <td className="px-4 py-3 text-red-500">Not recommended (proprietary GG45 jacks)</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Powerline Adapter (AV2000)</td>
-                  <td className="px-4 py-3 text-amber-500">4 - 15 ms</td>
-                  <td className="px-4 py-3 text-red-500">15 - 80 ms</td>
-                  <td className="px-4 py-3 text-red-500">1.0% - 4.5%</td>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Cat8</td>
+                  <td className="px-4 py-3">40 Gbps</td>
+                  <td className="px-4 py-3">30 m (98 ft)</td>
+                  <td className="px-4 py-3 text-red-500">Overkill — data center only</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <p className="text-xs text-[var(--text-muted)]">
+            For home gaming runs under 30 meters, <strong>Cat6</strong> is the ideal choice: affordable, flexible, and capable of 10 Gbps should you upgrade to a multi-gig internet plan. Avoid CCA (Copper Clad Aluminum) cables sold as &quot;Cat6&quot; — they break easily and increase signal resistance.
+          </p>
         </section>
 
-        {/* SECTION 19: Recommended Setup */}
+        {/* SECTION 11: Does Router Matter? */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Zap size={18} className="text-cyan-400" />
-            18. Recommended Setups by Budget
+            <Server size={18} className="text-cyan-400" />
+            10. Does Your Router Matter for Ethernet vs. Wi-Fi?
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
-              Configure your network path based on your budget and space limitations:
+              Yes. Even on a wired Ethernet connection, your router&apos;s CPU, RAM, and queue management software determine whether your packets are processed quickly or delayed in the WAN buffer.
             </p>
-            <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-muted)]">
-              <li>
-                <strong>Budget Setup (&lt;$20):</strong> Purchase a 50-foot Cat6 Ethernet cable and route it along baseboards using plastic cable clips. This delivers the lowest ping for minimal cost.
-              </li>
-              <li>
-                <strong>Mid-Range Setup ($50-$120):</strong> If drilling is not an option, connect a pair of MoCA 2.5 adapters to utilize existing coaxial television outlets in your walls.
-              </li>
-              <li>
-                <strong>Premium Setup ($150+):</strong> Install a Wi-Fi 7 tri-band router paired with a compatible Wi-Fi 7 network adapter, using the 6GHz band with MLO active for high wireless stability.
-              </li>
-            </ul>
             <p>
-              To choose the right router for these configurations, check our detailed evaluations at:
+              ISP-provided gateways feature weak dual-core processors and no advanced queue management. During heavy downloads, their WAN buffers bloat, causing ping spikes even on a wired connection. A gaming router with CAKE SQM active prevents this by capping the queue before it bloats.
+            </p>
+            <p>
+              To choose the right router hardware for your setup, see our detailed evaluations:
             </p>
             <ul className="list-disc pl-5 space-y-1 text-xs">
               <li>
                 <Link href="/best-router-for-gaming" className="text-[var(--brand-400)] hover:underline font-semibold">
-                  Best Gaming Routers Buyer&apos;s Guide
+                  Best Router for Gaming — Buyer&apos;s Guide
                 </Link>
               </li>
               <li>
@@ -783,8 +695,273 @@ export default function EthernetVsWifiGamingPage() {
                   Gaming Router vs. Normal Router Comparison
                 </Link>
               </li>
+              <li>
+                <Link href="/best-router-settings-for-gaming" className="text-[var(--brand-400)] hover:underline font-semibold">
+                  Best Router Settings for Gaming
+                </Link>
+              </li>
             </ul>
           </div>
+        </section>
+
+        {/* SECTION 12: Powerline Adapters */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <HardDrive size={18} className="text-cyan-400" />
+            11. Powerline Adapters vs. Wi-Fi for Gaming
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Powerline adapters transmit network data over your home&apos;s existing electrical wiring. They present themselves as a cable-free alternative to routing Ethernet through walls.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div className="p-4 bg-emerald-950/10 border border-emerald-800/40 rounded-xl space-y-2">
+                <h4 className="font-bold text-emerald-400">Advantages</h4>
+                <ul className="list-disc pl-4 space-y-1 text-[var(--text-muted)]">
+                  <li>No need to drill holes or run new cables.</li>
+                  <li>More stable than Wi-Fi in electrically quiet homes.</li>
+                  <li>Plug-and-play installation.</li>
+                </ul>
+              </div>
+              <div className="p-4 bg-red-950/10 border border-red-800/40 rounded-xl space-y-2">
+                <h4 className="font-bold text-red-400">Disadvantages</h4>
+                <ul className="list-disc pl-4 space-y-1 text-[var(--text-muted)]">
+                  <li>Electrical wiring carries high-frequency noise from appliances.</li>
+                  <li>Crossing circuit breakers degrades performance severely.</li>
+                  <li>Latency can be 4–15ms and is highly variable.</li>
+                  <li>Heavy appliances (dryers, air conditioners) cause packet bursts.</li>
+                </ul>
+              </div>
+            </div>
+            <p>
+              In most homes, modern Wi-Fi 6E or Wi-Fi 7 on the 6GHz band will outperform Powerline in latency consistency. Use MoCA adapters over coaxial lines if they are available — they are far more reliable.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 13: MoCA vs Ethernet vs Wi-Fi */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Network size={18} className="text-cyan-400" />
+            12. MoCA Adapters vs. Ethernet vs. Wi-Fi
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              MoCA (Multimedia over Coax) adapters convert your existing coaxial television outlets into a gigabit wired backhaul. Unlike powerline adapters, coaxial cables are designed to carry high-frequency signals and feature heavy shielding.
+            </p>
+            <p>
+              MoCA 2.5 adapters deliver <strong>gigabit speeds with less than 1ms added latency</strong> — performance virtually identical to a direct Ethernet run. This makes them the ideal solution for apartments and homes where running new Cat6 cables through walls is not possible.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 14: Real-World Gaming Tests */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Gamepad2 size={18} className="text-cyan-400" />
+            13. Real-World Gaming Benchmarks by Game
+          </h2>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            The following benchmark data represents estimated local-network-added latency under typical real-world conditions (not isolated lab tests). External ping to game server is not included — that value is identical across connection types once the packet leaves your router.
+          </p>
+          <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+            <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
+              <thead>
+                <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                  <th className="px-4 py-3 text-left">Game</th>
+                  <th className="px-4 py-3 text-left">Ethernet (Cat6)</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 5</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 6/6E</th>
+                  <th className="px-4 py-3 text-left">Wi-Fi 7</th>
+                  <th className="px-4 py-3 text-left">Verdict</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Valorant (128-tick)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 0.5ms (0% loss)</td>
+                  <td className="px-4 py-3 text-red-500">10-25ms + spikes (1-3% loss)</td>
+                  <td className="px-4 py-3 text-amber-500">4-12ms + minor jitter (0.5% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400">1-3ms + stable (0.1% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-bold">Ethernet / Wi-Fi 7 (MLO)</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Counter-Strike 2 (128-tick)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 0.5ms (0% loss)</td>
+                  <td className="px-4 py-3 text-red-500">12-30ms + spikes (1-3% loss)</td>
+                  <td className="px-4 py-3 text-amber-500">5-15ms + minor jitter (0.5% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400">1-4ms + stable (0.1% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-bold">Ethernet Required</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Warzone (64-tick)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 0.5ms (0% loss)</td>
+                  <td className="px-4 py-3 text-red-500">8-20ms + jitter (1-2% loss)</td>
+                  <td className="px-4 py-3 text-amber-500">3-10ms + minor jitter (&lt;0.5% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400">1-3ms + stable (0.1% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-bold">Ethernet Preferred</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Fortnite (30-tick)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 0.5ms (0% loss)</td>
+                  <td className="px-4 py-3 text-red-500">10-18ms (0.5-1% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400">4-8ms (&lt;0.1% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400">1-3ms (0% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-bold">Wi-Fi 6/7 Acceptable</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Apex Legends (20-tick)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">&lt; 0.5ms (0% loss)</td>
+                  <td className="px-4 py-3 text-red-500">8-15ms (0.5-1.5% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400">3-8ms (&lt;0.1% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400">1-3ms (0% loss)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-bold">Wi-Fi 6/7 Acceptable</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* SECTION 15: Streaming + Gaming */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Activity size={18} className="text-cyan-400" />
+            14. Streaming + Gaming Simultaneously
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Streaming to Twitch or YouTube while gaming requires a sustained, high-bandwidth upload (6 Mbps to 8 Mbps for 1080p60). Over Wi-Fi, this upload stream occupies the same half-duplex radio channel as your game&apos;s download packets, creating a direct conflict.
+            </p>
+            <p>
+              Over Ethernet, your upload stream and game downloads use separate wire pairs on the same cable simultaneously — no conflict. The router still needs Smart Queue Management (SQM) to prevent the stream from pushing your game packets into a long queue, so set your upload cap to 90% of your measured upload speed in the QoS settings.
+            </p>
+            <p>
+              For full configuration instructions:{" "}
+              <Link href="/best-qos-settings-for-gaming" className="text-[var(--brand-400)] hover:underline font-semibold">
+                Best QoS Settings for Gaming
+              </Link>.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 16: When Wi-Fi Is Good Enough */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <CheckCircle2 size={18} className="text-cyan-400" />
+            15. When Wi-Fi Is Good Enough
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>Wi-Fi is acceptable when all of the following conditions are met:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
+              <li>You play single-player, turn-based, or low-tick-rate casual multiplayer games.</li>
+              <li>You are the only active device on the wireless network during gaming sessions.</li>
+              <li>You are within 20 feet of the router with no more than one wall between you.</li>
+              <li>You are connected to the 5GHz or 6GHz band (not the congested 2.4GHz band).</li>
+              <li>Your bufferbloat grade tests as &quot;A&quot; or &quot;B&quot; with SQM active on your router.</li>
+            </ul>
+          </div>
+        </section>
+
+        {/* SECTION 17: Signs Ethernet Will Help */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Shield size={18} className="text-cyan-400" />
+            16. Signs Ethernet Will Immediately Help You
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <div className="p-5 border border-emerald-800/30 bg-emerald-950/10 rounded-xl space-y-3">
+              <h3 className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                <CheckCircle2 size={14} /> If You Experience Any of These, Switch to Ethernet Today
+              </h3>
+              <ul className="list-disc pl-5 space-y-1.5 text-[10px] text-[var(--text-secondary)]">
+                <li>Your ping test shows variance greater than 10ms between minimum and maximum values.</li>
+                <li>Your packet loss is above 0.1% when testing from your PC to your router gateway IP.</li>
+                <li>Your in-game shots miss targets that were clearly in your crosshair.</li>
+                <li>Your character rubber-bands or warps when running in a straight line.</li>
+                <li>Your ping spikes dramatically when another device starts downloading or streaming.</li>
+                <li>Your connection drops intermittently when someone runs a microwave or vacuum cleaner.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 18: Network Optimization Checklist */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Settings size={18} className="text-cyan-400" />
+            17. Full Network Optimization Checklist
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Whether you are on Ethernet or Wi-Fi, follow this full optimization checklist to extract maximum performance:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
+              <li><strong>Router Placement:</strong> Elevate the router. Remove it from metal cabinets and concrete alcoves.</li>
+              <li><strong>Firmware Updates:</strong> Update your router firmware. Manufacturers regularly patch queue management and wireless scheduling bugs.</li>
+              <li><strong>Enable QoS / SQM:</strong> Configure CAKE or FQ-CoDel with bandwidth caps at 90% of measured speeds.</li>
+              <li><strong>Optimize DNS:</strong> Replace your ISP&apos;s DNS servers with Cloudflare (1.1.1.1) or Google (8.8.8.8) to reduce DNS resolution latency.</li>
+              <li><strong>Select Optimal Game Server:</strong> In-game settings allow selecting a preferred region. Choose the server geographically closest to you.</li>
+              <li><strong>Disable Energy Efficient Ethernet (EEE):</strong> In Windows Device Manager → Network Adapter Properties → Advanced, disable Green Ethernet to prevent port sleep delays.</li>
+            </ul>
+            <p>
+              For the complete advanced optimization guide, visit:{" "}
+              <Link href="/gaming-network-optimization" className="text-[var(--brand-400)] hover:underline font-semibold">
+                Gaming Network Optimization Guide
+              </Link>.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 19: Buying Recommendations */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <TrendingDown size={18} className="text-cyan-400" />
+            18. Recommended Setup by User Type
+          </h2>
+          <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+            <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
+              <thead>
+                <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                  <th className="px-4 py-3 text-left">User Type</th>
+                  <th className="px-4 py-3 text-left">Recommended Setup</th>
+                  <th className="px-4 py-3 text-left">Priority Features</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Casual Gamer</td>
+                  <td className="px-4 py-3">Wi-Fi 6 (5GHz) + Standard Router</td>
+                  <td className="px-4 py-3">Coverage, ease of use</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Competitive FPS</td>
+                  <td className="px-4 py-3 font-semibold text-emerald-400">Cat6 Ethernet + Gaming Router (SQM)</td>
+                  <td className="px-4 py-3">Zero jitter, CAKE queue management</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Streamer</td>
+                  <td className="px-4 py-3 font-semibold text-emerald-400">Cat6 Ethernet + Gaming Router (QoS)</td>
+                  <td className="px-4 py-3">Upload queue management, full-duplex stability</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Esports Player</td>
+                  <td className="px-4 py-3 font-semibold text-emerald-400">Cat6a Ethernet + High-end Gaming Router</td>
+                  <td className="px-4 py-3">Sub-0.5ms local latency, multi-gig ports</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Large Household</td>
+                  <td className="px-4 py-3">Ethernet for PC/Console + Wi-Fi 7 for phones</td>
+                  <td className="px-4 py-3">Flow isolation, MLO wireless stability</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+            For detailed model-by-model router recommendations by budget tier, see our full guide:{" "}
+            <Link href="/best-router-for-gaming" className="text-[var(--brand-400)] hover:underline font-semibold">
+              Best Router for Gaming — Buyer&apos;s Guide <ArrowRight size={12} className="inline" />
+            </Link>
+          </p>
         </section>
 
       </div>
