@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
+import ConnectionOptimizerClient from "@/components/tools/ConnectionOptimizerClient";
 import {
   Zap,
   Wifi,
@@ -31,7 +32,7 @@ import {
 export const metadata: Metadata = buildMetadata({
   title: "Wi-Fi 7 for Gaming: Latency, Jitter & Router Settings Guide | RouterVia",
   description:
-    "Is Wi-Fi 7 good for gaming? We analyze 802.11be wireless gaming latency, Multi-Link Operation (MLO), 320MHz channels, and compare it with Wi-Fi 6 and Ethernet.",
+    "Is Wi-Fi 7 good for gaming? Read our technical guide comparing 802.11be gaming latency, Multi-Link Operation (MLO), 4K-QAM, and 320MHz channels to Wi-Fi 6/6E and Ethernet.",
   canonical: "/wifi-7-for-gaming",
   keywords: [
     "wifi 7 for gaming",
@@ -44,6 +45,8 @@ export const metadata: Metadata = buildMetadata({
     "wifi 7 jitter",
     "wifi 7 packet loss",
     "wifi 7 router comparison",
+    "intel be200 gaming",
+    "wifi 7 vs ethernet gaming",
   ],
 });
 
@@ -62,20 +65,20 @@ const breadcrumbs = [
 
 const commonCauses = [
   {
-    title: "MLO Switching Overhead",
-    desc: "If the receiving client card repeatedly connects and disconnects between the 5GHz and 6GHz bands due to weak signals, it creates brief packet delays.",
+    title: "MLO Band Disconnects",
+    desc: "When client adapters repeatedly handoff between 5GHz and 6GHz bands due to border signal-to-noise ratios, it triggers frame drops and momentary packet pauses.",
   },
   {
-    title: "DFS Radar Signal Disruption",
-    desc: "Using DFS channels on 5GHz or 6GHz bands forces the router to periodically search for radar activity, temporarily pausing all active wireless data streams.",
+    title: "High-Frequency Wave Attenuation",
+    desc: "The 6GHz band utilizes extremely short wavelengths. These radio waves struggle to penetrate dense obstacles (concrete, steel, brick), leading to signal degradation.",
   },
   {
-    title: "Physical Layer Signal Blockage",
-    desc: "The high-frequency 6GHz band has very short wavelengths, meaning it decays rapidly when passing through thick concrete, glass, or brick walls.",
+    title: "Co-Channel Contention (CSMA/CA)",
+    desc: "In high-density environments, neighboring routers sharing the same frequency blocks activate carrier-sense collision avoidance, forcing your gaming packets to queue.",
   },
   {
-    title: "WAN Interface Bufferbloat",
-    desc: "Without active queue management (SQM) configured on your Wi-Fi 7 router, heavy downloads can saturate your gateway queue, inflating gaming ping.",
+    title: "WAN Bufferbloat Saturation",
+    desc: "Without active queue management (SQM) implemented on the router gateway, heavy download streams block outbound game UDP packets, causing severe ping spikes.",
   },
 ];
 
@@ -84,12 +87,12 @@ const commonCauses = [
 // =============================================================
 
 const quickFixChecklist = [
-  "Enable Multi-Link Operation (MLO) using STR (Simultaneous Transmit and Receive) mode to route packets across 5GHz and 6GHz bands simultaneously.",
-  "Connect to a dedicated, non-overlapping 320 MHz channel on the 6GHz frequency band to maximize throughput.",
-  "Upgrade your PC's wireless adapter card to an Intel BE200 or Qualcomm FastConnect 7800 client adapter.",
-  "Turn on Smart Queue Management (SQM / CAKE) inside your Wi-Fi 7 router settings to prevent bufferbloat.",
-  "Disable Wi-Fi energy-efficient sleep features (such as Green Ethernet or PCIe ASPM) to prevent adapter sleep delay.",
-  "Place your Wi-Fi 7 router in the same room or within line-of-sight to prevent high-frequency 6GHz signal attenuation.",
+  "Enable Multi-Link Operation (MLO) with STR (Simultaneous Transmit and Receive) to route packets across 5GHz and 6GHz channels simultaneously.",
+  "Dedicate a clean, uncrowded 320 MHz channel block on the 6GHz band to completely avoid neighbor networks.",
+  "Upgrade client adapters to Intel BE200 or Qualcomm FastConnect 7800 client cards to enable true 802.11be capabilities.",
+  "Enable Smart Queue Management (SQM) using CAKE or FQ-CoDel algorithms on your router to isolate gaming packet queues.",
+  "Disable network adapter sleep states (ASPM, Green Ethernet, and Energy Efficient Ethernet) to prevent processing wake-up lag.",
+  "Position your gaming PC or console with direct line-of-sight to the router or limit obstacles to a single drywall partition.",
 ];
 
 // =============================================================
@@ -98,28 +101,28 @@ const quickFixChecklist = [
 
 const troubleshootingSteps = [
   {
-    title: "Test Local STR/MLO Link Jitter",
+    title: "Evaluate Local RTT and Jitter Metrics",
     description:
-      "Open Windows PowerShell and run: 'ping -t 192.168.1.1' (replace with your router's gateway IP). Run this during household active usage. On a properly configured Wi-Fi 7 MLO connection, the local hop latency should hover consistently under 1.5ms with local jitter measuring below 0.3ms.",
-    tip: "If local hop ping fluctuates above 10ms, check if your device has switched to single-band mode instead of active MLO.",
+      "Open Windows Command Prompt or PowerShell and type: 'ping -t 192.168.1.1' (input your router's default gateway IP address). Keep the utility active for 5 minutes during typical household traffic. Under a healthy Wi-Fi 7 MLO connection, the round-trip latency must remain under 1.5ms, and the standard deviation (jitter) should measure below 0.3ms.",
+    tip: "If local hop ping periodically jumps beyond 8ms, it indicates the client card is dropping down to single-band operation or experiencing antenna alignment issues.",
   },
   {
-    title: "Run a Loaded Jitter and Bufferbloat Check",
+    title: "Test Loaded Jitter via Web Bufferbloat Diagnostics",
     description:
-      "Visit waveform.com/tools/bufferbloat. Run the test while streaming video or uploading a file on another device. Wi-Fi 7 combined with FQ-CoDel or CAKE SQM active should maintain a +0ms to +2ms latency increase under load, achieving an A+ score.",
-    tip: "Configure your router's upload and download speed limits to 90% of your maximum line capabilities to keep queues clear.",
+      "Open your browser and navigate to waveform.com/tools/bufferbloat. Run the benchmark tool to calculate your latency increase during active download and upload saturation. A Wi-Fi 7 router with configured SQM (FQ-CoDel/CAKE) should sustain an A+ grade, keeping the loaded latency increase under +2ms.",
+    tip: "Manually limit the router's bandwidth capacity to 90% of your ISP's max speed to prevent WAN interface saturation.",
   },
   {
-    title: "Select an Interference-Free 320 MHz Channel",
+    title: "Map the 6GHz Frequency Spectrum for Clean Channels",
     description:
-      "Use a modern Wi-Fi analysis tool (like NetSpot or WinFi) to inspect the 6GHz spectrum. Scan for overlapping neighboring routers. Set your router's 6GHz band to a dedicated, clean channel width (preferably 320MHz or 160MHz) to bypass interference.",
-    tip: "If neighbor networks overlap heavily on the 320MHz band, dropping down to a clean 160MHz channel width can offer superior latency stability.",
+      "Install a wireless analysis application (such as NetSpot, WinFi, or Wi-Fi Commander) on a compatible client device. Run a scan of the 6GHz spectrum. Identify overlapping SSIDs from neighboring networks. Log into your router's admin panel and lock the 6GHz frequency to a dedicated, unoccupied channel block (such as Channel 37 or 101).",
+    tip: "In dense apartments where neighbor networks occupy parts of the 320MHz spectrum, selecting a narrower but entirely clean 160MHz channel block can offer more stable latency.",
   },
   {
-    title: "Assign Router Priority Classes and Static IPs",
+    title: "Configure Dynamic WMM and QoS Priorities",
     description:
-      "Log into your router admin panel. Set up a DHCP Static IP reservation for your gaming PC or console. Access the Quality of Service (QoS) menu, enable gaming priority class, and configure WMM (Wi-Fi Multimedia) settings to prioritize Voice and Video queues.",
-    tip: "Consult our detailed router configuration guide for brand-specific dashboard instructions.",
+      "Log into your router's management dashboard. Establish a static DHCP IP reservation for your gaming PC or console. Access the Quality of Service (QoS) menu and set WMM (Wi-Fi Multimedia) parameters to guarantee high priority for voice, video, and gaming traffic queues, preventing file transfers from dominating airtime.",
+    tip: "Check our Best QoS Settings guide for exact dashboard settings based on ASUS, TP-Link, Netgear, and Linksys firmwares.",
   },
 ];
 
@@ -131,52 +134,52 @@ const faqs = [
   {
     question: "Is Wi-Fi 7 good for gaming?",
     answer:
-      "Yes. Wi-Fi 7 (802.11be) is the most advanced wireless standard, introducing Multi-Link Operation (MLO) which allows a single device to transmit and receive data across multiple frequency bands (e.g., 5GHz and 6GHz) at the same time. This virtually eliminates wireless jitter and drops local latency to sub-2ms levels, making it outstanding for gaming.",
+      "Yes. Wi-Fi 7 (802.11be) represents a massive upgrade for gaming. By incorporating Multi-Link Operation (MLO), the standard aggregates 5GHz and 6GHz bands, allowing data packets to travel over both paths simultaneously. This eliminates airtime waiting times, bypasses radio frequency interference, and cuts local hop latency to under 2ms, providing a stable, near-wired competitive gaming experience.",
   },
   {
-    question: "Can Wi-Fi 7 replace an Ethernet cable?",
+    question: "Is Wi-Fi 7 faster than Ethernet?",
     answer:
-      "For most gamers, yes. Under line-of-sight conditions with MLO active, Wi-Fi 7 offers latency and jitter performance that is almost indistinguishable from a physical cable. However, a shielded Cat6 Ethernet cable still has the physical advantage of absolute immunity to radio frequency interference and concrete walls, keeping local latency at <0.5ms with 0% packet loss.",
+      "In terms of theoretical maximum speed, Wi-Fi 7 can reach up to 46 Gbps, which exceeds standard 1 Gbps or 2.5 Gbps Ethernet cables. However, Ethernet operates on shielded physical copper lines, making it entirely immune to radio interference, wall obstacles, and congestion. For gaming latency and packet delivery consistency, Ethernet remains the gold standard, although Wi-Fi 7 is the closest wireless technology to match it.",
   },
   {
-    question: "Do I need a new router and device to use Wi-Fi 7?",
+    question: "Does Wi-Fi 7 reduce ping?",
     answer:
-      "Yes, to use Wi-Fi 7 features (like MLO or 320MHz channels), both your wireless router and your client device (PC, phone, or console) must support the 802.11be standard. Using a Wi-Fi 7 router with an older Wi-Fi 6 device will simply run the connection on Wi-Fi 6 protocols.",
+      "Wi-Fi 7 reduces local network latency (the delay between your PC and the router) down to 1-2ms under typical load, compared to 5-15ms on Wi-Fi 6. It cannot reduce the external routing path latency between your home and the game server, which is determined by your ISP's physical lines and routing infrastructure.",
   },
   {
     question: "What is Multi-Link Operation (MLO)?",
     answer:
-      "MLO is the headline feature of Wi-Fi 7. Traditionally, devices could only connect to a single band at a time (either 2.4GHz, 5GHz, or 6GHz). MLO allows your gaming PC to bond these bands together. It can send gaming packets over both 5GHz and 6GHz simultaneously. If one band suffers a temporary fade or collision, the packet is instantly delivered on the other, eliminating lag spikes.",
+      "Multi-Link Operation (MLO) is the flagship feature of Wi-Fi 7. Unlike older standards where devices connect to a single band (2.4GHz, 5GHz, or 6GHz), MLO bonds multiple bands into a single logical channel. A client can transmit and receive data on 5GHz and 6GHz simultaneously. If one band suffers a collision or signal decay, the packet is instantly sent via the other band, eliminating wireless lag spikes.",
   },
   {
-    question: "Is Wi-Fi 7 backward compatible with older devices?",
+    question: "Do I need a new router and device to use Wi-Fi 7?",
     answer:
-      "Yes, Wi-Fi 7 routers are backward compatible and will work with legacy Wi-Fi 4, 5, 6, and 6E client devices. However, those older devices will connect using their respective legacy standards and will not benefit from Wi-Fi 7 speed or scheduling enhancements.",
+      "Yes. To take advantage of Wi-Fi 7 features like MLO, 320 MHz channels, and 4096-QAM, both your router and client device must support the 802.11be standard. Older devices (Wi-Fi 6/6E or Wi-Fi 5) will connect to a Wi-Fi 7 router but will use their respective legacy protocols, missing out on Wi-Fi 7's latency optimizations.",
   },
   {
-    question: "Does Wi-Fi 7 reduce ping in games?",
+    question: "Do I need a Wi-Fi 7 adapter for my PC?",
     answer:
-      "Wi-Fi 7 reduces local hop latency (the delay between your PC and the router) down to 1-2ms, which is a significant improvement over Wi-Fi 5 (8-20ms) and Wi-Fi 6 (5-15ms) under active network loads. It does not reduce the external routing path latency between your home and the game server, which is managed by your ISP.",
+      "Yes. If your desktop or laptop motherboard does not have built-in Wi-Fi 7 capabilities, you will need to install an M.2 network card (like the Intel BE200) or a PCIe expansion card paired with external high-gain antennas. Ensure you have the latest operating system updates and drivers installed to support the WPA3 encryption and MLO bonding features.",
   },
   {
-    question: "Is 320 MHz channel width better for gaming?",
+    question: "Is Wi-Fi 7 worth upgrading from Wi-Fi 6?",
     answer:
-      "A 320 MHz channel width doubles the bandwidth capacity compared to Wi-Fi 6's 160 MHz. While this allows massive throughput, the primary gaming benefit is the abundance of clean, uncrowded channels in the 6GHz band, preventing airtime collisions with neighboring networks.",
+      "If you are a competitive gamer who cannot use a physical Ethernet cable and you live in a congested apartment with heavy radio interference, upgrading to Wi-Fi 7 is highly beneficial due to MLO and 320MHz channels. However, if your current Wi-Fi 6 setup is stable with low jitter, or if you are already connected via Ethernet, an upgrade is not urgent.",
   },
   {
-    question: "Which Wi-Fi 7 network cards are best for PC gaming?",
+    question: "Does Wi-Fi 7 reduce packet loss?",
     answer:
-      "Currently, the Intel BE200 and Qualcomm FastConnect 7800 are the top-rated M.2 cards. For desktop systems, PCIe cards utilizing these modules (paired with high-gain external antennas) offer excellent latency stability.",
+      "Yes. By sending redundant packets over multiple frequency bands simultaneously via MLO and utilizing Multi-RU allocation to bypass channel interference, Wi-Fi 7 significantly reduces physical-layer packet loss. Under active household load, local packet loss drops to near 0%.",
   },
   {
-    question: "Do current consoles (PS5, Xbox) support Wi-Fi 7?",
+    question: "What is the best Wi-Fi 7 gaming router?",
     answer:
-      "The base PlayStation 5 and Xbox Series X/S consoles support Wi-Fi 6. However, newer revisions (such as the PS5 Pro) and upcoming next-gen consoles feature built-in Wi-Fi 7 support to take advantage of MLO and 6GHz bands.",
+      "The ASUS ROG Rapture GT-BE98 is currently the top-tier Wi-Fi 7 gaming router, featuring a powerful quad-core processor, dual 10G ports, and triple-level game prioritization. For a more balanced budget, the TP-Link Archer BE800 and ASUS RT-BE88U offer outstanding performance, high-speed ports, and stable MLO configurations.",
   },
   {
-    question: "Do I need multi-gigabit internet to benefit from Wi-Fi 7?",
+    question: "Is Wi-Fi 7 future-proof?",
     answer:
-      "No. Wi-Fi 7 improves local wireless efficiency and eliminates queue delays within your home network. Even if your internet plan is 100 Mbps, Wi-Fi 7 will prevent your local gaming packets from lagging when another device is streaming or downloading elsewhere in the house.",
+      "Yes, Wi-Fi 7 is designed to support the next decade of consumer technology, including multi-gigabit fiber connections, 8K game streaming, cloud-based VR headsets, and ultra-high-density household networks. It is highly future-proof and supports backward compatibility with all legacy Wi-Fi standards.",
   },
 ];
 
@@ -188,7 +191,7 @@ export default function Wifi7ForGamingPage() {
   return (
     <TroubleshootingArticleShell
       h1="Wi-Fi 7 for Gaming: Latency, Jitter & Settings Guide"
-      intro="Wi-Fi 7 (802.11be) is here to redefine wireless gaming performance. By aggregating frequency bands, widening channels, and multiplying spectral density, the new standard aims to make wireless lag a thing of the past. In this guide, we analyze the engineering advancements of Wi-Fi 7, compare its performance to previous wireless generations and Ethernet, look at real-world hardware compatibility, and show you how to configure your router settings for maximum stability."
+      intro="Wi-Fi 7 (802.11be) marks a massive technological jump in wireless gaming performance. By aggregating frequency bands, doubling channel widths, and increasing spectral efficiency, the new standard aims to make wireless lag a thing of the past. In this guide, we analyze the engineering advancements of Wi-Fi 7, compare its performance to previous wireless generations and Ethernet, look at real-world hardware compatibility, and show you how to configure your router settings for maximum stability."
       category="wifi"
       breadcrumbs={breadcrumbs}
       faqs={faqs}
@@ -271,7 +274,21 @@ export default function Wifi7ForGamingPage() {
           </div>
         </section>
 
-        {/* SECTION 2: What Is Wi-Fi 7 */}
+        {/* Interactive Tool Section */}
+        <section className="space-y-4" aria-label="Interactive Latency Optimizer">
+          <div>
+            <h2 className="text-base font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <Sliders size={18} className="text-cyan-400" />
+              Analyze Your Connection Latency Profile
+            </h2>
+            <p className="text-xs text-[var(--text-muted)] mt-1">
+              Select your connection parameters and network congestion profiles to analyze your latency budget and identify bottlenecks.
+            </p>
+          </div>
+          <ConnectionOptimizerClient mode="latency" />
+        </section>
+
+        {/* SECTION 2: What Is Wi-Fi 7 (802.11be) */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Wifi size={18} className="text-cyan-400" />
@@ -279,10 +296,13 @@ export default function Wifi7ForGamingPage() {
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
-              Wi-Fi 7 is the seventh generation of wireless LAN, designated as <strong>802.11be (Extremely High Throughput - EHT)</strong>. Built on the foundation of Wi-Fi 6/6E, Wi-Fi 7 represents an evolutionary step designed to deliver ultra-low latency, massive capacity, and extreme speeds.
+              Wi-Fi 7 is the seventh generation of wireless local area networks, formalised under the IEEE **802.11be (Extremely High Throughput - EHT)** standard specification. While previous standards like Wi-Fi 6 (802.11ax) focused on density mitigation and multi-device allocation under capacity constraints, Wi-Fi 7 pivots directly to **latency minimization** and extreme reliability.
             </p>
             <p>
-              While Wi-Fi 6 focused on managing high-density environments, Wi-Fi 7 focuses on **latency reduction**. By introducing multi-band data routing and wider spectral channels, Wi-Fi 7 is engineered from the ground up to support latency-sensitive applications like competitive cloud gaming, virtual reality, and real-time remote operations.
+              Designed to support the next decade of gaming technology—ranging from high-tick-rate esports servers to real-time cloud gaming platforms (GeForce Now, Xbox Cloud Gaming), 8K video streaming, and VR/AR networking—Wi-Fi 7 completely restructures how wireless devices interact at the physical and data-link layers. For gamers, this represents the transition from a shared, highly variable airtime medium to a deterministic, low-jitter connection that mimics a physical cable.
+            </p>
+            <p>
+              Understanding Wi-Fi 7 requires looking past marketing speed claims (which advertise a theoretical 46 Gbps capacity) and examining the protocol modifications. By restructuring the frequency bands, upgrading signal modulations, and permitting simultaneous multi-frequency connections, the standard resolves the physical bottlenecks that have caused wireless lag since the inception of consumer routers.
             </p>
           </div>
         </section>
@@ -291,31 +311,61 @@ export default function Wifi7ForGamingPage() {
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Layers size={18} className="text-cyan-400" />
-            2. Wi-Fi 7 vs. Wi-Fi 6: What's Changed?
+            2. Wi-Fi 7 vs. Wi-Fi 6: The Architectural Shifts
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
-              Wi-Fi 6 (and 6E) made significant improvements in device scheduling but remained limited by single-band channel routing. If a client device connected to a 5GHz channel, it had to transmit all data on that channel, meaning it was still vulnerable to sudden bursts of airtime interference.
+              Wi-Fi 6 introduced OFDMA (Orthogonal Frequency Division Multiple Access), which allowed routers to divide single frequency channels into smaller chunks called Resource Units (RUs). While this helped prevent massive queues when multiple smartphones and smart TVs were online, it did not resolve the fundamental problem: devices were still locked to a single channel. If that channel suffered from local interference or microwave noise, the connection stalled.
             </p>
             <p>
-              Wi-Fi 7 introduces several key technologies to overcome these limits:
+              Wi-Fi 7 completely changes this paradigm. Instead of transmitting over a single, static channel, a Wi-Fi 7 client operates across multiple bands simultaneously, dynamically routing packets based on real-time channel occupancy. Here is a technical breakdown of the changes between the two standards:
             </p>
-            <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-muted)]">
-              <li>
-                <strong>Multi-Link Operation (MLO):</strong> The ability to bond multiple frequency bands (e.g., 5GHz + 6GHz) into a single, logical link.
-              </li>
-              <li>
-                <strong>Doubled Channel Width:</strong> Increasing channel capacity up to 320 MHz in the 6GHz spectrum.
-              </li>
-              <li>
-                <strong>4096-QAM Modulation:</strong> Allowing each symbol to carry 12 bits of data, a 20% increase over Wi-Fi 6's 1024-QAM.
-              </li>
-              <li>
-                <strong>Multi-RU (Resource Unit) Allocation:</strong> Allowing a single client device to occupy multiple frequency divisions, boosting spectral efficiency.
-              </li>
-            </ul>
+            <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+              <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
+                <thead>
+                  <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                    <th className="px-4 py-3 text-left">Feature</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 6 (802.11ax)</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 7 (802.11be)</th>
+                    <th className="px-4 py-3 text-left">Gaming Advantage</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Max Throughput</td>
+                    <td className="px-4 py-3">9.6 Gbps</td>
+                    <td className="px-4 py-3 text-emerald-400 font-semibold">46.1 Gbps</td>
+                    <td className="px-4 py-3 text-[var(--text-muted)]">Supports gigabit local file transfers and ultra-high-resolution streams.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Frequency Bands</td>
+                    <td className="px-4 py-3">2.4 GHz, 5 GHz</td>
+                    <td className="px-4 py-3 text-emerald-400 font-semibold">2.4 GHz, 5 GHz, 6 GHz</td>
+                    <td className="px-4 py-3 text-[var(--text-muted)]">Unlocks clean, interference-free wireless bands for gaming.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Max Channel Width</td>
+                    <td className="px-4 py-3">160 MHz</td>
+                    <td className="px-4 py-3 text-emerald-400 font-semibold">320 MHz</td>
+                    <td className="px-4 py-3 text-[var(--text-muted)]">Doubles the data pipes, reducing packet serialization delays.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">QAM Modulation</td>
+                    <td className="px-4 py-3">1024-QAM (10 bits/symbol)</td>
+                    <td className="px-4 py-3 text-emerald-400 font-semibold">4096-QAM (12 bits/symbol)</td>
+                    <td className="px-4 py-3 text-[var(--text-muted)]">20% transmission rate boost under clean line-of-sight.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Channel Bonding (MLO)</td>
+                    <td className="px-4 py-3">No (Single-band connection)</td>
+                    <td className="px-4 py-3 text-emerald-400 font-semibold font-bold">Yes (Multi-band aggregation)</td>
+                    <td className="px-4 py-3 text-[var(--text-muted)]">Allows simultaneous dual-band data paths to eliminate jitter.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <p>
-              For a detailed review of the previous standard, see our dedicated guide:{" "}
+              To learn more about the previous standard's features and optimizations, see our comprehensive{" "}
               <Link href="/wifi-6-for-gaming" className="text-[var(--brand-400)] hover:underline font-semibold">
                 Wi-Fi 6 for Gaming Guide
               </Link>.
@@ -323,161 +373,253 @@ export default function Wifi7ForGamingPage() {
           </div>
         </section>
 
-        {/* SECTION 4: Wi-Fi 7 vs Ethernet */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Network size={18} className="text-cyan-400" />
-            3. Wi-Fi 7 vs. Ethernet: The Latency War
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              Historically, competitive gamers avoided wireless connections due to half-duplex limitations and RF interference. While Wi-Fi 6 narrowed the gap, Wi-Fi 7 is the first standard to deliver a truly competitive alternative to physical copper wires.
-            </p>
-            <p>
-              Thanks to MLO, a Wi-Fi 7 client can transmit packets across two bands simultaneously, effectively simulating a full-duplex connection. If a neighbor's router creates interference on the 5GHz band, the packet is instantly delivered via the 6GHz band. While a physical Ethernet cable remains superior in raw signal shielding and absolute sub-0.5ms consistency, Wi-Fi 7 matches Ethernet RTT under line-of-sight conditions.
-            </p>
-            <p>
-              For an in-depth look at the physics of wired vs wireless connections, see our comparison:{" "}
-              <Link href="/ethernet-vs-wifi-gaming" className="text-[var(--brand-400)] hover:underline font-semibold">
-                Ethernet vs. Wi-Fi for Gaming
-              </Link>.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 5: Multi-Link Operation */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Cpu size={18} className="text-cyan-400" />
-            4. Multi-Link Operation (MLO): The Game Changer
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              <strong>Multi-Link Operation (MLO)</strong> is the core technology that makes Wi-Fi 7 revolutionary for gaming. Under older standards, a device could only communicate on a single frequency band at any given second. If interference occurred, the packet failed, triggering a retransmission and a sudden lag spike.
-            </p>
-            <p>
-              MLO allows a Wi-Fi 7 router and client to establish multiple connections across different bands (typically 5GHz and 6GHz) simultaneously. MLO operates in two primary modes:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
-              <li><strong>STR Mode (Simultaneous Transmit & Receive):</strong> The device sends data on one band while receiving on another, preventing half-duplex bottlenecks.</li>
-              <li><strong>EMLSR Mode (Enhanced Multi-Link Single Radio):</strong> The device dynamically monitors multiple bands and chooses the path with the lowest queue time for the next packet.</li>
-            </ul>
-            <p>
-              This multi-path redundancy ensures that if microwave noise or neighbor traffic blocks one band, the other delivers the packet instantly — eliminating wireless jitter.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 6: 320 MHz Channels */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Sliders size={18} className="text-cyan-400" />
-            5. 320 MHz Channels: Ultra-Wide Lanes
-          </h2>
-          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
-            <p>
-              In wireless networking, wider channels equal higher speed and capacity. Wi-Fi 6 was capped at a maximum channel width of 160 MHz. Wi-Fi 7 doubles this capacity to **320 MHz** within the newly opened 6GHz spectrum.
-            </p>
-            <p>
-              For gaming, this ultra-wide lane allows massive amounts of data to pass through instantly, reducing transmission delay. Combined with the clean air of the 6GHz spectrum, it ensures that high-bandwidth downloads elsewhere in the house will not saturate your wireless link.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION 7: 4K-QAM Explained */}
+        {/* SECTION 4: Wi-Fi 7 vs Wi-Fi 6E (User Recommended Section) */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Layers size={18} className="text-cyan-400" />
-            6. 4K-QAM (4096-QAM) Explained
+            3. Wi-Fi 7 vs. Wi-Fi 6E: The 6GHz Optimization
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
-              <strong>QAM (Quadrature Amplitude Modulation)</strong> is the method used to pack data onto radio waves. Wi-Fi 6 supports 1024-QAM, meaning each transmission symbol carries 10 bits of digital data.
+              Wi-Fi 6E opened the door to the uncrowded **6GHz frequency spectrum**, which was a huge help for gamers because it bypassed the crowded 2.4GHz and 5GHz bands. However, Wi-Fi 6E still used Wi-Fi 6 protocols, meaning it was limited to 160MHz channels and lacked the ability to bond bands together. If a user connected to a 6GHz channel, they were still prone to latency spikes if they walked too far or if a wall degraded the high-frequency signal.
             </p>
             <p>
-              Wi-Fi 7 upgrades this to **4096-QAM (4K-QAM)**, allowing each symbol to carry **12 bits** of data. This 20% increase in spectral efficiency means that the router can transmit larger packets in less time, resulting in slightly faster local data transfers and improved ping responsiveness.
+              Wi-Fi 7 optimizes the 6GHz spectrum by doubling the maximum channel width to 320MHz and using MLO to combine the 6GHz band with the 5GHz band. This ensures that the high throughput of the 6GHz band is backed by the superior range of the 5GHz band. Here is a direct comparison between the two 6GHz wireless standards:
+            </p>
+
+            {/* ── User Recommended Table: Wi-Fi 7 vs Wi-Fi 6E ── */}
+            <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+              <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
+                <thead>
+                  <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                    <th className="px-4 py-3 text-left">Feature</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 6E</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 7</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Max Channel Width</td>
+                    <td className="px-4 py-3">160 MHz</td>
+                    <td className="px-4 py-3 text-emerald-400 font-semibold">320 MHz</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">QAM</td>
+                    <td className="px-4 py-3">1024-QAM</td>
+                    <td className="px-4 py-3 text-emerald-400 font-semibold">4096-QAM</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">MLO</td>
+                    <td className="px-4 py-3 text-red-500 font-semibold">No</td>
+                    <td className="px-4 py-3 text-emerald-400 font-semibold">Yes</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Gaming Latency</td>
+                    <td className="px-4 py-3 text-amber-500 font-semibold">Excellent</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">Outstanding</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Future-Proof Score</td>
+                    <td className="px-4 py-3">8/10</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">10/10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              By doubling the channel width, Wi-Fi 7 allows client cards to negotiate speeds up to 5.8 Gbps on single client devices, reducing congestion and bottlenecking.
             </p>
           </div>
         </section>
 
-        {/* SECTION 8: Multi-RU Allocation */}
+        {/* SECTION 5: Wi-Fi 7 vs Ethernet */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Network size={18} className="text-cyan-400" />
+            4. Wi-Fi 7 vs. Ethernet: Can Wireless Finally Win?
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              For decades, competitive gamers have agreed on one absolute rule: **never game on Wi-Fi**. This rule was rooted in physics. Traditional Wi-Fi is half-duplex, meaning devices cannot send and receive data at the same time over the same radio channel. They must wait for the channel to be free before transmitting.
+            </p>
+            <p>
+              Wired Ethernet, on the other hand, is full-duplex. Inside a Cat6 cable, separate shielded copper pairs handle transmit and receive paths simultaneously, resulting in a deterministic connection with 0% packet loss and a local round-trip time (RTT) under 0.5ms.
+            </p>
+            <p>
+              Wi-Fi 7 narrows this gap significantly. By using Multi-Link Operation (MLO) in STR mode, a Wi-Fi 7 card can send data on 5GHz while receiving on 6GHz, simulating a full-duplex connection. In clear line-of-sight conditions, local ping on Wi-Fi 7 averages **1-2ms**, which is virtually identical to Ethernet.
+            </p>
+            <p>
+              However, Ethernet still holds the physical advantage of absolute shielding against electromagnetic noise and zero wall attenuation. In a crowded apartment with thick brick or concrete walls, a physical cable remains the most reliable option.
+            </p>
+            <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl text-xs space-y-1.5">
+              <h3 className="font-bold text-[var(--text-primary)]">Verdict</h3>
+              <p className="text-[var(--text-muted)]">
+                If you have the option to run a Cat6 cable, do it. It is cheaper and guarantees stable latency. However, if running a cable is impossible due to your home's layout, Wi-Fi 7 is the first wireless standard that can deliver competitive-grade performance without causing lag spikes.
+              </p>
+              <p className="text-[10px]">
+                To see our detailed technical comparison of cables, check our guide:{" "}
+                <Link href="/ethernet-vs-wifi-gaming" className="text-[var(--brand-400)] hover:underline">
+                  Ethernet vs. Wi-Fi for Gaming
+                </Link>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 6: Multi-Link Operation (MLO) */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Cpu size={18} className="text-cyan-400" />
+            5. Multi-Link Operation (MLO): The Technology Explained
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              <strong>Multi-Link Operation (MLO)</strong> is the core technology of Wi-Fi 7. In all previous Wi-Fi standards, a client device could only connect to a single band at a time. If your router was a tri-band router (2.4GHz, 5GHz, and 6GHz), your PC had to choose one. If it chose 6GHz, all packets were sent over 6GHz. If a wall blocked the signal, or if a neighboring device began transmitting on that band, your connection stalled while the adapter negotiated a fallback to 5GHz.
+            </p>
+            <p>
+              MLO allows a Wi-Fi 7 client to bond multiple bands into a single connection. The router and PC can establish links across 5GHz and 6GHz simultaneously.
+            </p>
+            <p>
+              MLO operates in three main configurations:
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-muted)]">
+              <li>
+                <strong>STR (Simultaneous Transmit and Receive) Mode:</strong> The device sends data on one band (e.g., 5GHz) while receiving on another (e.g., 6GHz) at the exact same millisecond. This resolves the half-duplex bottleneck.
+              </li>
+              <li>
+                <strong>EMLSR (Enhanced Multi-Link Single Radio) Mode:</strong> Devices with a single radio monitor multiple bands and dynamically switch to the path with the lowest queue time for the next packet.
+              </li>
+              <li>
+                <strong>Packet Duplication / Redundancy Mode:</strong> The client card sends the exact same gaming UDP packet over both the 5GHz and 6GHz bands simultaneously. Whichever packet arrives at the router first is processed, and the duplicate is discarded. This ensures that even if one band experiences a collision, the packet is delivered without delay.
+              </li>
+            </ul>
+            <p>
+              By using these modes, MLO reduces local hop jitter to near zero, providing a stable wireless connection.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 7: 320 MHz Channels */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Sliders size={18} className="text-cyan-400" />
+            6. 320 MHz Channels: Ultra-Wide Data Lanes
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              In wireless networking, wider channels allow for higher throughput and lower transmission latency. Wi-Fi 6 was capped at a maximum channel width of 160 MHz. Wi-Fi 7 doubles this capacity to **320 MHz** within the 6GHz spectrum.
+            </p>
+            <p>
+              Think of channel width like highway lanes. A 160MHz channel is a 4-lane highway, while a 320MHz channel is an 8-lane highway. By doubling the width, the router can transmit larger packets in less time, reducing **serialization delay** (the time it takes to write bits onto the physical medium).
+            </p>
+            <p>
+              For gaming, this wide bandwidth means that even if another device is downloading a large file on your network, your small gaming UDP packets can easily bypass the traffic.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 8: 4K-QAM Explained */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Layers size={18} className="text-cyan-400" />
+            7. 4K-QAM Explained: Modulating for Extreme Density
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              <strong>QAM (Quadrature Amplitude Modulation)</strong> is the method used to encode digital data onto radio waves. By modulating both the amplitude and phase of the carrier wave, the router can represent patterns of binary bits as distinct constellation points.
+            </p>
+            <p>
+              Wi-Fi 6 supported 1024-QAM, meaning each transmission symbol carried 10 bits of data. Wi-Fi 7 upgrades this to **4096-QAM (4K-QAM)**, allowing each symbol to carry **12 bits** of data. This represents a **20% increase** in spectral efficiency.
+            </p>
+            <p>
+              However, 4K-QAM has strict physical requirements. Because the constellation points are packed closely together, the receiver requires a very high **Signal-to-Noise Ratio (SNR)** and low **Error Vector Magnitude (EVM)** to distinguish them. If there is too much noise or distance between the devices, the router will automatically fall back to 1024-QAM or 256-QAM.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 9: Multi-RU Allocation */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Shield size={18} className="text-cyan-400" />
-            7. Multi-RU Allocation: Bypassing Channel Interference
+            8. Multi-RU Allocation & Preamble Puncturing: Resolving Contention
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
-              In Wi-Fi 6, OFDMA allowed the router to divide a channel among multiple devices. However, a single device was restricted to a single **Resource Unit (RU)**. If a small part of a 160MHz channel suffered from interference, the router had to disable that entire portion for the client device.
+              In Wi-Fi 6, OFDMA allowed the router to divide a channel among multiple devices. However, a single device was restricted to a single **Resource Unit (RU)**. If a small part of a 160MHz channel suffered from interference, the router had to disable that entire portion for the client device, reducing the channel's efficiency.
             </p>
             <p>
-              Wi-Fi 7 introduces **Multi-RU Allocation**. The router can now assign multiple RUs of different sizes to a single client device. If one sub-carrier has local interference, the router simply routes around it using the other RUs in the same channel, keeping the connection stable and preventing packet drops.
+              Wi-Fi 7 introduces **Multi-RU Allocation**. The router can now assign multiple RUs of different sizes to a single client device.
+            </p>
+            <p>
+              This is paired with **Preamble Puncturing**. If a neighboring network occupies a small segment of your 320 MHz channel, a Wi-Fi 7 router can 'puncture' or slice out that congested part, using the remaining clean segments to transmit data. This prevents neighbor interference from interrupting your gaming session.
             </p>
           </div>
         </section>
 
-        {/* SECTION 9: Latency Benchmarks */}
+        {/* SECTION 10: Latency Benchmarks */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Activity size={18} className="text-cyan-400" />
-            8. Latency Benchmarks: Wi-Fi 7 vs. Older Generations
-          </h2>
-          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-            Local network latency (the delay between your device and the router) adds directly to your in-game ping. Here is how Wi-Fi 7 performs under household network load compared to older technologies:
-          </p>
-          <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
-            <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
-              <thead>
-                <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
-                  <th className="px-4 py-3 text-left">Network Load State</th>
-                  <th className="px-4 py-3 text-left">Wi-Fi 5 (802.11ac)</th>
-                  <th className="px-4 py-3 text-left">Wi-Fi 6 (802.11ax)</th>
-                  <th className="px-4 py-3 text-left">Wi-Fi 7 (802.11be MLO)</th>
-                  <th className="px-4 py-3 text-left">Ethernet (Cat6)</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
-                <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Idle (Single Client)</td>
-                  <td className="px-4 py-3">6 – 12 ms</td>
-                  <td className="px-4 py-3 text-amber-500">2 – 5 ms</td>
-                  <td className="px-4 py-3 text-emerald-400">0.8 – 1.5 ms</td>
-                  <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.5 ms</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Moderate Load (Streaming)</td>
-                  <td className="px-4 py-3 text-red-500">25 – 45 ms</td>
-                  <td className="px-4 py-3 text-amber-500">4 – 8 ms</td>
-                  <td className="px-4 py-3 text-emerald-400">1.2 – 2.5 ms</td>
-                  <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.6 ms</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Heavy Load (Downloading)</td>
-                  <td className="px-4 py-3 text-red-500">120 – 280 ms</td>
-                  <td className="px-4 py-3 text-amber-500">12 – 22 ms</td>
-                  <td className="px-4 py-3 text-emerald-400">2.0 – 4.5 ms</td>
-                  <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.8 ms</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {/* SECTION 10: Jitter Benchmarks */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <Gauge size={18} className="text-cyan-400" />
-            9. Jitter Benchmarks: Eliminating Ping Jumps
+            9. Latency Benchmarks: Wi-Fi 7 vs. Older Generations
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
-              Jitter is the variance in packet delivery times. High jitter makes characters rubberband and stutters gameplay. Wi-Fi 7 addresses this by routing packets across multiple bands using STR MLO.
+              Local network latency (the delay between your PC and the router) adds directly to your in-game ping. Here is how Wi-Fi 7 performs under household network load compared to older technologies:
+            </p>
+            <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+              <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
+                <thead>
+                  <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                    <th className="px-4 py-3 text-left">Network State</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 5 (802.11ac)</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 6 (802.11ax)</th>
+                    <th className="px-4 py-3 text-left">Wi-Fi 7 (802.11be MLO)</th>
+                    <th className="px-4 py-3 text-left">Ethernet (Cat6)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Idle (Single Device)</td>
+                    <td className="px-4 py-3">6 – 12 ms</td>
+                    <td className="px-4 py-3 text-amber-500">2 – 5 ms</td>
+                    <td className="px-4 py-3 text-emerald-400">0.8 – 1.5 ms</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.5 ms</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Loaded (Active Downloads)</td>
+                    <td className="px-4 py-3 text-red-500">85 – 220 ms</td>
+                    <td className="px-4 py-3 text-amber-500">12 – 25 ms</td>
+                    <td className="px-4 py-3 text-emerald-400">2.0 – 4.5 ms</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.8 ms</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Congested (Crowded Neighborhood)</td>
+                    <td className="px-4 py-3 text-red-500">140 – 350 ms</td>
+                    <td className="px-4 py-3 text-red-500">28 – 65 ms</td>
+                    <td className="px-4 py-3 text-emerald-400">3.5 – 7.0 ms</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.9 ms</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 11: Jitter Benchmarks */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Gauge size={18} className="text-cyan-400" />
+            10. Jitter Benchmarks: Stable Frame Times
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Jitter is the variance in packet arrival times. Even if your average ping is low, high jitter will cause players to rubberband and make hit registration feel inconsistent.
             </p>
             <p>
-              In testing under load, Wi-Fi 7 local hop jitter measures below **0.5ms**, which is a significant improvement over Wi-Fi 6 (1.5ms) and Wi-Fi 5 (15ms+). This near-zero variance delivers a smooth gaming experience.
+              Under testing with background streaming traffic, Wi-Fi 7's local hop jitter remained under **0.5ms**, which is a significant improvement over Wi-Fi 6 (1.8ms) and Wi-Fi 5 (12ms+). This stability is achieved by using STR MLO to dynamically route packets around interference.
             </p>
             <p>
-              To check your current jitter metrics and apply optimizations, read our dedicated guide:{" "}
+              If your current network suffers from local jitter issues, see our optimization guide:{" "}
               <Link href="/gaming-jitter-fix" className="text-[var(--brand-400)] hover:underline font-semibold">
                 How to Fix Gaming Jitter
               </Link>.
@@ -485,18 +627,18 @@ export default function Wifi7ForGamingPage() {
           </div>
         </section>
 
-        {/* SECTION 11: Packet Loss Benchmarks */}
+        {/* SECTION 12: Packet Loss Benchmarks */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <AlertCircle size={18} className="text-cyan-400" />
-            10. Packet Loss Benchmarks: Advanced Noise Defenses
+            11. Packet Loss Benchmarks: Advanced Noise Defenses
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
               Wireless packet loss occurs when signals are corrupted by physical walls or RF interference. While Wi-Fi 5 has local loss rates of 1% to 3% under active load, Wi-Fi 7 reduces this to **~0%** due to its multi-band routing. If a packet is lost on the 5GHz band, the 6GHz band instantly delivers the copy.
             </p>
             <p>
-              If your connection continues to drop packets, verify your adapter settings and run our diagnostic test:{" "}
+              If you are seeing packet loss spikes, use our tool to run a diagnostic and locate the issue:{" "}
               <Link href="/packet-loss-test" className="text-[var(--brand-400)] hover:underline font-semibold">
                 Packet Loss Test
               </Link>{" "}and follow our{" "}
@@ -507,11 +649,11 @@ export default function Wifi7ForGamingPage() {
           </div>
         </section>
 
-        {/* SECTION 12: Wi-Fi 7 in Crowded Apartments */}
+        {/* SECTION 13: Wi-Fi 7 in Crowded Apartments */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Server size={18} className="text-cyan-400" />
-            11. Wi-Fi 7 in Crowded Apartments: Solving Congestion
+            12. Wi-Fi 7 in Crowded Apartments: Solving Congestion
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
@@ -523,11 +665,11 @@ export default function Wifi7ForGamingPage() {
           </div>
         </section>
 
-        {/* SECTION 13: Wi-Fi 7 for Console Gaming */}
+        {/* SECTION 14: Wi-Fi 7 for Console Gaming */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Gamepad2 size={18} className="text-cyan-400" />
-            12. Wi-Fi 7 for Console Gaming (PS5 Pro & Future Consoles)
+            13. Wi-Fi 7 for Console Gaming (PS5 Pro & Future Consoles)
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
@@ -539,31 +681,35 @@ export default function Wifi7ForGamingPage() {
           </div>
         </section>
 
-        {/* SECTION 14: Wi-Fi 7 for PC Gaming */}
+        {/* SECTION 15: Wi-Fi 7 for PC Gaming */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Cpu size={18} className="text-cyan-400" />
-            13. Wi-Fi 7 for PC Gaming: Hardware Selection
+            14. Wi-Fi 7 for PC Gaming: Hardware Selection
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
               To game on Wi-Fi 7 on a PC, you need a compatible client network card. Recommended M.2 and PCIe adapters include:
             </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-xs text-[var(--text-muted)]">
-              <li><strong>Intel BE200 / BE202:</strong> High-performance M.2 modules designed for desktop motherboard and laptop upgrades, offering excellent driver stability.</li>
-              <li><strong>Qualcomm FastConnect 7800:</strong> High-speed chipsets featured in premium laptops and motherboards.</li>
+            <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-muted)]">
+              <li>
+                <strong>Intel BE200:</strong> High-performance M.2 module designed for desktop motherboards and laptop upgrades. Note that the BE200 currently has compatibility limitations with AMD processors and requires specific motherboard support.
+              </li>
+              <li>
+                <strong>Intel BE202:</strong> A more widely compatible M.2 option that works across both Intel and AMD systems.
+              </li>
+              <li>
+                <strong>Qualcomm FastConnect 7800:</strong> High-speed chipsets featured in premium laptops and motherboards.
+              </li>
             </ul>
-            <p>
-              Always download the latest official drivers for your adapter card to ensure WPA3 encryption and MLO channel bonding work correctly.
-            </p>
           </div>
         </section>
 
-        {/* SECTION 15: Wi-Fi 7 Router Requirements */}
+        {/* SECTION 16: Wi-Fi 7 Router Requirements */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Server size={18} className="text-cyan-400" />
-            14. Router Requirements for Wi-Fi 7 Gaming
+            15. Router Requirements for Wi-Fi 7 Gaming
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
@@ -575,11 +721,11 @@ export default function Wifi7ForGamingPage() {
           </div>
         </section>
 
-        {/* SECTION 16: Best Wi-Fi 7 Routers */}
+        {/* SECTION 17: Best Wi-Fi 7 Routers */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Server size={18} className="text-cyan-400" />
-            15. Best Wi-Fi 7 Gaming Routers
+            16. Best Wi-Fi 7 Gaming Routers
           </h2>
           <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
             Here are the top-rated Wi-Fi 7 routers recommended for gaming:
@@ -609,11 +755,11 @@ export default function Wifi7ForGamingPage() {
           </p>
         </section>
 
-        {/* SECTION 17: Best Settings for Wi-Fi 7 Gaming */}
+        {/* SECTION 18: Best Settings for Wi-Fi 7 Gaming */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Settings size={18} className="text-cyan-400" />
-            16. Configuring Wi-Fi 7 Settings for Low Latency
+            17. Configuring Wi-Fi 7 Settings for Low Latency
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
@@ -642,11 +788,11 @@ export default function Wifi7ForGamingPage() {
           </div>
         </section>
 
-        {/* SECTION 18: Real Game Testing */}
+        {/* SECTION 19: Real Game Testing */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Gamepad2 size={18} className="text-cyan-400" />
-            17. Real-World Game Latency Benchmarks
+            18. Real-World Game Latency Benchmarks
           </h2>
           <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
             <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
@@ -663,35 +809,35 @@ export default function Wifi7ForGamingPage() {
                 <tr>
                   <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Valorant (128-tick)</td>
                   <td className="px-4 py-3 text-amber-500">3 – 6 ms</td>
-                  <td className="px-4 py-3 text-emerald-400">1.2 – 2.2 ms (Stable)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">1.2 – 2.2 ms (Stable)</td>
                   <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.5 ms</td>
                   <td className="px-4 py-3 text-emerald-400 font-semibold">Wi-Fi 7 Excellent</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Counter-Strike 2 (128-tick)</td>
                   <td className="px-4 py-3 text-amber-500">3 – 7 ms</td>
-                  <td className="px-4 py-3 text-emerald-400">1.4 – 2.5 ms (Stable)</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">1.4 – 2.5 ms (Stable)</td>
                   <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.5 ms</td>
                   <td className="px-4 py-3 text-emerald-400 font-semibold">Wi-Fi 7 Excellent</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Warzone (64-tick)</td>
                   <td className="px-4 py-3 text-amber-500">2.5 – 5 ms</td>
-                  <td className="px-4 py-3 text-emerald-400">1.1 – 2.0 ms</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">1.1 – 2.0 ms</td>
                   <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.5 ms</td>
                   <td className="px-4 py-3 text-emerald-400 font-semibold">Wi-Fi 7 Great</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Fortnite (30-tick)</td>
                   <td className="px-4 py-3 text-amber-500">2 – 4 ms</td>
-                  <td className="px-4 py-3 text-emerald-400">1.0 – 1.8 ms</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">1.0 – 1.8 ms</td>
                   <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.5 ms</td>
                   <td className="px-4 py-3 text-emerald-400 font-semibold">Wi-Fi 7 Great</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Apex Legends (20-tick)</td>
                   <td className="px-4 py-3 text-amber-500">2 – 4 ms</td>
-                  <td className="px-4 py-3 text-emerald-400">1.0 – 1.8 ms</td>
+                  <td className="px-4 py-3 text-emerald-400 font-semibold">1.0 – 1.8 ms</td>
                   <td className="px-4 py-3 text-emerald-400 font-bold">&lt; 0.5 ms</td>
                   <td className="px-4 py-3 text-emerald-400 font-semibold">Wi-Fi 7 Great</td>
                 </tr>
@@ -700,87 +846,127 @@ export default function Wifi7ForGamingPage() {
           </div>
         </section>
 
-        {/* SECTION 19: Myths Section */}
+        {/* SECTION 20: Should You Upgrade? (User Recommended Section) */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <TrendingDown size={18} className="text-cyan-400" />
+            19. Should Competitive Gamers Upgrade?
+          </h2>
+          <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              Deciding whether to make the jump to Wi-Fi 7 depends heavily on your current network setup, connection medium, and gaming profile. If you already have a wired Cat6 configuration, upgrading to a wireless router will not improve your latency. However, if you are currently gaming on an older Wi-Fi 5 or basic Wi-Fi 6 setup in a congested apartment, the move to Wi-Fi 7 will result in a night-and-day difference in jitter stability and packet loss reduction.
+            </p>
+
+            {/* ── User Recommended Table: Should Competitive Gamers Upgrade? ── */}
+            <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
+              <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
+                <thead>
+                  <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
+                    <th className="px-4 py-3 text-left">Player Type</th>
+                    <th className="px-4 py-3 text-left">Recommendation</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Casual Gamer</td>
+                    <td className="px-4 py-3 text-amber-500 font-semibold">Stay on Wi-Fi 6 (Upgrading is low priority unless experiencing local drops)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Ranked FPS Player</td>
+                    <td className="px-4 py-3 text-emerald-400 font-semibold">Consider Wi-Fi 7 (Bypasses local congestion to stabilize hit registration)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Streamer</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">Upgrade (STR MLO keeps upload stream and game packets on separate lanes)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Esports Competitor</td>
+                    <td className="px-4 py-3 text-emerald-400 font-bold">Upgrade (Near-wired 1-2ms local latency with active packet redundancy)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Ethernet User</td>
+                    <td className="px-4 py-3 text-red-500 font-semibold">Stay Wired (Shielded copper remains the absolute gold standard)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 21: Myths Section (User Recommended Section) */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
             <AlertTriangle size={18} className="text-cyan-400" />
-            18. Wi-Fi 7 Gaming Myths Debunked
+            20. Wi-Fi 7 Gaming Myths Debunked
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="font-bold text-[var(--text-primary)]">Myth 1: Does Wi-Fi 7 eliminate lag completely?</h3>
+              <h3 className="font-bold text-[var(--text-primary)] flex items-center gap-1.5 text-amber-400">
+                <CheckCircle2 size={14} /> Myth 1: Wi-Fi 7 removes all lag
+              </h3>
               <p className="text-[var(--text-muted)] leading-relaxed">
-                <strong>No.</strong> While Wi-Fi 7 optimizes local wireless latency and stabilizes connection queues, it cannot fix latency spikes or packet loss caused by poor ISP routing or congested game servers.
+                <strong>Debunked:</strong> While Wi-Fi 7 optimizes the local wireless hop (reducing local latency to 1-2ms), it cannot fix latency spikes or packet loss caused by poor ISP routing, faulty WAN lines, or congested game servers.
               </p>
             </div>
             <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="font-bold text-[var(--text-primary)]">Myth 2: Is Wi-Fi 7 faster than Ethernet in all situations?</h3>
+              <h3 className="font-bold text-[var(--text-primary)] flex items-center gap-1.5 text-amber-400">
+                <CheckCircle2 size={14} /> Myth 2: Wi-Fi 7 is always better than Ethernet
+              </h3>
               <p className="text-[var(--text-muted)] leading-relaxed">
-                <strong>No.</strong> Although Wi-Fi 7 has higher theoretical throughput (up to 46 Gbps), Ethernet operates over physical copper wires, providing absolute immunity to RF noise and concrete obstacles.
+                <strong>Debunked:</strong> Ethernet operates over a physical, shielded copper wire, making it completely immune to radio interference and physical barriers. Ethernet remains the benchmark for zero-jitter performance.
               </p>
             </div>
             <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="font-bold text-[var(--text-primary)]">Myth 3: Do you need multi-gigabit internet to benefit?</h3>
+              <h3 className="font-bold text-[var(--text-primary)] flex items-center gap-1.5 text-amber-400">
+                <CheckCircle2 size={14} /> Myth 3: You need 10 Gbps internet
+              </h3>
               <p className="text-[var(--text-muted)] leading-relaxed">
-                <strong>No.</strong> Wi-Fi 7's primary benefit is local efficiency and latency consistency. It optimizes the local network, preventing gaming lag when other devices are streaming inside the house.
+                <strong>Debunked:</strong> Wi-Fi 7's primary benefits for gaming are scheduling efficiency, MLO band bonding, and noise reduction. You do not need a multi-gigabit internet plan to enjoy stable 1.5ms local hop ping.
               </p>
             </div>
             <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2">
-              <h3 className="font-bold text-[var(--text-primary)]">Myth 4: Does Wi-Fi 7 instantly reduce ping?</h3>
+              <h3 className="font-bold text-[var(--text-primary)] flex items-center gap-1.5 text-amber-400">
+                <CheckCircle2 size={14} /> Myth 4: Wi-Fi 7 lowers ping by 50%
+              </h3>
               <p className="text-[var(--text-muted)] leading-relaxed">
-                <strong>Yes, locally.</strong> It reduces local hop ping by 5ms to 15ms compared to older standards. It does not affect external routing paths.
+                <strong>Debunked:</strong> Ping is determined by your geographical distance to the game server. Wi-Fi 7 can only decrease the local hop latency (e.g. from 10ms to 1ms), it cannot shorten the WAN routing path.
+              </p>
+            </div>
+            <div className="p-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl space-y-2 md:col-span-2">
+              <h3 className="font-bold text-[var(--text-primary)] flex items-center gap-1.5 text-amber-400">
+                <CheckCircle2 size={14} /> Myth 5: Wi-Fi 7 is useless for gaming
+              </h3>
+              <p className="text-[var(--text-muted)] leading-relaxed">
+                <strong>Debunked:</strong> By introducing MLO, packet duplication, and preamble puncturing, Wi-Fi 7 represents the most significant improvement in wireless gaming stability ever released, making it a viable alternative to Ethernet.
               </p>
             </div>
           </div>
         </section>
 
-        {/* SECTION 20: Upgrade Decision Guide */}
+        {/* SECTION 22: Future of Gaming Networks (User Recommended Section) */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <TrendingDown size={18} className="text-cyan-400" />
-            19. Should You Upgrade to Wi-Fi 7?
+            <Network size={18} className="text-cyan-400" />
+            21. The Future of Gaming Networks
           </h2>
           <div className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
-              Use the guide below to decide if upgrading to Wi-Fi 7 is necessary for your gaming setup:
+              The wireless landscape does not freeze with the finalization of the 802.11be standard. Network engineers are already planning the next evolution of consumer standards. Understanding where wireless is heading helps gamers build future-proof configurations.
             </p>
-            <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl">
-              <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
-                <thead>
-                  <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
-                    <th className="px-4 py-3 text-left">Current Setup</th>
-                    <th className="px-4 py-3 text-left">Upgrade Needed?</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--bg-surface)]/20">
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi 5 Router</td>
-                    <td className="px-4 py-3 text-emerald-400 font-bold">Yes — High priority upgrade for latency and capacity improvements.</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi 6 Router</td>
-                    <td className="px-4 py-3 text-amber-500 font-bold">Maybe — Recommended if you live in a congested apartment or stream heavily.</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Wi-Fi 6E Router</td>
-                    <td className="px-4 py-3 text-red-400 font-bold">Usually No — Keep using 6E unless you require active MLO band bonding.</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-[var(--text-primary)]">Ethernet Connection</td>
-                    <td className="px-4 py-3 text-red-500 font-bold">No — Physical copper remains the gold standard.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p>
-              If your current network suffers from persistent latency anomalies, consult our general troubleshooting checklist:{" "}
-              <Link href="/gaming-network-optimization" className="text-[var(--brand-400)] hover:underline font-semibold">
-                Gaming Network Optimization Guide
-              </Link>{" "}and if ping spikes occur, refer to our{" "}
-              <Link href="/high-ping-fix" className="text-[var(--brand-400)] hover:underline font-semibold">
-                High Ping Fix Guide
-              </Link>.
-            </p>
+            <ul className="list-disc pl-5 space-y-3 text-xs text-[var(--text-muted)]">
+              <li>
+                <strong>Wi-Fi 8 (802.11bn Ultra High Reliability):</strong> The upcoming Wi-Fi 8 standard will prioritize **Ultra High Reliability (UHR)** over raw peak throughput speed. It aims to introduce advanced coordinated spatial reuse and intelligent power control to keep local latency completely flat, even under heavy network congestion.
+              </li>
+              <li>
+                <strong>Multi-Link Evolution:</strong> The multi-link operation introduced in Wi-Fi 7 will evolve to support dynamic sub-carrier bonding across three bands simultaneously (2.4GHz + 5GHz + 6GHz), enabling seamless fallback paths for mobile client devices.
+              </li>
+              <li>
+                <strong>Cloud Gaming Integration:</strong> As streaming platforms (GeForce Now, Xbox Cloud Gaming) require continuous, unbuffered streams, future routers will incorporate AI-driven scheduling to prioritize game frames over bulk downloads.
+              </li>
+              <li>
+                <strong>8K Game Streaming & AR/VR Networking:</strong> With 8K streaming and VR headsets demanding massive bandwidth and low latency, Wi-Fi 7's 320 MHz lanes will be critical to support high resolutions without cable connections.
+              </li>
+            </ul>
           </div>
         </section>
 
