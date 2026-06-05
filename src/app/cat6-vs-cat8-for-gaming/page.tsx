@@ -496,6 +496,7 @@ export default function Cat6VsCat8ForGamingPage() {
               { href: "/best-mesh-wifi-for-gaming", label: "Best Mesh Wi-Fi for Gaming" },
               { href: "/best-router-for-gaming", label: "Best Router for Gaming" },
               { href: "/wifi-6-for-gaming", label: "Wi-Fi 6 for Gaming Guide" },
+              { href: "/wifi-7-for-gaming", label: "Wi-Fi 7 for Gaming Guide" },
               { href: "/gaming-packet-loss-fix", label: "Gaming Packet Loss Fix" },
               { href: "/high-ping-fix", label: "High Ping Fix Guide" },
               { href: "/gaming-network-optimization", label: "Gaming Network Optimization" },

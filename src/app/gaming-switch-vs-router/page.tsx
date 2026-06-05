@@ -551,6 +551,7 @@ export default function GamingSwitchVsRouterPage() {
               { href: "/powerline-adapter-for-gaming", label: "Powerline Adapter for Gaming" },
               { href: "/best-mesh-wifi-for-gaming", label: "Best Mesh Wi-Fi for Gaming" },
               { href: "/cat6-vs-cat8-for-gaming", label: "Cat6 vs Cat8 for Gaming" },
+              { href: "/wifi-7-for-gaming", label: "Wi-Fi 7 for Gaming Guide" },
               { href: "/best-qos-settings-for-gaming", label: "Best QoS Settings for Gaming" },
               { href: "/gaming-network-optimization", label: "Gaming Network Optimization" },
               { href: "/high-ping-fix", label: "High Ping Fix Guide" },
