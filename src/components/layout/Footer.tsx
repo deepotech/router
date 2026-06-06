@@ -21,6 +21,7 @@ const footerLinks = {
     { label: "192.168.0.1", href: "/ips/192-168-0-1" },
     { label: "192.168.8.1", href: "/ips/192-168-8-1" },
     { label: "10.0.0.1", href: "/ips/10-0-0-1" },
+    { label: "All IP Directory", href: "/ips" },
   ],
   Tools: [
     { label: "IP Checker", href: "/tools/ip-checker" },

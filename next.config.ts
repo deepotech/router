@@ -90,6 +90,16 @@ const nextConfig: NextConfig = {
         destination: "/router-login-not-working",
         permanent: true,
       },
+      {
+        source: "/router-reset",
+        destination: "/router-login-not-working",
+        permanent: true,
+      },
+      {
+        source: "/router-password-recovery",
+        destination: "/router-login-not-working",
+        permanent: true,
+      },
     ];
   },
 };
