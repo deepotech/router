@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Link2 } from "lucide-react";
 import { buildMetadata } from "@/lib/seo/metadata";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
 import ConnectionOptimizerClient from "@/components/tools/ConnectionOptimizerClient";
@@ -235,9 +237,48 @@ export default function RouterLoginNotWorkingPage() {
 
           <h2 className="text-sm font-bold text-[var(--text-primary)]">Commercial Intent: Upgrading to Tri-Band Wi-Fi</h2>
           <p>
-            If your administrative dashboard is consistently slow or locks up when saving settings, it represents a bottleneck in your router's processing hardware. Modern **Wi-Fi 6E** and **Wi-Fi 7** routers feature dedicated multi-core CPUs and separate coprocessor memory units designed to keep administrative consoles responsive even under massive, heavy packet routing environments.
+            If your administrative dashboard is consistently slow or locks up when saving settings, it represents a bottleneck in your router&apos;s processing hardware. Modern Wi-Fi 6E and Wi-Fi 7 routers feature dedicated multi-core CPUs and separate coprocessor memory units designed to keep administrative consoles responsive even under massive, heavy packet routing environments.
           </p>
+
+          <h2 className="text-sm font-bold text-[var(--text-primary)]">Related Guides: Router Access Cluster</h2>
+          <p>
+            If login issues persist, you may need to recover your password or perform a factory reset. Use these cluster resources to navigate all router access scenarios:
+          </p>
+          <ul className="list-none !pl-0 space-y-1">
+            <li><Link href="/router-login" className="text-[var(--brand-400)] hover:underline">Router Login Guide →</Link> — Step-by-step login instructions for every brand</li>
+            <li><Link href="/router-password" className="text-[var(--brand-400)] hover:underline">Default Router Passwords →</Link> — Find default credentials or learn recovery steps</li>
+            <li><Link href="/router-reset" className="text-[var(--brand-400)] hover:underline">How to Reset a Router →</Link> — Factory reset walkthrough for soft and hard resets</li>
+            <li><Link href="/router-admin" className="text-[var(--brand-400)] hover:underline">Router Admin Hub →</Link> — Central control panel guide and operations overview</li>
+            <li><Link href="/ips" className="text-[var(--brand-400)] hover:underline">IP Address Directory →</Link> — Find your router&apos;s default gateway address</li>
+            <li><Link href="/routers" className="text-[var(--brand-400)] hover:underline">Router Brands Directory →</Link> — Brand-specific login IPs and guides</li>
+          </ul>
         </article>
+
+        {/* Router Access Cluster Navigation */}
+        <div className="mt-6 p-5 glass-card border border-[var(--border-subtle)] rounded-2xl">
+          <h3 className="text-sm font-bold text-[var(--text-primary)] mb-3 flex items-center gap-1.5">
+            <Link2 size={14} className="text-[var(--brand-400)]" />
+            Router Access Cluster
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { label: "Router Directory", href: "/routers" },
+              { label: "IP Directory", href: "/ips" },
+              { label: "Router Login", href: "/router-login" },
+              { label: "Router Passwords", href: "/router-password" },
+              { label: "Router Reset", href: "/router-reset" },
+              { label: "Router Admin", href: "/router-admin" },
+            ].map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="text-xs bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--brand-800)] px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--brand-400)] hover:bg-[var(--bg-hover)] transition-all font-medium"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </TroubleshootingArticleShell>
   );

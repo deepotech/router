@@ -81,23 +81,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/router-login",
-        destination: "/router-login-not-working",
-        permanent: true,
-      },
-      {
-        source: "/router-password",
-        destination: "/router-login-not-working",
-        permanent: true,
-      },
-      {
-        source: "/router-reset",
-        destination: "/router-login-not-working",
-        permanent: true,
-      },
-      {
         source: "/router-password-recovery",
-        destination: "/router-login-not-working",
+        destination: "/router-password",
         permanent: true,
       },
     ];
