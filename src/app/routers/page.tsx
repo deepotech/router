@@ -723,8 +723,8 @@ export default async function RoutersPage() {
           </p>
           <div className="flex flex-wrap gap-3">
             {[
-              { label: "192.168.1.1 Gateway", href: "/192-168-1-1" },
-              { label: "192.168.0.1 Gateway", href: "/192-168-0-1" },
+              { label: "192.168.1.1 Gateway", href: "/ips/192-168-1-1" },
+              { label: "192.168.0.1 Gateway", href: "/ips/192-168-0-1" },
               { label: "Router Admin Login", href: "/router-login" },
               { label: "Router Passwords", href: "/router-password" },
               { label: "Login Not Working", href: "/router-login-not-working" },
