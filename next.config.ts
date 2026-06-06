@@ -67,6 +67,31 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
+  async redirects() {
+    return [
+      {
+        source: "/192-168-1-1",
+        destination: "/ips/192-168-1-1",
+        permanent: true,
+      },
+      {
+        source: "/192-168-0-1",
+        destination: "/ips/192-168-0-1",
+        permanent: true,
+      },
+      {
+        source: "/router-login",
+        destination: "/router-login-not-working",
+        permanent: true,
+      },
+      {
+        source: "/router-password",
+        destination: "/router-login-not-working",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
