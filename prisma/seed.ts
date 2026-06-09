@@ -574,6 +574,193 @@ async function main() {
         metaDescription: "Access Arris Surfboard SB8200 cable modem status page at 192.168.100.1. View upstream/downstream channels and power levels.",
       },
     }),
+    // TP-Link High-SEO Models
+    prisma.routerModel.upsert({
+      where: { slug: "archer-ax55" },
+      update: {},
+      create: {
+        brandId: tpLink.id,
+        name: "Archer AX55",
+        slug: "archer-ax55",
+        loginIps: ["192.168.0.1", "tplinkwifi.net"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## How to Set Up WiFi on TP-Link Archer AX55\n\n1. Connect your PC or phone to the Archer AX55 via Ethernet or its default Wi-Fi network\n2. Open a browser and go to **192.168.0.1** or **tplinkwifi.net**\n3. Log in with username: **admin** and password: **admin** (or your custom password)\n4. Use the Quick Setup wizard to select your WAN connection type (Dynamic IP for most home setups, PPPoE if your ISP requires credentials)\n5. Navigate to **Wireless > Wireless Settings** to set your 2.4GHz and 5GHz SSIDs and passwords\n6. Enable WPA3 under Wireless Security for maximum protection\n7. Click Save and reconnect your devices with the new Wi-Fi credentials`,
+        resetGuide: `## How to Factory Reset TP-Link Archer AX55\n\n1. Ensure the Archer AX55 is powered on and fully booted (Power LED solid)\n2. Locate the **RESET** button on the rear panel of the router\n3. Use a paperclip to press and hold the RESET button for **10 seconds**\n4. Release the button when all LED indicators blink simultaneously\n5. The router will automatically reboot (takes approximately 60 seconds)\n6. After reset, the Archer AX55 returns to factory defaults — reconnect using the default credentials on the bottom label`,
+        faqs: [
+          {
+            question: "What is the default login IP for TP-Link Archer AX55?",
+            answer: "The default admin panel IP for the TP-Link Archer AX55 is 192.168.0.1. You can also use the local web address tplinkwifi.net when connected to the router's network.",
+          },
+          {
+            question: "What are the default credentials for Archer AX55?",
+            answer: "The default username is 'admin' and the default password is 'admin'. If this doesn't work, check the label on the bottom of the router for a unique default password set by TP-Link.",
+          },
+          {
+            question: "Does Archer AX55 support Wi-Fi 6?",
+            answer: "Yes, the TP-Link Archer AX55 is a dual-band Wi-Fi 6 (802.11ax) router with combined speeds of up to AX3000 (574 Mbps on 2.4GHz + 2402 Mbps on 5GHz).",
+          },
+          {
+            question: "How do I change the Wi-Fi password on Archer AX55?",
+            answer: "Log in to 192.168.0.1, navigate to Wireless > Wireless Settings, select your band (2.4GHz or 5GHz), update the SSID and password fields, then click Save.",
+          },
+          {
+            question: "Does TP-Link Archer AX55 support WPA3?",
+            answer: "Yes, the Archer AX55 supports WPA3-Personal (SAE) encryption. Enable it under Wireless > Wireless Security by selecting WPA3-Personal or WPA2/WPA3 Mixed mode for backward compatibility.",
+          },
+        ],
+        metaTitle: "TP-Link Archer AX55 Login — Default IP 192.168.0.1 & Password",
+        metaDescription: "Access TP-Link Archer AX55 admin panel at 192.168.0.1 or tplinkwifi.net. Default credentials: admin/admin. Complete Wi-Fi 6 setup, firmware update, and reset guide.",
+        diagnosticCategory: "WIFI",
+      },
+    }),
+    prisma.routerModel.upsert({
+      where: { slug: "archer-ax21" },
+      update: {},
+      create: {
+        brandId: tpLink.id,
+        name: "Archer AX21",
+        slug: "archer-ax21",
+        loginIps: ["192.168.0.1", "tplinkwifi.net"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## How to Set Up WiFi on TP-Link Archer AX21\n\n1. Connect your device to the Archer AX21 via Ethernet or the default Wi-Fi network on the bottom label\n2. Open a browser and navigate to **192.168.0.1** or **tplinkwifi.net**\n3. Log in with admin/admin (or your custom admin password)\n4. Run the Quick Setup wizard: select your WAN type (Dynamic IP for cable/fiber, PPPoE for ISP credentials)\n5. Navigate to **Wireless** to set your 2.4GHz and 5GHz SSID names and Wi-Fi passwords\n6. Save settings and reconnect all devices with the new credentials`,
+        resetGuide: `## Factory Reset TP-Link Archer AX21\n\n1. With the router powered on, locate the RESET button on the rear panel\n2. Press and hold using a paperclip for **10 seconds** until all LEDs blink\n3. Release — the router will reboot and restore factory default settings\n4. After reset (≈60 seconds), reconnect using the default credentials from the bottom label`,
+        faqs: [
+          {
+            question: "What is the default IP address for TP-Link Archer AX21?",
+            answer: "The default admin panel IP for the Archer AX21 is 192.168.0.1. You can also use the local hostname tplinkwifi.net when connected to the router's Wi-Fi.",
+          },
+          {
+            question: "What is the default username and password for Archer AX21?",
+            answer: "Default username: admin. Default password: admin. If login fails, check the sticker on the bottom of the router for a unique printed password.",
+          },
+          {
+            question: "Is the TP-Link Archer AX21 a Wi-Fi 6 router?",
+            answer: "Yes, the Archer AX21 is a dual-band Wi-Fi 6 (802.11ax) AX1800 router — 300 Mbps on 2.4GHz and 1201 Mbps on 5GHz. It's one of the most affordable Wi-Fi 6 entry-level routers available.",
+          },
+          {
+            question: "How do I update firmware on Archer AX21?",
+            answer: "Log in to 192.168.0.1, navigate to Advanced > System Tools > Firmware Upgrade, and click Check for Updates. Or download the latest firmware from TP-Link's website and upload it manually.",
+          },
+        ],
+        metaTitle: "TP-Link Archer AX21 Login — Default IP 192.168.0.1 & Password",
+        metaDescription: "Access TP-Link Archer AX21 admin panel at 192.168.0.1 or tplinkwifi.net. Default credentials admin/admin. AX1800 Wi-Fi 6 setup guide and factory reset instructions.",
+        diagnosticCategory: "WIFI",
+      },
+    }),
+    // ASUS High-SEO Models
+    prisma.routerModel.upsert({
+      where: { slug: "rt-ax86u" },
+      update: {},
+      create: {
+        brandId: asus.id,
+        name: "RT-AX86U",
+        slug: "rt-ax86u",
+        loginIps: ["192.168.1.1", "router.asus.com"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## How to Set Up WiFi on ASUS RT-AX86U\n\n1. Connect your PC to the RT-AX86U via Ethernet cable (LAN port 1-4)\n2. Open a browser and go to **192.168.1.1** or **router.asus.com**\n3. Log in with username: **admin** and password: **admin**\n4. The ASUS Quick Internet Setup (QIS) wizard will launch automatically\n5. Select your WAN connection type: Auto Detect works for most setups, or manually select PPPoE if your ISP requires credentials\n6. Set your 2.4GHz and 5GHz Wi-Fi names (SSID) and passwords\n7. Enable AiProtection (Trend Micro powered) for network security scanning\n8. Configure Adaptive QoS for gaming traffic prioritization under the Gaming tab`,
+        resetGuide: `## Factory Reset ASUS RT-AX86U\n\n1. Ensure the router is powered on (Power LED solid white)\n2. Locate the **WPS/Reset** button on the rear panel\n3. Press and hold for **10 seconds** until the Power LED blinks slowly\n4. Release the button — the router will reboot to factory settings (takes 2-3 minutes)\n5. After reset, log in with admin/admin and run the QIS setup wizard again`,
+        faqs: [
+          {
+            question: "What is the default IP for ASUS RT-AX86U?",
+            answer: "The default admin panel IP for the ASUS RT-AX86U is 192.168.1.1. You can also use the local hostname router.asus.com when connected to the router's network.",
+          },
+          {
+            question: "What are the default credentials for ASUS RT-AX86U?",
+            answer: "Default username: admin. Default password: admin. After first login, the QIS wizard will prompt you to change the admin password and Wi-Fi credentials.",
+          },
+          {
+            question: "Does ASUS RT-AX86U support Wi-Fi 6?",
+            answer: "Yes, the RT-AX86U is a dual-band Wi-Fi 6 (802.11ax) router with AX5700 combined speeds — 861 Mbps on 2.4GHz and 4804 Mbps on 5GHz, making it ideal for gaming and high-bandwidth households.",
+          },
+          {
+            question: "What is the difference between RT-AX86U and RT-AX88U?",
+            answer: "The RT-AX88U has 8 LAN ports vs the RT-AX86U's 4 LAN ports. The RT-AX86U Pro features a 2.5G WAN port for multi-gig internet. Both are dual-band AX-class routers with similar gaming features.",
+          },
+          {
+            question: "How do I enable AiMesh on ASUS RT-AX86U?",
+            answer: "Log in to router.asus.com, navigate to AiMesh, and click Add AiMesh Node. Power on a compatible ASUS router in the same room and the RT-AX86U will automatically detect and add it to your mesh network.",
+          },
+        ],
+        metaTitle: "ASUS RT-AX86U Login — Default IP 192.168.1.1 & Password",
+        metaDescription: "Access ASUS RT-AX86U admin panel at 192.168.1.1 or router.asus.com. Default credentials: admin/admin. Wi-Fi 6 gaming router setup, AiMesh configuration, and factory reset guide.",
+        diagnosticCategory: "WIFI",
+      },
+    }),
+    // Netgear High-SEO Models
+    prisma.routerModel.upsert({
+      where: { slug: "rs700s" },
+      update: {},
+      create: {
+        brandId: netgear.id,
+        name: "Nighthawk RS700S",
+        slug: "rs700s",
+        loginIps: ["192.168.1.1", "routerlogin.net"],
+        defaultUsername: "admin",
+        defaultPassword: "password",
+        wifiSetupGuide: `## How to Set Up WiFi on Netgear Nighthawk RS700S\n\n1. Connect your PC to the RS700S via Ethernet\n2. Open a browser and go to **192.168.1.1** or **routerlogin.net**\n3. Log in with username: **admin** and password: **password**\n4. Run the Nighthawk Setup wizard to configure your WAN connection\n5. Under Wireless Settings, configure your 2.4GHz, 5GHz, and 6GHz SSIDs\n6. Enable WPA3 encryption under each wireless band\n7. Set up Netgear Armor (Bitdefender powered) for cybersecurity protection`,
+        resetGuide: `## Factory Reset Netgear RS700S\n\n1. With the router powered on, locate the RESET button on the rear panel\n2. Insert a paperclip and hold for **7 seconds** until the Power LED blinks amber\n3. Release — the router will reboot (takes 2-3 minutes)\n4. After reset, log in with admin/password and reconfigure settings`,
+        faqs: [
+          {
+            question: "What is the default IP for Netgear Nighthawk RS700S?",
+            answer: "The default admin IP for the Netgear RS700S is 192.168.1.1. You can also use routerlogin.net when connected to the router's network.",
+          },
+          {
+            question: "Does the Netgear RS700S support Wi-Fi 7?",
+            answer: "Yes, the Netgear Nighthawk RS700S is a tri-band Wi-Fi 7 (802.11be) router — the first generation Nighthawk Wi-Fi 7 flagship with combined speeds up to 19.0 Gbps across 2.4GHz, 5GHz, and 6GHz bands.",
+          },
+          {
+            question: "What are the default login credentials for Netgear RS700S?",
+            answer: "Default username: admin. Default password: password. Change these immediately after first login to secure your router.",
+          },
+          {
+            question: "What is Multi-Link Operation (MLO) on the RS700S?",
+            answer: "MLO is a Wi-Fi 7 feature that allows the RS700S to aggregate multiple frequency bands simultaneously for a single device connection. This dramatically reduces latency and increases throughput compared to Wi-Fi 6.",
+          },
+        ],
+        metaTitle: "Netgear Nighthawk RS700S Login — Default IP & Password",
+        metaDescription: "Access Netgear Nighthawk RS700S Wi-Fi 7 router admin panel at 192.168.1.1 or routerlogin.net. Default credentials: admin/password. Complete setup and reset guide.",
+        diagnosticCategory: "WIFI",
+      },
+    }),
+    // Huawei High-SEO Model
+    prisma.routerModel.upsert({
+      where: { slug: "huawei-ax3" },
+      update: {},
+      create: {
+        brandId: huawei.id,
+        name: "AX3 (WS7200)",
+        slug: "huawei-ax3",
+        loginIps: ["192.168.3.1", "192.168.3.1"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## How to Set Up WiFi on Huawei AX3 (WS7200)\n\n1. Connect your PC to the Huawei AX3 via Ethernet or join the default Wi-Fi network on the bottom label\n2. Open a browser and go to **192.168.3.1**\n3. Log in with username: **admin** and password: **admin** (or your custom password)\n4. The Huawei Smart Home App provides guided setup — download it and follow the Quick Setup\n5. Under Settings > Wi-Fi, configure your 2.4GHz and 5GHz SSIDs and passwords\n6. Enable HarmonyOS Connect (for Huawei device ecosystem integration)\n7. Set up One Wi-Fi (Smart Roaming) to allow seamless band steering`,
+        resetGuide: `## Factory Reset Huawei AX3 (WS7200)\n\n1. Ensure the router is powered on\n2. Use a paperclip to press and hold the RESET button on the rear panel for **10 seconds**\n3. Release when the indicator LED flashes rapidly\n4. The router will reboot with factory settings (about 60 seconds)\n5. Reconnect using the default SSID and credentials from the bottom label`,
+        faqs: [
+          {
+            question: "What is the default IP for Huawei AX3?",
+            answer: "The default admin panel IP for the Huawei AX3 (WS7200) is 192.168.3.1. This is Huawei's standard gateway IP, unlike most brands that use 192.168.1.1 or 192.168.0.1.",
+          },
+          {
+            question: "What are the default credentials for Huawei AX3?",
+            answer: "Default username: admin. Default password: admin. On some units, the default password may be printed on the bottom label of the router.",
+          },
+          {
+            question: "Does Huawei AX3 support Wi-Fi 6?",
+            answer: "Yes, the Huawei AX3 (WS7200) is a dual-band Wi-Fi 6 (802.11ax) router supporting OFDMA and MU-MIMO with combined speeds of AX3000 (574 Mbps on 2.4GHz + 2402 Mbps on 5GHz).",
+          },
+          {
+            question: "How do I update firmware on Huawei AX3?",
+            answer: "Log in to 192.168.3.1, navigate to More > Update, and click Check for Updates. The router will download and install the latest EMUI firmware automatically if connected to the internet.",
+          },
+        ],
+        metaTitle: "Huawei AX3 (WS7200) Login — Default IP 192.168.3.1 & Password",
+        metaDescription: "Access Huawei AX3 router admin panel at 192.168.3.1. Default credentials: admin/admin. Wi-Fi 6 AX3000 router setup guide, LED meanings, and factory reset instructions.",
+        diagnosticCategory: "WIFI",
+      },
+    }),
   ]);
 
   console.log(`✅ Created ${models.length} router models`);
