@@ -92,6 +92,56 @@ async function main() {
           "Xiaomi offers affordable yet feature-rich routers and mesh Wi-Fi systems with excellent mobile app integration.",
       },
     }),
+    prisma.brand.upsert({
+      where: { slug: "tenda" },
+      update: {},
+      create: {
+        name: "Tenda",
+        slug: "tenda",
+        description:
+          "Tenda specializes in manufacturing easy-to-install, affordable routers, switches, and home mesh systems.",
+      },
+    }),
+    prisma.brand.upsert({
+      where: { slug: "mercusys" },
+      update: {},
+      create: {
+        name: "Mercusys",
+        slug: "mercusys",
+        description:
+          "Mercusys manufactures affordable networking devices focusing on simple setups, high-gain antennas, and basic home coverage.",
+      },
+    }),
+    prisma.brand.upsert({
+      where: { slug: "cisco" },
+      update: {},
+      create: {
+        name: "Cisco",
+        slug: "cisco",
+        description:
+          "Cisco Systems is a global leader in enterprise networking equipment, professional switches, and business-grade secure routers.",
+      },
+    }),
+    prisma.brand.upsert({
+      where: { slug: "belkin" },
+      update: {},
+      create: {
+        name: "Belkin",
+        slug: "belkin",
+        description:
+          "Belkin provides clean, stylish home routers and lifestyle accessories with straightforward wireless setup configurations.",
+      },
+    }),
+    prisma.brand.upsert({
+      where: { slug: "arris" },
+      update: {},
+      create: {
+        name: "Arris",
+        slug: "arris",
+        description:
+          "Arris manufactures cable modems and Surfboard gateways that connect home networks directly to cable provider backbones.",
+      },
+    }),
   ]);
 
   console.log(`✅ Created ${brands.length} brands`);
@@ -101,6 +151,14 @@ async function main() {
   const zte = brands.find((b) => b.slug === "zte")!;
   const dLink = brands.find((b) => b.slug === "d-link")!;
   const asus = brands.find((b) => b.slug === "asus")!;
+  const netgear = brands.find((b) => b.slug === "netgear")!;
+  const linksys = brands.find((b) => b.slug === "linksys")!;
+  const xiaomi = brands.find((b) => b.slug === "xiaomi")!;
+  const tenda = brands.find((b) => b.slug === "tenda")!;
+  const mercusys = brands.find((b) => b.slug === "mercusys")!;
+  const cisco = brands.find((b) => b.slug === "cisco")!;
+  const belkin = brands.find((b) => b.slug === "belkin")!;
+  const arris = brands.find((b) => b.slug === "arris")!;
 
   // ---- Router Models ----
   const models = await Promise.all([
@@ -264,6 +322,256 @@ async function main() {
         metaTitle: "ASUS RT-AX88U Login — 192.168.1.1 Admin Page",
         metaDescription:
           "Login to ASUS RT-AX88U at 192.168.1.1 or router.asus.com. Default credentials: admin/admin.",
+      },
+    }),
+    // Netgear
+    prisma.routerModel.upsert({
+      where: { slug: "netgear-r7000" },
+      update: {},
+      create: {
+        brandId: netgear.id,
+        name: "R7000",
+        slug: "netgear-r7000",
+        loginIps: ["192.168.1.1", "routerlogin.net"],
+        defaultUsername: "admin",
+        defaultPassword: "password",
+        wifiSetupGuide: `## WiFi Setup on Netgear R7000\n\n1. Open browser and go to **192.168.1.1** or **routerlogin.net**\n2. Login with admin/password\n3. Configure your WiFi settings under the Wireless menu`,
+        resetGuide: `## Factory Reset Netgear R7000\n\n1. Hold the physical Reset button on the back for 7 seconds\n2. Release and wait for the router to reboot`,
+        faqs: [
+          {
+            question: "What is the default password for R7000?",
+            answer: "The default password is 'password'.",
+          },
+        ],
+        metaTitle: "Netgear Nighthawk R7000 Login — Default IP & Password",
+        metaDescription: "Access Netgear Nighthawk R7000 settings. Default IP: 192.168.1.1 or routerlogin.net, password: password.",
+      },
+    }),
+    prisma.routerModel.upsert({
+      where: { slug: "netgear-rax50" },
+      update: {},
+      create: {
+        brandId: netgear.id,
+        name: "RAX50",
+        slug: "netgear-rax50",
+        loginIps: ["192.168.1.1", "routerlogin.net"],
+        defaultUsername: "admin",
+        defaultPassword: "password",
+        wifiSetupGuide: `## WiFi Setup on Netgear RAX50\n\n1. Open browser and go to **192.168.1.1**\n2. Login with admin/password\n3. Configure your settings`,
+        resetGuide: `## Factory Reset Netgear RAX50\n\n1. Press Reset button for 7 seconds\n2. Wait for reboot`,
+        faqs: [
+          {
+            question: "Does RAX50 support WiFi 6?",
+            answer: "Yes, it supports WiFi 6 (802.11ax).",
+          },
+        ],
+        metaTitle: "Netgear Nighthawk RAX50 Login — Default IP & Password",
+        metaDescription: "Access Netgear RAX50 admin panel. Default IP: 192.168.1.1, password: password. WiFi 6 router setup guide.",
+      },
+    }),
+    // Linksys
+    prisma.routerModel.upsert({
+      where: { slug: "linksys-velop" },
+      update: {},
+      create: {
+        brandId: linksys.id,
+        name: "Velop",
+        slug: "linksys-velop",
+        loginIps: ["192.168.1.1", "myrouter.local"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## WiFi Setup on Linksys Velop\n\n1. Open the Linksys App on your phone\n2. Follow the on-screen prompts to pair and configure your Velop nodes`,
+        resetGuide: `## Factory Reset Linksys Velop\n\n1. Press and hold the Reset button on the bottom of the node for 10 seconds\n2. Release when the light turns red`,
+        faqs: [
+          {
+            question: "How do I configure Velop?",
+            answer: "Use the Linksys App on iOS or Android.",
+          },
+        ],
+        metaTitle: "Linksys Velop Login & Setup Guide — Default IP & Password",
+        metaDescription: "Access Linksys Velop settings. Setup Velop nodes using the Linksys App. Troubleshooting and reset guides.",
+      },
+    }),
+    // Xiaomi
+    prisma.routerModel.upsert({
+      where: { slug: "xiaomi-ax3000" },
+      update: {},
+      create: {
+        brandId: xiaomi.id,
+        name: "AX3000",
+        slug: "xiaomi-ax3000",
+        loginIps: ["192.168.31.1", "miwifi.com"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## WiFi Setup on Xiaomi AX3000\n\n1. Open browser and go to **192.168.31.1** or **miwifi.com**\n2. Follow setup prompts\n3. Configure your network name and password`,
+        resetGuide: `## Factory Reset Xiaomi AX3000\n\n1. Hold the Reset pinhole for 5 seconds\n2. Wait for the status indicator to reboot`,
+        faqs: [
+          {
+            question: "What is the default IP for Xiaomi AX3000?",
+            answer: "The default gateway IP is 192.168.31.1.",
+          },
+        ],
+        metaTitle: "Xiaomi AX3000 Login — Default IP & Password",
+        metaDescription: "Access Xiaomi AX3000 router settings. Default IP: 192.168.31.1 or miwifi.com. WiFi 6 configuration guide.",
+      },
+    }),
+    // Tenda
+    prisma.routerModel.upsert({
+      where: { slug: "tenda-ac6" },
+      update: {},
+      create: {
+        brandId: tenda.id,
+        name: "AC6",
+        slug: "tenda-ac6",
+        loginIps: ["192.168.0.1", "tendawifi.com"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## WiFi Setup on Tenda AC6\n\n1. Open browser and go to **192.168.0.1** or **tendawifi.com**\n2. Use the setup wizard to select connection type\n3. Set WiFi name and password`,
+        resetGuide: `## Factory Reset Tenda AC6\n\n1. Hold the RST/WPS button for 8 seconds\n2. Release when LEDs blink`,
+        faqs: [
+          {
+            question: "What is the default login for Tenda AC6?",
+            answer: "Default IP is 192.168.0.1 or tendawifi.com. Password is 'admin'.",
+          },
+        ],
+        metaTitle: "Tenda AC6 Login — Default IP, Password & Setup Guide",
+        metaDescription: "Access Tenda AC6 router admin settings. Default IP: 192.168.0.1 or tendawifi.com. Username/password: admin/admin.",
+      },
+    }),
+    prisma.routerModel.upsert({
+      where: { slug: "tenda-rx12-pro" },
+      update: {},
+      create: {
+        brandId: tenda.id,
+        name: "RX12 Pro",
+        slug: "tenda-rx12-pro",
+        loginIps: ["192.168.0.1", "tendawifi.com"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## WiFi Setup on Tenda RX12 Pro\n\n1. Open browser and go to **192.168.0.1**\n2. Configure your WAN connection and WiFi credentials`,
+        resetGuide: `## Factory Reset Tenda RX12 Pro\n\n1. Hold the Reset button for 8 seconds\n2. Wait for system reboot`,
+        faqs: [
+          {
+            question: "Does RX12 Pro support WiFi 6?",
+            answer: "Yes, it is an AX3000 Wi-Fi 6 router.",
+          },
+        ],
+        metaTitle: "Tenda RX12 Pro Login — Default IP, Password & Setup Guide",
+        metaDescription: "Access Tenda RX12 Pro router. Default IP: 192.168.0.1 or tendawifi.com. AX3000 Wi-Fi 6 router setup.",
+      },
+    }),
+    prisma.routerModel.upsert({
+      where: { slug: "tenda-nova-mw6" },
+      update: {},
+      create: {
+        brandId: tenda.id,
+        name: "Nova MW6",
+        slug: "tenda-nova-mw6",
+        loginIps: ["192.168.0.1", "tendawifi.com"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## WiFi Setup on Tenda Nova MW6\n\n1. Install Tenda WiFi app on your phone\n2. Connect to Nova's default Wi-Fi\n3. Scan QR code or follow app guide to pair nodes`,
+        resetGuide: `## Factory Reset Tenda Nova MW6\n\n1. Press the Reset button on bottom of node with paperclip for 20 seconds\n2. Release when LED turns solid green`,
+        faqs: [
+          {
+            question: "How do I pair Nova MW6 nodes?",
+            answer: "Open the Tenda WiFi app, select Add Nova, and scan the QR code of the secondary node.",
+          },
+        ],
+        metaTitle: "Tenda Nova MW6 Mesh Login & Setup Guide — Default IP",
+        metaDescription: "Configure your Tenda Nova MW6 mesh Wi-Fi system. App setup guide, reset instructions, and default IP settings.",
+      },
+    }),
+    // Mercusys
+    prisma.routerModel.upsert({
+      where: { slug: "mercusys-mr70x" },
+      update: {},
+      create: {
+        brandId: mercusys.id,
+        name: "MR70X",
+        slug: "mercusys-mr70x",
+        loginIps: ["192.168.1.1", "mwlogin.net"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## WiFi Setup on Mercusys MR70X\n\n1. Go to **192.168.1.1** or **mwlogin.net**\n2. Set custom admin password on first run\n3. Configure your wireless network SSID and key`,
+        resetGuide: `## Factory Reset Mercusys MR70X\n\n1. Press and hold the Reset button for 10 seconds\n2. Release when LEDs flash`,
+        faqs: [
+          {
+            question: "What is the default IP for Mercusys MR70X?",
+            answer: "The default gateway IP is 192.168.1.1 or mwlogin.net.",
+          },
+        ],
+        metaTitle: "Mercusys MR70X Login — Default IP & Password",
+        metaDescription: "Access Mercusys MR70X AX1800 Wi-Fi 6 router. Default IP: 192.168.1.1 or mwlogin.net. Easy setup guide.",
+      },
+    }),
+    // Cisco
+    prisma.routerModel.upsert({
+      where: { slug: "cisco-rv340" },
+      update: {},
+      create: {
+        brandId: cisco.id,
+        name: "RV340",
+        slug: "cisco-rv340",
+        loginIps: ["192.168.1.1"],
+        defaultUsername: "cisco",
+        defaultPassword: "cisco",
+        wifiSetupGuide: `## Setup Guide for Cisco RV340\n\n1. Connect computer to a LAN port\n2. Open browser and go to **192.168.1.1**\n3. Login with cisco/cisco\n4. Follow setup wizard to secure network`,
+        resetGuide: `## Factory Reset Cisco RV340\n\n1. Press and hold Reset button for 10 seconds\n2. The system status light blinks when reset starts`,
+        faqs: [
+          {
+            question: "What are the default login details?",
+            answer: "Username: cisco, Password: cisco.",
+          },
+        ],
+        metaTitle: "Cisco RV340 Login — 192.168.1.1 Default Credentials",
+        metaDescription: "Access Cisco RV340 Dual WAN VPN router admin settings. Default IP: 192.168.1.1, username: cisco, password: cisco.",
+      },
+    }),
+    // Belkin
+    prisma.routerModel.upsert({
+      where: { slug: "belkin-rt3200" },
+      update: {},
+      create: {
+        brandId: belkin.id,
+        name: "RT3200",
+        slug: "belkin-rt3200",
+        loginIps: ["192.168.2.1", "router"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## WiFi Setup on Belkin RT3200\n\n1. Open browser and navigate to **192.168.2.1**\n2. Set up wireless network name and security key`,
+        resetGuide: `## Factory Reset Belkin RT3200\n\n1. Hold Reset button for 10 seconds\n2. Device will reboot to factory default state`,
+        faqs: [
+          {
+            question: "What is Belkin RT3200's default IP?",
+            answer: "The default gateway IP is 192.168.2.1 or 'http://router'.",
+          },
+        ],
+        metaTitle: "Belkin RT3200 Login — Default IP & Password",
+        metaDescription: "Access Belkin RT3200 Wi-Fi 6 router. Default IP: 192.168.2.1 or http://router. Step-by-step setup guides.",
+      },
+    }),
+    // Arris
+    prisma.routerModel.upsert({
+      where: { slug: "arris-surfboard-sb8200" },
+      update: {},
+      create: {
+        brandId: arris.id,
+        name: "Surfboard SB8200",
+        slug: "arris-surfboard-sb8200",
+        loginIps: ["192.168.100.1"],
+        defaultUsername: "admin",
+        defaultPassword: "password",
+        wifiSetupGuide: `## Setup Guide for Arris SB8200\n\n1. Connect coaxial cable to SB8200\n2. Connect Ethernet from SB8200 to PC\n3. Go to **192.168.100.1** to view status`,
+        resetGuide: `## Factory Reset Arris SB8200\n\n1. Hold the Reset button for 10 seconds\n2. Wait for power light to cycle`,
+        faqs: [
+          {
+            question: "Is SB8200 a router?",
+            answer: "No, the SB8200 is a standalone DOCSIS 3.1 cable modem. You need a separate Wi-Fi router.",
+          },
+        ],
+        metaTitle: "Arris Surfboard SB8200 Login — 192.168.100.1 Modem Status",
+        metaDescription: "Access Arris Surfboard SB8200 cable modem status page at 192.168.100.1. View upstream/downstream channels and power levels.",
       },
     }),
   ]);

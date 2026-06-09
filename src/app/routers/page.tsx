@@ -60,6 +60,11 @@ const BRAND_DETAILS: Record<string, { defaultIp: string; alternativeAddress?: st
   "zte": { defaultIp: "192.168.1.1" },
   "linksys": { defaultIp: "192.168.1.1" },
   "xiaomi": { defaultIp: "192.168.31.1" },
+  "tenda": { defaultIp: "192.168.0.1", alternativeAddress: "tendawifi.com" },
+  "mercusys": { defaultIp: "192.168.1.1", alternativeAddress: "mwlogin.net" },
+  "cisco": { defaultIp: "192.168.1.1" },
+  "belkin": { defaultIp: "192.168.2.1", alternativeAddress: "router" },
+  "arris": { defaultIp: "192.168.0.1" },
 };
 
 export default async function RoutersPage() {

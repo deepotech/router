@@ -33,6 +33,9 @@ export const ROUTER_BRANDS = [
   { name: "Xiaomi", slug: "xiaomi" },
   { name: "Tenda", slug: "tenda" },
   { name: "Mercusys", slug: "mercusys" },
+  { name: "Cisco", slug: "cisco" },
+  { name: "Belkin", slug: "belkin" },
+  { name: "Arris", slug: "arris" },
 ] as const;
 
 // Common IP addresses (used for sitemap + static generation)

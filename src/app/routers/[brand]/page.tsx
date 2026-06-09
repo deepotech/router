@@ -601,6 +601,187 @@ const BRAND_DATA: Record<string, BrandStaticData> = {
       },
     ],
   },
+  tenda: {
+    loginIps: ["192.168.0.1", "192.168.1.1"],
+    altUrl: "tendawifi.com",
+    defaultUsername: "admin",
+    defaultPassword: "admin (or blank)",
+    adminPath: "/",
+    tagline: "Easy-to-use, budget-friendly wireless routers and mesh networks",
+    marketPosition: "#1 Entry-Level & Value Router Brand",
+    bestKnownFor: "Nova mesh series, AC and RX series Wi-Fi 6 routers",
+    troubleshootingSteps: [
+      "Open a browser and go to 192.168.0.1 or tendawifi.com",
+      "Enter admin credentials (on newer firmware, enter the custom password created during setup)",
+      "If the login page fails to load, try 192.168.1.1 as a fallback IP",
+      "Verify that your device is connected to the Tenda Wi-Fi or via Ethernet",
+      "Temporarily disable VPN or ad-blocking extensions to prevent routing redirects",
+      "For a forgotten password, hold the physical Reset button for 8 seconds to factory reset",
+    ],
+    firmwareTip:
+      "Log in to the Tenda admin page, go to Administration -> System Upgrade, and click Check for Updates. Tenda also offers OTA updates via the Tenda WiFi mobile app for Nova and RX models.",
+    securityChecklist: [
+      "Change default admin credentials from 'admin'",
+      "Set up WPA3-SAE or WPA2-PSK Wi-Fi security",
+      "Disable WPS under Wireless Settings to prevent brute-force attacks",
+      "Disable remote web management in Advanced options",
+      "Keep router firmware updated to prevent vulnerability exploits",
+    ],
+    faqs: [
+      {
+        question: "What is the default IP address for Tenda routers?",
+        answer: "The default login IP address for Tenda routers is 192.168.0.1. Tenda also uses the local domain tendawifi.com. Some custom ISP units use 192.168.1.1.",
+      },
+      {
+        question: "What is the default username and password for Tenda?",
+        answer: "The default credentials are username: 'admin' and password: 'admin'. On many newer Tenda routers, there is no default password; you are required to set one during the initial setup.",
+      },
+      {
+        question: "How do I factory reset a Tenda router?",
+        answer: "With the router powered on, press and hold the physical Reset (RST) button on the back for 8 to 10 seconds. All LEDs will flash, indicating the reset is complete. The router will reboot to factory default settings.",
+      },
+    ],
+  },
+  mercusys: {
+    loginIps: ["192.168.1.1", "192.168.0.1"],
+    altUrl: "mwlogin.net",
+    defaultUsername: "admin",
+    defaultPassword: "(set during setup)",
+    adminPath: "/",
+    tagline: "Affordable and reliable home networking devices",
+    marketPosition: "Growing Budget-Friendly Network Brand",
+    bestKnownFor: "MR-series Wi-Fi 6 routers, Halo mesh Wi-Fi systems",
+    troubleshootingSteps: [
+      "Open a browser and go to 192.168.1.1 or mwlogin.net",
+      "Mercusys routers require you to create a custom password during first boot; enter that password to log in",
+      "Ensure your device is connected directly to the Mercusys LAN port or SSID",
+      "Disable any active VPNs to allow local domain resolution",
+      "If the login page fails to load, try 192.168.0.1 as an alternative IP",
+      "To reset, hold the physical Reset button on the back panel for 10 seconds",
+    ],
+    firmwareTip:
+      "Visit mercusys.com/support to check for firmware. Log in to the web admin interface -> System Tools -> Firmware Upgrade to flash downloaded files.",
+    securityChecklist: [
+      "Ensure a strong admin password is set during initial boot",
+      "Set WPA2/WPA3 wireless security with a complex key",
+      "Disable UPnP and WPS to block local network vulnerabilities",
+      "Check for firmware updates on mercusys.com regularly",
+    ],
+    faqs: [
+      {
+        question: "What is the default IP address for Mercusys routers?",
+        answer: "Most Mercusys routers use 192.168.1.1 as the default gateway. The local domain hostname is mwlogin.net.",
+      },
+      {
+        question: "Does Mercusys support mesh Wi-Fi?",
+        answer: "Yes, Mercusys Halo series provides seamless mesh Wi-Fi coverage across large homes.",
+      },
+    ],
+  },
+  cisco: {
+    loginIps: ["192.168.1.1", "192.168.15.1"],
+    defaultUsername: "admin / cisco",
+    defaultPassword: "admin / cisco",
+    adminPath: "/",
+    tagline: "Enterprise-grade secure business networking equipment",
+    marketPosition: "#1 Global Enterprise Networking Leader",
+    bestKnownFor: "Catalyst and ISR routers, RV-series small business VPN routers",
+    troubleshootingSteps: [
+      "Open your browser and connect to 192.168.1.1 (or 192.168.15.1 on select RV models)",
+      "Authenticate with the default credentials (e.g. cisco/cisco or admin/admin)",
+      "Ensure you are connected to the router's LAN interface using a static or DHCP IP",
+      "Disable VPN clients and check that routing rules are not diverting local packets",
+      "To factory reset, hold the Reset button for 10 seconds while the unit is powered on",
+    ],
+    firmwareTip:
+      "Cisco publishes security advisories and software downloads at software.cisco.com. Always verify SHA256 checksums before flashing firmware via the web GUI.",
+    securityChecklist: [
+      "Change default admin/cisco credentials immediately",
+      "Disable telnet and HTTP; enforce SSH and HTTPS access only",
+      "Configure client VLANs to isolate guest or IoT traffic from secure LANs",
+      "Enable firewall and Intrusion Prevention System (IPS) policies",
+      "Keep firmware up to date to patch zero-day vulnerabilities",
+    ],
+    faqs: [
+      {
+        question: "What is the default IP for Cisco business routers?",
+        answer: "Standard RV-series small business routers use 192.168.1.1. Some configurations default to 192.168.15.1.",
+      },
+      {
+        question: "What are the default Cisco RV credentials?",
+        answer: "Cisco small business RV-series routers typically default to cisco/cisco or admin/admin. Check the physical sticker or quick install guide.",
+      },
+    ],
+  },
+  belkin: {
+    loginIps: ["192.168.2.1"],
+    altUrl: "http://router",
+    defaultUsername: "admin",
+    defaultPassword: "(blank)",
+    adminPath: "/",
+    tagline: "Consumer lifestyle accessories and simple home routers",
+    marketPosition: "Consumer Home Wi-Fi Brand",
+    bestKnownFor: "RT-series Wi-Fi 6 routers, easy dashboard setups",
+    troubleshootingSteps: [
+      "Open a browser and go to 192.168.2.1 or http://router",
+      "Leave the password field blank and click Submit (or enter admin if prompted)",
+      "Verify connection to the Belkin SSID or Ethernet LAN port",
+      "Turn off any active VPNs or browser proxy settings",
+      "To reset, hold the physical Reset button on the back of the router for 10 seconds",
+    ],
+    firmwareTip:
+      "Go to belkin.com/support and search for your model to find the latest firmware. Upload it through the admin panel under Utilities -> Firmware Update.",
+    securityChecklist: [
+      "Create a strong administrator password (default is blank)",
+      "Use WPA2 or WPA3 personal security for wireless networks",
+      "Change the default SSID to a custom name",
+      "Disable remote administration in the Utilities menu",
+    ],
+    faqs: [
+      {
+        question: "What is the default IP for Belkin routers?",
+        answer: "Belkin routers default to 192.168.2.1. You can also access them by typing http://router in your browser's address bar.",
+      },
+      {
+        question: "What is the default password for Belkin?",
+        answer: "By default, Belkin routers do not have a password. Leave the password field blank and click Login/Submit.",
+      },
+    ],
+  },
+  arris: {
+    loginIps: ["192.168.0.1", "192.168.100.1"],
+    defaultUsername: "admin",
+    defaultPassword: "password",
+    adminPath: "/",
+    tagline: "High-speed broadband cable modems and Surfboard gateways",
+    marketPosition: "Top Cable Modem & Gateway Provider (North America)",
+    bestKnownFor: "Surfboard cable modems, DOCSIS 3.1 gateways",
+    troubleshootingSteps: [
+      "Open a browser and go to 192.168.0.1 (or 192.168.100.1 for standalone modems)",
+      "Enter username 'admin' and password 'password' (or the custom password printed on the sticker)",
+      "Verify the coaxial cable is screwed in tightly on the modem and wall outlet",
+      "Check that your PC is connected to the modem LAN port via Ethernet",
+      "If you cannot log in, hold the physical Reset button on the back with a pin for 15 seconds",
+    ],
+    firmwareTip:
+      "For standalone modems, cable operators push firmware updates automatically. For Arris gateway routers, check Arris support and flash firmware via the router settings page.",
+    securityChecklist: [
+      "Change default admin/password credentials immediately",
+      "Set a strong Wi-Fi key on the gateway router",
+      "Disable WPS pairing features",
+      "Check upstream/downstream SNR levels regularly to monitor cable line health",
+    ],
+    faqs: [
+      {
+        question: "What is the default IP for Arris modems and routers?",
+        answer: "Arris Surfboard Wi-Fi gateways use 192.168.0.1. Standalone modems (like SB8200) use 192.168.100.1 to access status pages.",
+      },
+      {
+        question: "What is the default Arris login password?",
+        answer: "The default username is 'admin' and the password is 'password'. Some models print a unique password on the device label.",
+      },
+    ],
+  },
 };
 
 // ─── Fallback data for unknown brands ─────────────────────────────────────────
