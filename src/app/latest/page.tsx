@@ -9,6 +9,7 @@ import { ArticlesService } from "@/server/services/articles.service";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd, buildBreadcrumbSchema } from "@/lib/seo/schema";
 import { APP_URL } from "@/lib/constants";
+import { hasDatabase } from "@/lib/server/env-safe";
 
 interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -35,10 +36,20 @@ export default async function LatestArticlesPage({ searchParams }: Props) {
   const page = Math.max(1, parseInt(pageStr, 10) || 1);
   const limit = 12; // 12 items per page fits nicely in a 3-column grid
 
-  const [articles, totalCount] = await Promise.all([
-    ArticlesService.getLatestArticles({ page, limit }),
-    ArticlesService.getTotalArticlesCount(),
-  ]);
+  let articles: any[] = [];
+  let totalCount = 0;
+  if (hasDatabase) {
+    try {
+      const [resArticles, resCount] = await Promise.all([
+        ArticlesService.getLatestArticles({ page, limit }),
+        ArticlesService.getTotalArticlesCount(),
+      ]);
+      articles = resArticles;
+      totalCount = resCount;
+    } catch (error) {
+      console.error("[Build] Failed to fetch latest articles:", error);
+    }
+  }
 
   const totalPages = Math.ceil(totalCount / limit);
   const breadcrumbs = [

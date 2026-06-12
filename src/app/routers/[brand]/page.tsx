@@ -845,7 +845,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!hasDatabase) return {};
   const { brand: brandSlug } = await params;
-  const brand = await RouterService.getBrand(brandSlug);
+  let brand;
+  try {
+    brand = await RouterService.getBrand(brandSlug);
+  } catch {
+    return {};
+  }
   if (!brand) return {};
   const d = BRAND_DATA[brandSlug] ?? DEFAULT_BRAND_DATA;
   return buildMetadata({
@@ -861,10 +866,16 @@ export const revalidate = 86400;
 
 export default async function BrandPage({ params }: Props) {
   const { brand: brandSlug } = await params;
-  const [brand, models] = await Promise.all([
-    RouterService.getBrand(brandSlug),
-    RouterService.getBrandModels(brandSlug),
-  ]);
+  if (!hasDatabase) notFound();
+  let brand, models;
+  try {
+    [brand, models] = await Promise.all([
+      RouterService.getBrand(brandSlug),
+      RouterService.getBrandModels(brandSlug),
+    ]);
+  } catch {
+    notFound();
+  }
   if (!brand) notFound();
 
   const d = BRAND_DATA[brandSlug] ?? DEFAULT_BRAND_DATA;

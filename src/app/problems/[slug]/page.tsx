@@ -133,11 +133,21 @@ import { hasDatabase } from "@/lib/server/env-safe";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   if (!hasDatabase) return {};
   const { slug } = await params;
-  const problem = await prisma.problem.findUnique({ where: { slug } });
+  let problem;
+  try {
+    problem = await prisma.problem.findUnique({ where: { slug } });
+  } catch {
+    return {};
+  }
   
   if (!problem) return {};
 
-  const robots = await IndexationControlService.getRobotsConfig(problem.status, 0.9);
+  let robots;
+  try {
+    robots = await IndexationControlService.getRobotsConfig(problem.status, 0.9);
+  } catch {
+    robots = { index: true, follow: true };
+  }
   
   const baseMetadata = buildProblemMetadata({
     title: problem.title,
@@ -153,11 +163,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProblemPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  if (!hasDatabase) notFound();
+  let problem;
+  try {
+    problem = await prisma.problem.findUnique({
+      where: { slug }
+    });
+  } catch {
+    notFound();
+  }
   
-  const problem = await prisma.problem.findUnique({
-    where: { slug }
-  });
-
   if (!problem) notFound();
 
   // Log page view analytics event

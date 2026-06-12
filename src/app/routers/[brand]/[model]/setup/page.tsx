@@ -19,7 +19,12 @@ import { hasDatabase } from "@/lib/server/env-safe";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!hasDatabase) return {};
   const { brand: brandSlug, model: modelSlug } = await params;
-  const routerModel = await RouterService.getModel(brandSlug, modelSlug);
+  let routerModel;
+  try {
+    routerModel = await RouterService.getModel(brandSlug, modelSlug);
+  } catch {
+    return {};
+  }
   if (!routerModel || !routerModel.brand) return {};
   return {
     title: `${routerModel.brand.name} ${routerModel.name} WiFi Setup & Configuration`,
@@ -32,7 +37,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function RouterSetupGuidePage({ params }: Props) {
   const { brand: brandSlug, model: modelSlug } = await params;
-  const routerModel = await RouterService.getModel(brandSlug, modelSlug);
+  if (!hasDatabase) notFound();
+  let routerModel;
+  try {
+    routerModel = await RouterService.getModel(brandSlug, modelSlug);
+  } catch {
+    notFound();
+  }
   if (!routerModel || !routerModel.brand) notFound();
 
   const brandName = routerModel.brand.name;

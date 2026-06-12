@@ -7,6 +7,7 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { Badge } from "@/components/ui/Badge";
 import { JsonLd, buildBreadcrumbSchema } from "@/lib/seo/schema";
 import { APP_URL, PROBLEM_CATEGORIES } from "@/lib/constants";
+import { hasDatabase } from "@/lib/server/env-safe";
 
 export const metadata: Metadata = buildMetadata({
   title: "WiFi & Router Problems — Troubleshooting Guides",
@@ -19,7 +20,14 @@ export const metadata: Metadata = buildMetadata({
 export const dynamic = "force-dynamic";
 
 export default async function ProblemsPage() {
-  const problems = await ProblemService.getAll();
+  let problems: any[] = [];
+  if (hasDatabase) {
+    try {
+      problems = await ProblemService.getAll();
+    } catch (error) {
+      console.error("[Build] Failed to fetch problems:", error);
+    }
+  }
 
   const breadcrumbs = [{ label: "Fix Problems", href: "/problems" }];
 
@@ -75,7 +83,7 @@ export default async function ProblemsPage() {
                       }
                       size="sm"
                     >
-                      {PROBLEM_CATEGORIES[problem.category]}
+                      {PROBLEM_CATEGORIES[problem.category as keyof typeof PROBLEM_CATEGORIES]}
                     </Badge>
                   </div>
                   <h2 className="text-sm font-bold text-[var(--text-primary)] mb-1 line-clamp-2">

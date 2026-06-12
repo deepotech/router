@@ -9,9 +9,17 @@ type Props = { params: Promise<{ brand: string; model: string }> };
 
 export const revalidate = 86400;
 
+import { hasDatabase } from "@/lib/server/env-safe";
+
 export default async function RouterModelOverviewPage({ params }: Props) {
   const { brand: brandSlug, model: modelSlug } = await params;
-  const routerModel = await RouterService.getModel(brandSlug, modelSlug);
+  if (!hasDatabase) notFound();
+  let routerModel;
+  try {
+    routerModel = await RouterService.getModel(brandSlug, modelSlug);
+  } catch {
+    notFound();
+  }
   if (!routerModel || !routerModel.brand) notFound();
 
   const brandName = routerModel.brand.name;

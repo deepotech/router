@@ -29,7 +29,12 @@ import { hasDatabase } from "@/lib/server/env-safe";
 export async function generateMetadata({ params }: { params: Promise<{ brand: string; model: string }> }): Promise<Metadata> {
   if (!hasDatabase) return {};
   const { brand: brandSlug, model: modelSlug } = await params;
-  const routerModel = await RouterService.getModel(brandSlug, modelSlug);
+  let routerModel;
+  try {
+    routerModel = await RouterService.getModel(brandSlug, modelSlug);
+  } catch {
+    return {};
+  }
   if (!routerModel || !routerModel.brand) return {};
   return buildRouterMetadata({
     brandName: routerModel.brand.name,
@@ -42,11 +47,21 @@ export async function generateMetadata({ params }: { params: Promise<{ brand: st
 
 export default async function RouterModelLayout({ params, children }: Props) {
   const { brand: brandSlug, model: modelSlug } = await params;
-  const routerModel = await RouterService.getModel(brandSlug, modelSlug);
+
+  if (!hasDatabase) notFound();
+
+  let routerModel;
+  try {
+    routerModel = await RouterService.getModel(brandSlug, modelSlug);
+  } catch {
+    notFound();
+  }
   if (!routerModel || !routerModel.brand) notFound();
 
-  // Log page view analytics event
-  AnalyticsService.logEvent("PAGE_VIEW", { url: `/routers/${brandSlug}/${modelSlug}`, title: routerModel.name });
+  // Log page view analytics event (fire-and-forget — don't block render)
+  try {
+    AnalyticsService.logEvent("PAGE_VIEW", { url: `/routers/${brandSlug}/${modelSlug}`, title: routerModel.name });
+  } catch {}
 
   const brandName = routerModel.brand.name;
   const { ratingValue, ratingCount } = calculateRouterRating(routerModel.id);

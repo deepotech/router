@@ -14,7 +14,12 @@ import { hasDatabase } from "@/lib/server/env-safe";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!hasDatabase) return {};
   const { slug } = await params;
-  const comparison = await ComparisonService.getComparisonBySlug(slug);
+  let comparison;
+  try {
+    comparison = await ComparisonService.getComparisonBySlug(slug);
+  } catch {
+    return {};
+  }
   
   if (!comparison) return {};
   
@@ -29,12 +34,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ComparisonPage({ params }: Props) {
   const { slug } = await params;
-  const comparison = await ComparisonService.getComparisonBySlug(slug);
+  if (!hasDatabase) notFound();
+  let comparison;
+  try {
+    comparison = await ComparisonService.getComparisonBySlug(slug);
+  } catch {
+    notFound();
+  }
   
   if (!comparison) notFound();
 
   // In a real scenario, these IDs would map to real models, so we fetch them to get logos/brands
-  const { routerA, routerB } = await ComparisonService.getRoutersForComparison(comparison.routerAId, comparison.routerBId);
+  let routerA, routerB;
+  try {
+    const res = await ComparisonService.getRoutersForComparison(comparison.routerAId, comparison.routerBId);
+    routerA = res.routerA;
+    routerB = res.routerB;
+  } catch {
+    notFound();
+  }
 
   if (!routerA || !routerB) notFound();
 

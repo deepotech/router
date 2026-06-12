@@ -10,6 +10,7 @@ import { TrendingService } from "@/server/services/trending.service";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/seo/schema";
 import { Badge } from "@/components/ui/Badge";
+import { hasDatabase } from "@/lib/server/env-safe";
 
 export const metadata = buildMetadata({
   title: "RouterVia — Router Admin Login, Setup Guides & IP Address Database",
@@ -21,12 +22,24 @@ export const metadata = buildMetadata({
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  // Fetch stats, latest articles, and trending searches in parallel
-  const [stats, latestArticles, trendingSearches] = await Promise.all([
-    StatsService.getHomepageStats(),
-    ArticlesService.getLatestArticles({ limit: 6 }),
-    TrendingService.getTrendingSearches(6),
-  ]);
+  let stats = { routerModels: 0, ipAddresses: 0, troubleshootingGuides: 0 };
+  let latestArticles: any[] = [];
+  let trendingSearches: any[] = [];
+
+  if (hasDatabase) {
+    try {
+      const [resStats, resArticles, resTrending] = await Promise.all([
+        StatsService.getHomepageStats(),
+        ArticlesService.getLatestArticles({ limit: 6 }),
+        TrendingService.getTrendingSearches(6),
+      ]);
+      stats = resStats;
+      latestArticles = resArticles;
+      trendingSearches = resTrending;
+    } catch (error) {
+      console.error("[Build] Failed to fetch homepage data:", error);
+    }
+  }
 
   const breadcrumbs = [{ label: "Home", href: "/" }];
   const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, APP_URL);

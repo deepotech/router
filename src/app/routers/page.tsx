@@ -26,6 +26,7 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { Badge } from "@/components/ui/Badge";
 import { JsonLd, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/seo/schema";
 import { APP_URL } from "@/lib/constants";
+import { hasDatabase } from "@/lib/server/env-safe";
 
 // ---- SEO Metadata ----
 export const metadata: Metadata = buildMetadata({
@@ -68,7 +69,14 @@ const BRAND_DETAILS: Record<string, { defaultIp: string; alternativeAddress?: st
 };
 
 export default async function RoutersPage() {
-  const brands = await RouterService.getAllBrands();
+  let brands: any[] = [];
+  if (hasDatabase) {
+    try {
+      brands = await RouterService.getAllBrands();
+    } catch (error) {
+      console.error("[Build] Failed to fetch brands:", error);
+    }
+  }
   const breadcrumbs = [{ label: "Routers", href: "/routers" }];
 
   // ---- Structured Data (JSON-LD) ----

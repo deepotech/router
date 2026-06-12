@@ -30,6 +30,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${APP_URL}/dns`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${APP_URL}/router-login`,
       lastModified: now,
       changeFrequency: "weekly",
@@ -421,6 +427,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${APP_URL}/best-dns-for-faster-internet`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/best-dns-servers`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${APP_URL}/what-is-dns`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${APP_URL}/how-to-flush-dns-cache`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,
