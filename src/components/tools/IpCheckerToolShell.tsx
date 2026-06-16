@@ -164,10 +164,10 @@ export default function IpCheckerToolShell({
   const ipToolsCluster = [
     { label: "IP Checker Tool", href: "/tools/ip-checker" },
     { label: "What Is My IP?", href: "/what-is-my-ip" },
-    { label: "Check My IP", href: "/check-my-ip" },
-    { label: "My IP Address", href: "/my-ip" },
-    { label: "Public IP Checker", href: "/public-ip-checker" },
+    { label: "DNS Lookup Tool", href: "/dns-lookup" },
+    { label: "Port Checker", href: "/port-checker" },
   ];
+
 
   return (
     <>

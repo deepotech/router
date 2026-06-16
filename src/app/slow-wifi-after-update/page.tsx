@@ -88,7 +88,7 @@ export default function SlowWifiAfterUpdatePage() {
             <ul className="list-disc pl-4 space-y-1 text-[11px]">
               <li>Test your DNS server speeds and resolution with our <a href="/dns-propagation-checker" className="text-[var(--brand-400)] hover:underline">DNS Propagation Checker</a>.</li>
               <li>Learn how to optimize routing configurations in our <a href="/best-dns-for-gaming" className="text-[var(--brand-400)] hover:underline">Best DNS for Gaming Guide</a>.</li>
-              <li>Diagnose local device IP assignments with the <a href="/check-my-ip" className="text-[var(--brand-400)] hover:underline">IP Checker Tool</a>.</li>
+              <li>Diagnose local device IP assignments with the <a href="/what-is-my-ip" className="text-[var(--brand-400)] hover:underline">IP Checker Tool</a>.</li>
             </ul>
           </div>
         </article>

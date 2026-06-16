@@ -530,6 +530,35 @@ export default function BestDnsForGamingPage() {
           </div>
         </section>
 
+        {/* Related DNS Guides */}
+        <section className="prose prose-invert max-w-none space-y-4">
+          <h2 className="text-base font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+            <HelpCircle size={16} className="text-[var(--brand-400)]" />
+            Related DNS Guides
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            {[
+              { title: "What Is DNS?", href: "/what-is-dns", desc: "Understand how the Domain Name System works and why it matters." },
+              { title: "Best DNS Servers 2026", href: "/best-dns-servers", desc: "Complete comparison of the fastest, most secure public DNS resolvers." },
+              { title: "Best DNS for PS5", href: "/best-dns-for-ps5", desc: "Optimized DNS settings specifically for PlayStation 5 performance." },
+              { title: "Best DNS for Xbox", href: "/best-dns-for-xbox", desc: "DNS configuration guide for Xbox Series X/S and Xbox One." },
+              { title: "DNS Server Not Responding", href: "/dns-server-not-responding", desc: "Step-by-step guide to fix DNS resolution failures." },
+              { title: "DNS Probe Finished No Internet", href: "/dns-probe-finished-no-internet", desc: "Fix the Chrome DNS_PROBE_FINISHED_NO_INTERNET error." },
+              { title: "Flush DNS Cache", href: "/how-to-flush-dns-cache", desc: "How to clear your DNS resolver cache on Windows, macOS, and Linux." },
+              { title: "DNS Hub", href: "/dns", desc: "Full DNS learning hub with tools, guides, and troubleshooting resources." },
+            ].map(({ title, href, desc }) => (
+              <Link
+                key={href}
+                href={href}
+                className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-elevated)] rounded-xl hover:border-[var(--brand-400)] transition-colors group block no-underline"
+              >
+                <span className="font-semibold text-[var(--brand-400)] group-hover:underline text-[11px] block">{title}</span>
+                <p className="text-[10px] text-[var(--text-muted)] mt-0.5">{desc}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
       </div>
     </TroubleshootingArticleShell>
   );

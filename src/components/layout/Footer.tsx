@@ -32,11 +32,12 @@ const footerLinks = {
   ],
   "Network & IP": [
     { label: "What Is My IP", href: "/what-is-my-ip" },
-    { label: "Public IP Checker", href: "/public-ip-checker" },
+    { label: "DNS Lookup Tool", href: "/dns-lookup" },
     { label: "Port Checker", href: "/port-checker" },
     { label: "MAC Address Lookup", href: "/mac-address-lookup" },
     { label: "Subnet Calculator", href: "/subnet-calculator" },
   ],
+
   "Gaming Net": [
     { label: "NAT Type Checker", href: "/nat-type-checker" },
     { label: "DNS Propagation", href: "/dns-propagation-checker" },
@@ -82,6 +83,20 @@ const footerLinks = {
     { label: "Chrome DNS Probe Error", href: "/dns-probe-finished-no-internet" },
     { label: "Best DNS for PS5", href: "/best-dns-for-ps5" },
     { label: "Best DNS for Xbox", href: "/best-dns-for-xbox" },
+  ],
+  "WiFi Security": [
+    { label: "WiFi Security Hub", href: "/wifi-security" },
+    { label: "WPA3 vs WPA2", href: "/wpa3-vs-wpa2" },
+    { label: "Who Is on My WiFi", href: "/how-to-see-who-is-on-my-wifi" },
+    { label: "Guest WiFi Setup", href: "/guest-wifi-setup" },
+    { label: "Block Devices on Router", href: "/block-device-on-router" },
+  ],
+  "Mesh WiFi": [
+    { label: "Mesh WiFi Guide", href: "/mesh-wifi" },
+    { label: "Mesh WiFi Setup", href: "/mesh-wifi-setup" },
+    { label: "Extender vs Mesh WiFi", href: "/wifi-extender-vs-mesh" },
+    { label: "Best Mesh for Gaming", href: "/best-mesh-wifi-for-gaming" },
+    { label: "How to Improve WiFi Signal", href: "/how-to-improve-wifi-signal" },
   ],
   "Internet Fixes": [
     { label: "Phone Connected No Internet", href: "/wifi-connected-but-no-internet-phone" },

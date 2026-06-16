@@ -358,6 +358,10 @@ wl -i eth2 phy_temp`,
     ],
     internalLinks: [
       {
+        text: "ASUS 192.168.50.1 Admin Login Guide",
+        href: "/ips/192-168-50-1",
+      },
+      {
         text: "Why Does My Router Keep Restarting? Solutions & Fixes",
         href: "/router-keeps-restarting",
       },
@@ -639,6 +643,10 @@ wl -i eth2 phy_temp`,
       },
     ],
     internalLinks: [
+      {
+        text: "ASUS 192.168.50.1 Admin Login Guide",
+        href: "/ips/192-168-50-1",
+      },
       {
         text: "ASUS Router Keeps Restarting",
         href: "/asus-router-keeps-restarting",

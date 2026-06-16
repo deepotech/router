@@ -88,7 +88,7 @@ export default function InternetConnectedNoAccessPage() {
             <ul className="list-disc pl-4 space-y-1 text-[11px]">
               <li>Is your DNS query resolving? Run a live query on our <a href="/dns-propagation-checker" className="text-[var(--brand-400)] hover:underline">Global DNS Propagation Checker</a>.</li>
               <li>Learn how to resolve port blocks with our <a href="/port-checker" className="text-[var(--brand-400)] hover:underline">Port Checker Utility</a>.</li>
-              <li>Verify your device IP configuration with the <a href="/public-ip-checker" className="text-[var(--brand-400)] hover:underline">Public IP Checker Tool</a>.</li>
+              <li>Verify your device IP configuration with the <a href="/what-is-my-ip" className="text-[var(--brand-400)] hover:underline">IP Address Checker</a>.</li>
             </ul>
           </div>
         </article>

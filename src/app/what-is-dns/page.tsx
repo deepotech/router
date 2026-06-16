@@ -220,10 +220,16 @@ export default function WhatIsDnsPage() {
             worldwide — no single server holds all the mappings.
           </p>
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-            DNS operates silently in the background of every website visit, email sent, and online
-            game session — performing billions of queries every second globally. Your experience of
-            the internet — its speed, reliability, and security — is directly shaped by the quality
-            of the DNS infrastructure you use.
+            DNS operates silently in the background of every website visit, email sent, and{" "}
+            <Link href="/best-dns-for-gaming" className="text-[var(--brand-400)] hover:underline">
+              online game session
+            </Link>{" "}
+            — performing billions of queries every second globally. Your experience of the internet
+            — its speed, reliability, and security — is directly shaped by the quality of the{" "}
+            <Link href="/best-dns-servers" className="text-[var(--brand-400)] hover:underline">
+              DNS servers
+            </Link>{" "}
+            you use.
           </p>
         </section>
 
@@ -377,11 +383,16 @@ export default function WhatIsDnsPage() {
             {[
               { label: "Best DNS Servers", href: "/best-dns-servers" },
               { label: "Flush DNS Cache", href: "/how-to-flush-dns-cache" },
-              { label: "DNS Hub Guide", href: "/dns" },
+              { label: "DNS Hub", href: "/dns" },
               { label: "Change DNS on Router", href: "/how-to-change-dns-on-router" },
-              { label: "DNS Not Responding", href: "/dns-server-not-responding" },
+              { label: "DNS Server Not Responding", href: "/dns-server-not-responding" },
               { label: "Best DNS for Gaming", href: "/best-dns-for-gaming" },
               { label: "Best DNS for PS5", href: "/best-dns-for-ps5" },
+              { label: "Best DNS for Xbox", href: "/best-dns-for-xbox" },
+              { label: "Best DNS Servers 2026", href: "/best-dns-servers" },
+              { label: "Flush DNS Cache", href: "/how-to-flush-dns-cache" },
+              { label: "Fastest DNS for Internet", href: "/best-dns-for-faster-internet" },
+              { label: "DNS Probe Finished No Internet", href: "/dns-probe-finished-no-internet" },
             ].map((link) => (
               <Link
                 key={link.href}

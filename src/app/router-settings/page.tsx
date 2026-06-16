@@ -354,7 +354,9 @@ export default function RouterSettingsPage() {
                   <td className="px-3 py-2.5 font-semibold">
                     <Link href="/routers/asus" className="text-[var(--brand-400)] hover:underline">ASUS</Link>
                   </td>
-                  <td className="px-3 py-2.5 font-mono">router.asus.com</td>
+                  <td className="px-3 py-2.5 font-mono">
+                    router.asus.com (or <Link href="/ips/192-168-50-1" className="text-[var(--brand-400)] hover:underline">192.168.50.1</Link>)
+                  </td>
                 </tr>
                 <tr>
                   <td className="px-3 py-2.5 font-semibold">

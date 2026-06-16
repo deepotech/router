@@ -85,6 +85,22 @@ const nextConfig: NextConfig = {
         destination: "/router-password",
         permanent: true,
       },
+      {
+        source: "/my-ip",
+        destination: "/what-is-my-ip",
+        permanent: true,
+      },
+      {
+        source: "/check-my-ip",
+        destination: "/what-is-my-ip",
+        permanent: true,
+      },
+      {
+        source: "/public-ip-checker",
+        destination: "/what-is-my-ip",
+        permanent: true,
+      },
+
     ];
   },
 };

@@ -266,6 +266,126 @@ export default function DnsHubPage() {
       <div className="space-y-10">
 
         {/* =========================================================================
+            DNS RESOURCE CENTER — Internal Linking Hub
+            ========================================================================= */}
+        <section aria-label="DNS Resource Center" className="not-prose">
+          <div className="flex items-center gap-2 text-[var(--brand-400)] font-semibold text-xs uppercase tracking-wider mb-3">
+            <Layers size={14} /> DNS Resource Center
+          </div>
+          <h2 className="text-xl font-bold text-[var(--text-primary)] mb-2">
+            DNS Resource Center
+          </h2>
+          <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
+            Everything you need to configure, troubleshoot, and optimise your DNS settings in one place.
+            Use the guides below to find the fastest DNS servers, fix connection errors, or flush your cache
+            — across every device and platform.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              {
+                href: "/best-dns-servers",
+                title: "Best DNS Servers",
+                desc: "Compare the fastest and most reliable public DNS resolvers available in 2026, including Cloudflare, Google, and Quad9 benchmark data.",
+                icon: <Server size={18} className="text-emerald-400" />,
+                accent: "border-emerald-900/40 hover:border-emerald-500/40",
+                badge: "Top Picks",
+              },
+              {
+                href: "/best-dns-for-gaming",
+                title: "Best DNS for Gaming",
+                desc: "Reduce matchmaking delays and lobby load times by switching to a low-latency DNS resolver optimised for online multiplayer gaming.",
+                icon: <Gamepad2 size={18} className="text-blue-400" />,
+                accent: "border-blue-900/40 hover:border-blue-500/40",
+                badge: "Gaming",
+              },
+              {
+                href: "/best-dns-for-ps5",
+                title: "Best DNS for PS5",
+                desc: "Optimise your PlayStation 5 network settings with the fastest DNS addresses for PSN, downloads, and online play.",
+                icon: <Tv size={18} className="text-purple-400" />,
+                accent: "border-purple-900/40 hover:border-purple-500/40",
+                badge: "PS5",
+              },
+              {
+                href: "/best-dns-for-xbox",
+                title: "Best DNS for Xbox",
+                desc: "Configure your Xbox Series X/S or Xbox One with the best DNS servers for Xbox Live, Game Pass downloads, and NAT optimisation.",
+                icon: <Gamepad2 size={18} className="text-green-400" />,
+                accent: "border-green-900/40 hover:border-green-500/40",
+                badge: "Xbox",
+              },
+              {
+                href: "/how-to-flush-dns-cache",
+                title: "How to Flush DNS Cache",
+                desc: "Clear stale DNS records on Windows, macOS, Linux, and mobile to fix resolution errors and force fresh lookups instantly.",
+                icon: <RefreshCw size={18} className="text-cyan-400" />,
+                accent: "border-cyan-900/40 hover:border-cyan-500/40",
+                badge: "Fix",
+              },
+              {
+                href: "/what-is-dns",
+                title: "What Is DNS?",
+                desc: "A complete beginner-friendly explanation of how the Domain Name System works, from recursive resolvers to root servers and TTL records.",
+                icon: <HelpCircle size={18} className="text-amber-400" />,
+                accent: "border-amber-900/40 hover:border-amber-500/40",
+                badge: "Learn",
+              },
+              {
+                href: "/how-to-change-dns-on-router",
+                title: "How to Change DNS on Router",
+                desc: "Step-by-step instructions to update DNS settings at the router level so every device on your network benefits automatically.",
+                icon: <Settings size={18} className="text-rose-400" />,
+                accent: "border-rose-900/40 hover:border-rose-500/40",
+                badge: "Setup",
+              },
+              {
+                href: "/dns-server-not-responding",
+                title: "DNS Server Not Responding",
+                desc: "Diagnose and fix the 'DNS Server Not Responding' error on Windows, macOS, and mobile devices with proven step-by-step solutions.",
+                icon: <AlertTriangle size={18} className="text-orange-400" />,
+                accent: "border-orange-900/40 hover:border-orange-500/40",
+                badge: "Troubleshoot",
+              },
+              {
+                href: "/dns-probe-finished-no-internet",
+                title: "DNS Probe Finished No Internet",
+                desc: "Fix the Chrome 'DNS_PROBE_FINISHED_NO_INTERNET' error caused by dropped connections, corrupt cache, or misconfigured adapter settings.",
+                icon: <EyeOff size={18} className="text-red-400" />,
+                accent: "border-red-900/40 hover:border-red-500/40",
+                badge: "Troubleshoot",
+              },
+            ].map((card) => (
+              <Link
+                key={card.href}
+                href={card.href}
+                className={`group relative glass-card p-5 rounded-2xl border bg-[var(--bg-elevated)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${card.accent}`}
+              >
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="shrink-0 mt-0.5">{card.icon}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="font-bold text-sm text-[var(--text-primary)] group-hover:text-[var(--brand-400)] transition-colors">
+                        {card.title}
+                      </span>
+                      <span className="text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded bg-[var(--bg-surface)] text-[var(--text-muted)] border border-[var(--border-subtle)]">
+                        {card.badge}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                  {card.desc}
+                </p>
+                <div className="mt-3 flex items-center gap-1 text-[var(--brand-400)] text-[10px] font-semibold uppercase tracking-wide opacity-0 group-hover:opacity-100 transition-opacity">
+                  Read Guide <ChevronRight size={10} />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* =========================================================================
             SECTION 1: WHAT IS DNS? (HERO + FEATURED SNIPPET)
             ========================================================================= */}
         <section className="prose prose-invert max-w-none space-y-4" aria-label="What is DNS">

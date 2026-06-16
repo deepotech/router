@@ -87,7 +87,7 @@ export default function WifiKeepsDisconnectingPage() {
             <span className="font-bold text-[var(--text-primary)] block text-xs">Recommended Tools & Quick Links</span>
             <ul className="list-disc pl-4 space-y-1 text-[11px]">
               <li>Use our <a href="/dns-lookup" className="text-[var(--brand-400)] hover:underline">DNS Lookup Tool</a> to verify external hostnames are resolving correctly.</li>
-              <li>Check your public connection address with the <a href="/public-ip-checker" className="text-[var(--brand-400)] hover:underline">Public IP Checker</a>.</li>
+              <li>Check your public connection address with the <a href="/what-is-my-ip" className="text-[var(--brand-400)] hover:underline">IP Address Checker</a>.</li>
               <li>Learn how to configure specific brands in our <a href="/port-forwarding-guide" className="text-[var(--brand-400)] hover:underline">Port Forwarding Guide</a>.</li>
             </ul>
           </div>

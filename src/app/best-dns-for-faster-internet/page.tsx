@@ -220,6 +220,35 @@ export default function BestDnsForFasterInternetPage() {
             A Pi-Hole runs on a low-cost Raspberry Pi micro-computer connected directly to your router switch. It intercepts all local DNS queries and automatically drops connections to known tracking and advertisement domains at the DNS level. This prevents your devices from downloading massive ad payloads, dramatically reducing WAN bandwidth consumption and accelerating page loading across all smartphones, tablets, and smart TVs in your household.
           </p>
         </article>
+
+        {/* Related DNS Guides */}
+        <section className="space-y-4">
+          <h2 className="text-base font-bold text-[var(--text-primary)]">
+            Related DNS Guides
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            {[
+              { title: "What Is DNS?", href: "/what-is-dns", desc: "Understand how the Domain Name System works step by step." },
+              { title: "Best DNS Servers 2026", href: "/best-dns-servers", desc: "Complete comparison of the fastest, most secure public DNS resolvers." },
+              { title: "Best DNS for Gaming", href: "/best-dns-for-gaming", desc: "Ranked DNS providers for PS5, Xbox, PC — fastest ping comparison." },
+              { title: "Best DNS for PS5", href: "/best-dns-for-ps5", desc: "Optimized DNS settings specifically for PlayStation 5 performance." },
+              { title: "Best DNS for Xbox", href: "/best-dns-for-xbox", desc: "DNS configuration guide for Xbox Series X/S and Xbox One." },
+              { title: "Change DNS on Router", href: "/how-to-change-dns-on-router", desc: "Step-by-step DNS setup guide for all major router brands." },
+              { title: "DNS Server Not Responding", href: "/dns-server-not-responding", desc: "Fix DNS resolution failures on Windows and macOS." },
+              { title: "Flush DNS Cache", href: "/how-to-flush-dns-cache", desc: "Clear your DNS resolver cache on Windows, macOS, and Linux." },
+            ].map(({ title, href, desc }) => (
+              <a
+                key={href}
+                href={href}
+                className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-elevated)] rounded-xl hover:border-[var(--brand-400)] transition-colors group block no-underline"
+              >
+                <span className="font-semibold text-[var(--brand-400)] group-hover:underline text-[11px] block">{title}</span>
+                <p className="text-[10px] text-[var(--text-muted)] mt-0.5">{desc}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
       </div>
     </TroubleshootingArticleShell>
   );

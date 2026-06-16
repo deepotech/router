@@ -60,6 +60,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${APP_URL}/router-settings`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/port-forwarding`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/change-wifi-password`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${APP_URL}/problems`,
       lastModified: now,
       changeFrequency: "weekly",
@@ -83,24 +101,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
-    {
-      url: `${APP_URL}/check-my-ip`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${APP_URL}/my-ip`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${APP_URL}/public-ip-checker`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
+
     {
       url: `${APP_URL}/dns-lookup`,
       lastModified: now,
@@ -481,6 +482,54 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${APP_URL}/asus-router-keeps-restarting`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/wifi-security`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/wpa3-vs-wpa2`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/how-to-see-who-is-on-my-wifi`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/guest-wifi-setup`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${APP_URL}/mesh-wifi`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/mesh-wifi-setup`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${APP_URL}/wifi-extender-vs-mesh`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${APP_URL}/block-device-on-router`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,

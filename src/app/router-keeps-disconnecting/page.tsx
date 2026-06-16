@@ -704,8 +704,8 @@ ipconfig /renew`}
               </li>
               <li>
                 Check your WAN IP status with the{" "}
-                <a href="/public-ip-checker" className="text-[var(--brand-400)] hover:underline">
-                  Public IP Checker Tool
+                <a href="/what-is-my-ip" className="text-[var(--brand-400)] hover:underline">
+                  IP Address Checker
                 </a>
                 .
               </li>

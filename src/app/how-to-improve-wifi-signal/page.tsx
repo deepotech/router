@@ -87,7 +87,7 @@ export default function HowToImproveWifiSignalPage() {
             <ul className="list-disc pl-4 space-y-1 text-[11px]">
               <li>Troubleshoot Wi-Fi dropouts using our <a href="/wifi-keeps-disconnecting" className="text-[var(--brand-400)] hover:underline">Wi-Fi Disconnect Guide</a>.</li>
               <li>Resolve console connection problems with our <a href="/xbox-nat-type-open" className="text-[var(--brand-400)] hover:underline">Xbox Open NAT Guide</a>.</li>
-              <li>Verify your device IP configuration with the <a href="/public-ip-checker" className="text-[var(--brand-400)] hover:underline">Public IP Checker Tool</a>.</li>
+              <li>Verify your device IP configuration with the <a href="/what-is-my-ip" className="text-[var(--brand-400)] hover:underline">IP Address Checker</a>.</li>
               <li>Log in to access your wireless configurations page at <a href="/ips/192-168-1-1" className="text-[var(--brand-400)] hover:underline">192.168.1.1 Portal</a>.</li>
             </ul>
           </div>

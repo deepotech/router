@@ -723,7 +723,37 @@ export default function HowToChangeDnsOnRouterPage() {
           </div>
         </section>
 
+        {/* Related DNS Guides */}
+        <section className="prose prose-invert max-w-none space-y-4">
+          <h2 className="text-base font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+            <Globe size={16} className="text-[var(--brand-400)]" />
+            Related DNS Guides
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            {[
+              { title: "What Is DNS?", href: "/what-is-dns", desc: "Understand how the Domain Name System works and why it matters for speed." },
+              { title: "Best DNS Servers 2026", href: "/best-dns-servers", desc: "Compare Cloudflare, Google, Quad9, and OpenDNS by speed, privacy, and security." },
+              { title: "Best DNS for Gaming", href: "/best-dns-for-gaming", desc: "Lowest-latency DNS providers for PS5, Xbox Series X, and PC gaming." },
+              { title: "Best DNS for PS5", href: "/best-dns-for-ps5", desc: "Step-by-step DNS optimization specifically for PlayStation 5." },
+              { title: "Best DNS for Xbox", href: "/best-dns-for-xbox", desc: "Manual DNS setup guide for Xbox Series X/S and Xbox One." },
+              { title: "DNS Server Not Responding", href: "/dns-server-not-responding", desc: "Fix DNS resolution failures and 'DNS server not responding' errors." },
+              { title: "Flush DNS Cache", href: "/how-to-flush-dns-cache", desc: "How to clear your DNS resolver cache on Windows, macOS, and Linux." },
+              { title: "DNS Probe Finished No Internet", href: "/dns-probe-finished-no-internet", desc: "Fix the Chrome DNS_PROBE_FINISHED_NO_INTERNET browser error." },
+            ].map(({ title, href, desc }) => (
+              <Link
+                key={href}
+                href={href}
+                className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-elevated)] rounded-xl hover:border-[var(--brand-400)] transition-colors group block no-underline"
+              >
+                <span className="font-semibold text-[var(--brand-400)] group-hover:underline text-[11px] block">{title}</span>
+                <p className="text-[10px] text-[var(--text-muted)] mt-0.5">{desc}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
       </div>
     </TroubleshootingArticleShell>
   );
 }
+

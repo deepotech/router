@@ -199,7 +199,186 @@ async function main() {
     }),
     prisma.routerModel.upsert({
       where: { slug: "archer-ax73" },
-      update: {},
+      update: {
+        wifiSetupGuide: `## Complete Login & Setup Guide for TP-Link Archer AX73
+
+### How to Access the Archer AX73 Admin Panel
+
+The TP-Link Archer AX73 (AX5400 Wi-Fi 6 Router) is accessed via its web-based administration dashboard. Follow these steps to log in:
+
+1. **Connect to the Router:** Use an Ethernet cable from your PC to any of the four yellow LAN ports on the rear of the Archer AX73, or connect wirelessly using the default SSID and password printed on the product label on the device's bottom panel.
+2. **Open the Admin Dashboard:** Launch any web browser (Chrome, Firefox, Edge). In the address bar, type **192.168.0.1** or **tplinkwifi.net** and press Enter. The TP-Link AGHP login page will load.
+3. **First-Time Password Creation:** If this is the first login, the Archer AX73 will prompt you to create a unique admin password — unlike older TP-Link routers, it does not use a preset default. Create a strong password using alphanumeric characters and at least one symbol (e.g., Tp@Link2024!).
+4. **Subsequent Logins:** Enter your custom admin password at the login prompt. Click **Log In** to access the full AGHP admin panel.
+
+### Quick Setup Wizard — Internet Connection
+
+1. Once logged in, navigate to the **Quick Setup** tab in the top menu bar.
+2. The wizard will auto-detect your internet connection type. For standard cable, fiber, or FTTH services, select **Dynamic IP (DHCP)**. For DSL services requiring authentication, choose **PPPoE** and enter the username and password provided by your ISP.
+3. If your ISP assigns a static IP, select **Static IP** and enter the IP, Subnet Mask, Gateway, and DNS server details from your ISP documentation.
+4. Click **Next** to advance through the wizard stages.
+
+### Wi-Fi 6 Configuration — Advanced Wireless Setup
+
+The Archer AX73 supports dual-band Wi-Fi 6 (802.11ax) with combined speeds up to 5400 Mbps (AX5400). To configure optimal wireless performance:
+
+1. Navigate to **Advanced > Wireless > Wireless Settings**.
+2. **Enable Smart Connect:** Check the Smart Connect box to unify both the 2.4GHz and 5GHz bands under one SSID. The router's band steering algorithm will automatically place devices on the optimal frequency based on distance and signal strength.
+3. **Set SSID and Password:** Enter your desired Wi-Fi Network Name (SSID) and select **WPA3-Personal** (or WPA2/WPA3 mixed mode for older client compatibility) as the security protocol. Enter a complex password of at least 12 characters.
+4. **Channel Optimization:** Set Channel Width to **160MHz** on the 5GHz band to maximize Wi-Fi 6 speeds. On 2.4GHz, use 20/40MHz for compatibility with legacy IoT devices. Select **Auto** channel to allow the router to scan and choose the least congested frequency.
+5. **Enable OFDMA:** Under Advanced Wireless settings, ensure **Orthogonal Frequency Division Multiple Access (OFDMA)** is enabled. OFDMA allows multiple devices to transmit simultaneously in the same channel, dramatically reducing latency in dense device environments.
+6. **Enable MU-MIMO:** Enable Multi-User MIMO (MU-MIMO) for the 5GHz band. The Archer AX73 supports 4x4 MU-MIMO, meaning it can serve up to 4 clients simultaneously at full speed.
+7. **Beamforming:** Enable Beamforming to focus the wireless signal toward connected client devices rather than broadcasting omnidirectionally. This improves per-device signal quality and reduces interference.
+8. **Target Wake Time (TWT):** Enable TWT under advanced settings. TWT is a Wi-Fi 6 power-saving feature that schedules when IoT devices and smartphones need to wake up to receive data, reducing battery drain significantly.
+
+### Guest Network Configuration
+
+1. Go to **Advanced > Guest Network**.
+2. Enable the guest network for both 2.4GHz and 5GHz if desired.
+3. Set a unique SSID (e.g., HomeGuest or VisitorWiFi).
+4. Ensure **Allow Guests to Access My Local Network** is toggled **OFF**. This prevents guest devices from accessing your NAS drives, printers, smart home hubs, or local servers.
+5. Configure the guest network with WPA2-Personal security and a separate password.
+
+### TP-Link Tether App Setup
+
+The TP-Link Tether app (iOS/Android) provides an alternative mobile-first setup experience:
+
+1. Download the Tether app from the App Store or Google Play.
+2. Ensure your phone is connected to the Archer AX73's default Wi-Fi (printed on the bottom label).
+3. Open Tether — it will auto-detect the Archer AX73.
+4. Follow the guided setup wizard to configure your internet connection, set SSIDs, create an admin password, and register for TP-Link ID for remote management.
+
+### Firmware Update Procedure
+
+Keeping the Archer AX73 firmware updated is critical for security patches and performance improvements:
+
+1. Log in to the dashboard at **192.168.0.1**.
+2. Navigate to **Advanced > System > Firmware Upgrade**.
+3. Click **Check for Upgrade** — the router contacts TP-Link's cloud servers and displays available firmware versions.
+4. If an update is available, click **Upgrade Now**. The router will download and install the update automatically.
+5. Alternatively, visit the TP-Link support page for the Archer AX73, download the latest firmware file (.bin), and use the **Manual Upgrade** option to upload it directly.
+6. **Warning:** Do NOT power off the router during firmware installation. Wait for the automatic reboot to complete (approximately 3-5 minutes).
+
+### Security Hardening Checklist
+
+Once your Archer AX73 is set up, apply these security configurations:
+
+- **Change Admin Password:** Go to Advanced > System > Administration. Change the admin password from any factory default.
+- **Disable WPS:** Navigate to Advanced > Wireless > WPS and toggle WPS Off. WPS PIN mode has known brute-force vulnerabilities.
+- **Enable WPA3:** In wireless settings, select WPA3-Personal or WPA2/WPA3 mixed mode for maximum security.
+- **Update Firmware:** Always install available firmware updates.
+- **Disable Remote Management:** Go to Advanced > System > Remote Management. Ensure this is disabled to prevent WAN-side admin access.
+- **Enable SPI Firewall:** Go to Advanced > Security > Firewall. Enable Stateful Packet Inspection (SPI) for incoming traffic protection.
+- **DNS-over-HTTPS:** Configure DoH under Advanced > DNS for encrypted DNS queries.
+
+### Port Forwarding Configuration
+
+For gaming consoles, home servers, or P2P applications requiring specific ports:
+
+1. Assign a static local IP to your device. Go to **Advanced > Network > DHCP Server > Address Reservation**. Enter the device MAC address and desired static IP.
+2. Go to **Advanced > NAT Forwarding > Port Forwarding**.
+3. Click **Add** and enter: Service Type (e.g., PS5, Minecraft), External Port range, Internal IP (the static IP you reserved), Internal Port, and Protocol (TCP/UDP).
+4. Click **Save**. The port forwarding rule is now active.
+5. Common gaming ports: PS5 — TCP 80, 443, 3478-3480; Xbox — UDP 88, 3074; PC Steam — UDP 27015-27030.
+
+### Common ISP Defaults for Archer AX73
+
+| ISP Region | Connection Type | Notes |
+|---|---|---|
+| US Cable ISPs | Dynamic IP (DHCP) | No PPPoE needed |
+| UK BT/Sky DSL | PPPoE | Use ISP-provided credentials |
+| EU Fiber ISPs | PPPoE or DHCP | Varies by provider |
+| APAC ISPs | PPPoE | Check ISP documentation |`,
+        resetGuide: `## Factory Reset Guide for TP-Link Archer AX73
+
+### Soft Reset (Admin Panel)
+
+If you still have admin access:
+
+1. Log in to the dashboard at **192.168.0.1**.
+2. Navigate to **Advanced > System > Backup & Restore**.
+3. Click **Restore** under Factory Default Settings.
+4. Confirm the restore. The router will reboot and clear all custom configurations.
+
+### Hard Reset (Physical Button)
+
+Use this method if you have forgotten your admin password:
+
+1. **Verify Power Status:** Ensure the Archer AX73 is plugged into a power source and the Power LED is solid green.
+2. **Locate the RESET Button:** Find the small pinhole labeled **RESET** on the rear panel, adjacent to the WPS button and USB port.
+3. **Perform the Reset:** Insert a paperclip, SIM ejector, or straightened pin into the pinhole. Press and hold the internal button firmly for exactly **10 seconds**.
+4. **Watch LED Indicators:** Hold the button until all front-panel LEDs flash simultaneously and then turn off — this signals that the NVRAM wipe has begun. Release the button.
+5. **Wait for Reboot:** The router takes approximately 2 minutes to complete its reboot and self-test cycle. Do not unplug power during this period.
+6. **Reconnect:** Once the Power and Wi-Fi LEDs are solid green, connect via Ethernet or the default SSID (printed on the bottom label) and navigate to **192.168.0.1** to run the setup wizard.
+
+### Pre-Reset Checklist
+
+Before performing a factory reset, note or backup:
+
+- ISP credentials (PPPoE username and password from your ISP)
+- Custom SSID names and Wi-Fi passwords
+- Port forwarding rules
+- DHCP static reservations (MAC-to-IP bindings)
+- Any VPN server configuration details
+
+### Post-Reset Security Steps
+
+1. Create a strong unique admin password during initial setup.
+2. Change both 2.4GHz and 5GHz SSIDs and passwords.
+3. Update firmware to the latest version immediately.
+4. Disable WPS and enable SPI Firewall.
+5. Configure DNS to a secure resolver (e.g., Cloudflare 1.1.1.1 or Google 8.8.8.8).`,
+        faqs: [
+          {
+            question: "Does the TP-Link Archer AX73 support Wi-Fi 6?",
+            answer: "Yes, the Archer AX73 is a dual-band Wi-Fi 6 (802.11ax) router supporting AX5400 combined speeds: 4804 Mbps on the 5GHz band and 574 Mbps on the 2.4GHz band. It features 4x4 MU-MIMO, OFDMA, and Target Wake Time (TWT)."
+          },
+          {
+            question: "How do I change the Wi-Fi password on Archer AX73?",
+            answer: "Log in to 192.168.0.1, go to Advanced > Wireless > Wireless Settings. Update the Password field for both the 2.4GHz and 5GHz bands. Click Save to apply the new credentials."
+          },
+          {
+            question: "How do I update the firmware on my Archer AX73?",
+            answer: "Log in to 192.168.0.1, navigate to Advanced > System > Firmware Upgrade. Click Check for Upgrade. If available, click Upgrade Now. Do not power off the router during the upgrade process."
+          },
+          {
+            question: "What is the default admin password for the Archer AX73?",
+            answer: "The Archer AX73 requires you to create a custom admin password during initial setup. Unlike older TP-Link models, there is no preset factory password. Log in at 192.168.0.1 for the first time and set your own secure password."
+          },
+          {
+            question: "How do I enable OFDMA on Archer AX73?",
+            answer: "Log in to the dashboard, go to Advanced > Wireless > Wireless Settings (Advanced). Enable the OFDMA option. This allows multiple devices to share the same Wi-Fi channel simultaneously, reducing latency in homes with many connected devices."
+          },
+          {
+            question: "How do I set up port forwarding on Archer AX73?",
+            answer: "Go to Advanced > NAT Forwarding > Port Forwarding. Click Add. Enter the external port range, internal IP (assign a static IP to your device via DHCP Address Reservation first), internal port, and select TCP/UDP protocol. Click Save."
+          },
+          {
+            question: "What is Smart Connect on Archer AX73?",
+            answer: "Smart Connect is a band-steering feature that combines the 2.4GHz and 5GHz Wi-Fi bands under a single SSID. The router automatically assigns connected devices to the optimal band based on signal strength and available bandwidth."
+          },
+          {
+            question: "How do I disable WPS on Archer AX73?",
+            answer: "Log in to 192.168.0.1, go to Advanced > Wireless > WPS. Toggle the WPS switch to Off and click Save. Disabling WPS prevents brute-force PIN attacks against your router."
+          },
+          {
+            question: "Can I use the TP-Link Tether app to manage Archer AX73?",
+            answer: "Yes, the TP-Link Tether app (available for iOS and Android) provides full management including setup, speed tests, client monitoring, parental controls, and remote access via TP-Link ID."
+          },
+          {
+            question: "How do I configure a guest network on Archer AX73?",
+            answer: "Go to Advanced > Guest Network. Enable the guest network for 2.4GHz or 5GHz. Set a unique SSID and password. Ensure 'Allow Guests to Access My Local Network' is disabled to isolate guest devices from your main LAN."
+          },
+          {
+            question: "What should I do if 192.168.0.1 is not loading?",
+            answer: "Verify your Ethernet cable is plugged into a LAN port (not the WAN port). Disable any VPN clients. Open Command Prompt and run 'ipconfig' — ensure your IPv4 address is in the 192.168.0.x range. Try accessing tplinkwifi.net as an alternative."
+          },
+          {
+            question: "Does the Archer AX73 support AiMesh or mesh Wi-Fi?",
+            answer: "The Archer AX73 does not support ASUS AiMesh. However, it supports TP-Link OneMesh when paired with compatible TP-Link range extenders (e.g., RE650 or RE600X), creating seamless whole-home Wi-Fi coverage."
+          }
+        ],
+      },
       create: {
         brandId: tpLink.id,
         name: "Archer AX73",
@@ -207,54 +386,247 @@ async function main() {
         loginIps: ["192.168.0.1", "tplinkwifi.net"],
         defaultUsername: "admin",
         defaultPassword: "admin",
-        wifiSetupGuide: `## Detailed WiFi Setup for TP-Link Archer AX73
+        wifiSetupGuide: `## Complete Login & Setup Guide for TP-Link Archer AX73
 
-To configure your wireless network on the TP-Link Archer AX73 (AX5400 Wi-Fi 6 Router), follow this comprehensive step-by-step setup procedure:
+### How to Access the Archer AX73 Admin Panel
 
-1. **Hardware Connections:** Plug the Ethernet cable from your internet modem into the blue WAN port on the rear of the Archer AX73. Connect your computer to one of the four yellow gigabit LAN ports using an RJ45 cable, or connect wirelessly using the default Wi-Fi network name (SSID) and password printed on the product label on the bottom of the device.
-2. **Access the Router Dashboard:** Launch a web browser and enter **192.168.0.1** or **tplinkwifi.net** in the address bar. Press Enter to load the router admin interface.
-3. **Establish Administrator Credentials:** On the first run, the router will require you to create a unique administrator password. Avoid default combinations and choose a strong password consisting of alphanumeric characters and special symbols to prevent unauthorized dashboard access.
-4. **Initiate the Quick Setup Wizard:** Locate the **Quick Setup** tab in the top navigation menu. The wizard will automatically attempt to detect your internet connection type. For standard consumer cable, fiber, or DSL connections, choose **Dynamic IP**. If your ISP requires PPPoE authentication, enter the username and password provided in your service contract.
-5. **Configure Dual-Band Wi-Fi 6 Parameters:** Under the Wireless configuration step, you can set your Network Name (SSID) and security keys. The Archer AX73 supports dual-band operations. You can enable **Smart Connect** to unify both the 2.4GHz and 5GHz bands under a single SSID, allowing the router to automatically steer devices to the optimal frequency. Ensure **WPA2-PSK [AES]** or the newer **WPA3-Personal** encryption is selected for security.
-6. **Smart Connect and TP-Link Tether App:** Alternatively, you can use the TP-Link Tether app on your mobile phone to complete setup. Open the app, scan the local Wi-Fi, select the Archer AX73, and follow the setup wizard. Smart Connect is recommended for most users to manage band steering dynamically.
-7. **Optimize Channel Width and OFDMA:** Navigate to the **Advanced > Wireless > Wireless Settings** page. Set the Channel Width for 5GHz to **160MHz** to enable the maximum throughput of Wi-Fi 6. Enable **OFDMA** and **TWT** (Target Wake Time) settings. If your home has walls that block signals, enable **Beamforming** under Advanced Wireless to focus the signal directly at connected clients rather than broadcasting in all directions.
-8. **Configure Guest Network Isolation:** Go to the **Guest Network** settings. Enable the guest network. Make sure **Allow Guests to Access My Local Network** is turned off. This keeps your home automation servers, NAS drives, and home computers private and secure from guest devices.
-9. **Save and Complete:** Review the summary of your configurations and click **Save** or **Finish**. The router will restart its wireless modules. Reconnect your client devices using your new Wi-Fi credentials.`,
+The TP-Link Archer AX73 (AX5400 Wi-Fi 6 Router) is accessed via its web-based administration dashboard. Follow these steps to log in:
+
+1. **Connect to the Router:** Use an Ethernet cable from your PC to any of the four yellow LAN ports on the rear of the Archer AX73, or connect wirelessly using the default SSID and password printed on the product label on the device's bottom panel.
+2. **Open the Admin Dashboard:** Launch any web browser (Chrome, Firefox, Edge). In the address bar, type **192.168.0.1** or **tplinkwifi.net** and press Enter. The TP-Link AGHP login page will load.
+3. **First-Time Password Creation:** If this is the first login, the Archer AX73 will prompt you to create a unique admin password — unlike older TP-Link routers, it does not use a preset default. Create a strong password using alphanumeric characters and at least one symbol (e.g., Tp@Link2024!).
+4. **Subsequent Logins:** Enter your custom admin password at the login prompt. Click **Log In** to access the full AGHP admin panel.
+
+### Wi-Fi 6 Configuration
+
+Navigate to Advanced > Wireless > Wireless Settings. Enable Smart Connect, set WPA3-Personal encryption, configure Channel Width to 160MHz on 5GHz, enable OFDMA and MU-MIMO for optimal multi-device performance.
+
+### Firmware Updates
+
+Go to Advanced > System > Firmware Upgrade. Click Check for Upgrade and install available updates to keep security patches current.
+
+### Security Hardening
+
+Disable WPS (Advanced > Wireless > WPS), enable SPI Firewall (Advanced > Security > Firewall), disable Remote Management, and configure DNS-over-HTTPS.
+
+### Port Forwarding
+
+Go to Advanced > NAT Forwarding > Port Forwarding. Create rules mapping external ports to static device IPs for gaming consoles and servers.`,
         resetGuide: `## Factory Reset Guide for TP-Link Archer AX73
 
-Restoring your TP-Link Archer AX73 to factory default settings will wipe all custom configurations, including Wi-Fi network names, passwords, and admin credentials. Use this procedure if you forget your admin password or experience routing system errors:
-
-1. **Verify Power Status:** Ensure the Archer AX73 is plugged into a power source and that the power LED indicator on the front panel is solid green, indicating the router has fully booted.
-2. **Locate the Physical Reset Button:** Look on the rear panel of the router for the small pinhole button labeled **RESET**, situated next to the WPS button and USB port.
-3. **Perform the Reset:** Insert a paperclip, SIM ejector tool, or pin into the pinhole. Press and hold the internal button firmly for **10 seconds**.
-4. **Observe LED Indicators:** Keep holding the button until all front-panel LED lights flash simultaneously and then turn off, indicating the system has initiated the restore process. Release the button.
-5. **Reboot Cycle:** Wait approximately 2 minutes for the router to complete its reboot cycle. Once the Power and Wi-Fi LEDs are solid green again, the factory restore is complete. Access the router at **192.168.0.1** using default parameters to set up the connection again.`,
+1. Verify the router is powered on (Power LED solid green).
+2. Locate the RESET pinhole on the rear panel.
+3. Insert a paperclip and hold the button for 10 seconds until LEDs flash.
+4. Wait 2 minutes for the reboot cycle to complete.
+5. Connect via Ethernet and navigate to 192.168.0.1 to run setup.`,
         faqs: [
           {
             question: "Does the TP-Link Archer AX73 support Wi-Fi 6?",
-            answer: "Yes, the Archer AX73 is a high-performance dual-band Wi-Fi 6 (802.11ax) router. It features 4x4 MU-MIMO and OFDMA, offering combined wireless transmission speeds of up to AX5400 (4804 Mbps on the 5GHz band and 574 Mbps on the 2.4GHz band) for improved throughput and reduced congestion."
+            answer: "Yes, the Archer AX73 is a dual-band Wi-Fi 6 (802.11ax) router supporting AX5400 combined speeds: 4804 Mbps on 5GHz and 574 Mbps on 2.4GHz, with OFDMA and MU-MIMO."
           },
           {
             question: "How do I change the Wi-Fi password on Archer AX73?",
-            answer: "Log in to the web console at 192.168.0.1, go to the Advanced tab at the top, select Wireless from the left menu, and click on Wireless Settings. Update the Password field for the 2.4GHz and 5GHz bands, then click Save at the bottom of the page."
+            answer: "Log in to 192.168.0.1, go to Advanced > Wireless > Wireless Settings. Update the Password field for 2.4GHz and 5GHz and click Save."
           },
           {
-            question: "How do I update the firmware on my Archer AX73?",
-            answer: "Connect to the router, log in to the web admin interface, and go to Advanced > System > Firmware Upgrade. Click the Check for Upgrade button to search TP-Link's servers. If an update is available, click Upgrade to download and install it automatically. Do not turn off the router during this process."
+            question: "How do I update firmware on Archer AX73?",
+            answer: "Navigate to Advanced > System > Firmware Upgrade and click Check for Upgrade. Install available updates without powering off the router during the process."
           },
           {
-            question: "What is the default admin password for the Archer AX73?",
-            answer: "Unlike older TP-Link models, the Archer AX73 does not have a default admin password printed on the label. Instead, you are required to create a custom administrator password during the initial setup wizard when you first log in to the dashboard at 192.168.0.1."
+            question: "What is the default admin password for Archer AX73?",
+            answer: "The Archer AX73 requires creating a custom admin password during first-time setup. There is no factory-preset default password."
+          },
+          {
+            question: "How do I set up port forwarding on Archer AX73?",
+            answer: "Go to Advanced > NAT Forwarding > Port Forwarding. Add a rule with external port, internal device IP (reserved via DHCP), internal port, and protocol (TCP/UDP)."
+          },
+          {
+            question: "How do I disable WPS on Archer AX73?",
+            answer: "Go to Advanced > Wireless > WPS and toggle WPS to Off. This prevents brute-force PIN attacks."
+          },
+          {
+            question: "What is Smart Connect?",
+            answer: "Smart Connect combines 2.4GHz and 5GHz bands under one SSID, automatically steering devices to the optimal band."
+          },
+          {
+            question: "How do I configure a guest network?",
+            answer: "Go to Advanced > Guest Network. Enable the guest SSID and disable 'Allow Guests to Access My Local Network' to isolate guest devices."
+          },
+          {
+            question: "Can I use TP-Link Tether app with Archer AX73?",
+            answer: "Yes, the Tether app provides full management including setup wizard, speed tests, parental controls, and remote access."
+          },
+          {
+            question: "What should I do if 192.168.0.1 is not loading?",
+            answer: "Ensure Ethernet cable is in a LAN port, disable VPN clients, and verify your IP is in the 192.168.0.x subnet via ipconfig."
           }
         ],
         metaTitle: "TP-Link Archer AX73 Login — Default IP & Password Setup",
-        metaDescription: "Access your TP-Link Archer AX73 router admin dashboard. Default IP: 192.168.0.1, username: admin. Complete Wi-Fi 6 configuration, firmware, and factory reset guide.",
+        metaDescription: "Access your TP-Link Archer AX73 router admin dashboard. Default IP: 192.168.0.1. Complete Wi-Fi 6 setup, OFDMA configuration, firmware update, and factory reset guide.",
       },
     }),
     // Huawei
     prisma.routerModel.upsert({
       where: { slug: "hg8245h5" },
-      update: {},
+      update: {
+        wifiSetupGuide: `## Complete Login & Admin Guide for Huawei HG8245H5 GPON Terminal
+
+### Understanding the HG8245H5: ISP vs User Access Levels
+
+The Huawei HG8245H5 is a GPON Optical Network Terminal (ONT) commonly deployed by fiber ISPs. It has **two admin levels**: the standard user account (username: admin, password varies by ISP) and the telecom/provider administrator account (username: telecomadmin). The telecom admin account has full access to advanced WLAN, VLAN, and TR-069 settings. Many ISPs restrict user access to the telecomadmin credentials — contact your ISP if access is denied.
+
+### How to Log In to the Huawei HG8245H5
+
+1. **Connect via Ethernet:** Plug an Ethernet cable from your PC into any of the LAN ports on the HG8245H5. Alternatively, connect wirelessly to the default SSID printed on the device's label.
+2. **Access the Web Interface:** Open a browser and navigate to **http://192.168.100.1**. The Huawei ONT login page will load.
+3. **Choose Your Account Level:**
+   - Standard user: Username **admin**, password as printed on the device label (varies by ISP — common defaults: admin, 1234, or the last 8 digits of the serial number).
+   - Full telecom admin: Username **telecomadmin**, password **admintelecom** (may be ISP-customized — check with your ISP).
+4. **Click Log In** to enter the web management interface.
+
+### ISP-Specific Default Credentials
+
+| ISP | Username | Password | Notes |
+|---|---|---|---|
+| Generic Huawei | telecomadmin | admintelecom | Full admin access |
+| Starhub (SG) | admin | Printed on label | User-level only |
+| PLDT (PH) | pldt | pldtadmin1234 | Check label first |
+| TM (MY) | tmadmin | Various | ISP-assigned |
+| STC (SA) | telecomadmin | admintelecom | Full access |
+
+### WLAN Configuration — 2.4GHz and 5GHz Setup
+
+1. After logging in, click the **WLAN** tab in the top navigation bar.
+2. Select **WLAN Basic Configuration** from the left panel.
+3. Click the **WLAN Switch** toggle to ensure Wi-Fi is enabled.
+4. Click on **SSID1** (primary 2.4GHz network) to expand its configuration:
+   - **SSID Name:** Enter your desired network name.
+   - **Authentication Mode:** Select **WPA2 Pre-Shared Key** for maximum security on standard clients.
+   - **Encryption Mode:** Select **AES**.
+   - **WPA Pre-Shared Key:** Enter a strong Wi-Fi password (minimum 12 characters).
+5. For the 5GHz band, look for SSID configurations under the 5GHz WLAN interface (may appear as SSID5 or under a separate 5GHz tab depending on firmware version).
+6. Click **Apply** to save changes.
+
+### Advanced Wireless Optimization
+
+- **Channel Width:** For 2.4GHz, set channel width to **40MHz** for higher throughput. For 5GHz, configure to **80MHz** for maximum speed.
+- **Channel Selection:** Set both bands to **Auto** so the ONT scans and selects the least congested frequency.
+- **Transmit Power:** Set to Maximum for larger home coverage areas.
+- **DTIM Period:** Set to 1 for real-time gaming applications to reduce beacon latency.
+
+### Huawei AI Life App Integration
+
+The HG8245H5 supports integration with the Huawei AI Life app (formerly HiLink) on Android and iOS:
+
+1. Download the Huawei AI Life app.
+2. Connect your smartphone to the HG8245H5's default Wi-Fi.
+3. Open the app — it auto-detects the gateway.
+4. Manage Wi-Fi settings, view connected devices, enable parental controls, and check ONT signal levels from your smartphone.
+
+### Firmware Update Procedure
+
+The HG8245H5 is typically managed via the ISP's TR-069 Auto-Configuration Server (ACS), meaning firmware is **pushed by the ISP automatically** over the WAN. Manual firmware updates are generally not available to end users to prevent configuration conflicts with ISP provisioning. If you need a firmware update:
+
+1. Contact your ISP's technical support.
+2. Request a firmware push or TR-069 configuration refresh.
+3. ISPs typically schedule firmware updates during maintenance windows.
+
+### Security Hardening for HG8245H5
+
+1. **Change the default WLAN password** from the factory preset immediately after ISP installation.
+2. **Disable WPS:** Navigate to WLAN > WPS Settings and set WPS Mode to Disabled. WPS PIN attacks are a significant risk on older GPON terminals.
+3. **Enable MAC Address Filtering:** Under WLAN > WLAN MAC Filtering, add your trusted device MAC addresses and set the mode to Allow Only Listed MACs.
+4. **Change User Admin Password:** Under the Security tab or System > User Management, change the standard user password. Note: the telecomadmin password may be ISP-controlled and cannot always be changed.
+5. **Disable Remote Management:** Ensure the WAN-facing HTTP/Telnet management interfaces are disabled. This is usually configured by the ISP via TR-069 but verify under System > Remote Management.
+
+### Port Forwarding on HG8245H5
+
+1. Assign a static IP to your target device. Navigate to **LAN > DHCP Static Address** and bind the device MAC to a fixed local IP (e.g., 192.168.100.50).
+2. Navigate to **Application > Port Mapping** or **Forwarding > Port Mapping**.
+3. Click **New** to add a rule:
+   - **WAN Interface:** Select your active WAN profile.
+   - **Protocol:** TCP, UDP, or Both.
+   - **Start/End External Port:** Enter the port range to forward.
+   - **Internal Host IP:** Enter the static IP of your device.
+   - **Start/End Internal Port:** Usually same as external port range.
+4. Click **Apply** to save the port forwarding rule.
+5. Common port forwarding scenarios: PS5 gaming (TCP/UDP 1935, 3478-3480), HTTP server (TCP 80), FTP server (TCP 21).
+
+### TR-069 and ISP Auto-Configuration
+
+The HG8245H5 uses the **TR-069 CWMP protocol** to communicate with your ISP's Auto-Configuration Server. This allows ISPs to:
+
+- Push configuration updates remotely
+- Perform remote diagnostics
+- Update firmware
+- Apply service provisioning changes
+
+Important: After a factory reset, the ISP's TR-069 server will automatically re-provision the device with your service profile. This means your ISP-specific settings (VLAN IDs, PPPoE profiles) will be restored automatically — but your custom WLAN names and passwords will NOT be re-applied.`,
+        resetGuide: `## Factory Reset Guide for Huawei HG8245H5
+
+### Soft Reset via Admin Panel
+
+1. Log in to **192.168.100.1** with telecomadmin credentials.
+2. Navigate to **System > Configuration Management** or **Maintenance > Factory Reset**.
+3. Click **Restore Default Configuration** and confirm.
+4. The ONT will reboot — this takes 2-3 minutes.
+
+### Hard Reset via Physical Button
+
+1. Ensure the HG8245H5 is powered on (Power LED solid green).
+2. Locate the **RESET** pinhole on the side panel of the gateway.
+3. Insert a paperclip firmly and hold for **15 seconds**.
+4. Watch the front panel LEDs — they will flash simultaneously then go dark, indicating the wipe has begun.
+5. Release the pin and wait approximately 2-3 minutes for the full reboot cycle.
+6. When the Power and PON LEDs return to solid green, the ONT is online with factory defaults.
+7. Connect via Ethernet and navigate to **192.168.100.1** to log in.
+
+### Post-Reset Behavior (ISP TR-069)
+
+After resetting an ISP-provided HG8245H5, the TR-069 ACS will automatically re-provision the device within minutes. Your internet service will be restored, but custom WLAN SSIDs and passwords must be reconfigured manually.`,
+        faqs: [
+          {
+            question: "What is the default IP address for Huawei HG8245H5?",
+            answer: "The default login IP address is 192.168.100.1. This is different from most consumer routers which use 192.168.1.1 or 192.168.0.1."
+          },
+          {
+            question: "Why does telecomadmin/admintelecom fail on HG8245H5?",
+            answer: "Many ISPs customize the telecomadmin password to prevent unauthorized access to GPON settings. Check the label on the device for ISP-assigned credentials, or contact your ISP helpdesk to request admin access."
+          },
+          {
+            question: "How do I configure WPA2 security on HG8245H5?",
+            answer: "Log in to 192.168.100.1, navigate to WLAN > WLAN Basic Configuration. Select your SSID, set Authentication Mode to WPA2 Pre-Shared Key, set Encryption to AES, enter your password in the WPA Pre-Shared Key field, and click Apply."
+          },
+          {
+            question: "Is the Huawei HG8245H5 a Wi-Fi 6 router?",
+            answer: "No, the HG8245H5 is a Wi-Fi 5 (802.11ac) dual-band GPON ONT. It does not support Wi-Fi 6 (802.11ax) technologies."
+          },
+          {
+            question: "Can I update the firmware on HG8245H5 myself?",
+            answer: "Generally no. The HG8245H5 firmware is managed by your ISP through TR-069 auto-configuration. Contact your ISP to request a firmware update or configuration refresh."
+          },
+          {
+            question: "How do I set up port forwarding on HG8245H5?",
+            answer: "Navigate to Application > Port Mapping (or Forwarding > Port Mapping). Assign a static IP to your device via LAN > DHCP Static Address first, then create a port mapping rule specifying WAN interface, protocol, external port, and internal device IP."
+          },
+          {
+            question: "What happens after I factory reset my ISP HG8245H5?",
+            answer: "After a factory reset, the ISP's TR-069 server will automatically re-provision your internet service within a few minutes. Custom Wi-Fi names and passwords must be reconfigured manually through the WLAN settings at 192.168.100.1."
+          },
+          {
+            question: "How do I disable WPS on HG8245H5?",
+            answer: "Navigate to WLAN > WPS Settings and set WPS Mode to Disabled. Click Apply. Disabling WPS protects against WPS PIN brute-force attacks."
+          },
+          {
+            question: "What is the difference between admin and telecomadmin on HG8245H5?",
+            answer: "The 'admin' account has limited access to basic WLAN and LAN settings. The 'telecomadmin' account has full access to all settings including TR-069, VLAN configuration, and advanced security parameters."
+          },
+          {
+            question: "How do I change the Wi-Fi channel on HG8245H5?",
+            answer: "Log in to 192.168.100.1 with telecomadmin, navigate to WLAN > WLAN Basic Configuration. Select your target SSID and set the Channel field to Auto or a specific channel (1, 6, or 11 for 2.4GHz; 36-165 for 5GHz)."
+          }
+        ],
+      },
       create: {
         brandId: huawei.id,
         name: "HG8245H5",
@@ -309,7 +681,159 @@ Restoring your Huawei HG8245H5 terminal to factory settings will reset all confi
     // ZTE
     prisma.routerModel.upsert({
       where: { slug: "zxhn-h298a" },
-      update: {},
+      update: {
+        wifiSetupGuide: `## Complete Login & Setup Guide for ZTE ZXHN H298A
+
+### How to Access the ZTE H298A Admin Panel
+
+The ZTE ZXHN H298A is a dual-band AC1200 home gateway router commonly deployed by telecom ISPs. Access its web interface as follows:
+
+1. **Connect to the Router:** Use an Ethernet cable from your PC to any LAN port on the H298A, or connect wirelessly to the default SSID and password printed on the device's rear label.
+2. **Open a Web Browser:** Enter **192.168.1.1** in the address bar and press Enter.
+3. **Enter Login Credentials:** Use the default username **admin** and password **admin**. If these fail, check the label for an ISP-assigned custom password. Some deployments use: admin/admin123, admin/password, or the last 6 digits of the device serial number.
+4. **Select Your Language:** The H298A interface supports multiple languages. Select your preferred language from the settings dropdown.
+
+### ISP-Specific Login Credentials
+
+| ISP | Username | Password | Region |
+|---|---|---|---|
+| Generic ZTE | admin | admin | Default |
+| Etisalat (UAE) | admin | admin | UAE |
+| Mobily (SA) | admin | admin | Saudi Arabia |
+| Vodafone (EG) | admin | admin | Egypt |
+| PTCL (PK) | admin | admin | Pakistan |
+
+### WLAN Configuration — 2.4GHz and 5GHz
+
+1. After logging in, click the **Local Network** tab in the top navigation menu.
+2. In the left panel, expand **WLAN** and select **WLAN Basic** or **WLAN SSID Configuration**.
+3. **Configure the 2.4GHz network (SSID 1):**
+   - SSID Name: Enter your desired network name.
+   - Security Type: Select **WPA2-PSK-AES**.
+   - WPA Passphrase: Enter a strong password (minimum 12 characters).
+4. **Configure the 5GHz network (SSID 5 or under 5GHz section):**
+   - Set a separate SSID name or the same name with a "_5G" suffix.
+   - Security Type: WPA2-PSK-AES.
+   - Enter a strong password.
+5. Click **Apply** to save changes to both bands.
+
+### Advanced Wireless Optimization
+
+- **Channel Width:** For 2.4GHz, enable 20/40MHz coexistence for compatibility with legacy IoT devices. For 5GHz, set to **80MHz** for maximum throughput on modern devices.
+- **Channel Selection:** Set both bands to **Auto** to allow the router to dynamically select the least congested channel. You can also manually select channels: 1, 6, or 11 for 2.4GHz; 36, 40, 44, or 149 for 5GHz.
+- **Transmission Power:** Set to Maximum for full coverage area.
+- **Band Steering:** If available under Advanced WLAN settings, enable Band Steering so dual-band capable clients are pushed to the faster 5GHz band.
+
+### Guest Network Setup
+
+1. Navigate to **WLAN > Guest Network** or **WLAN SSID Configuration** and look for SSID 2 (guest profile).
+2. Enable the guest SSID.
+3. Set a unique SSID name (e.g., HomeGuest).
+4. Set security to WPA2-PSK-AES with a separate password.
+5. Ensure **Internet Access Only** is enabled and guest-to-LAN routing is disabled.
+
+### Firmware Update Procedure
+
+Like many ISP-deployed routers, the ZTE H298A firmware is typically managed via **TR-069** by your ISP:
+
+1. Check if a manual update option exists under **System > Firmware Update** or **Maintenance > Upgrade**.
+2. If available, visit ZTE's official support website, download the firmware package for ZXHN H298A, and upload it via the manual upgrade interface.
+3. If no manual option exists, contact your ISP to request a firmware update push.
+4. **Warning:** Never upload firmware from unofficial sources — corrupted firmware can brick the device.
+
+### Security Hardening Checklist
+
+1. **Change Admin Password:** Navigate to **Maintenance > Account** (or System > User Management). Change the admin password from the default.
+2. **Disable WPS:** Go to **WLAN > WLAN Basic** and set WPS to Disabled. WPS PIN attacks are a documented vulnerability.
+3. **Enable WPA2/WPA3 Encryption:** Ensure all SSIDs use WPA2-PSK-AES or WPA2/WPA3 mixed mode.
+4. **Disable Remote Management:** Check under **Internet > Remote Management** and ensure this is turned off.
+5. **DHCP Static Reservations:** Assign fixed local IPs to critical devices (servers, printers, gaming consoles) for easier port forwarding management.
+
+### Port Forwarding on ZTE H298A
+
+1. Assign a static IP to your target device via **Local Network > DHCP Server > Static DHCP** (bind MAC to fixed IP).
+2. Navigate to **Internet > Port Forwarding** (or NAT > Port Mapping).
+3. Click **New Entry** or **Add Rule**:
+   - **WAN Connection:** Select your active internet connection profile.
+   - **Protocol:** TCP, UDP, or Both.
+   - **External Port:** The port number(s) accessible from the internet.
+   - **Internal Host IP:** The local device IP address.
+   - **Internal Port:** The application's local listening port.
+4. Click **Apply** to activate the rule.
+5. Common ports: Gaming — PS5 (TCP/UDP 3478-3480), Xbox (UDP 88, 3074); Remote Desktop — TCP 3389; HTTP — TCP 80.
+
+### DHCP and LAN Settings
+
+1. Navigate to **Local Network > LAN Settings** to configure the DHCP range.
+2. Adjust the IP pool start/end range (default: 192.168.1.2 to 192.168.1.254).
+3. Set DNS servers to Cloudflare (1.1.1.1) or Google (8.8.8.8) for improved resolution speeds.
+4. Set lease time to 24 hours (86400 seconds) for stable device IP assignments.`,
+        resetGuide: `## Factory Reset Guide for ZTE ZXHN H298A
+
+### Soft Reset via Admin Panel
+
+1. Log in to **192.168.1.1** with admin credentials.
+2. Navigate to **Maintenance > Factory Reset** or **System > Restore Default Configuration**.
+3. Click **Restore** and confirm the action. The router will reboot automatically.
+
+### Hard Reset via Physical Button
+
+1. Ensure the H298A is powered on.
+2. Locate the **RESET** pinhole on the side panel.
+3. Insert a paperclip and hold for **10 seconds**.
+4. Release when the Power LED flickers or turns off.
+5. Wait 2 minutes for the reboot to complete.
+6. Connect via Ethernet and navigate to **192.168.1.1** with default admin/admin credentials.
+
+### Post-Reset Steps
+
+1. Reconfigure your SSID names and Wi-Fi passwords.
+2. Change the admin panel password immediately.
+3. Re-apply port forwarding rules.
+4. Disable WPS and enable WPA2-PSK-AES on all SSIDs.`,
+        faqs: [
+          {
+            question: "What is the default IP address for ZTE ZXHN H298A?",
+            answer: "The default login IP address for the ZTE ZXHN H298A is 192.168.1.1."
+          },
+          {
+            question: "How do I secure my ZTE H298A Wi-Fi network?",
+            answer: "Log in to 192.168.1.1, navigate to Local Network > WLAN > WLAN SSID Configuration. Set Security Type to WPA2-PSK-AES, create a strong password, and click Apply. Also disable WPS under WLAN > WLAN Basic."
+          },
+          {
+            question: "Does the ZTE H298A support dual-band Wi-Fi?",
+            answer: "Yes, the ZTE ZXHN H298A supports dual-band operations on 2.4GHz and 5GHz. Configure each band separately in the WLAN SSID Configuration menu."
+          },
+          {
+            question: "How do I disable WPS on ZTE H298A?",
+            answer: "Navigate to Local Network > WLAN > WLAN Basic. Locate the WPS option and toggle it to Disabled, then click Apply."
+          },
+          {
+            question: "How do I set up port forwarding on ZTE H298A?",
+            answer: "Go to Internet > Port Forwarding. First assign a static IP to your device via DHCP Static settings. Then create a port mapping rule with protocol, external port, internal IP, and internal port."
+          },
+          {
+            question: "Can I manually update firmware on ZTE H298A?",
+            answer: "Some H298A units support manual firmware uploads via System > Firmware Update. Download official firmware from ZTE's support site only. Many ISP-deployed units are updated automatically via TR-069."
+          },
+          {
+            question: "How do I change the admin password on ZTE H298A?",
+            answer: "Navigate to Maintenance > Account or System > User Management. Enter the current password and set a new secure password. Click Apply."
+          },
+          {
+            question: "What should I do if 192.168.1.1 is not loading on H298A?",
+            answer: "Verify your Ethernet cable is in a LAN port. Disable VPN clients. Run ipconfig in Command Prompt and confirm your IP is in the 192.168.1.x range. Try clearing browser cache or using a private window."
+          },
+          {
+            question: "Does ZTE H298A support WPA3 security?",
+            answer: "WPA3 support depends on the firmware version. Most standard H298A deployments support WPA2-PSK-AES as the strongest option. Check your firmware version and consult ZTE support for WPA3 availability."
+          },
+          {
+            question: "How do I configure DNS servers on ZTE H298A?",
+            answer: "Navigate to Local Network > LAN Settings or DHCP Server settings. Enter primary DNS (e.g., 1.1.1.1 for Cloudflare) and secondary DNS (e.g., 8.8.8.8 for Google). Click Apply."
+          }
+        ],
+      },
       create: {
         brandId: zte.id,
         name: "ZXHN H298A",
@@ -364,7 +888,167 @@ Restoring the ZTE ZXHN H298A back to factory default settings will clear your cu
     // D-Link
     prisma.routerModel.upsert({
       where: { slug: "dir-842" },
-      update: {},
+      update: {
+        wifiSetupGuide: `## Complete Login & Setup Guide for D-Link DIR-842
+
+### How to Access the DIR-842 Admin Panel
+
+The D-Link DIR-842 AC1200 dual-band router features an intuitive web-based management interface. Follow these steps:
+
+1. **Connect to the Router:** Use an Ethernet cable from your PC to one of the four LAN ports on the DIR-842's rear panel. Alternatively, connect wirelessly using the default SSID (e.g., dlink-XXXX) and password from the Quick Install card included with the router.
+2. **Access the Web Interface:** Open any web browser and navigate to **http://192.168.0.1** (or **http://dlinkrouter.local** if mDNS is enabled on your network).
+3. **Login with Default Credentials:** Username: **Admin** (capital A is important — it is case-sensitive), Password: **leave blank** (press Enter without typing a password).
+4. **Setup Wizard Launch:** On first login, the D-Link Setup Wizard will automatically launch. Follow the on-screen prompts or dismiss it to access manual settings.
+
+### Internet Connection Setup
+
+1. Navigate to **Settings > Internet**.
+2. Select your connection type:
+   - **Dynamic IP (DHCP):** Used by most cable and fiber ISPs. No credentials needed.
+   - **PPPoE:** Used by DSL and some fiber ISPs. Enter your ISP-provided username and password.
+   - **Static IP:** Enter the IP address, Subnet Mask, Gateway, and DNS values provided by your ISP.
+3. Configure MTU: For PPPoE connections, set MTU to **1492**. For DHCP, leave at **1500**.
+4. Click **Save** to apply the internet settings.
+
+### Wireless Configuration — 2.4GHz and 5GHz
+
+1. Navigate to **Settings > Wireless**.
+2. **Smart Connect Mode:** If you want a single unified SSID for both bands, enable Smart Connect. D-Link's band steering will direct devices to the optimal frequency automatically.
+3. **Separate Band Configuration:** If Smart Connect is disabled, configure each band individually:
+   - **2.4GHz SSID:** Set your network name, Security Mode to WPA2-Personal (AES), and enter a Wi-Fi password.
+   - **5GHz SSID:** Repeat with a distinct SSID name (e.g., MyHome_5G) for easy band identification.
+4. **Channel Settings:**
+   - 2.4GHz: Set Channel Width to **20/40MHz**, Channel to **Auto**.
+   - 5GHz: Set Channel Width to **80MHz**, Channel to **Auto** (or manually select 149-165 range for less congested 5GHz spectrum).
+5. **Transmit Power:** Set to High for maximum range coverage.
+6. Click **Save** to apply.
+
+### Guest Zone Configuration
+
+1. Navigate to **Features > Guest Zone**.
+2. Enable the guest network for 2.4GHz and/or 5GHz.
+3. Set a distinct SSID (e.g., GuestWiFi or VisitorNetwork).
+4. Enable **Internet Access Only** and disable **Local Routing**. This isolates guest clients from your private LAN devices.
+5. Set security to WPA2-Personal with a simple but secure guest password.
+6. Click **Save**.
+
+### Firmware Update Procedure
+
+1. Log in to the admin panel at **192.168.0.1**.
+2. Navigate to **Management > Firmware Update** (or **System > Firmware**).
+3. Click **Check for New Firmware**. If available, follow the prompts to download and install.
+4. Alternatively, visit the D-Link support page for DIR-842, download the latest firmware for your hardware version (e.g., A1, B1), and use the **Manual Firmware Update** option to upload the file.
+5. **Important:** Do not power off the router during firmware installation. The process takes 2-5 minutes.
+
+### Security Hardening
+
+1. **Create an Admin Password:** Navigate to **Management > Admin**. Enter your new password and confirm. D-Link routers with blank default passwords are highly vulnerable — set a password immediately.
+2. **Disable WPS:** Go to **Settings > Wireless > WPS** and toggle it off.
+3. **Enable SPI Firewall:** Under **Features > Firewall**, enable Stateful Packet Inspection.
+4. **Disable UPnP:** Navigate to **Features > UPnP** and disable it to prevent unauthorized port mapping by applications.
+5. **Disable Remote Management:** Under **Management > Remote Management**, ensure this is turned off.
+6. **Update DNS:** Under **Settings > Internet**, set DNS to Cloudflare (1.1.1.1) or Google (8.8.8.8).
+
+### Port Forwarding on DIR-842
+
+1. Assign a static IP to your device. Navigate to **Settings > Network** (or under DHCP settings) to create a static IP reservation.
+2. Go to **Features > Port Forwarding**.
+3. Click **Add** to create a new rule:
+   - **Name:** Give the rule a descriptive name (e.g., PS5_Gaming).
+   - **IP Address:** Enter the device's static local IP.
+   - **TCP/UDP:** Select the protocol for your application.
+   - **Port Start/End:** Enter the external port range to forward.
+4. Click **Save** to activate the rule.
+5. Verify NAT type using an online port checker after applying rules.
+
+### Parental Controls and Access Scheduling
+
+1. Navigate to **Features > Parental Controls**.
+2. Add devices by MAC address to create parental control profiles.
+3. Set allowed internet access hours and days for each profile.
+4. Enable website filtering to block category-based content (adult, gambling, etc.).
+5. Click **Save** to apply all parental control rules.
+
+### Common ISP Defaults for DIR-842
+
+| ISP Region | Connection Type | Notes |
+|---|---|---|
+| US/Canada | Dynamic IP | DHCP, no credentials |
+| UK DSL | PPPoE | Enter ISP credentials |
+| Australia NBN | PPPoE | VLAN tag may be needed |
+| Middle East | PPPoE | ISP-specific credentials |`,
+        resetGuide: `## Factory Reset Guide for D-Link DIR-842
+
+### Soft Reset via Admin Panel
+
+1. Log in to **192.168.0.1** with admin credentials.
+2. Navigate to **Management > Reboot** for a soft reboot, or **Management > Factory Default** for a full reset.
+3. Click **Restore Factory Default** and confirm.
+4. The router will reboot — wait 90 seconds.
+
+### Hard Reset via Physical Button
+
+1. Verify the DIR-842 is powered on (Power LED solid).
+2. Locate the **RESET** pinhole on the rear panel.
+3. Insert a paperclip and hold for **10 seconds** until the Power LED turns red or amber.
+4. Release the button.
+5. Wait 60-90 seconds for the reboot to complete.
+6. Connect via Ethernet and navigate to **192.168.0.1**. Login with Admin (blank password).
+
+### Post-Reset Checklist
+
+1. **Set admin password** immediately (Management > Admin).
+2. Reconfigure your SSID names and Wi-Fi passwords.
+3. Disable WPS under Settings > Wireless.
+4. Re-apply port forwarding rules.
+5. Update firmware to the latest version.`,
+        faqs: [
+          {
+            question: "What is the default login for D-Link DIR-842?",
+            answer: "Default login IP: 192.168.0.1. Username: Admin (capital A). Password: leave blank. Set a custom admin password immediately after logging in."
+          },
+          {
+            question: "Why does 192.168.0.1 fail to load for DIR-842?",
+            answer: "Ensure your Ethernet cable is in a LAN port (not WAN). Disable VPN clients and check that your IP address is in the 192.168.0.x range via ipconfig."
+          },
+          {
+            question: "Does D-Link DIR-842 support gigabit connections?",
+            answer: "Yes, the DIR-842 has four gigabit LAN ports and one gigabit WAN port, supporting high-speed cable and fiber connections up to 1000 Mbps."
+          },
+          {
+            question: "How do I create an admin password on DIR-842?",
+            answer: "Go to Management > Admin. Enter your new password and confirm. The router defaults to no password, which is a significant security risk — set a password immediately."
+          },
+          {
+            question: "How do I update firmware on DIR-842?",
+            answer: "Navigate to Management > Firmware Update. Click Check for New Firmware or manually upload the firmware file downloaded from D-Link's support site for your hardware version."
+          },
+          {
+            question: "How do I set up port forwarding on DIR-842?",
+            answer: "Go to Features > Port Forwarding. Click Add. Enter the rule name, target device IP (assign static first), protocol (TCP/UDP), and port range. Click Save."
+          },
+          {
+            question: "Does D-Link DIR-842 support WPA3?",
+            answer: "The DIR-842 supports WPA2-Personal (AES) as its strongest encryption mode in standard firmware. WPA3 is not available on this hardware generation — consider upgrading to a Wi-Fi 6 router for WPA3 support."
+          },
+          {
+            question: "How do I set up the guest network on DIR-842?",
+            answer: "Navigate to Features > Guest Zone. Enable the guest network, set a unique SSID, enable Internet Access Only, and disable Local Routing. Set WPA2-Personal security with a separate password."
+          },
+          {
+            question: "How do I disable WPS on DIR-842?",
+            answer: "Go to Settings > Wireless. Scroll to the WPS section and toggle it Off. Click Save to disable WPS and protect against PIN brute-force attacks."
+          },
+          {
+            question: "What is the DIR-842 AC1200 speed rating?",
+            answer: "The DIR-842 is an AC1200 router providing a combined maximum wireless throughput of 1200 Mbps: 300 Mbps on 2.4GHz (2x2 MIMO) and 867 Mbps on 5GHz (2x2 MIMO)."
+          },
+          {
+            question: "How do I configure parental controls on DIR-842?",
+            answer: "Navigate to Features > Parental Controls. Add device MAC addresses, set allowed internet hours, and configure website filtering categories to restrict content access."
+          }
+        ],
+      },
       create: {
         brandId: dLink.id,
         name: "DIR-842",
@@ -419,7 +1103,194 @@ Performing a factory default restore on the D-Link DIR-842 will clear all custom
     // ASUS
     prisma.routerModel.upsert({
       where: { slug: "rt-ax88u" },
-      update: {},
+      update: {
+        wifiSetupGuide: `## Complete Login & Setup Guide for ASUS RT-AX88U
+
+### How to Access the RT-AX88U Admin Panel
+
+The ASUS RT-AX88U (AX6000 Wi-Fi 6 Gaming Router) uses the ASUSWRT firmware, a powerful and feature-rich router operating system. To log in:
+
+1. **Connect to the RT-AX88U:** Use an Ethernet cable from your PC to one of the eight gigabit LAN ports on the rear panel. Alternatively, connect wirelessly to the default SSID printed on the router's bottom label.
+2. **Access the Dashboard:** Open a browser and navigate to **192.168.1.1** or **http://router.asus.com**. The ASUSWRT Quick Internet Setup (QIS) wizard loads on first boot.
+3. **Login Credentials:** Default username: **admin**. Default password: **admin**. Change both immediately during initial setup.
+4. **Initial Setup Wizard:** The QIS wizard will walk through WAN connection type detection, SSID naming, and password creation.
+
+### Internet Connection Configuration
+
+1. The QIS wizard auto-detects your WAN type. If it fails, manually select:
+   - **Dynamic IP (DHCP):** For cable or fiber connections without credentials.
+   - **PPPoE:** For DSL or fiber requiring ISP username/password.
+   - **Static IP:** Enter IP, Subnet Mask, Gateway, and DNS from your ISP.
+2. If your ISP requires a specific MAC address (MAC cloning), go to **WAN > Internet Connection** and enable **MAC Address Spoofing**.
+3. Set MTU to **1500** for DHCP or **1492** for PPPoE connections.
+
+### Wi-Fi 6 Configuration — ASUSWRT Wireless Settings
+
+Navigate to **Wireless > General** in the left panel:
+
+1. **SSID Configuration:**
+   - Set distinct SSIDs for 2.4GHz and 5GHz-1 and 5GHz-2 bands (the RT-AX88U has dual 5GHz capability on compatible firmware).
+   - Set Security to **WPA3-Personal** or **WPA2/WPA3** mixed mode for backward compatibility.
+   - Enter a strong password (12+ characters with mixed case, numbers, and symbols).
+2. **Enable Smart Connect:** Under **Wireless > General**, enable Smart Connect to merge all bands under one SSID with automatic band steering.
+3. **Channel Width:**
+   - 2.4GHz: Set to 20/40MHz.
+   - 5GHz: Set to **160MHz** to enable maximum Wi-Fi 6 throughput.
+4. **Control Channel:** Set to Auto for automatic selection of the least congested channel.
+5. **Enable 802.11ax Mode:** Under **Advanced Settings**, ensure **802.11ax / Wi-Fi 6** mode is enabled on both bands.
+6. **OFDMA:** Enable Orthogonal Frequency Division Multiple Access (OFDMA) — this Wi-Fi 6 feature allows the RT-AX88U to serve multiple devices simultaneously on the same channel, dramatically reducing network congestion.
+7. **MU-MIMO:** Enable MU-MIMO (Multi-User MIMO) — the RT-AX88U supports 4x4 MU-MIMO on both 5GHz bands, enabling simultaneous full-speed service to multiple devices.
+8. **Beamforming:** Enable under **Advanced Settings** to focus wireless signals toward client devices.
+9. **Target Wake Time (TWT):** Enable under **Advanced Settings** to extend battery life of Wi-Fi 6 IoT devices.
+10. **TX Burst:** Enable under **Advanced Settings > Professional** for gaming optimization.
+
+### Adaptive QoS — Gaming Optimization
+
+The RT-AX88U's Adaptive QoS is one of its defining features for gaming:
+
+1. Navigate to **General > Adaptive QoS** (or **QoS > Bandwidth Monitor**).
+2. Toggle **Enable QoS** to On.
+3. Select **Gaming** as the priority profile.
+4. In the Device Priority list, add your gaming consoles or gaming PC and drag them to the highest priority position.
+5. ASUS Adaptive QoS uses Deep Packet Inspection (DPI) to intelligently classify traffic — gaming packets are given priority bandwidth over video streaming and file downloads, reducing latency spikes during gaming sessions.
+
+### AiMesh Network Setup
+
+The RT-AX88U serves as an excellent AiMesh node controller:
+
+1. Navigate to **AiMesh** in the left panel.
+2. Click **Add AiMesh Node** to scan for compatible ASUS routers on the network.
+3. Select the discovered node and follow the pairing prompts.
+4. Once added, the AiMesh controller manages roaming, band steering, and network topology across all nodes.
+5. The RT-AX88U supports **tri-band backhaul** — a dedicated wireless backhaul channel for mesh traffic reduces congestion on client-facing bands.
+
+### AiProtection — Built-in Network Security
+
+1. Navigate to **AiProtection > General**.
+2. Enable **Trend Micro AiProtection** — this provides:
+   - Malicious site blocking (blocks known C&C servers, phishing sites)
+   - Two-way IPS (intrusion prevention for incoming and outgoing threats)
+   - Infected device detection (quarantine alerts for compromised clients)
+3. Enable **Malicious Sites Blocking** and **Vulnerability Protection** for maximum security.
+
+### ASUS DDNS and VPN Server Setup
+
+1. **DDNS:** Navigate to **WAN > DDNS**. Enable the ASUS DDNS service and register a free hostname (e.g., yourhome.asuscomm.com). This lets you access your home network remotely using a memorable hostname.
+2. **VPN Server:** Navigate to **VPN > VPN Server**. Enable OpenVPN or WireGuard server to create a secure tunnel for remote home network access. Export the client configuration file and load it on your devices.
+
+### Firmware Updates
+
+1. Navigate to **Administration > Firmware Upgrade**.
+2. Click **Check** to search for available ASUS firmware updates.
+3. If available, click **Upload** to install automatically.
+4. Alternatively, visit ASUS Support for RT-AX88U, download the latest firmware ZIP file, extract the .w or .trx firmware file, and manually upload it.
+5. **Do not power off during update.** The RT-AX88U also supports **scheduled automatic updates** — configure under Firmware Upgrade settings.
+
+### Security Hardening Checklist
+
+1. Change admin username and password (Administration > System).
+2. Enable AiProtection (AiProtection > General).
+3. Disable WPS (Wireless > WPS).
+4. Enable WPA3 or WPA2/WPA3 mixed mode.
+5. Update firmware immediately after setup.
+6. Disable UPnP (WAN > UPnP) unless required.
+7. Enable SPI Firewall (Firewall > General).
+8. Disable remote management (Administration > System > Enable Web Access from WAN — set to No).
+9. Enable DNS-over-TLS under WAN > Internet Connection > DNS Privacy Protocol.
+10. Configure AiProtection's Parental Controls for children's devices.
+
+### Port Forwarding for Gaming
+
+1. Assign a static IP to your console via **LAN > DHCP Server > Manual Assignment** (bind device MAC to fixed IP).
+2. Navigate to **WAN > Virtual Server / Port Forwarding**.
+3. Click **Add Profile** and enter:
+   - **Service Name:** (e.g., PS5_Gaming)
+   - **Protocol:** TCP/UDP or Both
+   - **External Port Range:** (e.g., 3478-3480)
+   - **Internal IP:** (console's static IP)
+   - **Internal Port:** (same as external or application-specific)
+4. Click **OK** to save.
+5. Verify with an open NAT type test on your console.
+
+### ASUS Router Related Links
+
+For ASUS-specific IP management, see the /ips/192-168-50-1 guide if your RT-AX88U uses a 192.168.50.x subnet.`,
+        resetGuide: `## Factory Reset Guide for ASUS RT-AX88U
+
+### Soft Reset via ASUSWRT Panel
+
+1. Log in to **192.168.1.1** or **router.asus.com**.
+2. Navigate to **Administration > Restore/Save/Upload Setting**.
+3. Click **Factory Default** and confirm.
+4. The router reboots with factory defaults — wait 3 minutes.
+
+### Hard Reset via Physical Button
+
+1. Ensure RT-AX88U is powered on (Power LED solid white).
+2. Locate the **RESET** pinhole on the rear panel.
+3. Insert a paperclip and hold for **10 seconds** until the Power LED flashes slowly.
+4. Release the button.
+5. Wait 2-3 minutes for the NVRAM wipe and reboot.
+6. Navigate to **192.168.1.1** or **router.asus.com** to run Quick Internet Setup.
+
+### WPS Button Reset Method (Alternative)
+
+1. Power off the RT-AX88U.
+2. Press and hold the **WPS button** on the rear panel.
+3. While holding WPS, power the router back on.
+4. Continue holding WPS until the Power LED flashes rapidly.
+5. Release — the router will clear NVRAM and reboot with factory defaults.`,
+        faqs: [
+          {
+            question: "What is the default IP address for ASUS RT-AX88U?",
+            answer: "The default login IP address is 192.168.1.1. You can also access the admin panel via http://router.asus.com when connected to the router's network."
+          },
+          {
+            question: "What are the default login credentials for RT-AX88U?",
+            answer: "Default username: admin. Default password: admin. Change both during the initial Quick Internet Setup wizard to secure your admin panel."
+          },
+          {
+            question: "Does the ASUS RT-AX88U support AiMesh?",
+            answer: "Yes, the RT-AX88U is an excellent AiMesh controller. Connect compatible ASUS AiMesh nodes to build a seamless whole-home mesh Wi-Fi network with automatic roaming."
+          },
+          {
+            question: "How do I configure QoS for gaming on RT-AX88U?",
+            answer: "Navigate to General > Adaptive QoS. Enable QoS and select Gaming as the priority mode. Add your gaming devices to the priority list. ASUS uses Deep Packet Inspection to identify and prioritize gaming traffic."
+          },
+          {
+            question: "How do I enable Wi-Fi 6 on the RT-AX88U?",
+            answer: "Navigate to Wireless > General. Ensure 802.11ax mode is enabled. Enable OFDMA, MU-MIMO, and set 5GHz channel width to 160MHz for maximum Wi-Fi 6 performance."
+          },
+          {
+            question: "How do I set up a VPN server on RT-AX88U?",
+            answer: "Go to VPN > VPN Server. Enable OpenVPN or WireGuard. Export the client configuration file and import it into your VPN client application on remote devices for secure home network access."
+          },
+          {
+            question: "How do I update firmware on ASUS RT-AX88U?",
+            answer: "Navigate to Administration > Firmware Upgrade. Click Check to search for updates. Download and install automatically, or manually upload the firmware file from ASUS Support for RT-AX88U."
+          },
+          {
+            question: "What is AiProtection on ASUS RT-AX88U?",
+            answer: "AiProtection (powered by Trend Micro) is a built-in security suite offering malicious site blocking, two-way intrusion prevention, and infected device quarantine. Enable it under AiProtection > General."
+          },
+          {
+            question: "How do I set up port forwarding on RT-AX88U?",
+            answer: "Assign a static IP via LAN > DHCP Server. Then go to WAN > Virtual Server / Port Forwarding. Add a profile with service name, protocol, external port range, and internal device IP."
+          },
+          {
+            question: "Does ASUS RT-AX88U support WPA3?",
+            answer: "Yes, the RT-AX88U supports WPA3-Personal and WPA2/WPA3 mixed mode. Configure under Wireless > General > Authentication Method."
+          },
+          {
+            question: "How do I disable WPS on ASUS RT-AX88U?",
+            answer: "Navigate to Wireless > WPS. Toggle WPS to Off and click Apply. Disabling WPS prevents PIN brute-force attacks against your network."
+          },
+          {
+            question: "What is the difference between 192.168.1.1 and router.asus.com for RT-AX88U?",
+            answer: "Both addresses access the same ASUSWRT admin panel. 192.168.1.1 is the direct IP address, while router.asus.com is a local hostname that resolves to the router's IP. Use either interchangeably."
+          }
+        ],
+      },
       create: {
         brandId: asus.id,
         name: "RT-AX88U",
@@ -993,30 +1864,25 @@ Restoring the ASUS RT-AX88U to factory settings clears all custom configurations
     }),
   ]);
 
-  console.log(`✅ Created ${ips.length} IP addresses`);
-
-  // ---- Problems ----
-  const problems = await Promise.all([
-    prisma.problem.upsert({
-      where: { slug: "wifi-connected-no-internet" },
-      update: {},
-      create: {
-        title: "WiFi Connected But No Internet",
-        slug: "wifi-connected-no-internet",
-        category: "WIFI",
-        excerpt:
-          "Your device shows connected to WiFi but you cannot browse the internet. This common problem has several causes and straightforward fixes.",
-        content: `## WiFi Connected But No Internet Access: Diagnostic Guide
+  const wifiConnectedNoInternetContent = `## WiFi Connected But No Internet Access: Diagnostic Guide
 
 Connecting to a Wi-Fi access point successfully only to find you cannot load web pages is a common networking issue. This problem indicates that while the local wireless link between your client device and the router access point is active, the router is unable to communicate with the broader internet, or there is an configuration mismatch blocking IP routing.
 
 To troubleshoot this issue, it is helpful to understand the boundary between your local network (LAN) and the public network (WAN). The local connection to the router does not guarantee an active link to your ISP.
 
-### LAN vs. WAN Boundaries
-Your local area network (LAN) consists of your devices connected to the router via Wi-Fi or Ethernet. The wide area network (WAN) is the network connecting your router to the Internet Service Provider (ISP) and the rest of the web. A "Connected, No Internet" status means the LAN connection is functioning perfectly (your device can speak to the router), but the link between the router and the WAN is broken, or your device has been assigned an invalid routing profile that blocks it from accessing the WAN gateway.
+### LAN vs. WAN Boundaries and the OSI Model
+Your local area network (LAN) consists of your devices connected to the router via Wi-Fi or Ethernet. This operates primarily at Layer 1 (Physical) and Layer 2 (Data Link) of the Open Systems Interconnection (OSI) model. When your device connects to the Wi-Fi radio, it establishes a physical and data-link connection (verifying WPA2/WPA3 security keys and associating MAC addresses).
 
-### DHCP Lease Conflicts and APIPA Configuration
-A frequent cause of local network routing blocks is a conflict in Dynamic Host Configuration Protocol (DHCP) lease allocations. If two devices are assigned the same local IP address, or if a device's network configuration is stale, the router cannot route public traffic to it. Furthermore, if your device fails to receive any IP configuration from the router's DHCP server, it will self-assign an Automatic Private IP Address (APIPA) in the range **169.254.0.1** to **169.254.255.254**. An APIPA address indicates a complete breakdown in communication with the router's DHCP service. You must renew your DHCP lease or manually bind a static IP address within the router's active subnet mask (usually 255.255.255.0).
+The wide area network (WAN) is the network interface connecting your router to the Internet Service Provider (ISP) and the rest of the web, operating at Layer 3 (Network). A "Connected, No Internet" status means the Layer 2 LAN connection is functioning perfectly (your device can speak to the router), but the Layer 3 path between the router and the WAN is broken, or your device has been assigned an invalid routing profile that blocks it from accessing the WAN gateway.
+
+### DHCP Lease Conflicts, the DORA Handshake, and APIPA Configuration
+A frequent cause of local network routing blocks is a conflict in Dynamic Host Configuration Protocol (DHCP) lease allocations. The DHCP process follows a four-step handshake known as DORA:
+1. **Discover:** The client broadcasts a request looking for a DHCP server on the local link.
+2. **Offer:** The DHCP server (your router) responds with an available IP address, subnet mask, default gateway, and DNS servers.
+3. **Request:** The client requests the offered IP address.
+4. **Acknowledge:** The server confirms the lease and registers the client's MAC address.
+
+If two devices are assigned the same local IP address, or if a device's network configuration is stale, the router cannot route public traffic to it. Furthermore, if your device fails to receive any IP configuration from the router's DHCP server, it will self-assign an Automatic Private IP Address (APIPA) in the range **169.254.0.1** to **169.254.255.254**. An APIPA address indicates a complete breakdown in communication with the router's DHCP service. You must renew your DHCP lease or manually bind a static IP address within the router's active subnet mask (usually 255.255.255.0).
 
 ### WAN Interface Drop Symptoms & Hardware Diagnostics
 If multiple devices on your network show the "No Internet" status, the issue is likely at the router's WAN interface or modem level. Check the physical connections:
@@ -1027,69 +1893,377 @@ If multiple devices on your network show the "No Internet" status, the issue is 
 ### Adware, VPN, and Proxy Conflicts
 Security software and virtual private networks (VPNs) create virtual network adapters and edit your system's routing tables. If a VPN tunnel disconnects abruptly or its "Kill Switch" engages, it will block all traffic outside the secure tunnel, leading to a "Connected, No Internet" state. Similarly, misconfigured proxy servers, third-party firewalls, or adware can inject themselves into the TCP/IP stack, preventing standard HTTP/HTTPS traffic from reaching the default gateway.
 
-To resolve this issue, use the step-by-step diagnostic resolution flow below:`,
-        causes: [
-          "ISP (Internet Service Provider) connection outage or maintenance work",
-          "DNS resolver failure at the provider level or local misconfiguration",
-          "DHCP server IP address allocation conflicts or invalid IP bindings",
-          "Modem-to-router physical WAN port link drops or cable issues",
-          "Local firewall software, proxy configuration, or VPN profile conflicts"
-        ],
-        fixes: [
-          {
-            step: 1,
-            title: "Power Cycle Your Router and Modem",
-            description:
-              "Power cycling clears memory issues and restarts the WAN link. Unplug both devices from power. Wait 30 seconds. Plug in the modem first and wait 60 seconds for the DSL/Online indicator to turn solid. Then plug in the router, waiting another 60 seconds to establish the Wi-Fi AP link.",
-          },
-          {
-            step: 2,
-            title: "Check Your Local IP Address Configuration",
-            description:
-              "Verify that your device is receiving a valid local IP address (typically in the 192.168.1.X or 192.168.0.X range) from the router's DHCP server. If your IP address begins with 169.254.X.X, your device was unable to obtain an IP from the router. Run IP release/renew commands to request a new address.",
-            technicalDetails: "Windows CMD:\nipconfig /release\nipconfig /renew\n\nmacOS Terminal:\nsudo ipconfig set en0 DHCP"
-          },
-          {
-            step: 3,
-            title: "Flush DNS Cache and Run Ping Diagnostics",
-            description:
-              "Clear corrupted hostname records from your operating system's local memory. To determine if the issue is DNS-related, attempt to ping a public IP address (such as 8.8.8.8) directly. If the IP ping succeeds but domain name pings fail, you have a DNS configuration issue.",
-            technicalDetails: "Windows CMD:\nipconfig /flushdns\nping 8.8.8.8\nping google.com"
-          },
-          {
-            step: 4,
-            title: "Manually Configure DNS Resolvers",
-            description:
-              "Bypass your ISP's default name servers, which may be offline. Log in to your router admin panel (e.g. 192.168.1.1) or your network adapter settings, change DNS selection to manual, and enter Cloudflare DNS (1.1.1.1 / 1.0.0.1) or Google Public DNS (8.8.8.8 / 8.8.4.4).",
-          },
-          {
-            step: 5,
-            title: "Forget and Reconnect to the Wi-Fi Network",
-            description:
-              "Forget the Wi-Fi profile on your device to clear corrupted network configurations and cached security keys. Reconnect to the SSID and enter the security password from scratch.",
-          }
-        ],
-        faqs: [
-          {
-            question: "Why does my phone say 'Connected, No Internet' on Wi-Fi?",
-            answer: "This status means your phone has established a local wireless link with your router, but the router itself cannot reach the internet. The issue could be an ISP outage, a disconnected cable between the router and modem, or an IP address conflict on the local network."
-          },
-          {
-            question: "How do I diagnose if the connection issue is DNS-related?",
-            answer: "Open a command terminal and ping a public IP address directly (like 'ping 8.8.8.8'). If the ping succeeds, your internet link is active. If you then try to ping 'google.com' and it fails, the issue is DNS host resolution. Changing your DNS servers will resolve this."
-          },
-          {
-            question: "What does an IP address beginning with 169.254 mean?",
-            answer: "An IP address starting with 169.254.X.X is an Automatic Private IP Address (APIPA). It indicates that your device connected to the network, but the router's DHCP server failed to assign it a valid IP address. Restarting the router or renewing the DHCP lease usually fixes this."
-          },
-          {
-            question: "Can a VPN cause a 'Connected, No Internet' error?",
-            answer: "Yes. If your VPN client fails to authenticate or loses its connection to the secure server, it may block all outgoing traffic to protect your data. Temporarily disable your VPN client or secure proxy settings to see if your internet access returns."
-          }
-        ],
+---
+
+## Section 1: What Does "WiFi Connected But No Internet" Mean?
+
+The message "WiFi Connected, No Internet Access" or the yellow warning triangle on your network icon means your operating system has detected that while your device is connected to the local Wi-Fi network, it cannot reach the internet. Technically, your device passed the local connection phase but failed the internet reachability check.
+
+Modern operating systems run a background internet connectivity probe to verify network status:
+- **Windows NCSI (Network Connectivity Status Indicator):** Windows attempts to download a small text file from http://www.msftconnecttest.com/connecttest.txt and checks if it contains the text "Microsoft Connect Test". It also performs a DNS resolution lookup for dns.msftncsi.com, which should return the IP address 131.107.255.255. If either check fails, the system displays the yellow warning triangle.
+- **Android Captive Portal Detection:** Android sends an HTTP GET request to http://connectivitycheck.gstatic.com/generate_204. If it receives an HTTP status code 204 (No Content), it knows the connection is fully open. If it receives a redirect or an HTTP 200, it flags the network as having a captive portal (requiring login) or redirects to a portal login page. If the request fails entirely, it shows a cross next to the Wi-Fi icon.
+- **Apple iOS/macOS Captive Portal Assistant:** Apple devices request a page from http://captive.apple.com/hotspot-detect.html expecting a specific signature. If it is blocked or redirected, Apple launches the Captive Portal screen.
+
+This does not necessarily mean your router is broken. It could mean:
+- Your ISP is experiencing an outage in your area
+- Your router's WAN configuration is incorrect
+- DNS servers are failing to resolve hostnames
+- Your device has an APIPA address (169.254.x.x) instead of a valid LAN IP
+- A firewall, VPN, or antivirus is intercepting all outbound connections
+- Your router's NAT (Network Address Translation) table has become corrupted
+
+---
+
+## Section 2: Most Common Causes
+
+### ISP Outage and GPON Line Issues
+Your Internet Service Provider may be experiencing a partial or total network outage in your area. This is one of the most common reasons multiple devices on your network all lose internet simultaneously while the Wi-Fi radio still functions normally. Outages can occur due to physical fiber cuts, upstream routing changes, power failures at local distribution cabinets, or maintenance on your provider's Gigabit Passive Optical Network (GPON) splitters. GPON splitters divide a single optical feed from the OLT (Optical Line Terminal) at the central office into up to 64 individual fiber runs, meaning any hardware issue at this critical splitting node affects dozens of households simultaneously. Check your ISP's status page, Twitter feed, or use a service like Downdetector to confirm whether a regional outage is active.
+
+### Router Failure or Firmware Crash
+Routers run embedded operating systems that can crash or deadlock. A router experiencing a memory overflow, firmware exception, or overheating condition may continue to broadcast Wi-Fi SSIDs and respond to local ARP requests while failing to process any WAN routing tasks. In particular, the NAT connection tracking table (conntrack) has a finite size. If torrent clients or smart home appliances open thousands of concurrent connections, the conntrack table fills up, blocking any new outbound connections. A factory reset or firmware update often resolves this.
+
+### DNS Issues
+The Domain Name System is the backbone of all internet navigation. When your DNS resolver fails — whether because your ISP's name servers are down, your manually configured DNS entries are incorrect, or your router's internal DNS forwarder has crashed — all hostnames (google.com, youtube.com, etc.) fail to resolve. Switching to public DNS (Cloudflare 1.1.1.1 or Google 8.8.8.8) bypasses this layer entirely.
+
+### DHCP Issues
+Your router assigns local IP addresses via DHCP. If the DHCP server leases run out (too many devices competing for a small DHCP pool), if lease records become corrupted, or if the DHCP daemon on your router crashes, your device will fail to receive a valid IP address. You will see addresses beginning with 169.254.x.x (APIPA range), indicating your device gave up waiting and self-assigned an address that cannot route beyond your local link.
+
+### Gateway Problems
+The default gateway is the router's IP address that all traffic is forwarded through. If your device's route table does not have a valid default gateway entry, or if the gateway IP is unreachable, all external traffic fails immediately. This can happen after a network adapter driver update, a VPN software installation, or a Windows update that corrupts the routing table.
+
+### VPN Conflicts
+VPN software creates virtual network adapters and inserts custom routing rules that can override your physical network adapter's default gateway. If the VPN fails mid-session or its kill-switch activates, all internet traffic is blocked by design. Disabling the VPN temporarily is the fastest diagnostic test.
+
+### Firewall Conflicts
+Third-party firewall software or Windows Defender Firewall with overly aggressive rules can block all outbound TCP/UDP connections. Some antivirus software updates introduce rules that block HTTPS traffic on port 443, rendering all modern websites inaccessible even though the network layer is functional.
+
+---
+
+## Section 3: Quick Fixes
+
+Before diving into platform-specific diagnostics, try these universal fixes:
+
+1. **Restart your router and modem.** Unplug both devices from power. Wait 30 seconds. This allows the capacitors in the power adapters to discharge completely, resetting the volatile memory. Plug in the modem first, wait 60 seconds for the online indicator to become solid. Then plug in the router and wait another 60 seconds.
+2. **Reconnect your device to Wi-Fi.** On your device, forget the network and reconnect. This clears the stored DHCP lease and forces a fresh IP assignment.
+3. **Turn airplane mode on and off** (on mobile devices). This triggers a full Wi-Fi radio reset.
+4. **Check other devices.** If all devices lose internet simultaneously, the problem is on the router/ISP side. If only one device fails, the problem is device-specific.
+5. **Try a different DNS.** Change your DNS manually to 1.1.1.1 or 8.8.8.8. If the internet resumes working, your ISP's DNS was the problem.
+
+---
+
+## Section 4: Windows Fixes
+
+**Step 1 — Release and Renew DHCP Lease**
+Open Command Prompt as Administrator (search "cmd", right-click, Run as Administrator):
+\`\`\`cmd
+ipconfig /release
+ipconfig /renew
+\`\`\`
+This releases your current IP address and requests a fresh one from the router.
+
+**Step 2 — Flush DNS Cache**
+\`\`\`cmd
+ipconfig /flushdns
+\`\`\`
+This clears the local resolver cache of any stale or corrupted DNS records.
+
+**Step 3 — Reset TCP/IP Stack and Winsock**
+\`\`\`cmd
+netsh int ip reset
+netsh winsock reset
+\`\`\`
+This resets the network adapter registry settings and repairs the Winsock LSP stack. Reboot after running these commands.
+
+**Step 4 — Change DNS Servers**
+Settings → Network & Internet → Wi-Fi → Hardware Properties → DNS Server Assignment. Switch to Manual. Enable IPv4 and enter Primary: 1.1.1.1, Secondary: 1.0.0.1.
+
+**Step 5 — Disable IPv6**
+Control Panel → Network and Sharing Center → Change Adapter Settings. Right-click your Wi-Fi adapter → Properties. Uncheck "Internet Protocol Version 6 (TCP/IPv6)" to see if an IPv6 configuration issue is blocking routing.
+
+**Step 6 — Reinstall Network Adapter Drivers**
+Open Device Manager (devmgmt.msc), expand "Network adapters", right-click your wireless card (e.g., Intel Wi-Fi 6E AX211), and select "Uninstall device". Do NOT check the option to delete driver software. Restart your PC; Windows will automatically reinstall the driver.
+
+---
+
+## Section 5: macOS Fixes
+
+**Step 1 — Renew DHCP Lease**
+System Settings → Network → Wi-Fi → Details → Renew DHCP Lease button.
+
+**Step 2 — Flush DNS Cache**
+Open Terminal and run:
+\`\`\`bash
+sudo killall -HUP mDNSResponder
+\`\`\`
+
+**Step 3 — Forget and Reconnect to Wi-Fi**
+System Settings → Network → Wi-Fi → tap the details of your network → Forget This Network. Reconnect.
+
+**Step 4 — Change DNS on macOS**
+System Settings → Network → Wi-Fi → Details → DNS tab. Add 1.1.1.1 and 8.8.8.8. Remove ISP DNS entries.
+
+**Step 5 — Check Proxy Settings**
+System Settings → Network → Wi-Fi → Details → Proxies tab. Ensure no proxies are configured unless intentionally set.
+
+**Step 6 — Delete System Configuration PLIST Files**
+To fix deep-seated macOS network stack bugs, open Terminal and run:
+\`\`\`bash
+sudo rm /Library/Preferences/SystemConfiguration/NetworkInterfaces.plist
+sudo rm /Library/Preferences/SystemConfiguration/preferences.plist
+\`\`\`
+Reboot your Mac. This forces macOS to recreate clean default network configuration files.
+
+---
+
+## Section 6: Android Fixes
+
+**Step 1 — Toggle Wi-Fi Off and On**
+Swipe down the notification panel and tap the Wi-Fi icon to disable, wait 10 seconds, then re-enable.
+
+**Step 2 — Forget and Reconnect**
+Settings → Wi-Fi → Long-press your network → Forget → Reconnect.
+
+**Step 3 — Set Static DNS**
+Settings → Wi-Fi → Long-press network → Modify Network → Advanced Options → IP Settings: Static. Enter DNS 1: 1.1.1.1, DNS 2: 8.8.8.8.
+
+**Step 4 — Use Private DNS (Android 9+)**
+Settings → Network & Internet → Advanced → Private DNS → Private DNS provider hostname: one.one.one.one. This uses encrypted DNS-over-TLS.
+
+**Step 5 — Clear Network Settings**
+Settings → System → Reset options → Reset Wi-Fi, mobile & Bluetooth. This restores all wireless settings to default.
+
+---
+
+## Section 7: iPhone/iPad Fixes
+
+**Step 1 — Toggle Airplane Mode**
+Control Center → airplane icon → wait 15 seconds → tap again.
+
+**Step 2 — Forget Network and Reconnect**
+Settings → Wi-Fi → tap the "i" icon → Forget This Network → Reconnect.
+
+**Step 3 — Configure Custom DNS**
+Settings → Wi-Fi → "i" icon → Configure DNS → Manual → Add Server: 1.1.1.1 and 8.8.8.8.
+
+**Step 4 — Renew DHCP Lease**
+Settings → Wi-Fi → "i" icon → tap "Renew Lease".
+
+**Step 5 — Disable MAC Address Randomization (Private Wi-Fi Address)**
+Settings → Wi-Fi → "i" icon → toggle off "Private Wi-Fi Address". Some routers block devices that frequently rotate MAC addresses to prevent MAC spoofing.
+
+**Step 6 — Reset Network Settings (Last Resort)**
+Settings → General → Transfer or Reset iPhone → Reset → Reset Network Settings.
+*WARNING: This erases all Wi-Fi passwords and VPN settings.*
+
+---
+
+## Section 8: Router Troubleshooting
+
+### Check Router Admin Panel
+Log in to your router's admin interface (typically 192.168.1.1, 192.168.0.1, or 10.0.0.1). Verify:
+- WAN IP address is assigned (not 0.0.0.0 or empty)
+- DNS server IPs are populated
+- Gateway IP is present and correct
+
+### PPPoE Re-Authentication
+If you use DSL or fiber with PPPoE authentication, re-enter your ISP username and password in the WAN settings and click Reconnect.
+
+### Factory Reset the Router
+Hold the physical reset button on the back of the device using a paperclip for 10-30 seconds until the LEDs flash. Reconfigure from scratch with your ISP credentials.
+
+### Update Router Firmware
+Log into router admin, find Firmware Update section, and apply any available updates. Many modern routers support automatic updates.
+
+### Check DHCP Pool and IP Exclusions
+Verify the DHCP lease pool is large enough. If you have many smart home devices and guests, you may be exhausting the available IP pool. Adjust the lease time from 24 hours to 2 hours to recycle unused addresses faster.
+
+---
+
+## Section 9: Advanced Diagnostics
+
+### ipconfig — Check IP Configuration (Windows)
+\`\`\`cmd
+ipconfig /all
+\`\`\`
+Verify IPv4 Address is in 192.168.x.x range (NOT 169.254.x.x), Default Gateway matches your router IP, and DNS Servers show valid IPs.
+
+### ping — Test Layer by Layer and ICMP Routing
+The ping command uses the Internet Control Message Protocol (ICMP) Echo Request and Echo Reply packets to test the reachability of a host on an Internet Protocol (IP) network. When you run \`ping 8.8.8.8\`, your operating system sends a 32-byte ICMP echo request packet to the destination address. It then waits for a response. If a reply is received within a specific timeout threshold, the tool prints the round-trip time (RTT) in milliseconds. This tells you if the packet routing is complete. If you get a 'Request Timed Out' error, it means the packet was sent but no reply was received, which happens when a router along the way drops ICMP packets or the host is offline. If you get a 'Destination Host Unreachable' error, it means your local device could not find a route to the destination IP address, which indicates a local gateway routing configuration issue.
+\`\`\`cmd
+ping 192.168.1.1        (Test router reachability - local link)
+ping 8.8.8.8            (Test internet IP connectivity - bypasses DNS)
+ping google.com         (Test DNS resolution + internet connectivity)
+\`\`\`
+If the first ping fails, your device cannot reach the router. If the second fails, your router cannot reach the internet. If only the third fails, DNS is the problem.
+
+### tracert — Trace the Network Route
+\`\`\`cmd
+tracert 8.8.8.8
+\`\`\`
+Shows every routing hop from your device to Google's servers. If it stops at the first hop (your router), the WAN connection is the problem. If it stops further out, there is an upstream ISP issue.
+
+### nslookup — Test DNS Resolution
+\`\`\`cmd
+nslookup google.com
+nslookup google.com 1.1.1.1
+\`\`\`
+If the second works but the first doesn't, your router's DNS forwarder or ISP DNS is the problem. Switch to Cloudflare DNS immediately.
+
+---
+
+## Section 10: When To Contact Your ISP
+
+Contact your Internet Service Provider if:
+- Multiple devices all show "No Internet" simultaneously after a full router and modem restart
+- The modem's WAN light is off, blinking red/amber, or showing a "No Sync" pattern even after a power cycle
+- You have factory reset the router and re-entered ISP credentials, but the WAN IP remains 0.0.0.0
+- The router admin panel shows WAN status as "Disconnected" or "Authentication Failed" with correct credentials
+- The outage is confirmed regional — verified through Downdetector or neighbors reporting the same issue
+- Your modem is ISP-provided (rented equipment) — it may need remote reconfiguration by your provider
+
+When calling your ISP, have ready:
+1. Your account number or the phone number associated with the account
+2. The modem's serial number and MAC address (printed on the device label)
+3. The exact LED patterns visible on the modem
+4. The error or IP status shown in your router admin panel
+5. Whether the issue affects all devices or only specific ones`;
+
+  const wifiConnectedNoInternetCauses = [
+    "ISP (Internet Service Provider) connection outage or maintenance work",
+    "DNS resolver failure at the provider level or local misconfiguration",
+    "DHCP server IP address allocation conflicts or invalid IP bindings",
+    "Modem-to-router physical WAN port link drops or cable issues",
+    "Local firewall software, proxy configuration, or VPN profile conflicts",
+    "Router firmware crash or memory overflow requiring a reboot",
+    "Gateway routing table corruption from driver updates or VPN software"
+  ];
+
+  const wifiConnectedNoInternetFixes = [
+    {
+      step: 1,
+      title: "Power Cycle Your Router and Modem",
+      description:
+        "Power cycling clears memory issues and restarts the WAN link. Unplug both devices from power. Wait 30 seconds. Plug in the modem first and wait 60 seconds for the DSL/Online indicator to turn solid. Then plug in the router, waiting another 60 seconds to establish the Wi-Fi AP link.",
+    },
+    {
+      step: 2,
+      title: "Check Your Local IP Address Configuration",
+      description:
+        "Verify that your device is receiving a valid local IP address (typically in the 192.168.1.X or 192.168.0.X range) from the router's DHCP server. If your IP address begins with 169.254.X.X, your device was unable to obtain an IP from the router. Run IP release/renew commands to request a new address.",
+      technicalDetails: "Windows CMD:\nipconfig /release\nipconfig /renew\n\nmacOS Terminal:\nsudo ipconfig set en0 DHCP"
+    },
+    {
+      step: 3,
+      title: "Flush DNS Cache and Run Ping Diagnostics",
+      description:
+        "Clear corrupted hostname records from your operating system's local memory. To determine if the issue is DNS-related, attempt to ping a public IP address (such as 8.8.8.8) directly. If the IP ping succeeds but domain name pings fail, you have a DNS configuration issue.",
+      technicalDetails: "Windows CMD:\nipconfig /flushdns\nping 8.8.8.8\nping google.com\n\nmacOS Terminal:\nsudo killall -HUP mDNSResponder\nping 8.8.8.8"
+    },
+    {
+      step: 4,
+      title: "Manually Configure DNS Resolvers",
+      description:
+        "Bypass your ISP's default name servers, which may be offline. Log in to your router admin panel (e.g. 192.168.1.1) or your network adapter settings, change DNS selection to manual, and enter Cloudflare DNS (1.1.1.1 / 1.0.0.1) or Google Public DNS (8.8.8.8 / 8.8.4.4).",
+    },
+    {
+      step: 5,
+      title: "Forget and Reconnect to the Wi-Fi Network",
+      description:
+        "Forget the Wi-Fi profile on your device to clear corrupted network configurations and cached security keys. Reconnect to the SSID and enter the security password from scratch.",
+    },
+    {
+      step: 6,
+      title: "Reset TCP/IP Stack (Windows)",
+      description:
+        "Open Command Prompt as Administrator and run netsh winsock reset followed by netsh int ip reset. These commands repair corrupted network stack settings at the kernel level. Reboot immediately after.",
+      technicalDetails: "netsh int ip reset\nnetsh winsock reset\nipconfig /flushdns\nReboot the computer"
+    },
+    {
+      step: 7,
+      title: "Disable VPN or Third-Party Firewall Temporarily",
+      description:
+        "Temporarily disable any active VPN client or third-party firewall application. Test internet access. If it resumes, your security software is the cause. Update the software, adjust its settings, or reinstall it with correct configurations.",
+    },
+    {
+      step: 8,
+      title: "Log Into Router Admin and Check WAN Status",
+      description:
+        "Open a browser and navigate to your router's admin panel (192.168.1.1, 192.168.0.1, or 10.0.0.1). Check the WAN or Internet status page. The WAN IP must be assigned (not 0.0.0.0). If authentication fails, re-enter your ISP credentials and reconnect.",
+    }
+  ];
+
+  const wifiConnectedNoInternetFaqs = [
+    {
+      question: "Why does my phone say 'Connected, No Internet' on Wi-Fi?",
+      answer: "This status means your phone has established a local wireless link with your router, but the router itself cannot reach the internet. The issue could be an ISP outage, a disconnected cable between the router and modem, or an IP address conflict on the local network. Try rebooting the router and modem, then check if the problem persists on other devices."
+    },
+    {
+      question: "How do I diagnose if the connection issue is DNS-related?",
+      answer: "Open a command terminal and ping a public IP address directly (like 'ping 8.8.8.8'). If the ping succeeds, your internet link is active. If you then try to ping 'google.com' and it fails, the issue is DNS host resolution. Changing your DNS servers to Cloudflare (1.1.1.1) or Google (8.8.8.8) will resolve this."
+    },
+    {
+      question: "What does an IP address beginning with 169.254 mean?",
+      answer: "An IP address starting with 169.254.X.X is an Automatic Private IP Address (APIPA). It indicates that your device connected to the network, but the router's DHCP server failed to assign it a valid IP address. Restarting the router or renewing the DHCP lease (ipconfig /release then ipconfig /renew on Windows) usually fixes this."
+    },
+    {
+      question: "Can a VPN cause a 'Connected, No Internet' error?",
+      answer: "Yes. If your VPN client fails to authenticate or loses its connection to the secure server, it may block all outgoing traffic to protect your data (this is called a kill switch). Temporarily disable your VPN client or secure proxy settings to see if your internet access returns."
+    },
+    {
+      question: "Why does only one device lose internet while all others work fine?",
+      answer: "When only one device fails while others work, the problem is on that specific device rather than the router or ISP. Check the device's IP address for APIPA (169.254.x.x), flush its DNS cache, forget and rejoin the Wi-Fi network, and disable any VPN or firewall software. If the issue persists, try reinstalling your network adapter driver."
+    },
+    {
+      question: "How do I fix 'WiFi Connected But No Internet' on Windows 11?",
+      answer: "On Windows 11, open Command Prompt as Administrator and run these commands in sequence: ipconfig /release, ipconfig /renew, ipconfig /flushdns, netsh winsock reset, netsh int ip reset. Then reboot. Additionally, go to Settings > Network > Wi-Fi > Hardware Properties and set DNS manually to 1.1.1.1 and 8.8.8.8."
+    },
+    {
+      question: "Does resetting the router erase my WiFi password?",
+      answer: "A factory reset (pressing the physical reset button on the router) will erase ALL settings including your custom WiFi name (SSID), password, and any ISP credentials. A soft reboot (unplugging and replugging the power cord) does NOT erase settings. Only perform a factory reset as a last resort, and have your ISP credentials ready to reconfigure the connection."
+    },
+    {
+      question: "Why does my router show 'No Internet' even with the modem light solid green?",
+      answer: "A solid green modem light means the modem has a physical connection to the ISP network, but this doesn't guarantee the router is configured correctly to use it. Common causes include: incorrect PPPoE username/password in the router WAN settings, a mismatch in the connection type, or corrupted router firmware. Try re-entering your ISP credentials in the router admin panel."
+    },
+    {
+      question: "How long does it take for internet to come back after a router reboot?",
+      answer: "Most home routers take between 60 to 120 seconds to fully restart and re-establish the WAN connection after a power cycle. DSL connections with PPPoE authentication may take longer (2-3 minutes). Fiber connections typically reconnect faster (under 60 seconds). If internet is not restored after 5 minutes, the issue likely requires further diagnostics."
+    },
+    {
+      question: "Can an ISP block my router from accessing the internet?",
+      answer: "Yes, ISPs can suspend service for several reasons: unpaid bills, suspected abuse, equipment provisioning issues, or incorrect hardware registration. If your modem WAN light is active but internet access is completely blocked across all devices, contact your ISP to check your account status. They may need to re-provision your modem remotely."
+    }
+  ];
+
+  const problems = await Promise.all([
+    prisma.problem.upsert({
+      where: { slug: "wifi-connected-no-internet" },
+      update: {
+        title: "WiFi Connected But No Internet",
+        category: "WIFI",
+        excerpt:
+          "Your device shows connected to WiFi but you cannot browse the internet. This common problem has several causes and straightforward fixes across Windows, macOS, Android, and iOS.",
+        content: wifiConnectedNoInternetContent,
+        causes: wifiConnectedNoInternetCauses,
+        fixes: wifiConnectedNoInternetFixes,
+        faqs: wifiConnectedNoInternetFaqs,
         relatedSlugs: ["slow-internet", "dns-not-resolving"],
-        metaTitle: "WiFi Connected But No Internet — How to Troubleshoot",
-        metaDescription: "Diagnose and resolve the 'WiFi connected but no internet' error. Step-by-step troubleshooting, IP renew commands, and DNS configurations.",
+        metaTitle: "WiFi Connected But No Internet — Complete Troubleshooting Guide",
+        metaDescription: "Fix 'WiFi connected but no internet' on Windows, macOS, iPhone, and Android. Step-by-step diagnosis with ping, tracert, DNS fixes, and router solutions.",
+      },
+      create: {
+        title: "WiFi Connected But No Internet",
+        slug: "wifi-connected-no-internet",
+        category: "WIFI",
+        excerpt:
+          "Your device shows connected to WiFi but you cannot browse the internet. This common problem has several causes and straightforward fixes.",
+        content: wifiConnectedNoInternetContent,
+        causes: wifiConnectedNoInternetCauses,
+        fixes: wifiConnectedNoInternetFixes,
+        faqs: wifiConnectedNoInternetFaqs,
+        relatedSlugs: ["slow-internet", "dns-not-resolving"],
+        metaTitle: "WiFi Connected But No Internet — Complete Troubleshooting Guide",
+        metaDescription: "Fix 'WiFi connected but no internet' on Windows, macOS, iPhone, and Android. Step-by-step diagnosis with ping, tracert, DNS fixes, and router solutions.",
       },
     }),
     prisma.problem.upsert({

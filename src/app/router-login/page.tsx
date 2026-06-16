@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Link2, Info } from "lucide-react";
+import { Link2, Info, Shield, Lock, Wifi, Smartphone } from "lucide-react";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/schema";
@@ -405,6 +405,108 @@ export default async function RouterLoginPage() {
                 {link.label}
               </Link>
             ))}
+          </div>
+        </div>
+
+        {/* Section 9: Secure Your Router After Login */}
+        <div className="mb-10 p-6 glass-card border border-[var(--brand-800)]/30 bg-[var(--brand-950)]/10 rounded-2xl">
+          <div className="flex items-center gap-2 text-[var(--brand-400)] font-semibold text-xs uppercase tracking-wider mb-3">
+            <Shield size={14} /> Post-Login Security
+          </div>
+          <h2 className="text-xl font-bold text-[var(--text-primary)] mb-2">
+            Secure Your Router After Login
+          </h2>
+          <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
+            Accessing your router admin panel is only the first step. Once you are logged in, hardening
+            your network is critical to preventing unauthorised access, protecting your connected devices,
+            and keeping your household data private. Follow the guides below immediately after your first
+            login to lock down every layer of your home network.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Wi-Fi Security */}
+            <Link
+              href="/wifi-security"
+              className="group flex gap-4 p-4 border border-[var(--border-subtle)] hover:border-[var(--brand-500)]/60 bg-[var(--bg-elevated)] rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <div className="shrink-0 mt-0.5">
+                <Shield size={20} className="text-emerald-400" />
+              </div>
+              <div>
+                <span className="block font-bold text-sm text-[var(--text-primary)] group-hover:text-[var(--brand-400)] transition-colors mb-1">
+                  Wi-Fi Security Guide
+                </span>
+                <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                  Learn how to properly secure your wireless network. Covers encryption standards,
+                  firewall settings, disabling WPS, and protecting your network from common attack vectors.
+                </p>
+              </div>
+            </Link>
+
+            {/* WPA3 vs WPA2 */}
+            <Link
+              href="/wpa3-vs-wpa2"
+              className="group flex gap-4 p-4 border border-[var(--border-subtle)] hover:border-[var(--brand-500)]/60 bg-[var(--bg-elevated)] rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <div className="shrink-0 mt-0.5">
+                <Lock size={20} className="text-blue-400" />
+              </div>
+              <div>
+                <span className="block font-bold text-sm text-[var(--text-primary)] group-hover:text-[var(--brand-400)] transition-colors mb-1">
+                  WPA3 vs WPA2: Which Should You Use?
+                </span>
+                <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                  Understand the real differences between WPA2-AES and WPA3 encryption protocols so you
+                  can select the strongest security standard your router supports for maximum protection.
+                </p>
+              </div>
+            </Link>
+
+            {/* Guest Wi-Fi Setup */}
+            <Link
+              href="/guest-wifi-setup"
+              className="group flex gap-4 p-4 border border-[var(--border-subtle)] hover:border-[var(--brand-500)]/60 bg-[var(--bg-elevated)] rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <div className="shrink-0 mt-0.5">
+                <Wifi size={20} className="text-amber-400" />
+              </div>
+              <div>
+                <span className="block font-bold text-sm text-[var(--text-primary)] group-hover:text-[var(--brand-400)] transition-colors mb-1">
+                  How to Set Up a Guest Wi-Fi Network
+                </span>
+                <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                  Create a separate, isolated guest network to let visitors access the internet without
+                  exposing your primary devices, NAS drives, printers, or smart home equipment.
+                </p>
+              </div>
+            </Link>
+
+            {/* Block Device on Router */}
+            <Link
+              href="/block-device-on-router"
+              className="group flex gap-4 p-4 border border-[var(--border-subtle)] hover:border-[var(--brand-500)]/60 bg-[var(--bg-elevated)] rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <div className="shrink-0 mt-0.5">
+                <Smartphone size={20} className="text-rose-400" />
+              </div>
+              <div>
+                <span className="block font-bold text-sm text-[var(--text-primary)] group-hover:text-[var(--brand-400)] transition-colors mb-1">
+                  How to Block a Device on Your Router
+                </span>
+                <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                  Use your router&apos;s MAC address filtering or parental controls to block specific devices
+                  from accessing your network — useful for restricting unknown or unauthorised connections.
+                </p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="mt-5 pt-4 border-t border-[var(--border-subtle)]">
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+              <strong className="text-[var(--text-secondary)]">Pro tip:</strong> After making any security
+              changes, always save your router configuration and reboot the device to apply the new settings
+              across all connected clients. Use the Router Settings guide for a complete checklist.
+            </p>
           </div>
         </div>
 

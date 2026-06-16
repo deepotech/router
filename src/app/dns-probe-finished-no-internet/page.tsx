@@ -310,7 +310,37 @@ netsh int ip reset</pre>
             </li>
           </ul>
         </article>
+
+        {/* Related DNS Guides */}
+        <section className="space-y-4 mt-6">
+          <h2 className="text-base font-bold text-[var(--text-primary)]">
+            Related DNS Guides
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            {[
+              { title: "DNS Server Not Responding", href: "/dns-server-not-responding", desc: "Fix 'DNS Server Not Responding' errors on Windows and macOS." },
+              { title: "What Is DNS?", href: "/what-is-dns", desc: "Complete beginner's guide to how the Domain Name System works." },
+              { title: "Best DNS Servers 2026", href: "/best-dns-servers", desc: "Comparison of Cloudflare, Google, Quad9, and OpenDNS by speed and privacy." },
+              { title: "How to Flush DNS Cache", href: "/how-to-flush-dns-cache", desc: "Clear your DNS resolver cache on Windows, macOS, and Linux." },
+              { title: "Change DNS on Router", href: "/how-to-change-dns-on-router", desc: "Set custom DNS servers on your router to protect all devices." },
+              { title: "Best DNS for Gaming", href: "/best-dns-for-gaming", desc: "Lowest-latency DNS providers for PS5, Xbox, and PC gaming." },
+              { title: "Best DNS for Faster Internet", href: "/best-dns-for-faster-internet", desc: "Speed up your browsing with faster anycast DNS resolvers." },
+              { title: "DNS Hub", href: "/dns", desc: "Full DNS guide hub — tools, tutorials, and troubleshooting resources." },
+            ].map(({ title, href, desc }) => (
+              <a
+                key={href}
+                href={href}
+                className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-elevated)] rounded-xl hover:border-[var(--brand-400)] transition-colors group block no-underline"
+              >
+                <span className="font-semibold text-[var(--brand-400)] group-hover:underline text-[11px] block">{title}</span>
+                <p className="text-[10px] text-[var(--text-muted)] mt-0.5">{desc}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
       </div>
     </TroubleshootingArticleShell>
   );
 }
+
