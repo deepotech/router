@@ -110,6 +110,13 @@ const footerLinks = {
     { label: "Packet Loss Test Guide", href: "/packet-loss-test" },
     { label: "How to Fix Packet Loss", href: "/how-to-fix-packet-loss" },
   ],
+  Troubleshooting: [
+    { label: "Improve WiFi Signal", href: "/how-to-improve-wifi-signal" },
+    { label: "WiFi Keeps Disconnecting", href: "/wifi-keeps-disconnecting" },
+    { label: "Internet Keeps Dropping", href: "/internet-keeps-dropping" },
+    { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
+    { label: "Speed Up Internet", href: "/how-to-speed-up-internet" },
+  ],
   "Legal & Trust": [
     { label: "About Us", href: "/about" },
     { label: "Contact Us", href: "/contact" },

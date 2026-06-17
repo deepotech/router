@@ -190,7 +190,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${APP_URL}/wifi-keeps-disconnecting`,
       lastModified: now,
       changeFrequency: "weekly",
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${APP_URL}/router-blinking-orange`,
@@ -400,13 +400,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${APP_URL}/how-to-improve-wifi-signal`,
       lastModified: now,
       changeFrequency: "weekly",
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${APP_URL}/router-keeps-restarting`,
       lastModified: now,
       changeFrequency: "weekly",
-      priority: 0.8,
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/internet-keeps-dropping`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/how-to-speed-up-internet`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
     },
     {
       url: `${APP_URL}/wifi-connected-but-no-internet-phone`,
