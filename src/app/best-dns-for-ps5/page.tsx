@@ -82,6 +82,26 @@ const faqs = [
     question: "What is Primary vs Secondary DNS on PS5?",
     answer: "Primary DNS represents your console's first choice for resolving domain names. When your console needs to find an IP address, it sends the request to the Primary DNS server. The Secondary DNS server is a backup resolver. If the Primary DNS server is offline, experiencing packet loss, or takes too long to respond, your console will automatically route the query to the Secondary DNS server. Using different physical networks for your Primary and Secondary DNS (for example, Cloudflare 1.1.1.1 as Primary and Google 8.8.8.8 as Secondary) provides redundancy and prevents complete connection loss if one provider experiences an outage.",
   },
+  {
+    question: "What is the fastest DNS for PS5 in Europe and North America?",
+    answer: "For both Europe and North America, Cloudflare DNS (1.1.1.1 / 1.0.0.1) consistently ranks as the fastest public resolver due to its extensive Anycast network routing. However, Quad9 (9.9.9.9) and Google DNS (8.8.8.8) are very close seconds. You should run the built-in PS5 network test with each to see which resolver registers the lowest ping for your local ISP.",
+  },
+  {
+    question: "Do DNS settings affect PS5 packet loss or latency spikes?",
+    answer: "DNS settings do not directly cause or cure packet loss or mid-game latency spikes because once a game starts, traffic routes directly to numerical IP addresses. However, a faulty DNS server can lead to slow initial matchmaking connections, server disconnect errors, and inaccurate routing that connects you to distant server nodes with higher base ping.",
+  },
+  {
+    question: "Should I configure custom DNS for both 2.4GHz and 5GHz Wi-Fi bands?",
+    answer: "Yes. In the PS5 network configurations, custom DNS profiles are saved per SSID connection profile. If you switch between your 2.4GHz and 5GHz wireless networks, you will need to open the Advanced Settings for each network profile individually and configure your custom primary and secondary DNS addresses.",
+  },
+  {
+    question: "Can changing DNS improve PS5 party chat connection issues?",
+    answer: "Yes, changing DNS can resolve PS5 party chat connection failures (such as the NAT Type error blocking voice chat). Party chat uses peer-to-peer protocols that rely on PSN signaling servers. Fast, updated public resolvers like Cloudflare (1.1.1.1) ensure these connections are mapped and established instantly without timing out.",
+  },
+  {
+    question: "Are public DNS servers safer than my ISP's DNS for PSN logging?",
+    answer: "Yes. Major public DNS providers like Cloudflare and Quad9 offer advanced security and privacy policies. Cloudflare purges all query logs within 24 hours and does not sell user data. Quad9 actively blocks resolution of malicious domain names and phishing servers, safeguarding your console network traffic better than local ISPs.",
+  },
 ];
 
 export default async function BestDnsForPs5Page() {
@@ -150,68 +170,69 @@ export default async function BestDnsForPs5Page() {
           </p>
 
           <div className="overflow-x-auto border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)]">
-            <div className="min-w-[700px] text-xs">
+            <div className="min-w-[750px] text-xs">
               {/* Table Header */}
               <div className="grid grid-cols-7 border-b border-[var(--border-subtle)] bg-[var(--bg-elevated)] font-bold text-[var(--text-primary)] p-3">
                 <div>Provider</div>
-                <div>Primary IP</div>
-                <div>Secondary IP</div>
+                <div>DNS IPs</div>
                 <div>Avg Latency</div>
-                <div>Security Features</div>
-                <div>Privacy Policy</div>
+                <div>Privacy</div>
+                <div>Gaming Performance</div>
+                <div>DDoS Protection</div>
                 <div>Best For</div>
               </div>
               {/* Table Rows */}
               <div className="divide-y divide-[var(--border-subtle)]">
                 <div className="grid grid-cols-7 p-3 text-[var(--text-secondary)] items-center">
                   <div className="font-bold text-[var(--text-primary)]">Cloudflare</div>
-                  <div className="font-mono">1.1.1.1</div>
-                  <div className="font-mono">1.0.0.1</div>
+                  <div className="font-mono">1.1.1.1 / 1.0.0.1</div>
                   <div>&lt; 15ms</div>
-                  <div>Basic DDoS mitigation</div>
-                  <div>No logs sold / 24-hr purge</div>
+                  <div>Strict / 24-hr purge</div>
+                  <div>Ultra-Low Jitter</div>
+                  <div>Basic Layer 3/4</div>
                   <div className="text-[var(--brand-400)] font-semibold">Matchmaking Latency</div>
                 </div>
                 <div className="grid grid-cols-7 p-3 text-[var(--text-secondary)] items-center">
                   <div className="font-bold text-[var(--text-primary)]">Google DNS</div>
-                  <div className="font-mono">8.8.8.8</div>
-                  <div className="font-mono">8.8.4.4</div>
+                  <div className="font-mono">8.8.8.8 / 8.8.4.4</div>
                   <div>18 - 25ms</div>
-                  <div>Anycast rate limiting</div>
-                  <div>Temporary logging / diagnostic</div>
+                  <div>Temporary logs</div>
+                  <div>Deep CDN Cache</div>
+                  <div>Anycast Rate Limiting</div>
                   <div className="text-[var(--brand-400)] font-semibold">Large Game Downloads</div>
                 </div>
                 <div className="grid grid-cols-7 p-3 text-[var(--text-secondary)] items-center">
                   <div className="font-bold text-[var(--text-primary)]">Quad9</div>
-                  <div className="font-mono">9.9.9.9</div>
-                  <div className="font-mono">149.112.112.112</div>
+                  <div className="font-mono">9.9.9.9 / 149.112.112.112</div>
                   <div>20 - 30ms</div>
-                  <div>Threat intelligence blocklist</div>
-                  <div>Zero personal logging</div>
+                  <div>No personal logs</div>
+                  <div>Standard Routing</div>
+                  <div>Advanced Threat Block</div>
                   <div className="text-[var(--brand-400)] font-semibold">Security &amp; Malware block</div>
                 </div>
                 <div className="grid grid-cols-7 p-3 text-[var(--text-secondary)] items-center">
                   <div className="font-bold text-[var(--text-primary)]">OpenDNS</div>
-                  <div className="font-mono">208.67.222.222</div>
-                  <div className="font-mono">208.67.220.220</div>
+                  <div className="font-mono">208.67.222.222 / 208.67.220.220</div>
                   <div>22 - 32ms</div>
-                  <div>Web filtering options</div>
-                  <div>Logs kept for custom filters</div>
+                  <div>Custom log rules</div>
+                  <div>Moderate Jitter</div>
+                  <div>Custom Domain Filters</div>
                   <div className="text-[var(--brand-400)] font-semibold">Parental Controls</div>
                 </div>
                 <div className="grid grid-cols-7 p-3 text-[var(--text-secondary)] items-center">
                   <div className="font-bold text-[var(--text-primary)]">NextDNS</div>
                   <div className="font-mono">Configurable</div>
-                  <div className="font-mono">Configurable</div>
                   <div>15 - 28ms</div>
-                  <div>Full custom ad-blocking</div>
-                  <div>Strict user control settings</div>
+                  <div>Full user control</div>
+                  <div>Customized Fast Path</div>
+                  <div>Configurable Filters</div>
                   <div className="text-[var(--brand-400)] font-semibold">Ad &amp; Tracker Blocking</div>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
 
         {/* Understanding PS5 DNS and PSN Architecture */}
         <section className="space-y-4">

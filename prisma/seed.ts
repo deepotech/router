@@ -1747,15 +1747,14 @@ Restoring the ASUS RT-AX88U to factory settings clears all custom configurations
     // Huawei High-SEO Model
     prisma.routerModel.upsert({
       where: { slug: "huawei-ax3" },
-      update: {},
-      create: {
+      update: {
         brandId: huawei.id,
         name: "AX3 (WS7200)",
         slug: "huawei-ax3",
         loginIps: ["192.168.3.1", "192.168.3.1"],
         defaultUsername: "admin",
         defaultPassword: "admin",
-        wifiSetupGuide: `## How to Set Up WiFi on Huawei AX3 (WS7200)\n\n1. Connect your PC to the Huawei AX3 via Ethernet or join the default Wi-Fi network on the bottom label\n2. Open a browser and go to **192.168.3.1**\n3. Log in with username: **admin** and password: **admin** (or your custom password)\n4. The Huawei Smart Home App provides guided setup — download it and follow the Quick Setup\n5. Under Settings > Wi-Fi, configure your 2.4GHz and 5GHz SSIDs and passwords\n6. Enable HarmonyOS Connect (for Huawei device ecosystem integration)\n7. Set up One Wi-Fi (Smart Roaming) to allow seamless band steering`,
+        wifiSetupGuide: `## How to Set Up WiFi on Huawei AX3 (WS7200)\n\n1. Connect your PC to the Huawei AX3 via Ethernet or join the default Wi-Fi network on the bottom label\n2. Open a browser and go to **192.168.3.1**\n3. Log in with username: **admin** and password: **admin** (or your custom password)\n4. The Huawei Smart Home App provides guided setup — download it and follow the Quick Setup\n5. Under Settings > Wi-Fi, configure your 2.4GHz and 5GHz SSIDs and passwords. If you need to update WiFi credentials later, go to [change-wifi-password](file:///change-wifi-password).\n6. Enable HarmonyOS Connect (for Huawei device ecosystem integration)\n7. Set up One Wi-Fi (Smart Roaming) to allow seamless band steering.\n\n### Huawei AX3 WiFi 6 Features\nThe Huawei AX3 features true WiFi 6 (802.11ax) tech with several key performance improvements:\n- **OFDMA (Orthogonal Frequency Division Multiple Access):** Allows multiple devices to share a single channel simultaneously, significantly reducing latency and queuing.\n- **MU-MIMO (Multi-User, Multiple-Input, Multiple-Output):** Supports sending data streams to up to 4 devices simultaneously, maintaining high throughput.\n- **160 MHz Channel Width:** Doubles the channel bandwidth compared to Wi-Fi 5 routers, enabling speeds up to 2402 Mbps on the 5GHz band for compatible devices.\n\n### Optimize AX3 For Gaming\nTo minimize ping spikes and lag on the AX3, apply these gaming optimizations:\n1. Access the router dashboard and navigate to **More Services** -> **Wi-Fi Settings** -> **Wi-Fi Advanced Settings**.\n2. Change the 5GHz channel bandwidth to **160 MHz** for maximum throughput.\n3. Enable **Wi-Fi Game Acceleration** (deep integration for Huawei phones, and generic QoS queue priority for online consoles).\n4. Configure manual high-performance DNS servers in the LAN settings. Check our guide on [best-router-for-gaming](file:///best-router-for-gaming) for more general optimizations.\n\n### Optimize AX3 For Fiber\nFor gigabit fiber plans, configure these WAN and NAT parameters:\n1. Go to **Connect to Internet** on the top menu.\n2. For most GPON fiber connections, set connection type to **Dynamic IP (DHCP)**. If your fiber provider uses authentication, select **PPPoE** and input your account details.\n3. Go to **More Services** -> **System Settings** -> **System Settings** and ensure that **Hardware NAT Acceleration** is active. This offloads packet forwarding from the CPU to the hardware switch chip, ensuring full gigabit speeds. More advanced options can be checked in [router-settings](file:///router-settings).`,
         resetGuide: `## Factory Reset Huawei AX3 (WS7200)\n\n1. Ensure the router is powered on\n2. Use a paperclip to press and hold the RESET button on the rear panel for **10 seconds**\n3. Release when the indicator LED flashes rapidly\n4. The router will reboot with factory settings (about 60 seconds)\n5. Reconnect using the default SSID and credentials from the bottom label`,
         faqs: [
           {
@@ -1774,9 +1773,154 @@ Restoring the ASUS RT-AX88U to factory settings clears all custom configurations
             question: "How do I update firmware on Huawei AX3?",
             answer: "Log in to 192.168.3.1, navigate to More > Update, and click Check for Updates. The router will download and install the latest EMUI firmware automatically if connected to the internet.",
           },
+          {
+            question: "Does Huawei AX3 support true WiFi 6 speeds?",
+            answer: "Yes, the Huawei AX3 is a true Wi-Fi 6 router capable of speeds up to 3000 Mbps (2402 Mbps on 5GHz and 574 Mbps on 2.4GHz) when using 160MHz channels with compatible client adapters.",
+          },
+          {
+            question: "How do I enable 160MHz bandwidth channel on Huawei AX3?",
+            answer: "Log in, navigate to Wi-Fi Settings > Wi-Fi Advanced Settings, select the 5GHz network, and set Channel Bandwidth to 20/40/80/160 MHz (Auto) or lock it to 160 MHz for maximum speed.",
+          },
+          {
+            question: "Can I use Huawei AX3 in a mesh setup with other Huawei routers?",
+            answer: "Yes, Huawei AX3 supports HarmonyOS Connect (Link+). You can press the physical 'H' button on the AX3 and secondary Huawei routers to automatically sync settings and create a seamless mesh network.",
+          },
+          {
+            question: "What is the default IP address of the Huawei AX3 router?",
+            answer: "The default IP address is 192.168.3.1. Ensure your device is connected to the AX3 and enter 192.168.3.1 in any browser address bar to access the console.",
+          },
+          {
+            question: "How do I enable game acceleration mode on AX3?",
+            answer: "Go to the router management page, select More Services > Wi-Fi Settings > Wi-Fi Advanced Settings, and turn on the Game Acceleration toggle to prioritize gaming packets.",
+          },
         ],
         metaTitle: "Huawei AX3 (WS7200) Login — Default IP 192.168.3.1 & Password",
         metaDescription: "Access Huawei AX3 router admin panel at 192.168.3.1. Default credentials: admin/admin. Wi-Fi 6 AX3000 router setup guide, LED meanings, and factory reset instructions.",
+        diagnosticCategory: "WIFI",
+      },
+      create: {
+        brandId: huawei.id,
+        name: "AX3 (WS7200)",
+        slug: "huawei-ax3",
+        loginIps: ["192.168.3.1", "192.168.3.1"],
+        defaultUsername: "admin",
+        defaultPassword: "admin",
+        wifiSetupGuide: `## How to Set Up WiFi on Huawei AX3 (WS7200)\n\n1. Connect your PC to the Huawei AX3 via Ethernet or join the default Wi-Fi network on the bottom label\n2. Open a browser and go to **192.168.3.1**\n3. Log in with username: **admin** and password: **admin** (or your custom password)\n4. The Huawei Smart Home App provides guided setup — download it and follow the Quick Setup\n5. Under Settings > Wi-Fi, configure your 2.4GHz and 5GHz SSIDs and passwords. If you need to update WiFi credentials later, go to [change-wifi-password](file:///change-wifi-password).\n6. Enable HarmonyOS Connect (for Huawei device ecosystem integration)\n7. Set up One Wi-Fi (Smart Roaming) to allow seamless band steering.\n\n### Huawei AX3 WiFi 6 Features\nThe Huawei AX3 features true WiFi 6 (802.11ax) tech with several key performance improvements:\n- **OFDMA (Orthogonal Frequency Division Multiple Access):** Allows multiple devices to share a single channel simultaneously, significantly reducing latency and queuing.\n- **MU-MIMO (Multi-User, Multiple-Input, Multiple-Output):** Supports sending data streams to up to 4 devices simultaneously, maintaining high throughput.\n- **160 MHz Channel Width:** Doubles the channel bandwidth compared to Wi-Fi 5 routers, enabling speeds up to 2402 Mbps on the 5GHz band for compatible devices.\n\n### Optimize AX3 For Gaming\nTo minimize ping spikes and lag on the AX3, apply these gaming optimizations:\n1. Access the router dashboard and navigate to **More Services** -> **Wi-Fi Settings** -> **Wi-Fi Advanced Settings**.\n2. Change the 5GHz channel bandwidth to **160 MHz** for maximum throughput.\n3. Enable **Wi-Fi Game Acceleration** (deep integration for Huawei phones, and generic QoS queue priority for online consoles).\n4. Configure manual high-performance DNS servers in the LAN settings. Check our guide on [best-router-for-gaming](file:///best-router-for-gaming) for more general optimizations.\n\n### Optimize AX3 For Fiber\nFor gigabit fiber plans, configure these WAN and NAT parameters:\n1. Go to **Connect to Internet** on the top menu.\n2. For most GPON fiber connections, set connection type to **Dynamic IP (DHCP)**. If your fiber provider uses authentication, select **PPPoE** and input your account details.\n3. Go to **More Services** -> **System Settings** -> **System Settings** and ensure that **Hardware NAT Acceleration** is active. This offloads packet forwarding from the CPU to the hardware switch chip, ensuring full gigabit speeds. More advanced options can be checked in [router-settings](file:///router-settings).`,
+        resetGuide: `## Factory Reset Huawei AX3 (WS7200)\n\n1. Ensure the router is powered on\n2. Use a paperclip to press and hold the RESET button on the rear panel for **10 seconds**\n3. Release when the indicator LED flashes rapidly\n4. The router will reboot with factory settings (about 60 seconds)\n5. Reconnect using the default SSID and credentials from the bottom label`,
+        faqs: [
+          {
+            question: "What is the default IP for Huawei AX3?",
+            answer: "The default admin panel IP for the Huawei AX3 (WS7200) is 192.168.3.1. This is Huawei's standard gateway IP, unlike most brands that use 192.168.1.1 or 192.168.0.1.",
+          },
+          {
+            question: "What are the default credentials for Huawei AX3?",
+            answer: "Default username: admin. Default password: admin. On some units, the default password may be printed on the bottom label of the router.",
+          },
+          {
+            question: "Does Huawei AX3 support Wi-Fi 6?",
+            answer: "Yes, the Huawei AX3 (WS7200) is a dual-band Wi-Fi 6 (802.11ax) router supporting OFDMA and MU-MIMO with combined speeds of AX3000 (574 Mbps on 2.4GHz + 2402 Mbps on 5GHz).",
+          },
+          {
+            question: "How do I update firmware on Huawei AX3?",
+            answer: "Log in to 192.168.3.1, navigate to More > Update, and click Check for Updates. The router will download and install the latest EMUI firmware automatically if connected to the internet.",
+          },
+          {
+            question: "Does Huawei AX3 support true WiFi 6 speeds?",
+            answer: "Yes, the Huawei AX3 is a true Wi-Fi 6 router capable of speeds up to 3000 Mbps (2402 Mbps on 5GHz and 574 Mbps on 2.4GHz) when using 160MHz channels with compatible client adapters.",
+          },
+          {
+            question: "How do I enable 160MHz bandwidth channel on Huawei AX3?",
+            answer: "Log in, navigate to Wi-Fi Settings > Wi-Fi Advanced Settings, select the 5GHz network, and set Channel Bandwidth to 20/40/80/160 MHz (Auto) or lock it to 160 MHz for maximum speed.",
+          },
+          {
+            question: "Can I use Huawei AX3 in a mesh setup with other Huawei routers?",
+            answer: "Yes, Huawei AX3 supports HarmonyOS Connect (Link+). You can press the physical 'H' button on the AX3 and secondary Huawei routers to automatically sync settings and create a seamless mesh network.",
+          },
+          {
+            question: "What is the default IP address of the Huawei AX3 router?",
+            answer: "The default IP address is 192.168.3.1. Ensure your device is connected to the AX3 and enter 192.168.3.1 in any browser address bar to access the console.",
+          },
+          {
+            question: "How do I enable game acceleration mode on AX3?",
+            answer: "Go to the router management page, select More Services > Wi-Fi Settings > Wi-Fi Advanced Settings, and turn on the Game Acceleration toggle to prioritize gaming packets.",
+          },
+        ],
+        metaTitle: "Huawei AX3 (WS7200) Login — Default IP 192.168.3.1 & Password",
+        metaDescription: "Access Huawei AX3 router admin panel at 192.168.3.1. Default credentials: admin/admin. Wi-Fi 6 AX3000 router setup guide, LED meanings, and factory reset instructions.",
+        diagnosticCategory: "WIFI",
+      },
+    }),
+    // Huawei HG8145V5 Setup Page
+    prisma.routerModel.upsert({
+      where: { slug: "huawei-hg8145v5" },
+      update: {
+        brandId: huawei.id,
+        name: "HG8145V5",
+        slug: "huawei-hg8145v5",
+        loginIps: ["192.168.100.1"],
+        defaultUsername: "telecomadmin",
+        defaultPassword: "admintelecom",
+        wifiSetupGuide: `# Huawei HG8145V5 WiFi Setup Guide\n\n### Step 1: Connect to the Device\n1. **Connect your computer** to the Huawei HG8145V5 using an Ethernet cable or connect to its default WiFi network if available.\n\n### Step 2: Access the Admin Panel\n1. Open a web browser.\n2. Enter the default IP address: [192.168.100.1](file:///ips/192-168-100-1) (which is the standard gateway for Huawei ONTs).\n3. Log in using the default credentials.\n\n### HG8145V5 Default Credentials\nTo modify settings, you need the administrator login. Here is the credential matrix:\n\n| Username | Password | ISP / Region Access Level |\n| --- | --- | --- |\n| \`telecomadmin\` | \`admintelecom\` | Global Full Administrator |\n| \`root\` | \`admin\` | Standard User / Read-Only |\n| \`admin\` | \`admin\` | Standard User (secondary) |\n| *Custom* | *Serial Number* | Custom ISP provisioned logins |\n\nFor full wireless control and WAN setups, log in using \`telecomadmin\`. Standard logins may block access to VLAN and WAN configurations.\n\n### Step 3: Configure Wireless Settings\n1. Navigate to **WLAN** -> **WLAN Configuration** in the top menu.\n2. Enable the Wireless option for 2.4GHz and 5GHz.\n3. Configure the following settings:\n   - **SSID Name:** Enter your desired WiFi network name.\n   - **Security Mode:** Set to \`WPA2-PSK\` or \`WPA2/WPA3-PSK\` hybrid.\n   - **Pre-Shared Key:** Enter your secure WiFi password.\n4. Click **Apply** to save the changes. If you need to change your login credentials, visit the [router-password](file:///router-password) settings.\n\n### Common ISP Configurations\nHuawei HG8145V5 is a GPON Optical Network Terminal (ONT). Standard fiber setup details:\n- **GPON Authentication:** Auths via LOID (Logical ONT Identifier) or SN (Serial Number) supplied by your fiber provider.\n- **PPPoE WAN Interface:** Under WAN configuration, select \`PPPoE\` WAN type, enter your ISP username/password, and bind it to the relevant VLAN ID.\n- **VLAN Tagging:** Most fiber providers require tagging (e.g., VLAN ID 10 or 20) for internet traffic.\n- **IPTV Configuration:** Set up a secondary WAN interface in bridge mode tagged with the IPTV VLAN ID and bind it to a specific LAN port.\n\n### Troubleshooting HG8145V5\n- **LOS Light Blinking Red:** Loss of Optical Signal. Inspect the fiber optic cable for sharp bends or breaks. Contact your ISP if line levels fall below -27 dBm.\n- **PON Light Blinking Green:** The ONT is trying to authenticate with the OLT at the central office. Wait for it to turn solid green.\n- **Internet Not Working:** Ensure the WAN interface displays a valid IP. If connection parameters are lost, you might need to perform a [router-reset](file:///router-reset).\n- **WiFi Not Broadcasting:** Ensure WLAN is active in the interface and the physical Wi-Fi button on the ONT side panel is not toggled off.`,
+        resetGuide: `# Huawei HG8145V5 Factory Reset Guide\n\n### Step 1: Locate Reset Button\n1. Find the **Reset** button on the back of the Huawei HG8145V5 device.\n\n### Step 2: Perform the Reset\n1. Using a pin or paperclip, press and hold the **Reset** button for **10 seconds** (until the power LED starts blinking).\n\n### Step 3: Wait for Restart\n1. Release the button and wait for the device to reboot. This may take up to **2 minutes**.\n\n### Step 4: Access Admin Panel\n1. Once reset, the default IP will be [192.168.100.1](file:///ips/192-168-100-1).\n2. Use default credentials to log in:\n   - **Username:** \`telecomadmin\`\n   - **Password:** \`admintelecom\` (or ISP provided passwords).\n\n*Note: Factory reset will revert all settings to factory defaults. Backup important configurations beforehand.*`,
+        faqs: [
+          {
+            question: "What is the default access IP for Huawei HG8145V5?",
+            answer: "The default login IP address for the Huawei HG8145V5 GPON terminal is 192.168.100.1. Open your browser and navigate to http://192.168.100.1 to open the admin panel.",
+          },
+          {
+            question: "How do I change the default admin password?",
+            answer: "Once logged in, navigate to System Tools > Modify Login Password. Enter your current password and set a new strong administrator password to prevent unauthorized config modifications.",
+          },
+          {
+            question: "What does a blinking red LOS light mean on HG8145V5?",
+            answer: "A blinking red LOS (Loss of Signal) light indicates that the ONT is not receiving an optical signal from the fiber cable. Check the green connector on the bottom, avoid bending the cable, and call your ISP to test line signals.",
+          },
+          {
+            question: "How do I configure bridge mode on this Huawei ONT?",
+            answer: "Log in as telecomadmin, go to WAN > WAN Configuration, create or modify the WAN interface, set WAN Mode to Bridge, configure the VLAN ID, and bind it to the LAN port connected to your external router.",
+          },
+          {
+            question: "Can I set up a guest network on the HG8145V5?",
+            answer: "Yes. Log into the gateway, go to WLAN > WLAN Configuration, enable SSID2 or SSID3, name it for your guests, and configure a distinct security key to separate guest traffic from your main network.",
+          },
+        ],
+        metaTitle: "Huawei HG8145V5 WiFi Setup & Configuration",
+        metaDescription: "Learn how to configure your Huawei HG8145V5 ONT router, default credentials, ISP configuration settings, and wireless troubleshooting.",
+        diagnosticCategory: "WIFI",
+      },
+      create: {
+        brandId: huawei.id,
+        name: "HG8145V5",
+        slug: "huawei-hg8145v5",
+        loginIps: ["192.168.100.1"],
+        defaultUsername: "telecomadmin",
+        defaultPassword: "admintelecom",
+        wifiSetupGuide: `# Huawei HG8145V5 WiFi Setup Guide\n\n### Step 1: Connect to the Device\n1. **Connect your computer** to the Huawei HG8145V5 using an Ethernet cable or connect to its default WiFi network if available.\n\n### Step 2: Access the Admin Panel\n1. Open a web browser.\n2. Enter the default IP address: [192.168.100.1](file:///ips/192-168-100-1) (which is the standard gateway for Huawei ONTs).\n3. Log in using the default credentials.\n\n### HG8145V5 Default Credentials\nTo modify settings, you need the administrator login. Here is the credential matrix:\n\n| Username | Password | ISP / Region Access Level |\n| --- | --- | --- |\n| \`telecomadmin\` | \`admintelecom\` | Global Full Administrator |\n| \`root\` | \`admin\` | Standard User / Read-Only |\n| \`admin\` | \`admin\` | Standard User (secondary) |\n| *Custom* | *Serial Number* | Custom ISP provisioned logins |\n\nFor full wireless control and WAN setups, log in using \`telecomadmin\`. Standard logins may block access to VLAN and WAN configurations.\n\n### Step 3: Configure Wireless Settings\n1. Navigate to **WLAN** -> **WLAN Configuration** in the top menu.\n2. Enable the Wireless option for 2.4GHz and 5GHz.\n3. Configure the following settings:\n   - **SSID Name:** Enter your desired WiFi network name.\n   - **Security Mode:** Set to \`WPA2-PSK\` or \`WPA2/WPA3-PSK\` hybrid.\n   - **Pre-Shared Key:** Enter your secure WiFi password.\n4. Click **Apply** to save the changes. If you need to change your login credentials, visit the [router-password](file:///router-password) settings.\n\n### Common ISP Configurations\nHuawei HG8145V5 is a GPON Optical Network Terminal (ONT). Standard fiber setup details:\n- **GPON Authentication:** Auths via LOID (Logical ONT Identifier) or SN (Serial Number) supplied by your fiber provider.\n- **PPPoE WAN Interface:** Under WAN configuration, select \`PPPoE\` WAN type, enter your ISP username/password, and bind it to the relevant VLAN ID.\n- **VLAN Tagging:** Most fiber providers require tagging (e.g., VLAN ID 10 or 20) for internet traffic.\n- **IPTV Configuration:** Set up a secondary WAN interface in bridge mode tagged with the IPTV VLAN ID and bind it to a specific LAN port.\n\n### Troubleshooting HG8145V5\n- **LOS Light Blinking Red:** Loss of Optical Signal. Inspect the fiber optic cable for sharp bends or breaks. Contact your ISP if line levels fall below -27 dBm.\n- **PON Light Blinking Green:** The ONT is trying to authenticate with the OLT at the central office. Wait for it to turn solid green.\n- **Internet Not Working:** Ensure the WAN interface displays a valid IP. If connection parameters are lost, you might need to perform a [router-reset](file:///router-reset).\n- **WiFi Not Broadcasting:** Ensure WLAN is active in the interface and the physical Wi-Fi button on the ONT side panel is not toggled off.`,
+        resetGuide: `# Huawei HG8145V5 Factory Reset Guide\n\n### Step 1: Locate Reset Button\n1. Find the **Reset** button on the back of the Huawei HG8145V5 device.\n\n### Step 2: Perform the Reset\n1. Using a pin or paperclip, press and hold the **Reset** button for **10 seconds** (until the power LED starts blinking).\n\n### Step 3: Wait for Restart\n1. Release the button and wait for the device to reboot. This may take up to **2 minutes**.\n\n### Step 4: Access Admin Panel\n1. Once reset, the default IP will be [192.168.100.1](file:///ips/192-168-100-1).\n2. Use default credentials to log in:\n   - **Username:** \`telecomadmin\`\n   - **Password:** \`admintelecom\` (or ISP provided passwords).\n\n*Note: Factory reset will revert all settings to factory defaults. Backup important configurations beforehand.*`,
+        faqs: [
+          {
+            question: "What is the default access IP for Huawei HG8145V5?",
+            answer: "The default login IP address for the Huawei HG8145V5 GPON terminal is 192.168.100.1. Open your browser and navigate to http://192.168.100.1 to open the admin panel.",
+          },
+          {
+            question: "How do I change the default admin password?",
+            answer: "Once logged in, navigate to System Tools > Modify Login Password. Enter your current password and set a new strong administrator password to prevent unauthorized config modifications.",
+          },
+          {
+            question: "What does a blinking red LOS light mean on HG8145V5?",
+            answer: "A blinking red LOS (Loss of Signal) light indicates that the ONT is not receiving an optical signal from the fiber cable. Check the green connector on the bottom, avoid bending the cable, and call your ISP to test line signals.",
+          },
+          {
+            question: "How do I configure bridge mode on this Huawei ONT?",
+            answer: "Log in as telecomadmin, go to WAN > WAN Configuration, create or modify the WAN interface, set WAN Mode to Bridge, configure the VLAN ID, and bind it to the LAN port connected to your external router.",
+          },
+          {
+            question: "Can I set up a guest network on the HG8145V5?",
+            answer: "Yes. Log into the gateway, go to WLAN > WLAN Configuration, enable SSID2 or SSID3, name it for your guests, and configure a distinct security key to separate guest traffic from your main network.",
+          },
+        ],
+        metaTitle: "Huawei HG8145V5 WiFi Setup & Configuration",
+        metaDescription: "Learn how to configure your Huawei HG8145V5 ONT router, default credentials, ISP configuration settings, and wireless troubleshooting.",
         diagnosticCategory: "WIFI",
       },
     }),
@@ -2474,6 +2618,268 @@ Use this step-by-step diagnostic resolution flow to restore DNS functionality:`,
         relatedSlugs: ["wifi-connected-no-internet"],
         metaTitle: "DNS Not Resolving — How to Fix DNS Errors",
         metaDescription: "Fix DNS resolution failures. Step-by-step diagnostic guide, ipconfig flush commands, and public DNS setup configurations.",
+      },
+    }),
+    prisma.problem.upsert({
+      where: { slug: "router-not-assigning-ip-addresses" },
+      update: {
+        title: "Router not assigning IP addresses",
+        slug: "router-not-assigning-ip-addresses",
+        category: "OTHER",
+        excerpt: "The router fails to assign IP addresses due to DHCP service issues, pool exhaustion, or local IP conflicts, leading to self-assigned APIPA addresses (169.254.x.x) and no internet access.",
+        content: `## Troubleshooting: Router Not Assigning IP Addresses\n\nWhen client systems connect to a network but fail to obtain an IP configuration, it indicates a failure in local IP address lease negotiation. This guide details the diagnostics and resolution steps for DHCP service outages.\n\n### How DHCP Works (The DORA Process)\nThe Dynamic Host Configuration Protocol (DHCP) is a client-server protocol that automates IP parameter allocation. It operates on UDP Port 67 (server) and UDP Port 68 (client) through a four-way handshake:\n1. **Discover:** The client broadcasts a DHCP Discover packet to locate active DHCP servers on the subnet.\n2. **Offer:** The router DHCP server reserves an IP from its pool and broadcasts or unicasts a DHCP Offer containing the proposed IP, subnet mask, gateway, and DNS servers.\n3. **Request:** The client broadcasts a DHCP Request confirming it accepts the offered IP configuration.\n4. **Acknowledgement (ACK):** The server registers the client's MAC address, binds the IP lease, and sends a DHCP ACK to finalize the configuration.\n\n*Common Failure Points:*\n- Discover packets are dropped due to network loops (STP blocks) or VLAN isolation.\n- The DHCP daemon crashes or exhausts memory buffers, dropping Discover broadcasts.\n- The router fails to send an ACK because the IP lease is claimed by another static device.\n\n### DHCP Lease Lifecycle\nThe allocation of dynamic IP addresses follows a specific state-transition cycle:\n\n| State | Trigger | Action |\n| --- | --- | --- |\n| **INIT** | Client network interface active | Client sends DHCP Discover broadcast |\n| **SELECTING** | Client receives DHCP Offer(s) | Client selects best offer and prepares Request |\n| **REQUESTING** | Client sends DHCP Request | Client requests lease confirmation from server |\n| **BOUND** | Client receives DHCP ACK | Lease active; client binds IP configuration |\n| **RENEWING (T1)** | Lease time reaches 50% | Client unicasts DHCP Request to renew lease |\n| **REBINDING (T2)** | Lease time reaches 87.5% | Client broadcasts DHCP Request to any DHCP server |\n| **EXPIRED** | Lease time reaches 100% | IP released; interface disabled; INIT state triggered |\n\n### How To Verify DHCP Using Command Line\n\n#### Windows CMD / PowerShell\nRun these commands in an elevated Command Prompt or PowerShell terminal:\n- **Display Full Configuration:** \`ipconfig /all\` - verify if your adapter has a DHCP enabled flag and check your current gateway and DNS.\n- **Release Current Lease:** \`ipconfig /release\` - forces the system to drop its current IP allocation.\n- **Request New Lease:** \`ipconfig /renew\` - triggers a new DORA handshake to obtain fresh configuration parameters.\n\n#### macOS Terminal\nLocate your active interface (usually \`en0\` or \`en1\`) and run:\n- **Renew DHCP Lease:** \`sudo ipconfig set en0 DHCP\` - releases and requests a new DHCP config.\n- **Query Configuration:** \`networksetup -getinfo "Wi-Fi"\` or \`networksetup -getinfo "Belkin USB-C LAN"\` - inspects lease info.\n\n#### Linux Terminal\nUse the standard DHCP client daemon \`dhclient\` or NetworkManager's command line interface \`nmcli\`:\n- **Release and Renew using dhclient:**\n  \`\`\`bash\n  sudo dhclient -r eth0\n  sudo dhclient eth0\n  \`\`\`\n- **Toggle interface using nmcli:**\n  \`\`\`bash\n  nmcli device disconnect eth0\n  nmcli device connect eth0\n  \`\`\`\n\n### DHCP Failure Causes vs Solution Matrix\n\n| Observed Fault | Root Cause | Resolution Steps |\n| --- | --- | --- |\n| **APIPA Fallback (169.254.x.x)** | No DHCP Offer received; server down or link blocked | Restart DHCP service; verify physical cabling |\n| **IP Lease Depletion** | High volume of guest connections or smart devices | Extend DHCP pool range; shorten lease duration |\n| **Rogue DHCP Server** | Conflict from active DHCP on extender/AP | Log into secondary AP and toggle DHCP to Disabled |\n| **VLAN Handshake Failure** | Discover packets blocked at boundary | Configure DHCP Relay / IP Helper on Layer 3 switch |\n| **STP Broadcast Loop** | Mesh node switch loops flood CPU | Enable Spanning Tree Protocol (STP) on local switches |\n\n### Static IP vs DHCP\n- **DHCP (Dynamic Host Configuration Protocol):** The router automatically assigns IP parameters from a dynamic pool. Addresses can change when the lease expires, which is perfect for general clients but problematic for hosts needing consistent routes.\n- **Static IP Configuration:** Manually binding an IP address directly to the client network adapter. This bypasses the DHCP server entirely. \n- *Risk of Collisions:* If you configure a static IP manually (e.g., \`192.168.1.150\`) and that address lies inside the router's active DHCP range, the router may assign it to another device, triggering an **IP address conflict error** and dropping both devices offline. To prevent this, always set static IP reservations in the router GUI under **DHCP Reservations / Static Lease** bindings.\n\n### DHCP Pool Exhaustion\nA router's address pool defines the beginning and end of assignable IPs (e.g., \`192.168.1.100\` to \`192.168.1.199\`, supporting 100 devices). When guests, smart home devices, and mobile random-MAC devices connect, they lease these addresses.\n- **NAT Mapping Limits:** If the pool is fully leased, the DHCP server ignores Discover packets. Device number 101 will fail to get an IP, causing an APIPA fallback.\n- **Lease Duration Settings:** By default, many routers set lease durations to 24 or 72 hours. To avoid exhaustion on high-traffic networks, reduce the lease duration to **8 or 12 hours**. This instructs the router to reclaim inactive IP addresses faster.\n\n---\n\n### Internal References\n- If your device is configured but you can't access the login screen, see the [router-login](/router-login) checklist.\n- For instructions on setting up base configuration properties, read our guide on [router-settings](/router-settings).\n- If your WAN link is active but you receive DNS resolving warnings, look at [dns-server-not-responding](/dns-server-not-responding) or [default-gateway-not-available](/default-gateway-not-available).\n- To clear all system states and reset the DHCP daemon, check [router-reset](/router-reset).`,
+        causes: [
+          "DHCP service is disabled or not running on the router.",
+          "Incorrect DHCP configuration settings (e.g., wrong subnet mask or excluded IP range).",
+          "IP address pool is exhausted due to too many connected devices.",
+          "Network interface issues or hardware malfunctions on the router.",
+          "Firewall rules blocking DHCP requests from clients."
+        ],
+        fixes: [
+          {
+            stepTitle: "Enable DHCP Service",
+            description: "Ensure that the DHCP server is enabled on the router's configuration interface.",
+            technicalDetails: "Access your router settings (commonly 192.168.1.1) and navigate to the DHCP settings to enable the service."
+          },
+          {
+            stepTitle: "Review and Correct DHCP Settings",
+            description: "Check the DHCP configuration for subnet mask, gateway, and exclusion settings.",
+            technicalDetails: "Verify that the subnet mask matches the network configuration (usually 255.255.255.0) and check for valid IP range."
+          },
+          {
+            stepTitle: "Increase IP Address Pool",
+            description: "If the IP address pool is exhausted, expand it or reduce the number of connected devices.",
+            technicalDetails: "Modify the DHCP settings to increase the pool size, ensuring it is within the network subnet range."
+          },
+          {
+            stepTitle: "Inspect Hardware for Malfunctions",
+            description: "Check for hardware issues such as a faulty network interface on the router.",
+            technicalDetails: "Run diagnostics via the router UI and check LEDs indicating health status of network interfaces."
+          },
+          {
+            stepTitle: "Modify Firewall Settings",
+            description: "Adjust firewall rules to allow DHCP traffic through the necessary ports.",
+            technicalDetails: "Ensure that UDP port 67 and 68 are open to allow communication for DHCP requests and offers."
+          }
+        ],
+        faqs: [
+          {
+            question: "Why is my router giving some devices IP addresses but not others?",
+            answer: "This usually happens due to DHCP pool exhaustion (no more addresses available in the range), MAC filtering policies blocking specific hardware, or guest devices using randomized private MAC addresses that consume multiple leases. Check the active lease table in your router config and expand the start/end IP range."
+          },
+          {
+            question: "Can DHCP exhaustion cause this issue?",
+            answer: "Yes, DHCP pool exhaustion is a primary cause. If your pool is set to 50 addresses and you have 50 active smart plugs, phones, and laptops connected, any new device will fail to obtain an IP and default to a 169.254.x.x APIPA address."
+          },
+          {
+            question: "How do I increase DHCP pool size?",
+            answer: "Log into your router (commonly 192.168.1.1 or 192.168.0.1), navigate to Network Settings > LAN / DHCP Server, and adjust the IP Address Range. For example, change the End IP from 192.168.1.150 to 192.168.1.250, then save settings."
+          },
+          {
+            question: "Does rebooting the router reset DHCP leases?",
+            answer: "Rebooting clears the router's active RAM cache, restarting the DHCP server daemon. However, many routers store active leases in flash memory and will preserve them. To force a complete lease clearance, you can temporarily change the IP pool range or perform a full system reset."
+          },
+          {
+            question: "Can VLAN settings break DHCP?",
+            answer: "Yes. DHCP broadcasts do not cross VLAN boundaries. If your server is on VLAN 10 and clients are on VLAN 20, they will fail to receive IP addresses unless a DHCP Relay Agent (IP Helper) is configured on the routing switch to forward UDP packets between subnets."
+          }
+        ],
+        relatedSlugs: ["default-gateway-not-available", "dns-server-not-responding"],
+        metaTitle: "Router Not Assigning IP Addresses? Fix DHCP Issues Fast",
+        metaDescription: "Learn how to resolve DHCP server timeouts, lease pool exhaustion, static IP conflicts, and self-assigned APIPA (169.254.x.x) IP errors.",
+        diagnosticCategory: "DHCP",
+        isPublished: true,
+        status: "PUBLISHED"
+      },
+      create: {
+        title: "Router not assigning IP addresses",
+        slug: "router-not-assigning-ip-addresses",
+        category: "OTHER",
+        excerpt: "The router fails to assign IP addresses due to DHCP service issues, pool exhaustion, or local IP conflicts, leading to self-assigned APIPA addresses (169.254.x.x) and no internet access.",
+        content: `## Troubleshooting: Router Not Assigning IP Addresses\n\nWhen client systems connect to a network but fail to obtain an IP configuration, it indicates a failure in local IP address lease negotiation. This guide details the diagnostics and resolution steps for DHCP service outages.\n\n### How DHCP Works (The DORA Process)\nThe Dynamic Host Configuration Protocol (DHCP) is a client-server protocol that automates IP parameter allocation. It operates on UDP Port 67 (server) and UDP Port 68 (client) through a four-way handshake:\n1. **Discover:** The client broadcasts a DHCP Discover packet to locate active DHCP servers on the subnet.\n2. **Offer:** The router DHCP server reserves an IP from its pool and broadcasts or unicasts a DHCP Offer containing the proposed IP, subnet mask, gateway, and DNS servers.\n3. **Request:** The client broadcasts a DHCP Request confirming it accepts the offered IP configuration.\n4. **Acknowledgement (ACK):** The server registers the client's MAC address, binds the IP lease, and sends a DHCP ACK to finalize the configuration.\n\n*Common Failure Points:*\n- Discover packets are dropped due to network loops (STP blocks) or VLAN isolation.\n- The DHCP daemon crashes or exhausts memory buffers, dropping Discover broadcasts.\n- The router fails to send an ACK because the IP lease is claimed by another static device.\n\n### DHCP Lease Lifecycle\nThe allocation of dynamic IP addresses follows a specific state-transition cycle:\n\n| State | Trigger | Action |\n| --- | --- | --- |\n| **INIT** | Client network interface active | Client sends DHCP Discover broadcast |\n| **SELECTING** | Client receives DHCP Offer(s) | Client selects best offer and prepares Request |\n| **REQUESTING** | Client sends DHCP Request | Client requests lease confirmation from server |\n| **BOUND** | Client receives DHCP ACK | Lease active; client binds IP configuration |\n| **RENEWING (T1)** | Lease time reaches 50% | Client unicasts DHCP Request to renew lease |\n| **REBINDING (T2)** | Lease time reaches 87.5% | Client broadcasts DHCP Request to any DHCP server |\n| **EXPIRED** | Lease time reaches 100% | IP released; interface disabled; INIT state triggered |\n\n### How To Verify DHCP Using Command Line\n\n#### Windows CMD / PowerShell\nRun these commands in an elevated Command Prompt or PowerShell terminal:\n- **Display Full Configuration:** \`ipconfig /all\` - verify if your adapter has a DHCP enabled flag and check your current gateway and DNS.\n- **Release Current Lease:** \`ipconfig /release\` - forces the system to drop its current IP allocation.\n- **Request New Lease:** \`ipconfig /renew\` - triggers a new DORA handshake to obtain fresh configuration parameters.\n\n#### macOS Terminal\nLocate your active interface (usually \`en0\` or \`en1\`) and run:\n- **Renew DHCP Lease:** \`sudo ipconfig set en0 DHCP\` - releases and requests a new DHCP config.\n- **Query Configuration:** \`networksetup -getinfo "Wi-Fi"\` or \`networksetup -getinfo "Belkin USB-C LAN"\` - inspects lease info.\n\n#### Linux Terminal\nUse the standard DHCP client daemon \`dhclient\` or NetworkManager's command line interface \`nmcli\`:\n- **Release and Renew using dhclient:**\n  \`\`\`bash\n  sudo dhclient -r eth0\n  sudo dhclient eth0\n  \`\`\`\n- **Toggle interface using nmcli:**\n  \`\`\`bash\n  nmcli device disconnect eth0\n  nmcli device connect eth0\n  \`\`\`\n\n### DHCP Failure Causes vs Solution Matrix\n\n| Observed Fault | Root Cause | Resolution Steps |\n| --- | --- | --- |\n| **APIPA Fallback (169.254.x.x)** | No DHCP Offer received; server down or link blocked | Restart DHCP service; verify physical cabling |\n| **IP Lease Depletion** | High volume of guest connections or smart devices | Extend DHCP pool range; shorten lease duration |\n| **Rogue DHCP Server** | Conflict from active DHCP on extender/AP | Log into secondary AP and toggle DHCP to Disabled |\n| **VLAN Handshake Failure** | Discover packets blocked at boundary | Configure DHCP Relay / IP Helper on Layer 3 switch |\n| **STP Broadcast Loop** | Mesh node switch loops flood CPU | Enable Spanning Tree Protocol (STP) on local switches |\n\n### Static IP vs DHCP\n- **DHCP (Dynamic Host Configuration Protocol):** The router automatically assigns IP parameters from a dynamic pool. Addresses can change when the lease expires, which is perfect for general clients but problematic for hosts needing consistent routes.\n- **Static IP Configuration:** Manually binding an IP address directly to the client network adapter. This bypasses the DHCP server entirely. \n- *Risk of Collisions:* If you configure a static IP manually (e.g., \`192.168.1.150\`) and that address lies inside the router's active DHCP range, the router may assign it to another device, triggering an **IP address conflict error** and dropping both devices offline. To prevent this, always set static IP reservations in the router GUI under **DHCP Reservations / Static Lease** bindings.\n\n### DHCP Pool Exhaustion\nA router's address pool defines the beginning and end of assignable IPs (e.g., \`192.168.1.100\` to \`192.168.1.199\`, supporting 100 devices). When guests, smart home devices, and mobile random-MAC devices connect, they lease these addresses.\n- **NAT Mapping Limits:** If the pool is fully leased, the DHCP server ignores Discover packets. Device number 101 will fail to get an IP, causing an APIPA fallback.\n- **Lease Duration Settings:** By default, many routers set lease durations to 24 or 72 hours. To avoid exhaustion on high-traffic networks, reduce the lease duration to **8 or 12 hours**. This instructs the router to reclaim inactive IP addresses faster.\n\n---\n\n### Internal References\n- If your device is configured but you can't access the login screen, see the [router-login](/router-login) checklist.\n- For instructions on setting up base configuration properties, read our guide on [router-settings](/router-settings).\n- If your WAN link is active but you receive DNS resolving warnings, look at [dns-server-not-responding](/dns-server-not-responding) or [default-gateway-not-available](/default-gateway-not-available).\n- To clear all system states and reset the DHCP daemon, check [router-reset](/router-reset).`,
+        causes: [
+          "DHCP service is disabled or not running on the router.",
+          "Incorrect DHCP configuration settings (e.g., wrong subnet mask or excluded IP range).",
+          "IP address pool is exhausted due to too many connected devices.",
+          "Network interface issues or hardware malfunctions on the router.",
+          "Firewall rules blocking DHCP requests from clients."
+        ],
+        fixes: [
+          {
+            stepTitle: "Enable DHCP Service",
+            description: "Ensure that the DHCP server is enabled on the router's configuration interface.",
+            technicalDetails: "Access your router settings (commonly 192.168.1.1) and navigate to the DHCP settings to enable the service."
+          },
+          {
+            stepTitle: "Review and Correct DHCP Settings",
+            description: "Check the DHCP configuration for subnet mask, gateway, and exclusion settings.",
+            technicalDetails: "Verify that the subnet mask matches the network configuration (usually 255.255.255.0) and check for valid IP range."
+          },
+          {
+            stepTitle: "Increase IP Address Pool",
+            description: "If the IP address pool is exhausted, expand it or reduce the number of connected devices.",
+            technicalDetails: "Modify the DHCP settings to increase the pool size, ensuring it is within the network subnet range."
+          },
+          {
+            stepTitle: "Inspect Hardware for Malfunctions",
+            description: "Check for hardware issues such as a faulty network interface on the router.",
+            technicalDetails: "Run diagnostics via the router UI and check LEDs indicating health status of network interfaces."
+          },
+          {
+            stepTitle: "Modify Firewall Settings",
+            description: "Adjust firewall rules to allow DHCP traffic through the necessary ports.",
+            technicalDetails: "Ensure that UDP port 67 and 68 are open to allow communication for DHCP requests and offers."
+          }
+        ],
+        faqs: [
+          {
+            question: "Why is my router giving some devices IP addresses but not others?",
+            answer: "This usually happens due to DHCP pool exhaustion (no more addresses available in the range), MAC filtering policies blocking specific hardware, or guest devices using randomized private MAC addresses that consume multiple leases. Check the active lease table in your router config and expand the start/end IP range."
+          },
+          {
+            question: "Can DHCP exhaustion cause this issue?",
+            answer: "Yes, DHCP pool exhaustion is a primary cause. If your pool is set to 50 addresses and you have 50 active smart plugs, phones, and laptops connected, any new device will fail to obtain an IP and default to a 169.254.x.x APIPA address."
+          },
+          {
+            question: "How do I increase DHCP pool size?",
+            answer: "Log into your router (commonly 192.168.1.1 or 192.168.0.1), navigate to Network Settings > LAN / DHCP Server, and adjust the IP Address Range. For example, change the End IP from 192.168.1.150 to 192.168.1.250, then save settings."
+          },
+          {
+            question: "Does rebooting the router reset DHCP leases?",
+            answer: "Rebooting clears the router's active RAM cache, restarting the DHCP server daemon. However, many routers store active leases in flash memory and will preserve them. To force a complete lease clearance, you can temporarily change the IP pool range or perform a full system reset."
+          },
+          {
+            question: "Can VLAN settings break DHCP?",
+            answer: "Yes. DHCP broadcasts do not cross VLAN boundaries. If your server is on VLAN 10 and clients are on VLAN 20, they will fail to receive IP addresses unless a DHCP Relay Agent (IP Helper) is configured on the routing switch to forward UDP packets between subnets."
+          }
+        ],
+        relatedSlugs: ["default-gateway-not-available", "dns-server-not-responding"],
+        metaTitle: "Router Not Assigning IP Addresses? Fix DHCP Issues Fast",
+        metaDescription: "Learn how to resolve DHCP server timeouts, lease pool exhaustion, static IP conflicts, and self-assigned APIPA (169.254.x.x) IP errors.",
+        diagnosticCategory: "DHCP",
+        isPublished: true,
+        status: "PUBLISHED"
+      },
+    }),
+    prisma.problem.upsert({
+      where: { slug: "google-nest-wifi-point-flashing-yellow" },
+      update: {
+        title: "Google Nest WiFi point flashing yellow",
+        slug: "google-nest-wifi-point-flashing-yellow",
+        category: "WIFI",
+        excerpt: "A flashing yellow light on a Google Nest WiFi point indicates a factory reset is in progress, or that the node is having critical difficulties syncing with the main router.",
+        content: `## Troubleshooting: Google Nest WiFi Point Flashing Yellow\n\nGoogle Nest WiFi points use a single LED indicator ring on the base of the device to communicate status. A flashing yellow light is a warning signal that indicates either a factory reset has been triggered or a critical mesh synchronization error has occurred.\n\n### Yellow Light Meaning Matrix\nUnderstanding the state of the yellow LED is key to identifying the network issue:\n\n| LED State | System Meaning | Recommended Action |\n| --- | --- | --- |\n| **Solid Yellow** | Factory reset sequence is initializing | Keep the device plugged in; wait for the reset to complete |\n| **Flashing Yellow** | Reset in progress, or critical link failure | Do not unplug; wait for reboot, or perform a manual setup scan |\n| **Pulsing Yellow** | Node is booting up, or seeking network | Wait for the light to turn solid white; if it fails, trigger re-sync |\n\n### Factory Reset Walkthrough\nIf your Google Nest WiFi point continues to flash yellow and does not show up in the Google Home app, a hardware reset is required to clear corrupted configurations:\n1. Locate the physical **Factory Reset** button on the bottom of the Nest point.\n2. Press and hold the button for about **15 seconds**.\n3. The LED ring will pulse yellow and then turn **solid yellow**.\n4. Release the button. The point will now begin the reset cycle. This process takes about **5 minutes**.\n5. Once complete, the LED ring will pulse white, indicating the point is ready for setup.\n\n### Mesh Node Reconnection\nIf the yellow light was triggered by a connection drop between the Nest point and your main Nest router, follow these steps to restore the mesh:\n1. **Optimize Node Placement:** Ensure the Nest point is placed within 2 rooms or 30 feet of the main Nest router. Thicker concrete walls or metal appliances can block the 5GHz mesh backhaul.\n2. **Re-Add in Google Home App:**\n   - Open the **Google Home** app.\n   - Tap **Devices** -> **Add** -> **New Device**.\n   - Select your Home and wait for the app to scan the local area.\n   - Scan the QR code on the bottom of the Nest point to register it.\n3. **Run a Mesh Test:** Go to WiFi Settings in the Google Home app and run a **Mesh Test** to verify that connection strength is rated as "Great" or "Good".\n\n---\n\n### Internal References\n- Learn more about mesh topologies in our [mesh-wifi](/mesh-wifi) overview.\n- For detailed setup guidelines for primary and secondary nodes, check [mesh-wifi-setup](/mesh-wifi-setup).\n- To compare mesh setups with traditional extenders, read [wifi-extender-vs-mesh](/wifi-extender-vs-mesh).\n- If you need to reset other router models, see the general [router-reset](/router-reset) guide.`,
+        causes: [
+          "Factory reset button was physically held down.",
+          "Lost mesh backhaul connection with the primary router.",
+          "Firmware update interruption or corrupted software state.",
+          "Power adapter output instability causing CPU brownouts."
+        ],
+        fixes: [
+          {
+            stepTitle: "Wait for Factory Reset to Finish",
+            description: "If the reset was intentional, wait 5 minutes until the LED pulses white before re-configuring the point in Google Home."
+          },
+          {
+            stepTitle: "Relocate Point Closer to Router",
+            description: "Move the Nest point to a location closer to the main Nest router, bypassing thick walls and electronic interference."
+          },
+          {
+            stepTitle: "Perform a Hard Manual Reset",
+            description: "Hold the bottom reset button for 15 seconds until the LED turns solid yellow, then release and wait for the reboot."
+          },
+          {
+            stepTitle: "Re-add Point in Google Home App",
+            description: "Remove the offline point from your Home network dashboard, scan its QR code, and run a fresh installation cycle."
+          }
+        ],
+        faqs: [
+          {
+            question: "What does a blinking yellow light on a Google Nest Wifi point mean?",
+            answer: "A blinking yellow light on a Nest Wifi point means the device is performing a factory reset, or it has encountered a critical connection failure and cannot link to the main Nest router."
+          },
+          {
+            question: "How do I force my Google Nest Wifi point to reconnect to the router?",
+            answer: "Unplug the Nest Wifi point for 30 seconds, plug it back in, and place it closer to the main router. If the light does not turn solid white, you may need to remove it from the Google Home app and add it again."
+          },
+          {
+            question: "Can a software update cause the Nest Wifi point to flash yellow?",
+            answer: "Yes. If a firmware update fails or is interrupted due to a power loss, the Nest point's operating system can become corrupted, triggering a recovery state indicated by the flashing yellow LED."
+          },
+          {
+            question: "How do I perform a hard reset on a Google Nest point?",
+            answer: "Press and hold the reset button on the bottom of the device for 15 seconds. The LED ring will turn solid yellow. Release the button and wait 5 minutes for the device to restart in setup mode."
+          },
+          {
+            question: "Will resetting the Nest point erase my main router settings?",
+            answer: "No. Performing a factory reset on a secondary Nest point only clears the configuration of that specific node. Your main router, network name (SSID), and Wi-Fi password will remain completely unaffected."
+          }
+        ],
+        relatedSlugs: ["mesh-wifi", "mesh-wifi-setup"],
+        metaTitle: "Google Nest WiFi Point Flashing Yellow: Troubleshooting Guide",
+        metaDescription: "Learn the causes and solutions for Google Nest WiFi points flashing yellow, performing a hard factory reset, and re-syncing mesh nodes.",
+        diagnosticCategory: "WIFI",
+        isPublished: true,
+        status: "PUBLISHED"
+      },
+      create: {
+        title: "Google Nest WiFi point flashing yellow",
+        slug: "google-nest-wifi-point-flashing-yellow",
+        category: "WIFI",
+        excerpt: "A flashing yellow light on a Google Nest WiFi point indicates a factory reset is in progress, or that the node is having critical difficulties syncing with the main router.",
+        content: `## Troubleshooting: Google Nest WiFi Point Flashing Yellow\n\nGoogle Nest WiFi points use a single LED indicator ring on the base of the device to communicate status. A flashing yellow light is a warning signal that indicates either a factory reset has been triggered or a critical mesh synchronization error has occurred.\n\n### Yellow Light Meaning Matrix\nUnderstanding the state of the yellow LED is key to identifying the network issue:\n\n| LED State | System Meaning | Recommended Action |\n| --- | --- | --- |\n| **Solid Yellow** | Factory reset sequence is initializing | Keep the device plugged in; wait for the reset to complete |\n| **Flashing Yellow** | Reset in progress, or critical link failure | Do not unplug; wait for reboot, or perform a manual setup scan |\n| **Pulsing Yellow** | Node is booting up, or seeking network | Wait for the light to turn solid white; if it fails, trigger re-sync |\n\n### Factory Reset Walkthrough\nIf your Google Nest WiFi point continues to flash yellow and does not show up in the Google Home app, a hardware reset is required to clear corrupted configurations:\n1. Locate the physical **Factory Reset** button on the bottom of the Nest point.\n2. Press and hold the button for about **15 seconds**.\n3. The LED ring will pulse yellow and then turn **solid yellow**.\n4. Release the button. The point will now begin the reset cycle. This process takes about **5 minutes**.\n5. Once complete, the LED ring will pulse white, indicating the point is ready for setup.\n\n### Mesh Node Reconnection\nIf the yellow light was triggered by a connection drop between the Nest point and your main Nest router, follow these steps to restore the mesh:\n1. **Optimize Node Placement:** Ensure the Nest point is placed within 2 rooms or 30 feet of the main Nest router. Thicker concrete walls or metal appliances can block the 5GHz mesh backhaul.\n2. **Re-Add in Google Home App:**\n   - Open the **Google Home** app.\n   - Tap **Devices** -> **Add** -> **New Device**.\n   - Select your Home and wait for the app to scan the local area.\n   - Scan the QR code on the bottom of the Nest point to register it.\n3. **Run a Mesh Test:** Go to WiFi Settings in the Google Home app and run a **Mesh Test** to verify that connection strength is rated as "Great" or "Good".\n\n---\n\n### Internal References\n- Learn more about mesh topologies in our [mesh-wifi](/mesh-wifi) overview.\n- For detailed setup guidelines for primary and secondary nodes, check [mesh-wifi-setup](/mesh-wifi-setup).\n- To compare mesh setups with traditional extenders, read [wifi-extender-vs-mesh](/wifi-extender-vs-mesh).\n- If you need to reset other router models, see the general [router-reset](/router-reset) guide.`,
+        causes: [
+          "Factory reset button was physically held down.",
+          "Lost mesh backhaul connection with the primary router.",
+          "Firmware update interruption or corrupted software state.",
+          "Power adapter output instability causing CPU brownouts."
+        ],
+        fixes: [
+          {
+            stepTitle: "Wait for Factory Reset to Finish",
+            description: "If the reset was intentional, wait 5 minutes until the LED pulses white before re-configuring the point in Google Home."
+          },
+          {
+            stepTitle: "Relocate Point Closer to Router",
+            description: "Move the Nest point to a location closer to the main Nest router, bypassing thick walls and electronic interference."
+          },
+          {
+            stepTitle: "Perform a Hard Manual Reset",
+            description: "Hold the bottom reset button for 15 seconds until the LED turns solid yellow, then release and wait for the reboot."
+          },
+          {
+            stepTitle: "Re-add Point in Google Home App",
+            description: "Remove the offline point from your Home network dashboard, scan its QR code, and run a fresh installation cycle."
+          }
+        ],
+        faqs: [
+          {
+            question: "What does a blinking yellow light on a Google Nest Wifi point mean?",
+            answer: "A blinking yellow light on a Nest Wifi point means the device is performing a factory reset, or it has encountered a critical connection failure and cannot link to the main Nest router."
+          },
+          {
+            question: "How do I force my Google Nest Wifi point to reconnect to the router?",
+            answer: "Unplug the Nest Wifi point for 30 seconds, plug it back in, and place it closer to the main router. If the light does not turn solid white, you may need to remove it from the Google Home app and add it again."
+          },
+          {
+            question: "Can a software update cause the Nest Wifi point to flash yellow?",
+            answer: "Yes. If a firmware update fails or is interrupted due to a power loss, the Nest point's operating system can become corrupted, triggering a recovery state indicated by the flashing yellow LED."
+          },
+          {
+            question: "How do I perform a hard reset on a Google Nest point?",
+            answer: "Press and hold the reset button on the bottom of the device for 15 seconds. The LED ring will turn solid yellow. Release the button and wait 5 minutes for the device to restart in setup mode."
+          },
+          {
+            question: "Will resetting the Nest point erase my main router settings?",
+            answer: "No. Performing a factory reset on a secondary Nest point only clears the configuration of that specific node. Your main router, network name (SSID), and Wi-Fi password will remain completely unaffected."
+          }
+        ],
+        relatedSlugs: ["mesh-wifi", "mesh-wifi-setup"],
+        metaTitle: "Google Nest WiFi Point Flashing Yellow: Troubleshooting Guide",
+        metaDescription: "Learn the causes and solutions for Google Nest WiFi points flashing yellow, performing a hard factory reset, and re-syncing mesh nodes.",
+        diagnosticCategory: "WIFI",
+        isPublished: true,
+        status: "PUBLISHED"
       },
     }),
   ]);
