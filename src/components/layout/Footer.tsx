@@ -117,6 +117,11 @@ const footerLinks = {
     { label: "Router Keeps Restarting", href: "/router-keeps-restarting" },
     { label: "Speed Up Internet", href: "/how-to-speed-up-internet" },
   ],
+  "Commercial Guides": [
+    { label: "Best WiFi Routers", href: "/best-wifi-routers" },
+    { label: "Best Router For Gaming", href: "/best-router-for-gaming" },
+    { label: "Best Mesh WiFi Systems", href: "/best-mesh-wifi" },
+  ],
   "Legal & Trust": [
     { label: "About Us", href: "/about" },
     { label: "Contact Us", href: "/contact" },

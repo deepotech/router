@@ -304,7 +304,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${APP_URL}/best-router-for-gaming`,
       lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.8,
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/best-wifi-routers`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/best-mesh-wifi`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
     },
     {
       url: `${APP_URL}/gaming-router-vs-normal-router`,
