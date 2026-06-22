@@ -15,6 +15,7 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "prisma db seed",
+    "db:seed-expand": "npx tsx prisma/seed-expansion.ts",
     "db:studio": "prisma studio",
     "worker": "tsx src/server/jobs/workers/run-worker.ts"
   },
