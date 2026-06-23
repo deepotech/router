@@ -14,7 +14,11 @@ export const metadata: Metadata = buildMetadata({
     "optimize internet dns",
     "dns over https DoH",
     "dns over tls DoT",
-    "latency anycast routing"
+    "latency anycast routing",
+    "public dns resolvers",
+    "gaming dns settings",
+    "cloudflare dns 1.1.1.1",
+    "google dns 8.8.8.8",
   ],
 });
 
@@ -26,12 +30,12 @@ const breadcrumbs = [
 const troubleshootingSteps = [
   {
     title: "Change Adapter DNS on Your Device",
-    description: "On Windows, go to Network Settings → Ethernet/Wi-Fi → Edit IP/DNS Settings. On macOS, navigate to System Settings → Network → Advanced → DNS. Configure custom Anycast DNS resolvers manually.",
+    description: "On Windows, open Settings → Network & Internet → Advanced network settings → Network adapter properties. Select your active Wi-Fi or Ethernet adapter, click Edit next to IP assignment, toggle to Manual, enable IPv4, and enter custom Primary and Secondary Anycast DNS resolvers. On macOS, navigate to System Settings → Network → select your connection → click Details → select the DNS tab → click the plus (+) icon and enter target DNS provider IPs.",
     tip: "Using custom DNS on your local client isolates resolution speed improvements immediately without requiring a router reboot."
   },
   {
     title: "Configure Custom DNS at the WAN Router Level",
-    description: "Access your router admin console (typically 192.168.1.1), navigate to WAN / Internet Connection settings, toggle DNS settings to manual, and enter your target DNS provider IPs.",
+    description: "Access your router admin console (typically 192.168.1.1, 192.168.0.1, or 192.168.100.1), navigate to WAN / Internet Connection settings, toggle DNS settings to manual/custom, and enter your target DNS provider IPs.",
     tip: "Router-level configuration automatically applies the optimized DNS resolver to all smart TVs, smart home sensors, and console clients."
   },
   {
@@ -57,6 +61,34 @@ const faqs = [
   {
     question: "What is the difference between DoH and DoT?",
     answer: "DNS-over-HTTPS (DoH) encrypts queries within standard web traffic on port 443, making it extremely difficult for firewalls to block. DNS-over-TLS (DoT) uses a dedicated network port (853) that is easier for network administrators to monitor and configure."
+  },
+  {
+    question: "What is Anycast routing in public DNS?",
+    answer: "Anycast routing is a network addressing and routing method where a single destination IP address is shared by multiple physical routing nodes. When you query an Anycast IP like 1.1.1.1, the network automatically routes your request to the physically closest datacenter, minimizing latency."
+  },
+  {
+    question: "Should I configure IPv6 DNS servers on my devices?",
+    answer: "Yes, if your ISP supports native IPv6 routing. You should enter the IPv6 resolver addresses corresponding to your chosen provider (e.g., Cloudflare's 2606:4700:4700::1111) alongside the IPv4 addresses to prevent fallback resolution delays."
+  },
+  {
+    question: "Can a slow DNS server cause online gaming lag?",
+    answer: "A slow DNS server does not cause in-game lag spikes or high ping once you are in a match, because the game client communicates directly with game server IP addresses. However, it will slow down matchmaking, increase lobby joining times, and delay loading server lists."
+  },
+  {
+    question: "Is it safe to use free public DNS servers?",
+    answer: "Yes, if they are operated by reputable companies like Cloudflare, Google, or Quad9. These providers have strict privacy policies, encrypt your queries, and do not sell your browsing data. Avoid using unknown or unverified free DNS resolvers."
+  },
+  {
+    question: "What is EDNS Client Subnet (ECS) and why does it matter?",
+    answer: "EDNS Client Subnet (ECS) is a DNS extension that allows resolvers to pass a portion of the client's IP address to the authoritative nameserver. This helps Content Delivery Networks (CDNs) direct you to a local cache server. While beneficial for streaming, it does leak a part of your IP address, raising privacy concerns."
+  },
+  {
+    question: "Why does my browser say 'Resolving host...' for several seconds?",
+    answer: "This is a classic symptom of a slow or failing DNS server. Your browser is waiting for the DNS resolver to translate the web address into an IP. Changing to a fast public DNS resolver like Cloudflare or Google will fix this immediately."
+  },
+  {
+    question: "Can I use multiple DNS providers for redundancy?",
+    answer: "Yes. You can configure your Primary DNS to Cloudflare (1.1.1.1) and your Secondary DNS to Google (8.8.8.8). If Cloudflare experiences an outage, your system will automatically fall back to Google's server without dropping your connection."
   }
 ];
 
@@ -179,14 +211,48 @@ export default function BestDnsForFasterInternetPage() {
 
           <h2 className="text-sm font-bold text-[var(--text-primary)]">What Happens Internally During a DNS Lookup?</h2>
           <p>
-            Every web transaction begins with a DNS lookup. A DNS resolver acts as the 'phone book' of the internet. 
-          </p>
-          <p>
-            When you type a domain name like <code>google.com</code> into your browser, your computer sends a UDP query packet to port 53 of your configured DNS resolver. The resolver checks its local cache. If the record is missing, it performs a recursive lookup, querying the Root Name Servers, then the Top-Level Domain (TLD) server (e.g. for .com), and finally the authoritative name server of the target domain to retrieve the exact numeric IP address (e.g. 142.251.46.238).
+            Every web transaction begins with a DNS lookup. A DNS resolver acts as the 'phone book' of the internet. When you type a domain name like <code>google.com</code> into your browser, your computer sends a UDP query packet to port 53 of your configured DNS resolver. The resolver checks its local cache. If the record is missing, it performs a recursive lookup, querying the Root Name Servers, then the Top-Level Domain (TLD) server (e.g. for .com), and finally the authoritative name server of the target domain to retrieve the exact numeric IP address (e.g. 142.251.46.238).
           </p>
           <p>
             If your resolver is congested or geographically distant, this packet exchange introduces physical propagation latency. Because modern websites load elements from dozens of separate external domains (such as ad servers, media CDNs, and analytics trackers), slow DNS resolvers can add several seconds of cumulative delay to a single page load. Changing to anycast resolvers ensures your queries are routed to the physically closest server node, reducing latency to a minimum.
           </p>
+
+          <h2 className="text-sm font-bold text-[var(--text-primary)]">The Architecture of Anycast DNS Routing</h2>
+          <p>
+            Traditional unicast routing maps a single IP address to a single physical device on the internet. If that device is overloaded or physically distant, performance drops. Public DNS providers solve this bottleneck using Anycast routing. Under Anycast, multiple servers located in datacenters across the globe share the exact same IP address (e.g., 1.1.1.1).
+          </p>
+          <p>
+            When you send a request, internet routers use Border Gateway Protocol (BGP) routing metrics to automatically forward your packets to the nearest available server location. This geographical distribution ensures redundancy: if one datacenter goes offline, the internet routing protocol instantly routes your DNS traffic to the next closest node, preventing downtime and maintaining speed.
+          </p>
+
+          <h2 className="text-sm font-bold text-[var(--text-primary)]">Why Do Gaming vs. Streaming DNS Recommendations Differ?</h2>
+          <p>
+            When optimizing network settings, your choice of DNS depends heavily on your primary internet activity:
+          </p>
+          <ul className="list-disc pl-5 space-y-2 text-[11px] text-[var(--text-muted)]">
+            <li>
+              <strong>Online Gaming (Lowest Latency):</strong> Gamers require the absolute lowest physical round-trip times (RTT) to prevent matchmaking delays and lobby lag. <strong>Cloudflare (1.1.1.1)</strong> is the optimal choice; it prioritizes query processing speed over data scraping, maintaining the fastest global resolution response.
+            </li>
+            <li>
+              <strong>Video Streaming & Downloading (CDN Optimization):</strong> Media streamers require DNS resolvers that support <strong>EDNS Client Subnet (ECS)</strong>. When a resolver supports ECS, it passes a masked portion of your local IP address to content delivery networks (like Netflix or Akamai). This ensures the CDN returns the IP of the closest caching server, maximizing throughput for 4K video feeds. Quad9 does not support ECS on its secure 9.9.9.9 profile to protect privacy; use Google (8.8.8.8) or Cloudflare (1.1.1.1) for optimal streaming routing.
+            </li>
+          </ul>
+
+          <h2 className="text-sm font-bold text-[var(--text-primary)]">Comparing DNS SECURE Protocols: DoH vs. DoT vs. DNSCrypt</h2>
+          <p>
+            Standard DNS queries are sent in plaintext UDP format, exposing them to sniffing, tampering, and man-in-the-middle attacks. To secure this layer, three protocols are used:
+          </p>
+          <ul className="list-disc pl-5 space-y-2 text-[11px] text-[var(--text-muted)]">
+            <li>
+              <strong>DNS-over-HTTPS (DoH):</strong> Wraps DNS queries in encrypted HTTPS sessions on port 443. This makes it look like regular web traffic, preventing network administrators from easily blocking it.
+            </li>
+            <li>
+              <strong>DNS-over-TLS (DoT):</strong> Uses a dedicated network port (853) to establish a TLS tunnel. It is easier to configure and monitor at the router firewall level than DoH, but can be blocked by port-based firewalls.
+            </li>
+            <li>
+              <strong>DNSCrypt:</strong> An older open-source protocol that authenticates and encrypts DNS traffic. It requires specialized client software and is less supported natively by operating systems than DoH or DoT.
+            </li>
+          </ul>
 
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-elevated)] rounded-xl space-y-2">
             <span className="font-bold text-[var(--text-primary)] block text-xs">Deep Diagnostics & Internal Authority Links</span>
@@ -196,28 +262,15 @@ export default function BestDnsForFasterInternetPage() {
               <li>Verify your gateway configuration endpoints at the <a href="/ips/192-168-1-1" className="text-[var(--brand-400)] hover:underline">192.168.1.1 Gateway Portal</a>.</li>
               <li>Analyze your wireless dropouts using the <a href="/wifi-keeps-disconnecting" className="text-[var(--brand-400)] hover:underline">WiFi Disconnection Walkthrough</a>.</li>
               <li>Check your physical link speed using the <a href="/ethernet-connected-but-no-internet" className="text-[var(--brand-400)] hover:underline">Ethernet Connected but No Internet Optimizer</a>.</li>
+              <li>Isolate packet drop bottlenecks using the <a href="/packet-loss-test" className="text-[var(--brand-400)] hover:underline">Packet Loss Test Tool</a>.</li>
+              <li>Learn how nested routers create address translation issues at the <a href="/double-nat-detected" className="text-[var(--brand-400)] hover:underline">Double NAT Diagnostic</a>.</li>
+              <li>Optimize console gaming settings with the <a href="/best-dns-for-ps5" className="text-[var(--brand-400)] hover:underline">Best DNS for PS5 Guide</a>.</li>
             </ul>
           </div>
 
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">Why Do Gaming vs. Streaming DNS Recommendations Differ?</h2>
-          <p>
-            When optimizing network settings, your choice of DNS depends heavily on your primary internet activity:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-[11px] text-[var(--text-muted)]">
-            <li>
-              <strong>Online Gaming (Lowest Latency):</strong> Gamers require the absolute lowest physical round-trip times (RTT) to prevent matchmaking delays and lobby lag. **Cloudflare (1.1.1.1)** is the optimal choice; it prioritizes query processing speed over data scraping, maintaining the fastest global resolution response.
-            </li>
-            <li>
-              <strong>Video Streaming & Downloading (CDN Optimization):</strong> Media streamers require DNS resolvers that support **EDNS Client Subnet (ECS)**. When a resolver supports ECS, it passes a masked portion of your local IP address to content delivery networks (like Netflix or Akamai). This ensures the CDN returns the IP of the closest caching server, maximizing throughput for 4K video feeds. Quad9 does not support ECS on its secure 9.9.9.9 profile to protect privacy; use Google (8.8.8.8) or Cloudflare (1.1.1.1) for optimal streaming routing.
-            </li>
-          </ul>
-
           <h2 className="text-sm font-bold text-[var(--text-primary)]">Commercial Intent: Custom Pi-Hole & NextDNS Solutions</h2>
           <p>
-            If you want to take network-level DNS optimization further, consider deploying a dedicated local **Pi-Hole** DNS server or utilizing **NextDNS** cloud profiles. 
-          </p>
-          <p>
-            A Pi-Hole runs on a low-cost Raspberry Pi micro-computer connected directly to your router switch. It intercepts all local DNS queries and automatically drops connections to known tracking and advertisement domains at the DNS level. This prevents your devices from downloading massive ad payloads, dramatically reducing WAN bandwidth consumption and accelerating page loading across all smartphones, tablets, and smart TVs in your household.
+            If you want to take network-level DNS optimization further, consider deploying a dedicated local <strong>Pi-Hole</strong> DNS server or utilizing <strong>NextDNS</strong> cloud profiles. A Pi-Hole runs on a low-cost Raspberry Pi micro-computer connected directly to your router switch. It intercepts all local DNS queries and automatically drops connections to known tracking and advertisement domains at the DNS level. This prevents your devices from downloading massive ad payloads, dramatically reducing WAN bandwidth consumption and accelerating page loading across all smartphones, tablets, and smart TVs in your household.
           </p>
         </article>
 

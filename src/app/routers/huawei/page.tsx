@@ -1599,18 +1599,18 @@ export default function HuaweiRouterHubPage() {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
+                { href: "/huawei-router-login", label: "Huawei Router Login" },
+                { href: "/huawei-router-default-password", label: "Huawei default passwords" },
+                { href: "/huawei-router-ip-address", label: "Huawei router IP Address" },
+                { href: "/huawei-hg8145v5-default-password", label: "Huawei HG8145V5 Setup" },
+                { href: "/huawei-ax3-default-password", label: "Huawei AX3 Config Guide" },
                 { href: "/router-login", label: "Router Login Guide" },
                 { href: "/router-password", label: "Router Password Recovery" },
                 { href: "/router-reset", label: "Router Reset Guide" },
                 { href: "/router-admin", label: "Router Admin Setup" },
                 { href: "/ips/192-168-0-1", label: "192.168.0.1 Guide" },
                 { href: "/ips/192-168-1-1", label: "192.168.1.1 Guide" },
-                { href: "/routers/tp-link", label: "TP-Link Hub" },
-                { href: "/routers/netgear", label: "NETGEAR Hub" },
-                { href: "/routers/asus", label: "ASUS Hub" },
-                { href: "/routers/d-link", label: "D-Link Hub" },
                 { href: "/wifi-6-for-gaming", label: "Wi-Fi 6 for Gaming" },
-                { href: "/best-mesh-wifi-for-gaming", label: "Best Mesh Wi-Fi" },
               ].map((link) => (
                 <Link
                   key={link.href}

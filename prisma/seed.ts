@@ -1,4 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import { ip_192_168_1_1 } from "../content/ip-pages/192-168-1-1";
+import { ip_192_168_0_1 } from "../content/ip-pages/192-168-0-1";
+import { ip_192_168_8_1 } from "../content/ip-pages/192-168-8-1";
+import { ip_192_168_100_1 } from "../content/ip-pages/192-168-100-1";
 
 const prisma = new PrismaClient();
 
@@ -1932,81 +1936,95 @@ Restoring the ASUS RT-AX88U to factory settings clears all custom configurations
   const ips = await Promise.all([
     prisma.ipAddress.upsert({
       where: { address: "192.168.1.1" },
-      update: {},
+      update: {
+        slug: ip_192_168_1_1.slug,
+        commonBrands: ip_192_168_1_1.commonBrands,
+        description: ip_192_168_1_1.description,
+        loginGuide: ip_192_168_1_1.loginGuide,
+        faqs: ip_192_168_1_1.faqs,
+        metaTitle: ip_192_168_1_1.metaTitle,
+        metaDescription: ip_192_168_1_1.metaDescription,
+      },
       create: {
         address: "192.168.1.1",
-        slug: "192-168-1-1",
-        commonBrands: ["ASUS", "D-Link", "Netgear", "Linksys", "ZTE"],
-        description:
-          "192.168.1.1 is one of the most common router login IP addresses. It is the default gateway for many popular router brands including ASUS, D-Link, Netgear, and Linksys.",
-        loginGuide: `## How to Login at 192.168.1.1\n\n1. Make sure you are connected to your router via WiFi or Ethernet\n2. Open any web browser (Chrome, Firefox, Edge)\n3. Type **192.168.1.1** in the address bar and press Enter\n4. Enter your router's username and password\n5. If you haven't changed them, try the defaults: admin/admin\n6. You will now be in your router's admin panel`,
-        faqs: [
-          {
-            question: "Why can't I access 192.168.1.1?",
-            answer:
-              "Make sure you are connected to the router. Check that 192.168.1.1 is actually your router's IP by running 'ipconfig' (Windows) or 'ip route' (Linux/Mac) and looking for the Default Gateway.",
-          },
-          {
-            question: "What routers use 192.168.1.1?",
-            answer:
-              "Many routers use 192.168.1.1 as the default gateway including ASUS, D-Link, Netgear, Linksys, and some ZTE models.",
-          },
-        ],
-        metaTitle: "192.168.1.1 — Router Login Admin Page",
-        metaDescription:
-          "Access your router admin page at 192.168.1.1. Step-by-step login guide, default credentials, and troubleshooting tips.",
+        slug: ip_192_168_1_1.slug,
+        commonBrands: ip_192_168_1_1.commonBrands,
+        description: ip_192_168_1_1.description,
+        loginGuide: ip_192_168_1_1.loginGuide,
+        faqs: ip_192_168_1_1.faqs,
+        metaTitle: ip_192_168_1_1.metaTitle,
+        metaDescription: ip_192_168_1_1.metaDescription,
       },
     }),
     prisma.ipAddress.upsert({
       where: { address: "192.168.0.1" },
-      update: {},
+      update: {
+        slug: ip_192_168_0_1.slug,
+        commonBrands: ip_192_168_0_1.commonBrands,
+        description: ip_192_168_0_1.description,
+        loginGuide: ip_192_168_0_1.loginGuide,
+        faqs: ip_192_168_0_1.faqs,
+        metaTitle: ip_192_168_0_1.metaTitle,
+        metaDescription: ip_192_168_0_1.metaDescription,
+      },
       create: {
         address: "192.168.0.1",
-        slug: "192-168-0-1",
-        commonBrands: ["TP-Link", "D-Link", "Huawei", "Tenda"],
-        description:
-          "192.168.0.1 is the default gateway for many TP-Link, D-Link, and Huawei routers. It gives you access to the router administration panel.",
-        loginGuide: `## How to Login at 192.168.0.1\n\n1. Connect to your router via WiFi or Ethernet cable\n2. Open a web browser and type **192.168.0.1**\n3. Press Enter to load the admin login page\n4. Enter your username and password (try admin/admin if not changed)\n5. Access your router settings`,
-        faqs: [
-          {
-            question: "Which routers use 192.168.0.1?",
-            answer:
-              "TP-Link, D-Link, and some Huawei routers commonly use 192.168.0.1 as the default gateway.",
-          },
-          {
-            question: "What if 192.168.0.1 doesn't open?",
-            answer:
-              "Try 192.168.1.1 instead. If neither works, check your router's label for the correct IP or run 'ipconfig' on Windows.",
-          },
-        ],
-        metaTitle: "192.168.0.1 — Router Login Admin Page",
-        metaDescription:
-          "Login to your router at 192.168.0.1. Default credentials and setup guide for TP-Link, D-Link, and Huawei routers.",
+        slug: ip_192_168_0_1.slug,
+        commonBrands: ip_192_168_0_1.commonBrands,
+        description: ip_192_168_0_1.description,
+        loginGuide: ip_192_168_0_1.loginGuide,
+        faqs: ip_192_168_0_1.faqs,
+        metaTitle: ip_192_168_0_1.metaTitle,
+        metaDescription: ip_192_168_0_1.metaDescription,
       },
     }),
     prisma.ipAddress.upsert({
       where: { address: "192.168.8.1" },
-      update: {},
+      update: {
+        slug: ip_192_168_8_1.slug,
+        commonBrands: ip_192_168_8_1.commonBrands,
+        description: ip_192_168_8_1.description,
+        loginGuide: ip_192_168_8_1.loginGuide,
+        faqs: ip_192_168_8_1.faqs,
+        metaTitle: ip_192_168_8_1.metaTitle,
+        metaDescription: ip_192_168_8_1.metaDescription,
+      },
       create: {
         address: "192.168.8.1",
-        slug: "192-168-8-1",
-        commonBrands: ["Huawei"],
-        description:
-          "192.168.8.1 is the default login address for many Huawei home routers and mobile WiFi devices.",
-        loginGuide: `## How to Login at 192.168.8.1\n\n1. Connect to your Huawei device via WiFi or cable\n2. Open a browser and go to **192.168.8.1**\n3. Enter the admin credentials from your device label\n4. Access the Huawei admin panel`,
-        faqs: [
-          {
-            question: "Which devices use 192.168.8.1?",
-            answer:
-              "Huawei routers and Huawei mobile WiFi (MiFi) devices commonly use 192.168.8.1.",
-          },
-        ],
-        metaTitle: "192.168.8.1 — Huawei Router Login Admin Page",
-        metaDescription:
-          "Access your Huawei router admin page at 192.168.8.1. Login guide and troubleshooting for Huawei devices.",
+        slug: ip_192_168_8_1.slug,
+        commonBrands: ip_192_168_8_1.commonBrands,
+        description: ip_192_168_8_1.description,
+        loginGuide: ip_192_168_8_1.loginGuide,
+        faqs: ip_192_168_8_1.faqs,
+        metaTitle: ip_192_168_8_1.metaTitle,
+        metaDescription: ip_192_168_8_1.metaDescription,
+      },
+    }),
+    prisma.ipAddress.upsert({
+      where: { address: "192.168.100.1" },
+      update: {
+        slug: ip_192_168_100_1.slug,
+        commonBrands: ip_192_168_100_1.commonBrands,
+        description: ip_192_168_100_1.description,
+        loginGuide: ip_192_168_100_1.loginGuide,
+        faqs: ip_192_168_100_1.faqs,
+        metaTitle: ip_192_168_100_1.metaTitle,
+        metaDescription: ip_192_168_100_1.metaDescription,
+      },
+      create: {
+        address: "192.168.100.1",
+        slug: ip_192_168_100_1.slug,
+        commonBrands: ip_192_168_100_1.commonBrands,
+        description: ip_192_168_100_1.description,
+        loginGuide: ip_192_168_100_1.loginGuide,
+        faqs: ip_192_168_100_1.faqs,
+        metaTitle: ip_192_168_100_1.metaTitle,
+        metaDescription: ip_192_168_100_1.metaDescription,
       },
     }),
   ]);
+
+  console.log(`✅ Created ${ips.length} IP address pages`);
 
   const wifiConnectedNoInternetContent = `## WiFi Connected But No Internet Access: Diagnostic Guide
 

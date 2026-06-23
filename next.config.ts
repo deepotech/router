@@ -31,6 +31,10 @@ const nextConfig: NextConfig = {
   experimental: {
     // Partial Pre-rendering for hybrid static/dynamic rendering
     ppr: false,
+    // Throttling static generation concurrency to prevent database connection pool exhaustion
+    staticGenerationMaxConcurrency: 4,
+    // Limit CPU threads for worker pools to prevent DB exhaustion
+    cpus: 4,
   },
 
   // Security Headers

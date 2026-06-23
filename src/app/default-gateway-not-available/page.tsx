@@ -4,9 +4,9 @@ import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArtic
 import ConnectionOptimizerClient from "@/components/tools/ConnectionOptimizerClient";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Default Gateway Not Available? Fix Gateway Connection Issues",
+  title: "Default Gateway Not Available? Fix Connection Drops (Updated 2026)",
   description:
-    "Is your computer showing a 'Default Gateway is Not Available' error? Learn how to reset your TCP/IP stack, configure driver power settings, and resolve gateway failures.",
+    "Fix 'Default Gateway is Not Available' in seconds. Learn step-by-step how to reset your TCP/IP stack, configure network adapter drivers, and resolve gateway dropouts.",
   canonical: "/default-gateway-not-available",
   keywords: [
     "default gateway not available",
@@ -14,7 +14,10 @@ export const metadata: Metadata = buildMetadata({
     "gateway is unreachable",
     "gateway ip address mismatch",
     "ethernet no default gateway",
-    "default gateway blank"
+    "default gateway blank",
+    "winsock reset gateway",
+    "intel network driver reset",
+    "realtek gateway dropout",
   ],
 });
 
@@ -26,12 +29,12 @@ const breadcrumbs = [
 const troubleshootingSteps = [
   {
     title: "Inspect Adapter Power Management Settings",
-    description: "On Windows, open Device Manager, expand Network Adapters, right-click your adapter (Intel/Realtek), and select Properties. Under the Power Management tab, uncheck 'Allow the computer to turn off this device to save power'.",
+    description: "On Windows, open Device Manager (right-click the Start button and select Device Manager), expand the 'Network adapters' section, right-click your main network controller adapter (Intel/Realtek/Killer), and select Properties. Navigate to the Power Management tab, and uncheck 'Allow the computer to turn off this device to save power'. Click OK and restart your PC.",
     tip: "Power-saving sleep states frequently lock up the network adapter's physical transceiver (PHY), causing it to fail to process gateway keepalive frames."
   },
   {
     title: "Query Mapped Routes and ARP Cache States",
-    description: "Open an elevated command interface. Execute 'route print' to ensure the default route (0.0.0.0/0) points to your router's actual LAN IP. Run 'arp -a' to verify if the router's physical MAC address is successfully mapped.",
+    description: "Open an elevated command interface (CMD as administrator). Execute 'route print' to ensure the default route (0.0.0.0/0) points to your router's actual LAN IP. Run 'arp -a' to verify if the router's physical MAC address is successfully mapped.",
     tip: "A stale or incorrect gateway MAC entry in your ARP cache will redirect local packets to a dead network node."
   },
   {
@@ -75,6 +78,22 @@ const faqs = [
   {
     question: "What is the difference between a default gateway and an IP address?",
     answer: "Your IP address is the unique identity of your device on the local subnet, allowing other local nodes to address packets to it. The default gateway is the IP address of the router interface connected to the LAN. It serves as the exit route for all packets destined for addresses outside the local subnet (e.g., the internet)."
+  },
+  {
+    question: "Can double NAT cause default gateway not available issues?",
+    answer: "No, double NAT itself does not cause gateway unreachable errors because both nested routers maintain active gateway configurations. However, it can cause IP conflicts if both routers use the same subnet (e.g. 192.168.1.1), which leads to local routing collision dropouts."
+  },
+  {
+    question: "How do I flush the ARP cache to fix default gateway conflicts?",
+    answer: "Open Command Prompt as Administrator and run the command: 'netsh interface ip delete arpcache'. This forces the operating system to clear all mapped MAC-to-IP addresses and re-query the default gateway router."
+  },
+  {
+    question: "Why does my WiFi gateway fail while Ethernet works?",
+    answer: "This is usually caused by RF wireless signal interference or radio congestion rather than a TCP/IP stack problem. Wireless adapters also have stricter power-saving profiles than wired Ethernet adapters, which triggers sleep timeouts."
+  },
+  {
+    question: "How does my PC discover the default gateway IP automatically?",
+    answer: "Discovery occurs during the DHCP handshake. When your computer connects to the network, it broadcasts a DHCP Discover packet. The router responds with a DHCP Offer containing your leased local IP, subnet mask, DNS servers, and the router's own IP assigned as the Default Gateway (DHCP Option 3)."
   }
 ];
 
@@ -213,6 +232,9 @@ export default function DefaultGatewayNotAvailablePage() {
               <li>Learn how physical port negotiation caps routing speeds in our <a href="/ethernet-slower-than-wifi" className="text-[var(--brand-400)] hover:underline">Ethernet Slower than Wi-Fi Walkthrough</a>.</li>
               <li>Is your router gateway constantly rebooting under load? See our <a href="/router-keeps-restarting" className="text-[var(--brand-400)] hover:underline">Router Power Instability Debug Guide</a>.</li>
               <li>Check your DNS paths once the default gateway is restored with our <a href="/best-dns-for-faster-internet" className="text-[var(--brand-400)] hover:underline">Best DNS Settings Optimizer</a>.</li>
+              <li>Resolve nested address translations with the <a href="/double-nat-detected" className="text-[var(--brand-400)] hover:underline">Double NAT Resolution Guide</a>.</li>
+              <li>Verify PlayStation configurations with the <a href="/best-dns-for-ps5" className="text-[var(--brand-400)] hover:underline">Fastest PS5 DNS Guides</a>.</li>
+              <li>Perform physical transmission tests using the <a href="/packet-loss-test" className="text-[var(--brand-400)] hover:underline">Packet Loss Diagnostic Tool</a>.</li>
             </ul>
           </div>
 

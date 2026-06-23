@@ -6,7 +6,7 @@ import { APP_URL } from "@/lib/constants";
 export interface NetworkingToolShellProps {
   h1: string;
   intro: string;
-  toolType: "dns" | "port" | "mac" | "subnet";
+  toolType: "dns" | "port" | "mac" | "subnet" | "ping" | "password";
   breadcrumbs: {
     name: string;
     url: string;
@@ -113,6 +113,46 @@ export default function NetworkingToolShell({
       differencesTitle: "Understanding CIDR Prefix Notation",
       differencesText1: "CIDR (Classless Inter-Domain Routing) notation represents an IP address followed by a slash and a decimal number indicating the network prefix length — e.g. /24 implies 24 bits are dedicated to the network.",
       differencesText2: "This modern system replaced the legacy Class A, B, and C address classes in 1993, allowing networks to be split with absolute precision rather than arbitrary, wasteful boundaries.",
+    },
+    ping: {
+      icon: Activity,
+      colorClass: "bg-yellow-900/20 text-yellow-400 border-yellow-800/30",
+      appId: "ping-test",
+      appName: "RouterVia Ping Test",
+      description: "A free browser-based ping test to measure latency and packet loss to any host or IP address using HTTP HEAD requests.",
+      howItWorksTitle: "How Does the Ping Test Work?",
+      howItWorksText1: "This browser-based ping tool sends HTTP HEAD requests to the target host and measures the round-trip time (RTT) — the time it takes for a request to travel from your browser to the server and back. It runs 4 consecutive probes, similar to a traditional ICMP ping, and reports the average latency.",
+      howItWorksText2: "Note: Browser pings use HTTP rather than raw ICMP packets, so results include HTTP handshake overhead and may differ from system-level ping times. They are best used for relative comparison between hosts rather than absolute latency measurements.",
+      revealsTitle: "Interpreting Ping Results",
+      revealCards: [
+        { title: "< 20ms — Excellent", desc: "Extremely low latency. Ideal for competitive online gaming, VoIP calls, and real-time financial trading applications." },
+        { title: "20–50ms — Good", desc: "Standard home broadband performance. Suitable for gaming and streaming without noticeable lag." },
+        { title: "50–100ms — Acceptable", desc: "Moderate latency. May introduce slight delays in competitive gaming. Common on mobile or congested networks." },
+        { title: "> 100ms — High", desc: "Noticeable lag. Investigate ISP congestion, Wi-Fi signal strength, VPN overhead, or routing path issues." },
+      ],
+      differencesTitle: "ICMP Ping vs. HTTP Ping",
+      differencesText1: "Traditional ICMP ping (the system command) sends small ICMP Echo Request packets directly to the target IP at the network layer. Many servers block ICMP requests for security, which makes them appear unreachable even when the website is fully accessible.",
+      differencesText2: "HTTP HEAD ping (used here) sends a lightweight HTTP request to the web application layer. This gives a more realistic measurement of website accessibility but includes TCP handshake and TLS negotiation overhead. Both methods are valid diagnostic tools for different use cases.",
+    },
+    password: {
+      icon: Shield,
+      colorClass: "bg-cyan-900/20 text-cyan-400 border-cyan-800/30",
+      appId: "password-generator",
+      appName: "RouterVia Password Generator",
+      description: "A cryptographically secure browser-based password generator for creating strong WiFi passwords and router admin credentials.",
+      howItWorksTitle: "How Does the Password Generator Work?",
+      howItWorksText1: "This tool uses the Web Crypto API (crypto.getRandomValues) built into your browser to generate cryptographically secure random passwords. Unlike Math.random() which uses a predictable pseudo-random algorithm, crypto.getRandomValues uses the operating system's entropy pool to generate true randomness that cannot be predicted or reverse-engineered.",
+      howItWorksText2: "All password generation happens locally in your browser — no passwords are ever sent to our servers. The tool assembles a character set based on your selected options, then uses the random byte stream to select characters uniformly from that set.",
+      revealsTitle: "Password Security Fundamentals",
+      revealCards: [
+        { title: "Entropy & Length", desc: "Password strength is measured in bits of entropy. Each additional character multiplies the attack space — 16 characters is exponentially harder to crack than 8." },
+        { title: "Character Diversity", desc: "Mixing uppercase, lowercase, numbers, and symbols dramatically increases the keyspace — from 26^N to 94^N possible combinations." },
+        { title: "WPA2 / WPA3 Requirements", desc: "WiFi passwords must be 8–63 characters. WPA3 uses SAE (Simultaneous Authentication of Equals) to resist offline dictionary attacks even with shorter passwords." },
+        { title: "Admin Panel Security", desc: "Router admin passwords are the most critical — a compromised admin panel gives full network control. Always change from the default 'admin/admin' credentials." },
+      ],
+      differencesTitle: "WPA2 vs. WPA3 Security",
+      differencesText1: "WPA2 (Wi-Fi Protected Access 2) uses CCMP-AES encryption with a 4-way handshake that is vulnerable to offline brute-force attacks if a weak password is used. An attacker who captures the handshake can attempt millions of password guesses per second using a GPU.",
+      differencesText2: "WPA3 replaces the vulnerable 4-way handshake with SAE (Simultaneous Authentication of Equals), also known as Dragonfly. SAE prevents offline dictionary attacks — each authentication attempt requires active participation, making brute-force attacks computationally impractical. Enable WPA3 in your router's wireless security settings if your devices support it.",
     },
   };
 

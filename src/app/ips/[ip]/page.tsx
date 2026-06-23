@@ -47,6 +47,12 @@ interface StaticIpData {
   troubleshootingTips: string[];
   firmwareTip: string;
   faqs: { question: string; answer: string }[];
+  routerBrands?: {
+    brand: string;
+    models: string;
+    defaultLogin: string;
+    alternativeUrl?: string;
+  }[];
 }
 
 const STATIC_IP_DATA: Record<string, StaticIpData> = {
@@ -82,43 +88,85 @@ const STATIC_IP_DATA: Record<string, StaticIpData> = {
       {
         question: "What routers use 192.168.1.1?",
         answer:
-          "192.168.1.1 is the default gateway for ASUS, Netgear, Linksys, older TP-Link, ZTE, Belkin, and many other home routers. It is the most common router login IP in the world.",
+          "ASUS, Netgear, Linksys, D-Link (some models), ZTE, and Belkin routers commonly use 192.168.1.1 as their default gateway. Check the sticker on the bottom of your router to confirm.",
       },
       {
         question: "Why is 192.168.1.1 not opening?",
         answer:
-          "Common causes: (1) You're not connected to the router network. (2) A VPN is blocking local subnet access. (3) Your router uses a different IP like 192.168.0.1. (4) Browser is forcing HTTPS — type http://192.168.1.1 explicitly.",
+          "Common causes: (1) your device is not connected to the router, (2) an active VPN is intercepting local traffic, (3) your router uses a different IP like 192.168.0.1, or (4) the browser is forcing HTTPS. Run ipconfig (Windows) to check your actual gateway.",
       },
       {
-        question: "What is the default password for 192.168.1.1?",
+        question: "What is the default username and password for 192.168.1.1?",
         answer:
-          "Most routers using 192.168.1.1 have the default username 'admin' and password 'admin'. Netgear uses 'admin' / 'password'. Always check the sticker on the back of your router first.",
+          "Most routers use admin/admin or admin/password. Netgear uses admin/password. D-Link uses Admin (capital A) with a blank password. Always check the sticker on your router first as ISPs sometimes set custom credentials.",
       },
       {
-        question: "How do I reset a router to access 192.168.1.1?",
+        question: "How do I log in to 192.168.1.1 from my phone?",
         answer:
-          "While the router is powered on, press and hold the Reset button (small pinhole) for 10 seconds until the LED flashes. This restores factory defaults, including the default IP and credentials.",
+          "Connect your phone to the router's Wi-Fi. Turn off mobile data temporarily (it can override Wi-Fi for browser requests). Open any browser, type http://192.168.1.1 in the address bar, and press Go.",
       },
       {
-        question: "Is 192.168.1.1 a public or private IP?",
+        question: "Is 192.168.1.1 a public or private IP address?",
         answer:
-          "192.168.1.1 is a private IP address (RFC 1918 range). It is only accessible from within your local network and cannot be accessed from the internet.",
+          "It is a private IP address defined by RFC 1918. It is only accessible within your local network and cannot be reached from the internet. Any device outside your home cannot connect to 192.168.1.1.",
       },
       {
-        question: "Can I change my router's IP from 192.168.1.1?",
+        question: "How do I reset my router if I forgot the password for 192.168.1.1?",
         answer:
-          "Yes. Log in to the admin panel at 192.168.1.1, go to LAN Settings → LAN IP Address, and change it to any private IP in the 192.168.x.x or 10.x.x.x range. Save and reconnect.",
+          "Hold the Reset button (pinhole on the back) for 10–15 seconds while the router is powered on. The router reboots with factory defaults. You can then log in with the original default credentials printed on the label.",
       },
       {
-        question: "What if I forgot my 192.168.1.1 password?",
+        question: "Can I change my router's IP address from 192.168.1.1?",
         answer:
-          "If you've changed the password and forgotten it, perform a factory reset: hold the Reset button for 10 seconds. This restores the default credentials (admin/admin or as printed on the router label).",
+          "Yes. Log in at 192.168.1.1, go to LAN Settings → LAN IP Address, and change it to any private IP (e.g. 192.168.2.1 or 10.0.0.1). After saving, reconnect to the router and use the new IP.",
       },
       {
-        question: "Does 192.168.1.1 work on mobile?",
+        question: "Why does my browser redirect 192.168.1.1 to Google?",
         answer:
-          "Yes. Connect your phone to the router's Wi-Fi, then open a mobile browser and go to http://192.168.1.1. Make sure Wi-Fi data is being used (disable mobile data temporarily if the page won't load).",
+          "You typed it in the search bar, not the address bar. The address bar is at the top of the browser. Click it, type http://192.168.1.1 exactly, and press Enter.",
       },
+      {
+        question: "What is a default gateway?",
+        answer:
+          "The default gateway is the device (usually your router) that your computer sends traffic to when the destination is outside your local network. For most home setups, the gateway is 192.168.1.1.",
+      },
+      {
+        question: "How do I change the Wi-Fi password at 192.168.1.1?",
+        answer:
+          "Log in at 192.168.1.1, navigate to Wireless → Wireless Security (or Wi-Fi Password on newer routers), enter a new password in the WPA2 Pre-Shared Key field, and click Save. Reconnect all devices with the new password.",
+      },
+      {
+        question: "What should I do if I get a security warning when accessing 192.168.1.1?",
+        answer:
+          "Local routers use HTTP or self-signed certificates. Click Advanced → Proceed to 192.168.1.1. This is normal and not dangerous because the connection is entirely local — no data leaves your network.",
+      },
+      {
+        question: "How do I update router firmware at 192.168.1.1?",
+        answer:
+          "Log in, go to Administration → Firmware Upgrade (ASUS), Advanced → Firmware Update (Netgear), or System Tools → Firmware Upgrade (TP-Link). Click Check for updates or upload a firmware file from the manufacturer's website.",
+      },
+      {
+        question: "What is double NAT and how does it affect 192.168.1.1?",
+        answer:
+          "Double NAT occurs when two routers both perform NAT, typically an ISP modem/router and your personal router. If both use 192.168.1.1, your secondary router shifts to 192.168.2.1 to avoid conflict. Run ipconfig to find your actual gateway.",
+      },
+      {
+        question: "What security risks come with using default credentials on 192.168.1.1?",
+        answer:
+          "Default credentials (admin/admin) are publicly documented. Anyone on your Wi-Fi network can access your router admin panel with them. Change the admin password immediately after first login to prevent unauthorized access.",
+      },
+      {
+        question: "Can I access 192.168.1.1 via Ethernet without Wi-Fi?",
+        answer:
+          "Yes. Plug an Ethernet cable from your computer into any LAN port on the router. Wired connections are often more reliable for initial router setup since they don't depend on wireless configuration.",
+      },
+    ],
+    routerBrands: [
+      { brand: "ASUS", models: "RT-AX88U, RT-AX86U, RT-AC68U", defaultLogin: "admin / admin", alternativeUrl: "router.asus.com" },
+      { brand: "Netgear", models: "Nighthawk R7000, RAX50, RS700S", defaultLogin: "admin / password", alternativeUrl: "routerlogin.net" },
+      { brand: "Linksys", models: "Velop, WRT3200ACM", defaultLogin: "admin / admin (or blank)", alternativeUrl: "myrouter.local" },
+      { brand: "D-Link", models: "DIR-882, DIR-842", defaultLogin: "admin / (blank)", alternativeUrl: "dlinkrouter.local" },
+      { brand: "ZTE", models: "ZXHN H298A", defaultLogin: "admin / admin" },
     ],
   },
   "192-168-0-1": {
@@ -151,45 +199,86 @@ const STATIC_IP_DATA: Record<string, StaticIpData> = {
       "For TP-Link routers at 192.168.0.1, go to Advanced → System Tools → Firmware Upgrade to update. D-Link users should visit support.dlink.com for the latest firmware files.",
     faqs: [
       {
-        question: "What routers use 192.168.0.1?",
+        question: "What is 192.168.0.1?",
         answer:
-          "192.168.0.1 is primarily used by TP-Link, D-Link, Tenda, and Mercusys routers. Some ASUS and Belkin models also use this IP as an alternate gateway.",
+          "192.168.0.1 is a private IPv4 address used as the default gateway for home routers from TP-Link, D-Link, Tenda, and Mercusys. Navigating to it in a browser opens the router admin panel.",
       },
       {
-        question: "Why won't 192.168.0.1 open?",
+        question: "Which routers use 192.168.0.1?",
         answer:
-          "Check that you're connected to the router. Try typing http://192.168.0.1 (not https://). Disable VPN. Try 192.168.1.1 as an alternate. If nothing works, reset the router.",
+          "TP-Link (Archer, TL-WR series), D-Link (DIR series), Tenda (AC series), Mercusys, and some Huawei HiLink models use 192.168.0.1 as their default gateway.",
       },
       {
-        question: "What is the default login for 192.168.0.1?",
+        question: "What is the default TP-Link login at 192.168.0.1?",
         answer:
-          "For most routers (TP-Link, Tenda, Mercusys): username admin, password admin. For D-Link: username Admin (capital A), no password. Always check the router label first.",
+          "Older TP-Link routers use username admin and password admin. Newer Archer AX series require you to create a password during setup — if skipped, try tplinkwifi.net to complete setup first.",
       },
       {
-        question: "Can I access 192.168.0.1 from my phone?",
+        question: "What is the default D-Link login at 192.168.0.1?",
         answer:
-          "Yes. Connect your phone to the router Wi-Fi, open a browser, and go to http://192.168.0.1. Turn off mobile data if the browser redirects to a search instead of loading the admin page.",
+          "D-Link uses username Admin (with capital A) and a blank password field. Just press Enter after typing Admin — do not type anything in the password box.",
+      },
+      {
+        question: "Why won't 192.168.0.1 open in my browser?",
+        answer:
+          "Check that your device is connected to the router. Run ipconfig to verify your Default Gateway is 192.168.0.1. If it shows 192.168.1.1, your router uses that IP instead. Also disable VPN and type http:// explicitly.",
       },
       {
         question: "What is tplinkwifi.net?",
         answer:
-          "tplinkwifi.net is TP-Link's official domain that resolves to the router's admin page (192.168.0.1) when you're connected to the TP-Link network. It works as an alternative to typing the IP address.",
+          "tplinkwifi.net is a local domain name registered by TP-Link that resolves to the router's admin IP (192.168.0.1 or 192.168.1.1) when you're connected to the TP-Link network. It's a convenient alternative to typing the IP address.",
       },
       {
-        question: "How do I change the Wi-Fi password at 192.168.0.1?",
+        question: "How do I reset a TP-Link router to 192.168.0.1?",
         answer:
-          "Log in at 192.168.0.1, navigate to Wireless → Wireless Security (TP-Link) or Wireless → Wi-Fi Password (D-Link), enter a new password and save. Reconnect all devices with the new password.",
+          "Hold the Reset button (pinhole on the back) for 10 seconds while the router is powered on. The LED will blink and the router reboots with factory settings: 192.168.0.1 gateway and admin/admin credentials.",
+      },
+      {
+        question: "Can I access 192.168.0.1 from my phone?",
+        answer:
+          "Yes. Connect your phone to the router Wi-Fi, turn off mobile data temporarily, and open a browser. Type http://192.168.0.1 in the address bar and press Go. Mobile data can override Wi-Fi for DNS lookups on some phones.",
       },
       {
         question: "Is 192.168.0.1 the same as 192.168.1.1?",
         answer:
-          "No. They are different IP addresses on different subnets (192.168.0.x vs 192.168.1.x). Your router uses one or the other as its default gateway depending on the manufacturer configuration.",
+          "No. They are different IP addresses on different subnets (192.168.0.x vs 192.168.1.x). Your router uses one or the other depending on the manufacturer's default configuration.",
       },
       {
-        question: "How do I factory reset at 192.168.0.1?",
+        question: "How do I change the Wi-Fi password at 192.168.0.1?",
         answer:
-          "Hold the Reset button on the router for 10 seconds while powered on. The router reboots with factory settings. Then access 192.168.0.1 with the default credentials (admin/admin).",
+          "Log in at 192.168.0.1, go to Wireless → Wireless Security (TP-Link) or Wireless → Wi-Fi Password (D-Link), change the WPA2 Pre-Shared Key, and click Save. Reconnect all devices with the new password.",
       },
+      {
+        question: "What security risks come with the default admin/admin credentials?",
+        answer:
+          "Any device on your Wi-Fi network — including guests — can log in to your router admin panel with admin/admin if you have not changed it. This allows full control over your network settings, DNS, and port forwarding.",
+      },
+      {
+        question: "Can ISP restrictions prevent me from changing settings at 192.168.0.1?",
+        answer:
+          "If the router is provided by your ISP, they may restrict access to certain menus (especially WAN and VLAN settings). Consumer-purchased routers generally have no such restrictions.",
+      },
+      {
+        question: "What should I do if my browser cache shows an old login page?",
+        answer:
+          "Clear your browser cache (Ctrl+Shift+Delete on Windows) or open an Incognito/Private window. Cached login pages from a previous router session can cause authentication failures.",
+      },
+      {
+        question: "What alternate IP should I try if 192.168.0.1 doesn't work?",
+        answer:
+          "Try 192.168.1.1 (ASUS, Netgear, Linksys) or 192.168.8.1 (Huawei MiFi). Run ipconfig to find your actual Default Gateway — that is always the correct IP for your router.",
+      },
+      {
+        question: "How do I update D-Link firmware from 192.168.0.1?",
+        answer:
+          "D-Link does not support automatic online firmware updates from the admin panel. Download the latest firmware from support.dlink.com for your model, then go to Tools → Firmware and upload the file manually.",
+      },
+    ],
+    routerBrands: [
+      { brand: "TP-Link", models: "Archer C7, Archer AX50", defaultLogin: "admin / admin", alternativeUrl: "tplinkwifi.net" },
+      { brand: "D-Link", models: "DIR-605L, DIR-615", defaultLogin: "Admin / (blank)", alternativeUrl: "dlinkrouter.local" },
+      { brand: "Tenda", models: "AC10, AC19", defaultLogin: "admin / admin", alternativeUrl: "tendawifi.com" },
+      { brand: "Mercusys", models: "MR70X, MR30G", defaultLogin: "admin / admin", alternativeUrl: "mwlogin.net" }
     ],
   },
   "192-168-50-1": {
@@ -435,45 +524,85 @@ const STATIC_IP_DATA: Record<string, StaticIpData> = {
       "Huawei ISP ONT firmware is automatically updated by your ISP via TR-069. Motorola and Arris cable modems are typically updated by the ISP provider. Contact your ISP for manual firmware requests.",
     faqs: [
       {
+        question: "What is 192.168.100.1?",
+        answer:
+          "192.168.100.1 is the default management IP for ISP-deployed fiber GPON gateways (ONTs) from Huawei and ZTE, and for standalone cable modems from Motorola and Arris. It provides access to signal diagnostics and WAN configuration.",
+      },
+      {
         question: "What devices use 192.168.100.1?",
         answer:
-          "Huawei ISP fiber gateways (ONTs/ONU), Motorola cable modems, Arris SURFboard, and Zoom DSL modems use 192.168.100.1 as their management IP.",
+          "Huawei fiber ONTs (HG8145V5, HG8245H, EG8145V5), ZTE ONTs (F660, F680), Motorola cable modems (MB8600, MB7621), and Arris SURFboard modems use 192.168.100.1 as their management IP.",
       },
       {
         question: "What is the Huawei telecomadmin login?",
         answer:
-          "telecomadmin is the ISP administrator account on Huawei ONTs with full access. The default password is 'admintelecom'. ISPs often change this — contact your ISP if it fails.",
+          "telecomadmin is the ISP-level administrator account on Huawei ONTs with full access to all settings. The default password is admintelecom. Many ISPs change or lock this password remotely — contact your ISP if it fails.",
       },
       {
-        question: "Why can't I log in to 192.168.100.1?",
+        question: "Why is 192.168.100.1 not accessible from my computer?",
         answer:
-          "ISPs lock the telecomadmin account on Huawei ONTs. Try the 'user' account with the password on the device label. For modems, try admin/admin or admin/password.",
+          "The most common cause is that your computer is connected through a personal router on a different subnet (e.g. 192.168.1.x). Connect your computer directly to the ONT or modem LAN port using an Ethernet cable to access 192.168.100.1.",
       },
       {
-        question: "Can I change settings on my ISP modem at 192.168.100.1?",
+        question: "What is the difference between an ONT and a cable modem?",
         answer:
-          "ISP-deployed devices often restrict settings. The 'user' account on Huawei ONTs allows basic Wi-Fi changes. For full control, contact your ISP.",
+          "An ONT (Optical Network Terminal) converts fiber optic light signals to Ethernet, used in fiber/GPON networks. A cable modem converts coaxial cable signals to Ethernet using DOCSIS. Both often use 192.168.100.1 as their management IP.",
+      },
+      {
+        question: "How do I check fiber signal levels at 192.168.100.1?",
+        answer:
+          "Log in at 192.168.100.1, navigate to Status → Optical Information (Huawei) or PON Information (ZTE). The Rx Optical Power should be between -8 dBm and -27 dBm. Values outside this range indicate a fiber connection problem.",
+      },
+      {
+        question: "What does the LOS red light mean on a Huawei ONT?",
+        answer:
+          "LOS (Loss of Signal) means the ONT is not receiving optical light from the fiber line. Check that the green SC/APC fiber connector at the bottom is fully plugged in. If it is, the issue is likely a cut fiber or ISP infrastructure problem.",
+      },
+      {
+        question: "Can I reset my fiber ONT at 192.168.100.1?",
+        answer:
+          "You can factory reset via the Reset button, but this clears the ONT's GPON registration keys. The fiber line will go offline until your ISP re-provisions the device remotely. Only reset if instructed by your ISP.",
+      },
+      {
+        question: "What is bridge mode and how do I enable it?",
+        answer:
+          "Bridge mode turns the ONT into a pure media converter, passing the WAN IP to your personal router. This eliminates double NAT. Access 192.168.100.1 with telecomadmin and change the WAN connection type, or ask your ISP to enable it remotely.",
+      },
+      {
+        question: "How do I check cable modem signal quality at 192.168.100.1?",
+        answer:
+          "Log in at 192.168.100.1 and go to Signal or Connection Status. Check Downstream Power (-15 to +15 dBmV), SNR (>30 dB), and Upstream Power (38-48 dBmV). High T3/T4 timeout counts indicate upstream packet loss.",
+      },
+      {
+        question: "Can I change settings on my ISP-provided ONT?",
+        answer:
+          "The user account allows basic Wi-Fi changes. The telecomadmin account provides full access but ISPs may lock it. Advanced settings like VLAN and PPPoE credentials require telecomadmin or ISP assistance.",
+      },
+      {
+        question: "Why is my WAN IP empty at 192.168.100.1?",
+        answer:
+          "An empty or 0.0.0.0 WAN IP means the device failed to authenticate with the ISP. Causes include: account not activated, MAC address not provisioned, or a GPON registration mismatch. Contact your ISP.",
+      },
+      {
+        question: "What is TR-069 and how does it affect my ONT?",
+        answer:
+          "TR-069 is a WAN management protocol that allows your ISP to remotely configure, update, and monitor your ONT. ISPs use it to push firmware updates and configuration changes. Settings you change locally may be overwritten by TR-069.",
+      },
+      {
+        question: "Can I update firmware on a Huawei ONT?",
+        answer:
+          "Huawei ONT firmware is managed remotely by your ISP via TR-069. You cannot manually update it from the admin panel. If you need a firmware update, contact your ISP.",
       },
       {
         question: "How is 192.168.100.1 different from 192.168.1.1?",
         answer:
-          "192.168.100.1 is used by ISP modems/ONTs, while 192.168.1.1 is used by consumer routers. In a typical home, the modem is at 192.168.100.1 and your router is at 192.168.1.1.",
+          "192.168.100.1 is the management IP for ISP modems and ONTs (not purchased by the end user). 192.168.1.1 is the typical gateway for consumer routers (ASUS, Netgear, Linksys). In a standard home setup, the modem at 192.168.100.1 is upstream from the router at 192.168.1.1.",
       },
-      {
-        question: "How do I reset an ONT at 192.168.100.1?",
-        answer:
-          "Hold the Reset button for 15 seconds while powered on. Warning: this resets ISP configuration and may disconnect your fiber service — contact your ISP before resetting.",
-      },
-      {
-        question: "Does the Arris SURFboard use 192.168.100.1?",
-        answer:
-          "Yes. Many Arris SURFboard cable modems use 192.168.100.1 for management. The admin interface shows connected devices, signal levels, and event logs.",
-      },
-      {
-        question: "Can I update firmware at 192.168.100.1?",
-        answer:
-          "ISP devices are usually updated remotely by the provider. Cable modems and ONTs don't typically support manual firmware updates through the admin interface.",
-      },
+    ],
+    routerBrands: [
+      { brand: "Huawei ONT", models: "HG8145V5, HG8245H", defaultLogin: "telecomadmin / admintelecom", alternativeUrl: "user / (label password)" },
+      { brand: "Motorola", models: "MB8600, MB7621 modems", defaultLogin: "admin / motorola (or admin)" },
+      { brand: "Arris SURFboard", models: "SB8200, SB6183 modems", defaultLogin: "admin / password" }
     ],
   },
   "10-0-0-1": {
@@ -579,43 +708,83 @@ const STATIC_IP_DATA: Record<string, StaticIpData> = {
       {
         question: "What devices use 192.168.8.1?",
         answer:
-          "Huawei 4G/5G MiFi hotspots (E5573, E5577, E5787) and B-series CPE routers (B535, B818) use 192.168.8.1 as their default gateway.",
+          "Huawei 4G/5G MiFi pocket hotspots (E5573, E5577, E5785) and B-series CPE routers (B535, B818) use 192.168.8.1 as their default gateway. The Huawei 5G CPE Pro also uses this address.",
       },
       {
         question: "What is the default login for 192.168.8.1?",
         answer:
-          "Default username is 'admin' and password is 'admin'. Many MiFi models have a unique password printed on the device label — always check that first.",
+          "Username admin and password admin. Many newer Huawei MiFi models have a unique password printed on the label inside the battery cover — check there first before trying admin/admin.",
       },
       {
-        question: "How do I change the MiFi Wi-Fi password?",
+        question: "Why is 192.168.8.1 not loading on my phone?",
         answer:
-          "Log in at 192.168.8.1, go to Wi-Fi Settings, and change the Wi-Fi password. Or use the Huawei AI Life app for easier management.",
+          "The most common cause on smartphones is mobile data overriding the Wi-Fi connection. Go to Settings and turn off mobile data temporarily. Then open a browser and try http://192.168.8.1 again.",
       },
       {
-        question: "How do I configure the APN on a Huawei MiFi?",
+        question: "How do I change the Wi-Fi password at 192.168.8.1?",
         answer:
-          "Log in at 192.168.8.1 → Settings → Mobile Network → APN Settings. Add or edit the APN provided by your mobile carrier. Save and reconnect.",
+          "Log in at 192.168.8.1, go to Settings → Wi-Fi → Wi-Fi Settings (or Advanced Settings on some models), change the Wi-Fi Password field, and click Save. All connected devices will be disconnected and must reconnect with the new password.",
       },
       {
-        question: "Why is 192.168.8.1 not working?",
+        question: "Can I manage a Huawei MiFi from an app instead of 192.168.8.1?",
         answer:
-          "Ensure you're connected to the MiFi Wi-Fi. The device may use a different IP — check with ipconfig. Turn off mobile data on phones. Try the Huawei AI Life app.",
+          "Yes. The Huawei AI Life app (available on Android and iOS) provides full management of compatible Huawei routers and MiFi hotspots including Wi-Fi settings, data usage monitoring, and firmware updates.",
       },
       {
-        question: "Can I access 192.168.8.1 from a phone?",
+        question: "How do I configure the APN at 192.168.8.1?",
         answer:
-          "Yes. Connect to the MiFi hotspot, disable mobile data, then open a browser at http://192.168.8.1. The Huawei AI Life app is easier for mobile users.",
+          "Log in at 192.168.8.1, go to Settings → Mobile Network → APN Settings (or Dial-up → APN Management). Create a new profile with your carrier's APN details and set it as default. Contact your mobile carrier for the correct APN name.",
       },
       {
-        question: "How do I reset a Huawei MiFi?",
+        question: "How do I factory reset a Huawei MiFi?",
         answer:
-          "Hold the Reset button for 10 seconds. The device reboots with factory settings. Note: this resets Wi-Fi name and password to defaults on the label.",
+          "With the device powered on, press and hold the Reset button (small pinhole) for 10 seconds until all LEDs flash. The device reboots with factory default settings including 192.168.8.1 and admin/admin credentials.",
       },
       {
-        question: "Does 192.168.8.1 work for Huawei 5G CPE?",
+        question: "What does a red LED mean on a Huawei MiFi?",
         answer:
-          "Yes. Huawei 5G CPE Pro (H122-373) and similar 5G fixed wireless models use 192.168.8.1. The AI Life app provides the best management experience for these devices.",
+          "A red LED typically indicates: no SIM card detected, SIM PIN is locked, or no cellular signal in your area. Check the SIM card seating, enter the PIN if required, and move to an area with better coverage.",
       },
+      {
+        question: "Can I check my data usage at 192.168.8.1?",
+        answer:
+          "Yes. Log in at 192.168.8.1 and check the Statistics or Data Usage section. You can view monthly data consumption and set alerts. The Huawei AI Life app provides a more detailed usage dashboard.",
+      },
+      {
+        question: "What is the Huawei AI Life app?",
+        answer:
+          "The Huawei AI Life app is the official management application for Huawei routers and MiFi devices. It provides network overview, connected device management, Wi-Fi settings, data usage tracking, and firmware update notifications.",
+      },
+      {
+        question: "Does 192.168.8.1 work for Huawei 5G CPE routers?",
+        answer:
+          "Yes. Huawei 5G CPE Pro (H122-373), 5G CPE Win (H312-371), and similar 5G fixed wireless access models use 192.168.8.1. The Huawei AI Life app is the recommended management tool for these devices.",
+      },
+      {
+        question: "Can my Huawei MiFi at 192.168.8.1 run in bridge mode?",
+        answer:
+          "B-series CPE routers (B535, B818) support bridge mode under Network settings, which disables NAT and passes the public WAN IP to a secondary router. Compact MiFi hotspots typically do not have bridge mode.",
+      },
+      {
+        question: "How do I update Huawei MiFi firmware at 192.168.8.1?",
+        answer:
+          "Log in at 192.168.8.1, go to Settings → System → Firmware Update, and click Check for Updates. Alternatively, use the Huawei AI Life app which notifies you of available updates automatically.",
+      },
+      {
+        question: "My Huawei MiFi shows 192.168.8.1 but I cannot access it from laptop",
+        answer:
+          "Check that your laptop is connected to the Huawei Wi-Fi network and that your Default Gateway is 192.168.8.1 (run ipconfig). Also check if a VPN is active — VPNs block local subnet access. Try an Incognito browser window to eliminate cache issues.",
+      },
+      {
+        question: "Is it safe to use http:// for 192.168.8.1?",
+        answer:
+          "Yes. Using plain HTTP to access a local router admin panel is safe because the connection never leaves your local network. Data exchanged with 192.168.8.1 cannot be intercepted by external parties.",
+      },
+    ],
+    routerBrands: [
+      { brand: "Huawei CPE", models: "B535, B818", defaultLogin: "admin / (sticker password)", alternativeUrl: "AI Life App" },
+      { brand: "Huawei MiFi", models: "E5573, E5577", defaultLogin: "admin / admin", alternativeUrl: "AI Life App" },
+      { brand: "Huawei Mobile WiFi", models: "Pro series", defaultLogin: "admin / admin", alternativeUrl: "AI Life App" }
     ],
   },
   "192-168-1-254": {
@@ -827,6 +996,7 @@ export default async function IpPage({ params }: Props) {
 
   // When using DB, render the full DB-driven layout
   if (dbIp) {
+    const staticFallback = STATIC_IP_DATA[dbIp.slug];
     const breadcrumbs = [
       { label: "IP Addresses", href: "/ips" },
       { label: dbIp.address, href: `/ips/${dbIp.slug}` },
@@ -894,6 +1064,18 @@ export default async function IpPage({ params }: Props) {
                   </div>
                 </div>
               </section>
+
+              {staticFallback?.firmwareTip && (
+                <section className="glass-card p-6 border-l-2 border-[var(--brand-400)]">
+                  <h2 className="text-xl font-bold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                    <RefreshCw size={18} className="text-[var(--brand-400)]" />
+                    Firmware &amp; Security
+                  </h2>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                    {staticFallback.firmwareTip}
+                  </p>
+                </section>
+              )}
 
               {dbIp.faqs.length > 0 && (
                 <section className="glass-card p-6">
@@ -1089,6 +1271,42 @@ export default async function IpPage({ params }: Props) {
             ))}
           </div>
         </section>
+
+        {/* ── Router Brands Table ── */}
+        {d.routerBrands && d.routerBrands.length > 0 && (
+          <section>
+            <h2 className="text-lg font-bold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+              <Link2 size={18} className="text-[var(--brand-400)]" />
+              Default Login Details by Brand
+            </h2>
+            <div className="glass-card overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-[var(--border-subtle)] text-sm">
+                  <thead>
+                    <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-semibold">
+                      <th className="px-5 py-3 text-left">Brand</th>
+                      <th className="px-5 py-3 text-left">Common Models</th>
+                      <th className="px-5 py-3 text-left">Default Login</th>
+                      <th className="px-5 py-3 text-left">Alternative Access</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[var(--border-subtle)] text-[var(--text-secondary)]">
+                    {d.routerBrands.map((item, i) => (
+                      <tr key={i} className="hover:bg-[var(--bg-hover)] transition-colors">
+                        <td className="px-5 py-3.5 font-bold text-[var(--text-primary)]">{item.brand}</td>
+                        <td className="px-5 py-3.5">{item.models}</td>
+                        <td className="px-5 py-3.5 font-mono text-xs">{item.defaultLogin}</td>
+                        <td className="px-5 py-3.5 font-mono text-xs text-[var(--brand-400)]">
+                          {item.alternativeUrl || "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ── Firmware Tip ── */}
         <section>

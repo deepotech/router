@@ -4,9 +4,9 @@ import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArtic
 import ConnectionOptimizerClient from "@/components/tools/ConnectionOptimizerClient";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Router Not Assigning IP Addresses? Fix DHCP Issues Fast",
+  title: "Router Not Assigning IP Addresses? Fix DHCP Issues (Updated 2026)",
   description:
-    "Is your device showing a 169.254.x.x IP address or 'No valid IP configuration'? Learn how to resolve DHCP server timeouts, lease pool exhaustion, and local IP conflicts.",
+    "Struggling with a 169.254.x.x IP address or 'No valid IP configuration' error? Fix your router's DHCP server, lease tables, and IP conflicts in minutes.",
   canonical: "/router-not-assigning-ip-addresses",
   keywords: [
     "router not assigning ip addresses",
@@ -99,31 +99,29 @@ const commonCauses = [
   }
 ];
 
-const quickFixChecklist = [
-  "Verify if your device IP address is in the 169.254.x.x range.",
-  "Run 'ipconfig /release' and 'ipconfig /renew' in an administrator Command Prompt.",
-  "Configure a manual static IP to bypass DHCP and log into the router gateway.",
-  "Ensure all secondary access points or extenders are set to Bridge or AP mode.",
-  "Shorten DHCP lease times in the router dashboard to free up inactive IP addresses."
-];
-
-export default function RouterNotAssigningIpPage() {
+export default function RouterNotAssigningIpAddressesPage() {
   return (
     <TroubleshootingArticleShell
       h1="Router Not Assigning IP Addresses? Fix DHCP Issues Fast"
-      intro="If your computer displays a 169.254.x.x IP address, an 'Ethernet has a self-assigned IP' warning, or a 'No valid IP configuration' error, your device's DHCP handshake is failing. Learn how to debug local DHCP service crashes, release stalled lease allocations, and stabilize subnet address distribution."
-      category="dns"
+      intro="If your computer is showing a 169.254.x.x IP address, experiencing an APIPA fallback loop, or throwing a 'No valid IP configuration' network diagnostic result, your client device has failed to receive network routing parameters. Follow our step-by-step diagnostic guide to troubleshoot router DHCP service crashes, clear full lease tables, configure manual IP parameters, and restore local network access in minutes."
+      category="wifi"
       breadcrumbs={breadcrumbs}
       faqs={faqs}
       troubleshootingSteps={troubleshootingSteps}
       warningBanner={{
-        title: "Rogue DHCP Server Warning",
-        text: "Connecting a secondary router, wireless extender, or smart plug with its DHCP server active onto your LAN creates a conflicting DHCP environment. Clients may receive incorrect gateway details, blocking all internet and local routing."
+        title: "Dynamic Allocation Failure Warning",
+        text: "When modifying your router's DHCP lease pool size or lease times, do not disable the DHCP server daemon entirely unless you have configured a static IP on your management client. Disabling DHCP without a manual IP binding will lock you out of the router administration interface."
       }}
-      quickFixChecklist={quickFixChecklist}
+      quickFixChecklist={[
+        "Run 'ipconfig /release' and 'ipconfig /renew' in an elevated terminal.",
+        "Verify your device is not assigned a self-signed APIPA IP address (169.254.x.x).",
+        "Clear the router's active DHCP lease tables and increase the IP address pool range.",
+        "Disable secondary DHCP servers on access points, range extenders, or mesh nodes.",
+        "Perform a sequential power cycle of your modem, router, and client devices."
+      ]}
       commonCauses={commonCauses}
-      whenToContactISP="If your gateway is configured in bridge mode and your local devices fail to secure WAN IP handshakes from the ISP's upstream node, or if the ISP-provided modem continues to drop its DHCP allocation tables, the ISP provisioning profile may be locking out new MAC addresses. Contact your ISP support to request a dynamic MAC binding flush on their CMTS or OLT."
-      severityLevel="medium"
+      whenToContactISP="If client devices continue to receive APIPA addresses after performing a factory reset and connecting directly to the router's physical LAN ports, the DHCP controller integrated circuit on the router board may have suffered a chip-level failure. Contact your ISP to replace the residential gateway."
+      severityLevel="high"
     >
       <div className="space-y-6">
         {/* Quick Answer Snippet for AI Search Engines */}
@@ -133,288 +131,64 @@ export default function RouterNotAssigningIpPage() {
           </div>
           <h3 className="text-xs font-bold text-amber-400 mb-2 uppercase tracking-wide">Quick Diagnostic Summary</h3>
           <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-            Routers stop assigning IP addresses when their internal <strong>DHCP server daemon crashes</strong> due to memory limits, or when the <strong>IP lease pool is exhausted</strong>. The fastest fix is to run <code className="font-mono text-amber-300">ipconfig /release</code> and <code className="font-mono text-amber-300">ipconfig /renew</code> in your terminal. If the problem persists, assign a manual static IP to access the router dashboard, expand the DHCP pool, and shorten the lease time configuration.
+            A router failing to assign local IP addresses indicates a breakdown in the **DHCP DORA handshake** (Discover, Offer, Request, Acknowledge). This is usually caused by **lease pool exhaustion** (too many smart devices using stale leases), **STP blocking** due to a local network loop, or **VPN software conflicts**. Resolve this immediately by renewing your lease manually or configuring a static IP address in your router's subnet range to bypass DHCP.
           </p>
         </section>
 
-        {/* Interactive Troubleshooting Wizard */}
         <ConnectionOptimizerClient mode="ethernet-no-internet" />
 
-        {/* Technical Article Body */}
         <article className="prose prose-invert max-w-none space-y-6 text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
           
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">Symptoms vs. Root Causes Diagnostic Table</h2>
+          <h2 className="text-sm font-bold text-[var(--text-primary)]">What is the DHCP DORA Handshake?</h2>
           <p>
-            When Layer 2 connectivity is established but Layer 3 IP configuration fails, client systems present specific system alerts. Use the diagnostic matrix below to map errors to their corresponding fixes:
+            The Dynamic Host Configuration Protocol (DHCP) operates at the Application Layer of the TCP/IP suite. It dynamically delegates IP parameters to local devices, avoiding manual configurations. This lease allocation process follows a four-step handshake, often referred to as **DORA**:
           </p>
-
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-[var(--border-subtle)] text-[11px] text-[var(--text-secondary)]">
-              <thead>
-                <tr className="bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold">
-                  <th className="px-3 py-2 text-left">Observed Symptom</th>
-                  <th className="px-3 py-2 text-left">Likely Network / Protocol Fault</th>
-                  <th className="px-3 py-2 text-left">Severity</th>
-                  <th className="px-3 py-2 text-left">Fastest Fix</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[var(--border-subtle)]">
-                <tr>
-                  <td className="px-3 py-2 font-mono text-amber-400">169.254.x.x IP address</td>
-                  <td className="px-3 py-2">APIPA fallback triggered; DHCP Discover queries timed out without a router reply.</td>
-                  <td className="px-3 py-2">Medium</td>
-                  <td className="px-3 py-2">Restart router DHCP service; check client-side network adapter configurations.</td>
-                </tr>
-                <tr>
-                  <td className="px-3 py-2 font-mono text-amber-400">&ldquo;No valid IP configuration&rdquo;</td>
-                  <td className="px-3 py-2">The network adapter failed to bind an IP within the local subnet scope.</td>
-                  <td className="px-3 py-2">Medium</td>
-                  <td className="px-3 py-2">Flush DNS cache and reset winsock stack; run ipconfig lease renewal.</td>
-                </tr>
-                <tr>
-                  <td className="px-3 py-2 font-mono text-amber-400">Ethernet connected but no IP</td>
-                  <td className="px-3 py-2">Physical link negotiation (Layer 1/2) is active, but the DHCP daemon is unresponsive.</td>
-                  <td className="px-3 py-2">High</td>
-                  <td className="px-3 py-2">Temporarily configure a manual static IP to access the router gateway.</td>
-                </tr>
-                <tr>
-                  <td className="px-3 py-2 font-mono text-amber-400">Limited connectivity status</td>
-                  <td className="px-3 py-2">IP assigned, but default gateway or DNS parameters are missing from the DHCP scope.</td>
-                  <td className="px-3 py-2">Medium</td>
-                  <td className="px-3 py-2">Check DHCP Option 3 (Gateway) and Option 6 (DNS) settings in router admin.</td>
-                </tr>
-                <tr>
-                  <td className="px-3 py-2 font-mono text-amber-400">DHCP Timeout Logs</td>
-                  <td className="px-3 py-2">The client's UDP port 68 handshake packets are ignored by the router due to pool exhaustion.</td>
-                  <td className="px-3 py-2">High</td>
-                  <td className="px-3 py-2">Expand the DHCP pool start/end range; reduce lease duration to 8-12 hours.</td>
-                </tr>
-                <tr>
-                  <td className="px-3 py-2 font-mono text-amber-400">Self-assigned IP warning (macOS)</td>
-                  <td className="px-3 py-2">The system self-allocated an IP because the local gateway DHCP interface is down.</td>
-                  <td className="px-3 py-2">Medium</td>
-                  <td className="px-3 py-2">Renew DHCP lease via System Settings or flush active interface bindings.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">What Is Happening Internally? The DHCP Handshake (DORA) and APIPA Fallback</h2>
-          <p>
-            To understand why a router stops assigning IP addresses, it is necessary to examine the underlying Layer 7 protocol transaction: the **DHCP DORA** handshake. This transaction operates over **UDP Ports 67** (server listening port) and **UDP Port 68** (client listening port):
-          </p>
-
-          <ol className="list-decimal pl-5 space-y-2 text-[11px] text-[var(--text-muted)]">
-            <li>
-              <strong>Discover:</strong> The client broadcasts a DHCP Discover packet to the MAC address <code className="font-mono">FF:FF:FF:FF:FF:FF</code> and IP address <code className="font-mono">255.255.255.255</code>. This packet alerts any active DHCP server on the physical LAN segment that a client needs an IP address.
-            </li>
-            <li>
-              <strong>Offer:</strong> The router's DHCP daemon (such as <code className="font-mono">dnsmasq</code> or <code className="font-mono">dhcpd</code>) receives the broadcast, checks its lease database, reserves an available IP, and unicasts or broadcasts a DHCP Offer containing the proposed IP, subnet mask, default gateway, and DNS servers.
-            </li>
-            <li>
-              <strong>Request:</strong> The client receives the offer and responds with a DHCP Request broadcast, confirming it accepts the offered IP. Broadcasting this packet notifies other potential DHCP servers on the subnet that their offers have been rejected.
-            </li>
-            <li>
-              <strong>ACK (Acknowledgment):</strong> The router receives the request, writes the client&apos;s hardware MAC address and lease timestamps to its active lease table, and sends a DHCP ACK packet to finalize the lease.
-            </li>
-          </ol>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">APIPA Fallback Mechanics</h3>
-          <p>
-            If the client system broadcasts a <strong>DHCP Discover</strong> packet but receives no valid <strong>DHCP Offer</strong> within a specific timeout window (typically 10 to 15 seconds), the operating system triggers its fallback routine: **APIPA (Automatic Private IP Addressing)**. 
-          </p>
-          <p>
-            The OS automatically selects an address from the Link-Local block **169.254.1.0 to 169.254.254.255** (defined by RFC 3927). It then broadcasts local **ARP (Address Resolution Protocol)** queries to ensure no other device on the link is using that self-assigned IP. While this allows basic peer-to-peer communication on the local layer 2 segment, APIPA addresses do not have a default gateway. As a result, the device cannot route packets outside its local LAN segment, resulting in a loss of internet access.
-          </p>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">Lease Pool Exhaustion and NAT Constraints</h3>
-          <p>
-            Every DHCP lease has a set **lease time**. If the router&apos;s configured address range (for example, <code className="font-mono">192.168.1.100</code> to <code className="font-mono">192.168.1.150</code>) contains 50 IP addresses, and 50 unique MAC addresses have connected within the lease period, the pool is fully exhausted. 
-          </p>
-          <p>
-            When device number 51 requests an IP, the router&apos;s DHCP daemon has no available addresses to assign, and ignores the DHCP Discover packet. Because Network Address Translation (NAT) maps internal private IP addresses to a single public WAN IP, any device without a valid local IP address lease cannot be added to the NAT translation tables, blocking internet access.
-          </p>
-
-          <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-elevated)] rounded-xl space-y-2">
-            <span className="font-bold text-[var(--text-primary)] block text-xs">Deep Diagnostics & Internal Authority Links</span>
-            <ul className="list-disc pl-4 space-y-1 text-[11px]">
-              <li>If you can&apos;t access the router config page to check DHCP pools, see our <a href="/router-login-not-working" className="text-[var(--brand-400)] hover:underline">192.168.1.1 Timeout Resolution Guide</a>.</li>
-              <li>Learn how IP routing speeds are affected by physical links in our <a href="/ethernet-slower-than-wifi" className="text-[var(--brand-400)] hover:underline">Ethernet vs Wi-Fi Speed Analysis</a>.</li>
-              <li>For DNS optimization once your IP is assigned, check out our <a href="/best-dns-for-faster-internet" className="text-[var(--brand-400)] hover:underline">Fast DNS Configuration Walkthrough</a>.</li>
-              <li>Troubleshoot downstream synchronization drops with our <a href="/modem-online-light-blinking" className="text-[var(--brand-400)] hover:underline">Modem Online Light Blinking Guide</a>.</li>
-              <li>If your phone gets an IP but still shows no internet connection, read our <a href="/wifi-connected-but-no-internet-phone" className="text-[var(--brand-400)] hover:underline">Mobile Wi-Fi No Internet Fix</a>.</li>
-            </ul>
-          </div>
-
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">Advanced Root Causes of DHCP Failures</h2>
-          <p>
-            Aside from simple pool exhaustion, several advanced network configurations can disrupt DHCP operations:
-          </p>
-
           <ul className="list-disc pl-5 space-y-3 text-[11px] text-[var(--text-muted)]">
             <li>
-              <strong>Disabled DHCP Server Daemon:</strong> When a router is converted to an Access Point (AP) or configured behind a primary gateway, its internal DHCP server must be disabled to avoid conflict. If this is done accidentally on a primary router, clients will fail to obtain IPs.
+              <strong>Discover (Client to Broadcast):</strong> When a client device connects to the network (physical cable insertion or Wi-Fi association), it does not have an IP. It broadcasts a <code>DHCPDISCOVER</code> packet containing its hardware MAC address over UDP port 68 to destination 255.255.255.255.
             </li>
             <li>
-              <strong>Rogue DHCP Servers:</strong> If a secondary access point, network bridge, or virtualization server (running hypervisors like Proxmox or Hyper-V) is misconfigured to run its own DHCP server on the same VLAN, it will reply to DHCP Discover broadcasts. Devices receiving these rogue offers may be assigned invalid subnets or gateway routes.
+              <strong>Offer (Router to Client):</strong> The router's DHCP daemon (listening on UDP port 67) receives the broadcast. It checks its active lease tables, reserves an available IP, and unicasts or broadcasts a <code>DHCPOFFER</code> packet containing the proposed IP, subnet mask, default gateway, DNS servers, and lease duration.
             </li>
             <li>
-              <strong>Firmware RAM Memory Leaks:</strong> Budget routers with limited RAM (e.g., 128MB or 256MB) can experience memory leaks in their DHCP daemons over time. This causes the daemon to crash, preventing it from responding to queries even though the physical Wi-Fi and Ethernet ports remain active.
+              <strong>Request (Client to Router):</strong> The client receives the offer. If multiple offers are received (due to rogue routers), it selects one and broadcasts a <code>DHCPREQUEST</code> packet, letting all servers know it has accepted the specific offer.
             </li>
             <li>
-              <strong>Mesh Topology STP Loops:</strong> In mesh Wi-Fi setups, connecting multiple mesh nodes via physical Ethernet cables without configuring Spanning Tree Protocol (STP) on the backhaul switch can trigger a **network loop**. This floods the network with broadcast packets, causing the router&apos;s CPU to spike to 100% and drop DHCP traffic.
-            </li>
-            <li>
-              <strong>VLAN Isolation Blocks:</strong> If your network uses Virtual Local Area Networks (VLANs) to segment traffic, and your DHCP server is on a different VLAN than the client, the DHCP broadcast packets cannot cross the VLAN boundary. You must configure a **DHCP Helper Address** (IP Helper / DHCP Relay) on the Layer 3 switch or router interface to forward the broadcast packets to the DHCP server.
-            </li>
-            <li>
-              <strong>MAC Filtering Policies:</strong> If MAC address filtering is active on the router, the DHCP daemon will ignore requests from unauthorized hardware, forcing client systems into APIPA configurations.
-            </li>
-            <li>
-              <strong>ISP Bridge Mode Subnet Mismatches:</strong> If your primary router is connected to an ISP gateway that has not been placed in Bridge Mode, both devices may attempt to host the same subnet (e.g., 192.168.1.0/24), creating routing conflicts and blocking IP assignment.
+              <strong>Acknowledge (Router to Client):</strong> The chosen router receives the request, binds the client's MAC address to the leased IP, and returns a <code>DHCPACK</code> packet to confirm the lease is active.
             </li>
           </ul>
 
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">Windows 11 Console Diagnostics</h2>
+          <h2 className="text-sm font-bold text-[var(--text-primary)]">Why Do Devices Fall Back to a 169.254.x.x APIPA IP?</h2>
           <p>
-            To troubleshoot DHCP failures on Windows 11, open PowerShell or Command Prompt as an Administrator and execute the following commands. These commands interact directly with the Windows TCP/IP stack:
+            If a client device broadcasts a <code>DHCPDISCOVER</code> packet but receives no reply within its timeout window, the operating system invokes **APIPA** (Automatic Private IP Addressing). APIPA is a fallback protocol defined by RFC 3927 that assigns a temporary link-local IP in the range **169.254.1.0 to 169.254.254.255** with subnet mask **255.255.0.0**.
           </p>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">1. Release Current Address Bindings</h3>
-          <pre className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg font-mono text-[10px] text-green-400">
-            ipconfig /release
-          </pre>
-          <p className="text-[11px] text-[var(--text-muted)]">
-            <strong>Internal Action:</strong> Instructs the DHCP client service to send a unicast DHCP Release packet (via UDP port 67) to the active DHCP gateway. This relinquishes the current IP address lease and updates the system registry.
-          </p>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">2. Request New IP Allocation</h3>
-          <pre className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg font-mono text-[10px] text-green-400">
-            ipconfig /renew
-          </pre>
-          <p className="text-[11px] text-[var(--text-muted)]">
-            <strong>Internal Action:</strong> Forces the network adapter to broadcast a DHCP Discover packet. It resets the lease negotiation sequence to secure new IP address bindings and subnet routing information from the active gateway.
-          </p>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">3. Flush DNS Resolver Database</h3>
-          <pre className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg font-mono text-[10px] text-green-400">
-            ipconfig /flushdns
-          </pre>
-          <p className="text-[11px] text-[var(--text-muted)]">
-            <strong>Internal Action:</strong> Purges the local DNS resolver cache, forcing the operating system to perform new DNS queries instead of relying on outdated cache data.
-          </p>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">4. Reset TCP/IP Stack Configuration</h3>
-          <pre className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg font-mono text-[10px] text-green-400">
-            netsh int ip reset
-          </pre>
-          <p className="text-[11px] text-[var(--text-muted)]">
-            <strong>Internal Action:</strong> Rewrites critical TCP/IP system registry keys to their default states. This clears custom configurations, incorrect static routes, and registry corruption affecting the network stack.
-          </p>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">5. Reset Winsock API Catalog</h3>
-          <pre className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg font-mono text-[10px] text-green-400">
-            netsh winsock reset
-          </pre>
-          <p className="text-[11px] text-[var(--text-muted)]">
-            <strong>Internal Action:</strong> Resets the Windows Sockets API catalog. This removes third-party LSP (Layered Service Provider) drivers and network filters installed by VPNs or security software that can intercept and block socket queries.
-          </p>
-
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">macOS / Linux Terminal Diagnostics</h2>
           <p>
-            On Unix-based operating systems, network configuration is managed via configuration daemons or directly via commands. Execute these commands in Terminal:
+            An APIPA IP allows you to communicate with other local devices that also failed to obtain an IP. However, because APIPA has no default gateway parameter, devices cannot route packets beyond their immediate local link. The appearance of a 169.254.x.x IP address is confirmation that the DORA handshake failed, typically due to a crashed router DHCP service or signal attenuation.
           </p>
 
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">Renew DHCP Leases via networksetup (macOS)</h3>
+          <h2 className="text-sm font-bold text-[var(--text-primary)]">Step-by-Step Settings Optimization by Brand</h2>
           <p>
-            Identify your active network interface (typically <code className="font-mono">Wi-Fi</code> or <code className="font-mono">USB 10/100/1000 LAN</code>) and trigger a lease renewal:
-          </p>
-          <pre className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg font-mono text-[10px] text-green-400">
-            sudo ipconfig set en0 DHCP
-          </pre>
-          <p className="text-[11px] text-[var(--text-muted)]">
-            <strong>Internal Action:</strong> Resets the DHCP state machine for interface <code className="font-mono">en0</code>. This releases the current IP address and broadcasts a new DHCP Discover query.
+            If you need to verify or configure your router's DHCP server settings, follow these instructions for the major residential router brands:
           </p>
 
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">Release and Renew on Linux (dhclient)</h3>
+          <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase">1. TP-Link (Tether App / Web UI)</h3>
           <p>
-            Linux distributions utilize the ISC DHCP client daemon to manage leases. Release the current address and request a new one:
-          </p>
-          <pre className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg font-mono text-[10px] text-green-400">
-            sudo dhclient -r eth0{"\n"}
-            sudo dhclient eth0
-          </pre>
-          <p className="text-[11px] text-[var(--text-muted)]">
-            The <code className="font-mono">-r</code> flag instructs the daemon to release the current lease on interface <code className="font-mono">eth0</code>. The second command starts a new DHCP transaction to obtain a fresh IP configuration.
-          </p>
-
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">Mobile OS Configurations: Android and iOS</h2>
-          <p>
-            Modern mobile operating systems include security features that can complicate DHCP addressing:
-          </p>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">MAC Address Randomization (Private Wi-Fi Address)</h3>
-          <p>
-            By default, iOS and Android randomize their MAC addresses for each SSID to prevent tracking. While beneficial for privacy, this can cause issues on local networks:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-[11px] text-[var(--text-muted)]">
-            <li>
-              <strong>Lease Pool Depletion:</strong> If a device frequently changes its MAC address, the router will treat it as a new device each time, assigning it a new IP address. This can quickly exhaust the DHCP lease pool.
-            </li>
-            <li>
-              <strong>Static IP Binding Failures:</strong> MAC-to-IP binding configurations will fail if the client device uses a randomized MAC instead of its hardware MAC.
-            </li>
-            <li>
-              <strong>Resolution:</strong> Go to the Wi-Fi settings on your mobile device, select the network name, and toggle **Private Wi-Fi Address** (iOS) or **Use Device MAC** (Android) to disable randomization for that network.
-            </li>
-          </ul>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)]">Forget and Reconnect Network Profile</h3>
-          <p>
-            Forgetting the network profile clears cached IP configurations, lease details, and custom DNS settings stored on the device. Reconnecting forces the device to request a new IP address lease.
-          </p>
-
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">Console Settings: PS5 and Xbox</h2>
-          <p>
-            Gaming consoles require stable, uninterrupted network paths to support multiplayer matching:
-          </p>
-          
-          <ul className="list-disc pl-5 space-y-3 text-[11px] text-[var(--text-muted)]">
-            <li>
-              <strong>PS5 NAT Type Failures:</strong> A Strict NAT Type on PlayStation consoles often stems from local IP address lease changes. If the router assigns a new IP address to the console via DHCP, any port forwarding rules configured for the console&apos;s previous IP will no longer apply. To prevent this, configure an **Address Reservation** on the router to lock the console to a specific IP address.
-            </li>
-            <li>
-              <strong>Xbox Teredo Network Conflicts:</strong> Xbox consoles use the Teredo tunneling protocol to establish peer-to-peer connections. If the router&apos;s DHCP server assigns incorrect default DNS settings, or if UPnP is disabled, Teredo cannot resolve routing targets. Configure a static IP on the Xbox and set the primary DNS to Cloudflare (<code className="font-mono">1.1.1.1</code>) or Google (<code className="font-mono">8.8.8.8</code>) to resolve this.
-            </li>
-          </ul>
-
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">Brand-Specific DHCP Settings Navigation</h2>
-          <p>
-            If you need to adjust DHCP parameters, lease durations, or configure static IP reservations, use the paths below to locate the settings in your router&apos;s admin panel:
-          </p>
-
-          <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase">1. TP-Link (Archer series)</h3>
-          <p>
-            Go to **Advanced** &rarr; **Network** &rarr; **DHCP Server**. 
-            Here, you can modify the Start and End IP address pool ranges, adjust the lease time (we recommend 1440 minutes / 24 hours), and configure DNS addresses.
+            Log into the web dashboard (192.168.0.1 or tplinkwifi.net). Go to **Advanced** &rarr; **Network** &rarr; **DHCP Server**. Verify that the DHCP Server checkbox is selected. Check the IP Address Pool range (ensure it supports enough devices, e.g. 100 to 249). Set the Address Lease Time to 120 minutes (for high turnover networks) or 1440 minutes (default 24 hours).
           </p>
 
           <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase">2. ASUS (ASUSWRT console)</h3>
           <p>
-            Go to **Advanced Settings** &rarr; **LAN** &rarr; **DHCP Server** tab. 
-            Enable the DHCP Server toggle. You can set the IP pool range and configure **Manual Assignment** (MAC binding) at the bottom of the page.
+            Go to **Advanced Settings** &rarr; **LAN** &rarr; **DHCP Server** tab. Enable the DHCP Server toggle. You can set the IP pool range and configure **Manual Assignment** (MAC binding) at the bottom of the page.
           </p>
 
           <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase">3. Netgear (Nighthawk / Orbi)</h3>
           <p>
-            Go to **Advanced** &rarr; **Setup** &rarr; **LAN Setup**. 
-            Ensure the **Use Router as DHCP Server** checkbox is selected. You can set the start and end IP addresses and configure static address reservations here.
+            Go to **Advanced** &rarr; **Setup** &rarr; **LAN Setup**. Ensure the **Use Router as DHCP Server** checkbox is selected. You can set the start and end IP addresses and configure static address reservations here.
           </p>
 
           <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase">4. Linksys</h3>
           <p>
-            Go to **Connectivity** &rarr; **Local Network** &rarr; **DHCP Server**. 
-            Toggle the DHCP Server to Enabled, adjust the client lease time, and save your changes.
+            Go to **Connectivity** &rarr; **Local Network** &rarr; **DHCP Server**. Toggle the DHCP Server to Enabled, adjust the client lease time, and save your changes.
           </p>
 
           <h2 className="text-sm font-bold text-[var(--text-primary)]">Hardware Failures Causing DHCP Drops</h2>
@@ -435,6 +209,22 @@ export default function RouterNotAssigningIpPage() {
               <strong>Capacitor Aging:</strong> Swollen or failing electrolytic capacitors on the router&apos;s mainboard can cause voltage instability, leading to random CPU resets and crashes of network daemons like the DHCP service.
             </li>
           </ul>
+
+          <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-elevated)] rounded-xl space-y-2">
+            <span className="font-bold text-[var(--text-primary)] block text-xs">Deep Diagnostics & Internal Authority Links</span>
+            <ul className="list-disc pl-4 space-y-1 text-[11px]">
+              <li>If you need step-by-step guidance on updating router interfaces, read our <a href="/how-to-change-dns-on-router" className="text-[var(--brand-400)] hover:underline">How to Change DNS on Router Walkthrough</a>.</li>
+              <li>Learn how to optimize routing targets with our <a href="/dns-server-not-responding" className="text-[var(--brand-400)] hover:underline">DNS Server Not Responding Diagnostics</a>.</li>
+              <li>Verify your gateway configuration endpoints at the <a href="/ips/192-168-1-1" className="text-[var(--brand-400)] hover:underline">192.168.1.1 Gateway Portal</a>.</li>
+              <li>Analyze your wireless dropouts using the <a href="/wifi-keeps-disconnecting" className="text-[var(--brand-400)] hover:underline">WiFi Disconnection Walkthrough</a>.</li>
+              <li>Check your physical link speed using the <a href="/ethernet-connected-but-no-internet" className="text-[var(--brand-400)] hover:underline">Ethernet Connected but No Internet Optimizer</a>.</li>
+              <li>Isolate packet drop bottlenecks using the <a href="/packet-loss-test" className="text-[var(--brand-400)] hover:underline">Packet Loss Test Tool</a>.</li>
+              <li>Learn how nested routers create address translation issues at the <a href="/double-nat-detected" className="text-[var(--brand-400)] hover:underline">Double NAT Diagnostic</a>.</li>
+              <li>Optimize console gaming settings with the <a href="/best-dns-for-ps5" className="text-[var(--brand-400)] hover:underline">Best DNS for PS5 Guide</a>.</li>
+              <li>Verify gateway IP options at the <a href="/default-gateway-not-available" className="text-[var(--brand-400)] hover:underline">Default Gateway Unreachable Guide</a>.</li>
+              <li>Instantly identify hardware brands using our <a href="/mac-address-lookup" className="text-[var(--brand-400)] hover:underline">MAC Address Lookup Tool</a>.</li>
+            </ul>
+          </div>
 
           <h2 className="text-sm font-bold text-[var(--text-primary)]">How ISPs Detect DHCP Issues Remotely</h2>
           <p>

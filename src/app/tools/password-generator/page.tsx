@@ -1,170 +1,78 @@
-"use client";
+import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo/metadata";
+import NetworkingToolShell from "@/components/tools/NetworkingToolShell";
+import PasswordGeneratorClient from "@/components/tools/PasswordGeneratorClient";
 
-import { useState, useCallback } from "react";
-import { Lock, Copy, Check, RefreshCw, Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Breadcrumb } from "@/components/layout/Breadcrumb";
+export const metadata: Metadata = buildMetadata({
+  title: "Secure Password Generator — WiFi & Router Admin Passwords | RouterVia",
+  description:
+    "Generate cryptographically secure random passwords for your router WiFi and admin panel. Uses the Web Crypto API — passwords are generated locally, never sent to servers.",
+  canonical: "/tools/password-generator",
+  keywords: [
+    "password generator",
+    "wifi password generator",
+    "secure password generator",
+    "random password generator",
+    "strong password generator",
+    "router password generator",
+    "wpa2 password",
+    "admin password generator",
+  ],
+});
 
 const breadcrumbs = [
-  { label: "Tools", href: "/tools" },
-  { label: "Password Generator", href: "/tools/password-generator" },
+  { name: "Tools", url: "/tools" },
+  { name: "Password Generator", url: "/tools/password-generator" },
 ];
 
-const CHARS = {
-  uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  lowercase: "abcdefghijklmnopqrstuvwxyz",
-  numbers: "0123456789",
-  symbols: "!@#$%^&*()-_=+[]{}|;:,.<>?",
-};
-
-function generatePassword(length: number, opts: typeof CHARS_OPTS): string {
-  let charset = "";
-  if (opts.uppercase) charset += CHARS.uppercase;
-  if (opts.lowercase) charset += CHARS.lowercase;
-  if (opts.numbers) charset += CHARS.numbers;
-  if (opts.symbols) charset += CHARS.symbols;
-  if (!charset) charset = CHARS.lowercase;
-
-  const arr = new Uint32Array(length);
-  crypto.getRandomValues(arr);
-  return Array.from(arr).map((n) => charset[n % charset.length]).join("");
-}
-
-const CHARS_OPTS = { uppercase: true, lowercase: true, numbers: true, symbols: false };
-
-function getStrength(pwd: string): { label: string; color: string; width: string } {
-  let score = 0;
-  if (pwd.length >= 12) score++;
-  if (pwd.length >= 16) score++;
-  if (/[A-Z]/.test(pwd)) score++;
-  if (/[0-9]/.test(pwd)) score++;
-  if (/[^a-zA-Z0-9]/.test(pwd)) score++;
-  if (score <= 1) return { label: "Weak", color: "bg-red-500", width: "w-1/4" };
-  if (score <= 3) return { label: "Fair", color: "bg-amber-500", width: "w-2/4" };
-  if (score === 4) return { label: "Strong", color: "bg-emerald-500", width: "w-3/4" };
-  return { label: "Very Strong", color: "bg-emerald-400", width: "w-full" };
-}
+const faqs = [
+  {
+    question: "How secure is a randomly generated password?",
+    answer:
+      "Security depends on length and character diversity. A 16-character password using uppercase, lowercase, numbers, and symbols has approximately 95^16 ≈ 4.4 × 10^31 possible combinations. At a rate of 1 trillion guesses per second, it would take over a trillion years to brute-force — effectively uncrackable. Our generator uses the browser's cryptographic random number generator (crypto.getRandomValues) for true randomness.",
+  },
+  {
+    question: "What is the recommended password length for a WiFi network?",
+    answer:
+      "The minimum WPA2/WPA3 password length is 8 characters, but this is far too short. We recommend at least 16 characters for home networks and 20+ characters for business or sensitive networks. Longer passwords provide exponentially more security — each additional character multiplies the possible combinations by the size of the character set.",
+  },
+  {
+    question: "Should I use symbols in my WiFi password?",
+    answer:
+      "Symbols greatly improve password security by expanding the character set from 62 (alphanumeric) to 94 characters. However, some old router firmware and network devices have trouble with certain special characters. Safe symbols that work universally include: ! @ # $ % ^ & * ( ) - _ = +. Avoid using quotes, backslashes, and angle brackets as they can cause parsing issues in router configuration interfaces.",
+  },
+  {
+    question: "Is it safe to use a password generated on this website?",
+    answer:
+      "Yes — this generator runs entirely in your browser using JavaScript. Passwords are generated locally by the Web Crypto API and are never transmitted to our servers. You can verify this by disconnecting your internet and refreshing the page — the generator will still work. For maximum security, close the tab after copying your password.",
+  },
+  {
+    question: "What is the difference between WPA2 and WPA3 password security?",
+    answer:
+      "WPA2 uses CCMP-AES encryption with a Pre-Shared Key (PSK) that is vulnerable to offline dictionary attacks. If an attacker captures the 4-way handshake during authentication, they can try billions of password guesses per second offline. WPA3 uses SAE (Simultaneous Authentication of Equals), which requires active interaction for every authentication attempt, making offline brute-force attacks computationally infeasible regardless of password length.",
+  },
+  {
+    question: "How often should I change my router's WiFi password?",
+    answer:
+      "Best practice recommendations: (1) Change immediately when you first set up the router — never leave the factory default. (2) Change whenever you suspect unauthorized access. (3) Change when a trusted person who knew the password leaves the household or organization. (4) Change every 12–24 months as a precautionary measure. Router admin panel passwords should be changed separately from the WiFi password and should be unique.",
+  },
+  {
+    question: "What makes a password hard to crack?",
+    answer:
+      "Three factors determine crackability: (1) Length — each extra character multiplies the attack space exponentially. (2) Randomness — predictable patterns (dictionary words, keyboard walks like 'qwerty123') are checked first by attackers. (3) Character diversity — mixing character classes prevents simple dictionary attacks. The strongest passwords are completely random strings of 16+ characters — exactly what this generator produces.",
+  },
+];
 
 export default function PasswordGeneratorPage() {
-  const [length, setLength] = useState(16);
-  const [opts, setOpts] = useState(CHARS_OPTS);
-  const [password, setPassword] = useState(() => generatePassword(16, CHARS_OPTS));
-  const [show, setShow] = useState(false);
-  const [copied, setCopied] = useState(false);
-
-  const regenerate = useCallback(() => {
-    setPassword(generatePassword(length, opts));
-    setCopied(false);
-  }, [length, opts]);
-
-  async function copyPassword() {
-    await navigator.clipboard.writeText(password);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
-
-  const strength = getStrength(password);
-
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <Breadcrumb items={breadcrumbs} className="mb-8" />
-
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-10 rounded-xl bg-cyan-900/20 flex items-center justify-center">
-            <Lock size={20} className="text-cyan-400" />
-          </div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[var(--text-primary)]">
-            Password Generator
-          </h1>
-        </div>
-        <p className="text-[var(--text-secondary)]">
-          Generate secure, random passwords for your router WiFi or admin panel.
-        </p>
-      </div>
-
-      <div className="glass-card p-6 space-y-6">
-        {/* Password Display */}
-        <div className="relative">
-          <div className="w-full px-4 py-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-xl font-mono text-[var(--brand-400)] text-lg tracking-wider break-all pr-24">
-            {show ? password : "•".repeat(password.length)}
-          </div>
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
-            <button
-              onClick={() => setShow(!show)}
-              className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-all"
-              aria-label={show ? "Hide password" : "Show password"}
-            >
-              {show ? <EyeOff size={16} /> : <Eye size={16} />}
-            </button>
-            <button
-              onClick={copyPassword}
-              className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--brand-400)] hover:bg-[var(--bg-hover)] transition-all"
-              aria-label="Copy password"
-            >
-              {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Strength Meter */}
-        <div>
-          <div className="flex justify-between text-xs mb-1.5">
-            <span className="text-[var(--text-muted)]">Strength</span>
-            <span className={`font-semibold ${strength.label === "Weak" ? "text-red-400" : strength.label === "Fair" ? "text-amber-400" : "text-emerald-400"}`}>
-              {strength.label}
-            </span>
-          </div>
-          <div className="h-1.5 bg-[var(--bg-elevated)] rounded-full overflow-hidden">
-            <div className={`h-full rounded-full transition-all duration-500 ${strength.color} ${strength.width}`} />
-          </div>
-        </div>
-
-        {/* Length Slider */}
-        <div>
-          <div className="flex justify-between text-xs mb-2">
-            <span className="text-[var(--text-muted)]">Length</span>
-            <span className="font-semibold text-[var(--text-primary)]">{length} characters</span>
-          </div>
-          <input
-            type="range"
-            min={8}
-            max={64}
-            value={length}
-            onChange={(e) => { setLength(+e.target.value); regenerate(); }}
-            className="w-full accent-[var(--brand-500)]"
-            aria-label="Password length"
-          />
-        </div>
-
-        {/* Options */}
-        <div className="grid grid-cols-2 gap-3">
-          {(Object.keys(opts) as (keyof typeof opts)[]).map((key) => (
-            <label key={key} className="flex items-center gap-2.5 cursor-pointer group">
-              <input
-                type="checkbox"
-                checked={opts[key]}
-                onChange={(e) => { setOpts((o) => ({ ...o, [key]: e.target.checked })); regenerate(); }}
-                className="w-4 h-4 rounded accent-[var(--brand-500)]"
-              />
-              <span className="text-sm text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors capitalize">
-                {key}
-              </span>
-            </label>
-          ))}
-        </div>
-
-        {/* Actions */}
-        <div className="flex gap-3">
-          <Button variant="primary" size="md" onClick={regenerate} className="flex-1" id="regen-password-btn">
-            <RefreshCw size={15} /> Generate New
-          </Button>
-          <Button variant="secondary" size="md" onClick={copyPassword}>
-            {copied ? <Check size={15} /> : <Copy size={15} />}
-            {copied ? "Copied!" : "Copy"}
-          </Button>
-        </div>
-      </div>
-    </div>
+    <NetworkingToolShell
+      h1="Password Generator"
+      intro="Generate cryptographically secure random passwords for your router WiFi and admin panel. Uses the browser's Web Crypto API — passwords are generated locally and never sent to our servers."
+      toolType="password"
+      breadcrumbs={breadcrumbs}
+      faqs={faqs}
+    >
+      <PasswordGeneratorClient />
+    </NetworkingToolShell>
   );
 }
