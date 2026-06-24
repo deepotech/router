@@ -20,11 +20,16 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const pageStr = typeof resolvedParams.page === "string" ? resolvedParams.page : "1";
   const page = Math.max(1, parseInt(pageStr, 10) || 1);
 
-  return buildMetadata({
-    title: `Latest Troubleshooting Guides & Router Setups (Page ${page}) — RouterVia`,
-    description: `Stay up to date with the latest router setups, firmware details, network troubleshooting, and IP configurations. Page ${page}.`,
-    canonical: page === 1 ? "/latest" : `/latest?page=${page}`,
-  });
+  // C-5 Fix: noindex + follow — /latest is a utility pagination page, not a content destination.
+  // Prevents crawl budget waste; Googlebot still follows links to discover individual article pages.
+  return {
+    ...buildMetadata({
+      title: `Latest Troubleshooting Guides & Router Setups (Page ${page}) — RouterVia`,
+      description: `Stay up to date with the latest router setups, firmware details, network troubleshooting, and IP configurations. Page ${page}.`,
+      canonical: page === 1 ? "/latest" : `/latest?page=${page}`,
+    }),
+    robots: { index: false, follow: true },
+  };
 }
 
 // force dynamic to support pagination query parameters

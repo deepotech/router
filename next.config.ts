@@ -38,9 +38,14 @@ const nextConfig: NextConfig = {
   },
 
   // Security Headers
+  // NOTE: X-Frame-Options exemption for /embed/* is handled in src/proxy.ts.
+  // next.config.ts headers() can only SET/OVERRIDE values, not delete them —
+  // and "ALLOWALL" is not a standards-defined X-Frame-Options value.
+  // Proxy uses response.headers.delete() which is the only correct approach.
   async headers() {
     return [
       {
+        // Apply strict security headers to all routes
         source: "/(.*)",
         headers: [
           {

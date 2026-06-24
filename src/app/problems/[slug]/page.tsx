@@ -17,6 +17,7 @@ import { buildProblemMetadata } from "@/lib/seo/metadata";
 import { JsonLd, buildBreadcrumbSchema, buildFaqSchema, generateSemanticArticleSchema } from "@/lib/seo/schema";
 import { APP_URL } from "@/lib/constants";
 import { RelatedRoutersForProblem } from "@/components/seo/RelatedRoutersForProblem";
+import { ProblemService } from "@/server/services/problem.service";
 
 // ─── Inline Markdown Client Wrapper ─────────────────────────────────────────
 function MarkdownContent({ content }: { content: string }) {
@@ -130,6 +131,25 @@ function ProblemContent({ problem }: { problem: any }) {
 
 import { hasDatabase } from "@/lib/server/env-safe";
 
+// ─── Static Generation ───────────────────────────────────────────────────────
+// Pre-render all PUBLISHED problem pages at build time.
+// dynamicParams = true: new problems added post-build are served via ISR fallback (no 404).
+// revalidate = 86400: both pre-built and newly discovered paths revalidate every 24h (ISR).
+//   Without this, new paths served via dynamicParams would be pure SSR on every request.
+export const dynamicParams = true;
+export const revalidate = 86400;
+
+export async function generateStaticParams() {
+  if (!hasDatabase) return [];
+  try {
+    const paths = await ProblemService.getAllPaths();
+    return paths.map(({ slug }) => ({ slug }));
+  } catch (error) {
+    console.error("[Build] Failed to generate problem static params:", error);
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   if (!hasDatabase) return {};
   const { slug } = await params;
@@ -146,7 +166,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   try {
     robots = await IndexationControlService.getRobotsConfig(problem.status, 0.9);
   } catch {
-    robots = { index: true, follow: true };
+    // Safety default: if indexation service is unavailable (Redis/DB outage),
+    // never accidentally index STAGED or unreviewed content.
+    robots = { index: false, follow: false, noarchive: true };
   }
   
   const baseMetadata = buildProblemMetadata({

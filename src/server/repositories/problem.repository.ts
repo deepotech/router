@@ -30,6 +30,7 @@ export const ProblemRepository = {
 
   async getAllSlugs(): Promise<string[]> {
     const problems = await prisma.problem.findMany({
+      where: { status: "PUBLISHED" },
       select: { slug: true },
     });
     return problems.map((p) => p.slug);

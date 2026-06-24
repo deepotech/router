@@ -48,8 +48,10 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-// Force dynamic to prevent Prisma queries during Railway build phase
-export const dynamic = "force-dynamic";
+// C-1 Fix: ISR instead of force-dynamic.
+// /routers hub content (brand list) is stable — cache for 1 hour.
+// This improves TTFB and crawl efficiency for the most-linked hub page.
+export const revalidate = 3600; // 1 hour
 
 // ---- Brand Details Hardcoded mapping for Cards ----
 const BRAND_DETAILS: Record<string, { defaultIp: string; alternativeAddress?: string }> = {
