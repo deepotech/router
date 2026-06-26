@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Link2, Info, Shield, Lock, Wifi, Smartphone, Globe, Settings, RefreshCw, AlertTriangle } from "lucide-react";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/schema";
@@ -36,10 +35,7 @@ export default async function HuaweiRouterDefaultPasswordPage() {
     "url": `${APP_URL}/huawei-router-default-password`,
     "name": "Huawei Router Default Username & Password List (Updated 2026)",
     "description": "Complete list of default usernames and passwords for all Huawei consumer routers, mobile LTE routers, and GPON fiber ONTs.",
-    "about": {
-      "@type": "Thing",
-      "name": "Huawei Default Passwords",
-    },
+    "about": { "@type": "Thing", "name": "Huawei Default Passwords" },
   };
 
   const troubleshootingSteps = [
@@ -83,6 +79,10 @@ export default async function HuaweiRouterDefaultPasswordPage() {
     {
       question: "What is the default login for Huawei LTE/5G mobile routers?",
       answer: "Most Huawei LTE mobile routers (e.g., B535, B310, B818) use 'admin' as both the default username and password. You can access the configuration dashboard at http://192.168.8.1.",
+    },
+    {
+      question: "How do I see connected devices on a Huawei router after logging in?",
+      answer: "Log into your admin panel (192.168.3.1 for consumer routers), go to 'DHCP' or 'More Functions' → 'Device Manager'. A list of all connected devices with their MAC addresses, IP addresses, and hostnames is displayed. Use this list to identify unknown devices and block unauthorized connections.",
     },
   ];
 
@@ -134,7 +134,7 @@ export default async function HuaweiRouterDefaultPasswordPage() {
               1. Huawei Router Default Credentials Matrix
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Use the following matrix to identify the default credentials for your Huawei device family. Ensure you are attempting login on the corresponding gateway IP address:
+              Use the following matrix to identify the default credentials for your Huawei device family. Ensure you are attempting login on the corresponding gateway IP address. Our full <Link href="/huawei-router-ip-address" className="text-[var(--brand-400)] hover:underline">Huawei IP address guide</Link> covers how to determine which gateway your device is using.
             </p>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
@@ -193,7 +193,7 @@ export default async function HuaweiRouterDefaultPasswordPage() {
               2. How to Recover Access to Your Huawei Router
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              If default passwords do not allow you to log in, someone has customized the login keys. Follow this structured recovery path to restore router access:
+              If default passwords do not allow you to log in, someone has customized the login keys. Follow this structured recovery path to restore router access. You can also see our <Link href="/router-login-not-working" className="text-[var(--brand-400)] hover:underline">router login not working guide</Link> for universal recovery procedures that apply to all brands.
             </p>
             <div className="space-y-4">
               <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
@@ -213,26 +213,60 @@ export default async function HuaweiRouterDefaultPasswordPage() {
 
           <section className="space-y-4">
             <h2 className="text-lg font-bold text-[var(--text-primary)]">
-              3. Internal Linking Hub
+              3. Security Best Practices After Login
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Strengthen your network knowledge by reviewing our related resource guides:
+              Once you have successfully logged in with default credentials, your first priority should be to harden access. Routers running default passwords are actively exploited by IoT botnets and port-scanning malware:
             </p>
+            <ul className="space-y-2 text-xs text-[var(--text-secondary)]">
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-400 font-bold mt-0.5">✓</span>
+                <span>Immediately change the admin password to something 12+ characters with mixed case, numbers, and symbols.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-400 font-bold mt-0.5">✓</span>
+                <span>Update your <Link href="/change-wifi-password" className="text-[var(--brand-400)] hover:underline">Wi-Fi password</Link> if you have been using the default SSID key.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-400 font-bold mt-0.5">✓</span>
+                <span>Enable <Link href="/wpa3-vs-wpa2" className="text-[var(--brand-400)] hover:underline">WPA3 encryption</Link> if your router firmware supports it (AX3 Pro and newer).</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-400 font-bold mt-0.5">✓</span>
+                <span>Set up a <Link href="/guest-wifi-setup" className="text-[var(--brand-400)] hover:underline">Guest Wi-Fi network</Link> for IoT devices and visitors to isolate them from your main LAN.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-400 font-bold mt-0.5">✓</span>
+                <span>Review <Link href="/how-to-see-who-is-on-my-wifi" className="text-[var(--brand-400)] hover:underline">who is connected to your Wi-Fi</Link> and block any unknown MAC addresses.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-400 font-bold mt-0.5">✓</span>
+                <span>Change your DNS servers to trusted resolvers — see our <Link href="/best-dns-for-faster-internet" className="text-[var(--brand-400)] hover:underline">best DNS servers guide</Link>.</span>
+              </li>
+            </ul>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+              4. Related Huawei &amp; Router Access Guides
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
-                <h3 className="text-sm font-bold text-[var(--text-primary)]">Related Huawei Guides</h3>
+                <h3 className="text-sm font-bold text-[var(--text-primary)]">Huawei Device Guides</h3>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-[var(--text-muted)]">
                   <li>Log in to your gateway: <Link href="/huawei-router-login" className="text-[var(--brand-400)] hover:underline">Huawei Router Login Guide</Link></li>
                   <li>Identify your default IP: <Link href="/huawei-router-ip-address" className="text-[var(--brand-400)] hover:underline">Huawei Router IP Guide</Link></li>
-                  <li>Configure specific models: <Link href="/huawei-hg8145v5-default-password" className="text-[var(--brand-400)] hover:underline">Huawei HG8145V5 Setup</Link> and <Link href="/huawei-ax3-default-password" className="text-[var(--brand-400)] hover:underline">Huawei AX3 Config</Link></li>
+                  <li>AX3 WiFi 6 setup: <Link href="/huawei-ax3-default-password" className="text-[var(--brand-400)] hover:underline">Huawei AX3 Setup Guide</Link></li>
+                  <li>HG8145V5 ONT setup: <Link href="/huawei-hg8145v5-default-password" className="text-[var(--brand-400)] hover:underline">HG8145V5 Admin Guide</Link></li>
                 </ul>
               </div>
               <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
                 <h3 className="text-sm font-bold text-[var(--text-primary)]">General Router Access Resources</h3>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-[var(--text-muted)]">
-                  <li>Access default router panels: <Link href="/router-admin" className="text-[var(--brand-400)] hover:underline">Router Admin Setup Guide</Link></li>
-                  <li>Recover forgotten passwords: <Link href="/router-password" className="text-[var(--brand-400)] hover:underline">Default Router Passwords List</Link></li>
-                  <li>Reset your hardware safely: <Link href="/router-reset" className="text-[var(--brand-400)] hover:underline">Router Reset Walkthrough</Link></li>
+                  <li>Full brand password list: <Link href="/router-password" className="text-[var(--brand-400)] hover:underline">Default Router Passwords</Link></li>
+                  <li>Admin access hub: <Link href="/router-admin" className="text-[var(--brand-400)] hover:underline">Router Admin Setup Guide</Link></li>
+                  <li>Safe reset procedures: <Link href="/router-reset" className="text-[var(--brand-400)] hover:underline">Router Reset Walkthrough</Link></li>
+                  <li>All brand login guides: <Link href="/router-login-hostnames" className="text-[var(--brand-400)] hover:underline">Router Login Hostnames Directory</Link></li>
                 </ul>
               </div>
             </div>

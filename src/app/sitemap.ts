@@ -59,6 +59,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.85,
     },
+    // Router Login Hostnames Cluster (Sprint 7A)
+    {
+      url: `${APP_URL}/router-login-hostnames`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/routerlogin.net`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/tplinkwifi.net`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/netgear-router-login`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/tp-link-router-login`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
     {
       url: `${APP_URL}/router-settings`,
       lastModified: now,

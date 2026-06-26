@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Link2, Info, Shield, Lock, Wifi, Smartphone, Globe, Settings, RefreshCw, AlertTriangle } from "lucide-react";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/schema";
@@ -36,10 +35,7 @@ export default async function HuaweiAx3DefaultPasswordPage() {
     "url": `${APP_URL}/huawei-ax3-default-password`,
     "name": "Huawei AX3 Default Password & WiFi Setup Guide (Updated 2026)",
     "description": "Learn how to set up the Huawei WiFi AX3 / AX3 Pro router. Find default login passwords, access 192.168.3.1, change Wi-Fi settings, and configure AiMesh.",
-    "about": {
-      "@type": "Thing",
-      "name": "Huawei AX3 default password",
-    },
+    "about": { "@type": "Thing", "name": "Huawei AX3 default password" },
   };
 
   const troubleshootingSteps = [
@@ -90,6 +86,10 @@ export default async function HuaweiAx3DefaultPasswordPage() {
       question: "Does the Huawei AX3 support WPA3 security?",
       answer: "Yes, the Huawei WiFi AX3 series supports modern WPA3-SAE encryption. To enable it, log into the admin interface, go to Wi-Fi Settings, select WPA2/WPA3-PSK hybrid or WPA3-SAE mode under Security, and click Save.",
     },
+    {
+      question: "What is the difference between AX3 and AX3 Pro?",
+      answer: "The Huawei WiFi AX3 Pro features a Quad-Core CPU (compared to the Dual-Core on the standard AX3), supports 160 MHz bandwidth on the 5 GHz band for near-gigabit wireless throughput, and offers improved mesh node capability. Both support Wi-Fi 6 (802.11ax) and HiLink mesh networking.",
+    },
   ];
 
   const commonCauses = [
@@ -120,7 +120,7 @@ export default async function HuaweiAx3DefaultPasswordPage() {
       <JsonLd data={collectionPageSchema} />
       <TroubleshootingArticleShell
         h1="Huawei AX3 WiFi 6 Router Setup & Default Password Guide"
-        intro="The Huawei WiFi AX3 (and AX3 Pro) is a popular Wi-Fi 6 consumer router featuring high speeds and mesh compatibility. This guide outlines how to establish a local connection, access the 192.168.3.1 setup panel, configure secure Wi-Fi 6 parameters, and set up an AiMesh network."
+        intro="The Huawei WiFi AX3 (and AX3 Pro) is a popular Wi-Fi 6 consumer router featuring high speeds and mesh compatibility. This guide outlines how to establish a local connection, access the 192.168.3.1 setup panel, configure secure Wi-Fi 6 parameters, and set up a HiLink Mesh network."
         category="wifi"
         breadcrumbs={breadcrumbs}
         faqs={faqs}
@@ -140,7 +140,7 @@ export default async function HuaweiAx3DefaultPasswordPage() {
               1. Huawei WiFi AX3 & AX3 Pro Technical Specifications
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Below are the key technical hardware profiles and default parameters of the Huawei AX3 router family:
+              Below are the key technical hardware profiles and default parameters of the Huawei AX3 router family. Once you complete setup, explore our <Link href="/router-settings" className="text-[var(--brand-400)] hover:underline">router settings optimization guide</Link> to configure QoS, DNS, and firewall rules for peak performance.
             </p>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
@@ -187,7 +187,7 @@ export default async function HuaweiAx3DefaultPasswordPage() {
               2. How to Configure Huawei AX3 Mesh Networking
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Huawei AX3 routers support HiLink Mesh (Link+), allowing you to link multiple units to eliminate wireless dead zones. Follow these steps to build your mesh network:
+              Huawei AX3 routers support HiLink Mesh (Link+), allowing you to link multiple units to eliminate wireless dead zones. For a broader comparison of mesh systems, see our <Link href="/mesh-wifi" className="text-[var(--brand-400)] hover:underline">mesh Wi-Fi technology guide</Link> and <Link href="/wifi-extender-vs-mesh" className="text-[var(--brand-400)] hover:underline">Wi-Fi extender vs mesh comparison</Link>.
             </p>
             <div className="space-y-4">
               <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
@@ -199,7 +199,7 @@ export default async function HuaweiAx3DefaultPasswordPage() {
               <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
                 <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-2">Method B: Wired Ethernet Backhaul</h3>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  For maximum speeds, connect a network cable from one of the LAN ports on your primary AX3 to the WAN port of the secondary AX3. The routers will automatically configure themselves via Link+ protocol, establishing a high-speed wired backhaul link.
+                  For maximum speeds, connect a network cable from one of the LAN ports on your primary AX3 to the WAN port of the secondary AX3. The routers will automatically configure themselves via Link+ protocol, establishing a high-speed wired backhaul link. Our guide on <Link href="/mesh-wifi-setup" className="text-[var(--brand-400)] hover:underline">mesh Wi-Fi setup</Link> covers advanced backhaul configurations.
                 </p>
               </div>
             </div>
@@ -207,11 +207,32 @@ export default async function HuaweiAx3DefaultPasswordPage() {
 
           <section className="space-y-4">
             <h2 className="text-lg font-bold text-[var(--text-primary)]">
-              3. Internal Linking Hub
+              3. Optimize Your AX3 for Gaming & Streaming
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Further optimize your network configurations using our related guides:
+              The Huawei AX3 Quad-Core is an excellent gaming router when properly configured. Key optimizations to apply after logging in:
             </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {[
+                { label: "Best DNS for gaming", href: "/best-dns-for-gaming", desc: "Reduce latency by switching to gaming-optimized DNS resolvers." },
+                { label: "QoS settings for gaming", href: "/best-qos-settings-for-gaming", desc: "Prioritize gaming traffic to eliminate lag spikes." },
+                { label: "Fix Wi-Fi packet loss", href: "/wifi-packet-loss", desc: "Diagnose and eliminate wireless retransmissions." },
+                { label: "Improve Wi-Fi signal", href: "/how-to-improve-wifi-signal", desc: "Optimize channel selection and transmit power." },
+                { label: "Change DNS on router", href: "/how-to-change-dns-on-router", desc: "Set Cloudflare or Google DNS for faster resolution." },
+                { label: "Port forwarding guide", href: "/port-forwarding-guide", desc: "Open ports for gaming, servers, or cameras." },
+              ].map((item) => (
+                <div key={item.href} className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl">
+                  <Link href={item.href} className="text-xs font-bold text-[var(--brand-400)] hover:underline block mb-1">{item.label} →</Link>
+                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+              4. Related Huawei & Router Guides
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
                 <h3 className="text-sm font-bold text-[var(--text-primary)]">Related Huawei Guides</h3>
@@ -220,6 +241,7 @@ export default async function HuaweiAx3DefaultPasswordPage() {
                   <li>Find default passwords: <Link href="/huawei-router-default-password" className="text-[var(--brand-400)] hover:underline">Huawei Default Password Directory</Link></li>
                   <li>Identify your default IP: <Link href="/huawei-router-ip-address" className="text-[var(--brand-400)] hover:underline">Huawei Router IP Guide</Link></li>
                   <li>Configure HG8145V5 ONT: <Link href="/huawei-hg8145v5-default-password" className="text-[var(--brand-400)] hover:underline">Huawei HG8145V5 Setup</Link></li>
+                  <li>Router reset safety: <Link href="/router-reset" className="text-[var(--brand-400)] hover:underline">Router Factory Reset Guide</Link></li>
                 </ul>
               </div>
               <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
@@ -228,6 +250,9 @@ export default async function HuaweiAx3DefaultPasswordPage() {
                   <li>Access default router panels: <Link href="/router-admin" className="text-[var(--brand-400)] hover:underline">Router Admin Setup Guide</Link></li>
                   <li>Troubleshoot Wi-Fi drops: <Link href="/wifi-keeps-disconnecting" className="text-[var(--brand-400)] hover:underline">Wi-Fi Connection Diagnostic</Link></li>
                   <li>Compare Wi-Fi standards: <Link href="/wpa3-vs-wpa2" className="text-[var(--brand-400)] hover:underline">WPA2 vs WPA3 SAE Guide</Link></li>
+                  <li>Router login cluster: <Link href="/router-login" className="text-[var(--brand-400)] hover:underline">Router Login Hub</Link></li>
+                  <li>See connected devices: <Link href="/how-to-see-who-is-on-my-wifi" className="text-[var(--brand-400)] hover:underline">Who Is On My Wi-Fi Guide</Link></li>
+                  <li>Block devices: <Link href="/block-device-on-router" className="text-[var(--brand-400)] hover:underline">Block Device on Router</Link></li>
                 </ul>
               </div>
             </div>

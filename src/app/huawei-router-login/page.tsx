@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Link2, Info, Shield, Lock, Wifi, Smartphone, Globe, Settings, RefreshCw, AlertTriangle } from "lucide-react";
+import { Link2, Info } from "lucide-react";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/schema";
@@ -37,10 +37,7 @@ export default async function HuaweiRouterLoginPage() {
     "url": `${APP_URL}/huawei-router-login`,
     "name": "Huawei Router Login Guide: Access Admin Panel (Updated 2026)",
     "description": "Step-by-step guide to log into any Huawei router or ONT gateway. Find default IP addresses, default credentials, and troubleshoot issues.",
-    "about": {
-      "@type": "Thing",
-      "name": "Huawei Router Access",
-    },
+    "about": { "@type": "Thing", "name": "Huawei Router Access" },
   };
 
   const troubleshootingSteps = [
@@ -91,6 +88,10 @@ export default async function HuaweiRouterLoginPage() {
       question: "Can I log into my Huawei router using the AI Life app?",
       answer: "Yes, you can manage most consumer Huawei routers using the official HUAWEI AI Life app on Android or iOS. Connect your mobile phone to the router's Wi-Fi network, launch the app, and follow the on-screen prompts to pair and manage the device. For advanced settings like bridge mode or VoIP configuration, you must use the web browser interface.",
     },
+    {
+      question: "What should I do if 192.168.3.1 shows a blank page?",
+      answer: "A blank page usually means the router's web server daemon is crashed or the firmware is being updated. Power cycle the router by unplugging it for 30 seconds and re-plugging it. Also, ensure you're not using https:// — use plain http://192.168.3.1. If the issue persists, connect via Ethernet cable directly to a LAN port.",
+    },
   ];
 
   const commonCauses = [
@@ -105,6 +106,10 @@ export default async function HuaweiRouterLoginPage() {
     {
       title: "Client IP Configuration Errors",
       desc: "Static client IP settings configured on your laptop or computer can prevent communication if they don't match the router's active subnet.",
+    },
+    {
+      title: "Browser Cache Loops",
+      desc: "Old cached HTTPS redirects in the browser can cause the admin portal to loop or refuse connections — always use Incognito mode for first-time access.",
     },
   ];
 
@@ -141,7 +146,7 @@ export default async function HuaweiRouterLoginPage() {
               1. Huawei Gateway IP Address Reference
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Depending on the hardware configuration (consumer Wi-Fi router, LTE/5G SIM card router, or GPON ONT), Huawei devices default to different IP subnets. Refer to the reference matrix below to target the correct gateway:
+              Depending on the hardware configuration (consumer Wi-Fi router, LTE/5G SIM card router, or GPON ONT), Huawei devices default to different IP subnets. Refer to the reference matrix below to target the correct gateway. Our full <Link href="/huawei-router-ip-address" className="text-[var(--brand-400)] hover:underline">Huawei router IP address guide</Link> has deeper subnet diagnostic steps.
             </p>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
@@ -182,7 +187,7 @@ export default async function HuaweiRouterLoginPage() {
               2. How to Resolve Huawei Login Page Not Loading
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              If your browser returns a &quot;Connection Timed Out&quot; or &quot;This site can’t be reached&quot; error when entering the gateway IP address, it indicates that your device cannot route traffic to the router's processor. Use these diagnostic steps to restore connectivity:
+              If your browser returns a &quot;Connection Timed Out&quot; or &quot;This site can't be reached&quot; error when entering the gateway IP address, it indicates that your device cannot route traffic to the router's processor. See also our <Link href="/router-login-not-working" className="text-[var(--brand-400)] hover:underline">router login not working guide</Link> for universal browser diagnostic steps.
             </p>
             <div className="space-y-4">
               <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
@@ -194,7 +199,7 @@ export default async function HuaweiRouterLoginPage() {
               <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
                 <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-2">Bypass Virtual Network Adapters</h3>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  VPN clients (like NordVPN, ExpressVPN) and custom DNS proxies override your network adapter's routing tables. When you query a local gateway IP (such as 192.168.3.1), the virtual adapter attempts to route it through the encrypted tunnel instead of the local network interface card. Always disable active VPN connections before trying to configure your local networking equipment.
+                  VPN clients (like NordVPN, ExpressVPN) and custom DNS proxies override your network adapter's routing tables. When you query a local gateway IP (such as 192.168.3.1), the virtual adapter attempts to route it through the encrypted tunnel instead of the local network interface card. Always disable active VPN connections before trying to configure your local networking equipment. Once logged in, refer to our guide on <Link href="/how-to-change-dns-on-router" className="text-[var(--brand-400)] hover:underline">how to change DNS on your router</Link>.
                 </p>
               </div>
             </div>
@@ -202,28 +207,119 @@ export default async function HuaweiRouterLoginPage() {
 
           <section className="space-y-4">
             <h2 className="text-lg font-bold text-[var(--text-primary)]">
-              3. Internal Link Navigation Hub
+              3. Huawei-Specific Model Login Guides
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Strengthen your network knowledge by reviewing our related resource guides:
+              Different Huawei hardware families have unique credential requirements. Navigate to your specific device guide below:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
-                <h3 className="text-sm font-bold text-[var(--text-primary)]">Related Huawei Guides</h3>
-                <ul className="list-disc pl-5 space-y-1 text-xs text-[var(--text-muted)]">
-                  <li>Find model default passwords: <Link href="/huawei-router-default-password" className="text-[var(--brand-400)] hover:underline">Huawei Default Password Directory</Link></li>
-                  <li>Identify your default IP: <Link href="/huawei-router-ip-address" className="text-[var(--brand-400)] hover:underline">Huawei Router IP Guide</Link></li>
-                  <li>Configure specific models: <Link href="/huawei-hg8145v5-default-password" className="text-[var(--brand-400)] hover:underline">Huawei HG8145V5 Setup</Link> and <Link href="/huawei-ax3-default-password" className="text-[var(--brand-400)] hover:underline">Huawei AX3 Config</Link></li>
+              <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-3">
+                <h3 className="text-sm font-bold text-[var(--brand-400)]">Consumer Routers (AX Series)</h3>
+                <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-secondary)]">
+                  <li>Default password &amp; setup wizard: <Link href="/huawei-ax3-default-password" className="text-[var(--brand-400)] hover:underline">Huawei AX3 WiFi 6 Setup Guide</Link></li>
+                  <li>Default credentials matrix: <Link href="/huawei-router-default-password" className="text-[var(--brand-400)] hover:underline">Huawei Default Password Directory</Link></li>
+                  <li>Find gateway IP: <Link href="/huawei-router-ip-address" className="text-[var(--brand-400)] hover:underline">Huawei Router IP Address Guide</Link></li>
+                  <li>Recover forgotten password: <Link href="/router-password" className="text-[var(--brand-400)] hover:underline">Default Router Passwords List</Link></li>
+                  <li>Compare Wi-Fi security modes: <Link href="/wpa3-vs-wpa2" className="text-[var(--brand-400)] hover:underline">WPA3 vs WPA2 Security Guide</Link></li>
+                  <li>Setup guest networks: <Link href="/guest-wifi-setup" className="text-[var(--brand-400)] hover:underline">Guest Wi-Fi Setup Guide</Link></li>
                 </ul>
               </div>
-              <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
-                <h3 className="text-sm font-bold text-[var(--text-primary)]">General Router Access Resources</h3>
-                <ul className="list-disc pl-5 space-y-1 text-xs text-[var(--text-muted)]">
-                  <li>Unlock default router panels: <Link href="/router-admin" className="text-[var(--brand-400)] hover:underline">Router Admin Setup Guide</Link></li>
-                  <li>Recover forgotten passwords: <Link href="/router-password" className="text-[var(--brand-400)] hover:underline">Default Router Passwords List</Link></li>
-                  <li>Solve DHCP leasing failures: <Link href="/router-not-assigning-ip-addresses" className="text-[var(--brand-400)] hover:underline">DHCP Troubleshooting Page</Link></li>
+              <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-3">
+                <h3 className="text-sm font-bold text-[var(--brand-400)]">GPON ONT Terminals (Fiber)</h3>
+                <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-secondary)]">
+                  <li>ONT-specific credentials: <Link href="/huawei-hg8145v5-default-password" className="text-[var(--brand-400)] hover:underline">Huawei HG8145V5 Default Password Guide</Link></li>
+                  <li>ISP-level access: <Link href="/router-admin" className="text-[var(--brand-400)] hover:underline">Router Admin Access Guide</Link></li>
+                  <li>Restore defaults safely: <Link href="/router-reset" className="text-[var(--brand-400)] hover:underline">Router Factory Reset Walkthrough</Link></li>
+                  <li>IP subnet diagnosis: <Link href="/default-gateway-not-available" className="text-[var(--brand-400)] hover:underline">Fix Default Gateway Not Available</Link></li>
+                  <li>Fix DHCP leasing: <Link href="/router-not-assigning-ip-addresses" className="text-[var(--brand-400)] hover:underline">DHCP IP Assignment Troubleshooter</Link></li>
+                  <li>Fiber connection guide: <Link href="/ethernet-connected-but-no-internet" className="text-[var(--brand-400)] hover:underline">Ethernet Connected but No Internet Fix</Link></li>
                 </ul>
               </div>
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+              4. Optimizing Your Huawei Router After Login
+            </h2>
+            <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+              Once logged in successfully, these are the highest-impact settings you should configure to maximize network performance, security, and reliability:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {[
+                {
+                  title: "Change Wi-Fi Password",
+                  desc: "Update both 2.4 GHz and 5 GHz band passwords to unique strong keys.",
+                  href: "/change-wifi-password",
+                  label: "Wi-Fi Password Guide →"
+                },
+                {
+                  title: "Update DNS Servers",
+                  desc: "Switch from ISP default DNS to faster resolvers like Cloudflare or Google.",
+                  href: "/how-to-change-dns-on-router",
+                  label: "DNS Change Guide →"
+                },
+                {
+                  title: "Enable Port Forwarding",
+                  desc: "Open required ports for gaming, servers, or security cameras.",
+                  href: "/port-forwarding",
+                  label: "Port Forwarding Guide →"
+                },
+                {
+                  title: "Improve Wi-Fi Signal",
+                  desc: "Adjust channel widths and transmit power to reduce interference.",
+                  href: "/how-to-improve-wifi-signal",
+                  label: "Wi-Fi Signal Guide →"
+                },
+                {
+                  title: "Block Devices",
+                  desc: "Restrict unauthorized clients from accessing your local network.",
+                  href: "/block-device-on-router",
+                  label: "Block Device Guide →"
+                },
+                {
+                  title: "Set Best DNS",
+                  desc: "Pick the fastest DNS for your region using performance benchmarks.",
+                  href: "/best-dns-for-faster-internet",
+                  label: "Best DNS Guide →"
+                },
+              ].map((item) => (
+                <div key={item.href} className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl">
+                  <h3 className="text-xs font-bold text-[var(--text-primary)] mb-1">{item.title}</h3>
+                  <p className="text-[11px] text-[var(--text-muted)] mb-2 leading-relaxed">{item.desc}</p>
+                  <Link href={item.href} className="text-[11px] text-[var(--brand-400)] hover:underline font-semibold">{item.label}</Link>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+              5. Router Access Cluster Navigation
+            </h2>
+            <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+              Navigate to the most useful related guides in the Router Login knowledge cluster:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: "Router Login Hub", href: "/router-login" },
+                { label: "Hostname Directory", href: "/router-login-hostnames" },
+                { label: "Router Passwords", href: "/router-password" },
+                { label: "Router Reset Guide", href: "/router-reset" },
+                { label: "Router Settings", href: "/router-settings" },
+                { label: "Router Admin Access", href: "/router-admin" },
+                { label: "Login Not Working", href: "/router-login-not-working" },
+                { label: "IP Directory", href: "/ips" },
+                { label: "Router Brands", href: "/routers" },
+              ].map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-xs bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--brand-800)] px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--brand-400)] hover:bg-[var(--bg-hover)] transition-all font-medium"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </section>
         </div>

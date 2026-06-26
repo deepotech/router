@@ -76,6 +76,15 @@ const footerLinks = {
     { label: "TP-Link Login Issues", href: "/tp-link-login-not-working" },
     { label: "ASUS Keeps Restarting", href: "/asus-router-keeps-restarting" },
   ],
+  "Router Login": [
+    { label: "Router Login Guide", href: "/router-login" },
+    { label: "Hostnames Directory", href: "/router-login-hostnames" },
+    { label: "routerlogin.net Guide", href: "/routerlogin.net" },
+    { label: "tplinkwifi.net Guide", href: "/tplinkwifi.net" },
+    { label: "Netgear Login Guide", href: "/netgear-router-login" },
+    { label: "TP-Link Login Guide", href: "/tp-link-router-login" },
+    { label: "Login Not Working", href: "/router-login-not-working" },
+  ],
   "DNS Guides": [
     { label: "Best DNS for Speed", href: "/best-dns-for-faster-internet" },
     { label: "How to Change Router DNS", href: "/how-to-change-dns-on-router" },

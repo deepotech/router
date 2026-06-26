@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Link2, Info, Shield, Lock, Wifi, Smartphone, Globe, Settings, RefreshCw, AlertTriangle } from "lucide-react";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/schema";
@@ -36,10 +35,7 @@ export default async function HuaweiRouterIpAddressPage() {
     "url": `${APP_URL}/huawei-router-ip-address`,
     "name": "Huawei Router IP Address: Find Default Gateways (Updated 2026)",
     "description": "How to find the default IP address of your Huawei router or ONT terminal. Step-by-step instructions for Windows, macOS, Android, and iOS.",
-    "about": {
-      "@type": "Thing",
-      "name": "Huawei Router IP",
-    },
+    "about": { "@type": "Thing", "name": "Huawei Router IP" },
   };
 
   const troubleshootingSteps = [
@@ -88,6 +84,10 @@ export default async function HuaweiRouterIpAddressPage() {
     {
       question: "How do I configure a static IP on my Huawei router?",
       answer: "Log into the admin panel, navigate to WAN or Internet settings, change the Connection Type from DHCP/Auto to Static IP, and input the static IP, subnet mask, gateway IP, and DNS servers supplied by your ISP.",
+    },
+    {
+      question: "Why is my Huawei router showing 169.254.x.x instead of 192.168.3.1?",
+      answer: "A 169.254.x.x address (APIPA — Automatic Private IP Addressing) means your device failed to receive a DHCP lease from the router. This happens when the router's DHCP service has crashed, the network cable is faulty, or your device's network adapter has a static IP configured. Power cycle the router and re-plug your Ethernet cable.",
     },
   ];
 
@@ -139,7 +139,7 @@ export default async function HuaweiRouterIpAddressPage() {
               1. Huawei Gateway IP Reference & Subnets
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Use the following directory table to cross-reference common Huawei router models with their factory default IP address and subnet masks:
+              Use the following directory table to cross-reference common Huawei router models with their factory default IP address and subnet masks. Once you identify your IP, visit the specific model's admin guide for login credentials — start with the <Link href="/huawei-router-default-password" className="text-[var(--brand-400)] hover:underline">Huawei default password directory</Link>.
             </p>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
@@ -192,7 +192,7 @@ export default async function HuaweiRouterIpAddressPage() {
               <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
                 <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-2">Step 1: Enter the IP in the Address Bar</h3>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Open a browser and type the IP address exactly (e.g., <code>192.168.3.1</code>) into the search bar. Do not append search suffixes like &quot;.com&quot; or wrap the numbers in search engine quotes. Press Enter to load the landing page.
+                  Open a browser and type the IP address exactly (e.g., <code>192.168.3.1</code>) into the search bar. Do not append search suffixes like &quot;.com&quot; or wrap the numbers in search engine quotes. Press Enter to load the landing page. If you see a browser error, refer to the <Link href="/router-login-not-working" className="text-[var(--brand-400)] hover:underline">router login not working guide</Link> for resolution steps.
                 </p>
               </div>
               <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
@@ -201,31 +201,63 @@ export default async function HuaweiRouterIpAddressPage() {
                   Input default credentials such as Username <code>telecomadmin</code> and Password <code>admintelecom</code> for fiber gateways, or log in with your custom administrator password for AX series routers. Look up details in our <Link href="/huawei-router-default-password" className="text-[var(--brand-400)] hover:underline">Huawei router password directory</Link>.
                 </p>
               </div>
+              <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
+                <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-2">Step 3: Configure Network Settings</h3>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  Once inside the admin panel, your most impactful first actions are: change the <Link href="/change-wifi-password" className="text-[var(--brand-400)] hover:underline">Wi-Fi password</Link>, update your <Link href="/how-to-change-dns-on-router" className="text-[var(--brand-400)] hover:underline">DNS server settings</Link>, and optionally set up <Link href="/port-forwarding" className="text-[var(--brand-400)] hover:underline">port forwarding rules</Link>.
+                </p>
+              </div>
             </div>
           </section>
 
           <section className="space-y-4">
             <h2 className="text-lg font-bold text-[var(--text-primary)]">
-              3. Internal Linking Hub
+              3. Why IP Address Matters for Network Diagnostics
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Expand your network knowledge with our related resource guides:
+              Your router's IP address is the starting point for diagnosing virtually every network issue. If you are experiencing any of the below network problems, your first diagnostic step is always to confirm your router's gateway IP and verify the admin panel is accessible:
             </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {[
+                { label: "Internet keeps dropping", href: "/internet-keeps-dropping" },
+                { label: "Default gateway not available", href: "/default-gateway-not-available" },
+                { label: "Router not assigning IP addresses", href: "/router-not-assigning-ip-addresses" },
+                { label: "Ethernet connected but no internet", href: "/ethernet-connected-but-no-internet" },
+                { label: "Router blinking orange light", href: "/router-blinking-orange" },
+                { label: "Double NAT detected", href: "/double-nat-detected" },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl text-xs text-[var(--text-secondary)] hover:text-[var(--brand-400)] hover:border-[var(--brand-800)] transition-all font-medium"
+                >
+                  {item.label} →
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+              4. Related Huawei & Gateway IP Guides
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
                 <h3 className="text-sm font-bold text-[var(--text-primary)]">Related Huawei Guides</h3>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-[var(--text-muted)]">
                   <li>Log in to your gateway: <Link href="/huawei-router-login" className="text-[var(--brand-400)] hover:underline">Huawei Router Login Guide</Link></li>
                   <li>Find default passwords: <Link href="/huawei-router-default-password" className="text-[var(--brand-400)] hover:underline">Huawei Default Password Directory</Link></li>
-                  <li>Configure specific models: <Link href="/huawei-hg8145v5-default-password" className="text-[var(--brand-400)] hover:underline">Huawei HG8145V5 Setup</Link> and <Link href="/huawei-ax3-default-password" className="text-[var(--brand-400)] hover:underline">Huawei AX3 Config</Link></li>
+                  <li>AX3 WiFi 6 model: <Link href="/huawei-ax3-default-password" className="text-[var(--brand-400)] hover:underline">Huawei AX3 Setup Guide</Link></li>
+                  <li>HG8145V5 fiber ONT: <Link href="/huawei-hg8145v5-default-password" className="text-[var(--brand-400)] hover:underline">HG8145V5 Admin Guide</Link></li>
                 </ul>
               </div>
               <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
                 <h3 className="text-sm font-bold text-[var(--text-primary)]">General Router Access Resources</h3>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-[var(--text-muted)]">
-                  <li>Understand default gateways: <Link href="/default-gateway-not-available" className="text-[var(--brand-400)] hover:underline">Fix Default Gateway Not Available</Link></li>
+                  <li>Universal gateway guide: <Link href="/how-to-find-router-ip-address" className="text-[var(--brand-400)] hover:underline">How to Find Router IP Address</Link></li>
+                  <li>All router IP addresses: <Link href="/ips" className="text-[var(--brand-400)] hover:underline">IP Address Directory</Link></li>
                   <li>Access default router panels: <Link href="/router-admin" className="text-[var(--brand-400)] hover:underline">Router Admin Setup Guide</Link></li>
-                  <li>Explore public IP addresses: <Link href="/what-is-my-ip" className="text-[var(--brand-400)] hover:underline">Public IP Checker</Link></li>
+                  <li>Explore public IP: <Link href="/what-is-my-ip" className="text-[var(--brand-400)] hover:underline">What Is My IP Address Tool</Link></li>
                 </ul>
               </div>
             </div>

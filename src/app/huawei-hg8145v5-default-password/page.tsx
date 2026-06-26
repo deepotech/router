@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Link2, Info, Shield, Lock, Wifi, Smartphone, Globe, Settings, RefreshCw, AlertTriangle } from "lucide-react";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/schema";
@@ -36,10 +35,7 @@ export default async function HuaweiHg8145v5DefaultPasswordPage() {
     "url": `${APP_URL}/huawei-hg8145v5-default-password`,
     "name": "Huawei HG8145V5 Default Username & Password Guide (2026)",
     "description": "Get default admin logins for the Huawei HG8145V5 GPON ONT. Learn how to log into 192.168.100.1, change Wi-Fi settings, and troubleshoot fiber connection issues.",
-    "about": {
-      "@type": "Thing",
-      "name": "Huawei HG8145V5 default password",
-    },
+    "about": { "@type": "Thing", "name": "Huawei HG8145V5 default password" },
   };
 
   const troubleshootingSteps = [
@@ -89,6 +85,10 @@ export default async function HuaweiHg8145v5DefaultPasswordPage() {
     {
       question: "How do I change the Wi-Fi SSID and password on the HG8145V5?",
       answer: "Log into the admin portal, navigate to the WLAN tab. Select WLAN Configuration. Modify the SSID Name, set Security Mode to WPA2-PSK or WPA2/WPA3-PSK, enter your secure wireless password in the Pre-shared Key field, and click Apply.",
+    },
+    {
+      question: "Can I connect a personal router to the HG8145V5?",
+      answer: "Yes. If you configure the HG8145V5 in Bridge Mode (as telecomadmin), you can connect a personal router to LAN Port 1. Your personal router will then handle NAT, DHCP, Wi-Fi, and firewall independently — known as PPPoE pass-through. This eliminates Double NAT issues and gives you full control over your network.",
     },
   ];
 
@@ -140,7 +140,7 @@ export default async function HuaweiHg8145v5DefaultPasswordPage() {
               1. HG8145V5 Default Login and Credential Configurations
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Use the following credential configurations to log into your Huawei HG8145V5 ONT. Keep in mind that different accounts provide different configuration permissions:
+              Use the following credential configurations to log into your Huawei HG8145V5 ONT. Keep in mind that different accounts provide different configuration permissions. See also our full <Link href="/huawei-router-default-password" className="text-[var(--brand-400)] hover:underline">Huawei default password directory</Link> for the complete list across all device families.
             </p>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
@@ -181,19 +181,19 @@ export default async function HuaweiHg8145v5DefaultPasswordPage() {
               2. How to Access the HG8145V5 Admin Page
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              If the default IP address does not load, follow this troubleshooting guide to restore access:
+              If the default IP address does not load, follow this troubleshooting guide to restore access. For universal browser diagnostic steps that apply to all brands, see our <Link href="/router-login-not-working" className="text-[var(--brand-400)] hover:underline">router login not working guide</Link>.
             </p>
             <div className="space-y-4">
               <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
                 <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-2">Check Your Local IP Subnet</h3>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  If the ONT is connected to a secondary router, your computer might be receiving an IP address from the secondary router's subnet (such as <code>192.168.1.X</code> or <code>192.168.3.X</code>). To load <code>192.168.100.1</code>, disconnect your secondary router, plug your PC directly into the ONT, and reboot your computer to lease a fresh IP from the ONT's DHCP server.
+                  If the ONT is connected to a secondary router, your computer might be receiving an IP address from the secondary router's subnet (such as <code>192.168.1.X</code> or <code>192.168.3.X</code>). To load <code>192.168.100.1</code>, disconnect your secondary router, plug your PC directly into the ONT, and reboot your computer to lease a fresh IP from the ONT's DHCP server. If this creates a <Link href="/double-nat-detected" className="text-[var(--brand-400)] hover:underline">Double NAT situation</Link>, configure Bridge Mode on the ONT.
                 </p>
               </div>
               <div className="p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)]">
                 <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-2">Query Optical Signal Power</h3>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Log in as a standard user (root/admin) and navigate to Status &gt; Optical Information. Verify that the Rx Optical Power is between <strong>-8 dBm and -27 dBm</strong>. If it is lower than -27 dBm (e.g. -30 dBm), the optical signal is too weak, causing packet loss and interface disconnects.
+                  Log in as a standard user (root/admin) and navigate to Status &gt; Optical Information. Verify that the Rx Optical Power is between <strong>-8 dBm and -27 dBm</strong>. If it is lower than -27 dBm (e.g. -30 dBm), the optical signal is too weak, causing packet loss and interface disconnects. Use our <Link href="/how-to-fix-packet-loss" className="text-[var(--brand-400)] hover:underline">packet loss fix guide</Link> to understand signal degradation and troubleshooting steps.
                 </p>
               </div>
             </div>
@@ -201,11 +201,35 @@ export default async function HuaweiHg8145v5DefaultPasswordPage() {
 
           <section className="space-y-4">
             <h2 className="text-lg font-bold text-[var(--text-primary)]">
-              3. Internal Linking Hub
+              3. Configuring the HG8145V5 in Bridge Mode
             </h2>
             <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
-              Further optimize your network configurations using our related guides:
+              Running the HG8145V5 in Bridge Mode allows you to connect a dedicated router behind the ONT, giving you full control over NAT, DHCP, QoS, and Wi-Fi. This eliminates Double NAT and improves gaming performance. Here is the step-by-step process:
             </p>
+            <ol className="space-y-3 text-xs text-[var(--text-secondary)]">
+              {[
+                "Log into the ONT at http://192.168.100.1 using telecomadmin / admintelecom.",
+                "Navigate to WAN → WAN Configuration and click the 'New' button.",
+                "Set Mode to 'Bridge', enter your ISP's VLAN ID (check your ISP documentation), and select Connection Type as 'IPoE' or 'PPPoE' as required.",
+                "Bind the WAN interface to LAN Port 1 in the interface binding section.",
+                "Connect your personal router's WAN port to LAN Port 1 on the ONT with an Ethernet cable.",
+                "Configure your personal router to dial PPPoE using your ISP username and password.",
+              ].map((step, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[var(--brand-800)] text-[var(--brand-300)] text-[10px] font-bold flex items-center justify-center">{i + 1}</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+            <p className="text-xs text-[var(--text-muted)]">
+              For more details on optimal router settings after Bridge Mode, explore our <Link href="/router-settings" className="text-[var(--brand-400)] hover:underline">router settings optimization guide</Link> and the <Link href="/port-forwarding" className="text-[var(--brand-400)] hover:underline">port forwarding setup guide</Link>.
+            </p>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+              4. Related Huawei & Fiber Network Guides
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
                 <h3 className="text-sm font-bold text-[var(--text-primary)]">Related Huawei Guides</h3>
@@ -214,14 +238,19 @@ export default async function HuaweiHg8145v5DefaultPasswordPage() {
                   <li>Find default passwords: <Link href="/huawei-router-default-password" className="text-[var(--brand-400)] hover:underline">Huawei Default Password Directory</Link></li>
                   <li>Identify your default IP: <Link href="/huawei-router-ip-address" className="text-[var(--brand-400)] hover:underline">Huawei Router IP Guide</Link></li>
                   <li>Configure AX3 routers: <Link href="/huawei-ax3-default-password" className="text-[var(--brand-400)] hover:underline">Huawei AX3 Config Guide</Link></li>
+                  <li>Router login cluster: <Link href="/router-login" className="text-[var(--brand-400)] hover:underline">Router Login Hub</Link></li>
+                  <li>Full password list: <Link href="/router-password" className="text-[var(--brand-400)] hover:underline">Default Router Passwords</Link></li>
                 </ul>
               </div>
               <div className="p-4 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-elevated)] space-y-2">
-                <h3 className="text-sm font-bold text-[var(--text-primary)]">General Router Access Resources</h3>
+                <h3 className="text-sm font-bold text-[var(--text-primary)]">Fiber & Gateway Diagnostics</h3>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-[var(--text-muted)]">
-                  <li>Understand default gateways: <Link href="/default-gateway-not-available" className="text-[var(--brand-400)] hover:underline">Fix Default Gateway Not Available</Link></li>
-                  <li>Access default router panels: <Link href="/router-admin" className="text-[var(--brand-400)] hover:underline">Router Admin Setup Guide</Link></li>
-                  <li>Identify MAC addresses: <Link href="/mac-address-lookup" className="text-[var(--brand-400)] hover:underline">MAC Address Lookup Tool</Link></li>
+                  <li>Fix Double NAT: <Link href="/double-nat-detected" className="text-[var(--brand-400)] hover:underline">Double NAT Detected Guide</Link></li>
+                  <li>Ethernet no internet: <Link href="/ethernet-connected-but-no-internet" className="text-[var(--brand-400)] hover:underline">Ethernet Connected But No Internet</Link></li>
+                  <li>Gateway not available: <Link href="/default-gateway-not-available" className="text-[var(--brand-400)] hover:underline">Default Gateway Not Available Fix</Link></li>
+                  <li>Identify MAC address: <Link href="/mac-address-lookup" className="text-[var(--brand-400)] hover:underline">MAC Address Lookup Tool</Link></li>
+                  <li>Fix packet loss: <Link href="/how-to-fix-packet-loss" className="text-[var(--brand-400)] hover:underline">Packet Loss Fix Guide</Link></li>
+                  <li>Router admin guide: <Link href="/router-admin" className="text-[var(--brand-400)] hover:underline">Router Admin Setup Guide</Link></li>
                 </ul>
               </div>
             </div>
