@@ -171,6 +171,7 @@ export default async function RouterLoginPage() {
         troubleshootingSteps={troubleshootingSteps}
         quickFixChecklist={quickFixChecklist}
         severityLevel="low"
+        isHubPage={true}
       >
         {/* Section 1: Featured Snippet Table */}
         <div className="mb-10 p-6 glass-card border border-[var(--border-subtle)] rounded-2xl">
@@ -254,6 +255,9 @@ export default async function RouterLoginPage() {
           <h2 className="text-xl font-bold text-[var(--text-primary)] mb-3">What is Router Login?</h2>
           <p>
             Router login is the primary administrative procedure that connects a client computer or phone to the built-in operating system daemon running inside your local wireless router. Standard routers do not require internet access to function or configure; they host a localized web server (such as mini_httpd) that serves settings files over local sockets. By typing your router&apos;s default gateway IP address (such as 192.168.1.1) into any web browser, you submit a local connection request to this inner daemon.
+          </p>
+          <p>
+            If you have forgotten your credentials or need to update system settings, visit our <Link href="/router-login-recovery" className="text-[var(--brand-400)] hover:underline">router login recovery</Link> hub. For resolving brand-specific address domains, check our <Link href="/router-login-hostnames" className="text-[var(--brand-400)] hover:underline">router login hostnames</Link> guide.
           </p>
           <p>
             Logging in grants access to the router&apos;s administration dashboard (often referred to as the control panel or console). Within this dashboard, users can modify vital transmission policies. Key tasks include renaming Wi-Fi SSIDs, configuring security keys (WPA2/WPA3), forwarding ports for gaming consoles, and enabling parental control sandboxes.

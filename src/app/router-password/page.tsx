@@ -257,27 +257,37 @@ export default async function RouterPasswordPage() {
               </thead>
               <tbody className="divide-y divide-[var(--border-subtle)] text-[var(--text-secondary)]">
                 <tr>
-                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">TP-Link</td>
+                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">
+                    <Link href="/tp-link-default-password" className="text-[var(--brand-400)] hover:underline">TP-Link</Link>
+                  </td>
                   <td className="py-2.5 px-4 font-mono">admin</td>
                   <td className="py-2.5 pl-4 font-mono">admin / (create on login)</td>
                 </tr>
                 <tr>
-                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">ASUS</td>
+                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">
+                    <Link href="/asus-default-password" className="text-[var(--brand-400)] hover:underline">ASUS</Link>
+                  </td>
                   <td className="py-2.5 px-4 font-mono">admin</td>
                   <td className="py-2.5 pl-4 font-mono">admin</td>
                 </tr>
                 <tr>
-                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">Netgear</td>
+                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">
+                    <Link href="/netgear-default-password" className="text-[var(--brand-400)] hover:underline">Netgear</Link>
+                  </td>
                   <td className="py-2.5 px-4 font-mono">admin</td>
                   <td className="py-2.5 pl-4 font-mono">password</td>
                 </tr>
                 <tr>
-                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">D-Link</td>
+                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">
+                    <Link href="/d-link-default-password" className="text-[var(--brand-400)] hover:underline">D-Link</Link>
+                  </td>
                   <td className="py-2.5 px-4 font-mono">admin / Admin</td>
                   <td className="py-2.5 pl-4 font-mono">(leave blank)</td>
                 </tr>
                 <tr>
-                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">Linksys</td>
+                  <td className="py-2.5 pr-4 font-bold text-[var(--text-primary)]">
+                    <Link href="/linksys-default-password" className="text-[var(--brand-400)] hover:underline">Linksys</Link>
+                  </td>
                   <td className="py-2.5 px-4 font-mono">admin</td>
                   <td className="py-2.5 pl-4 font-mono">admin / admin</td>
                 </tr>
@@ -323,16 +333,34 @@ export default async function RouterPasswordPage() {
           <h2 className="text-lg font-bold text-[var(--text-primary)] mb-4">Default Logins by Brand</h2>
           <div className="space-y-4 text-sm text-[var(--text-secondary)]">
             <div>
-              <h3 className="font-bold text-[var(--text-primary)] mb-1">TP-Link Default Passwords</h3>
-              <p>Common login IP is 192.168.0.1. Default username is <strong>admin</strong> and default password is <strong>admin</strong>. On modern models, you will be forced to specify a custom password upon first connection.</p>
+              <h3 className="font-bold text-[var(--text-primary)] mb-1">
+                <Link href="/tp-link-default-password" className="text-[var(--brand-400)] hover:underline">TP-Link Default Passwords</Link>
+              </h3>
+              <p>Common login IP is 192.168.0.1. Default username is <strong>admin</strong> and default password is <strong>admin</strong>. On modern models, you will be forced to specify a custom password upon first connection. Learn more in our dedicated <Link href="/tp-link-default-password" className="text-[var(--brand-400)] hover:underline">TP-Link password guide</Link>.</p>
             </div>
             <div>
-              <h3 className="font-bold text-[var(--text-primary)] mb-1">ASUS Default Passwords</h3>
-              <p>Default login IP is 192.168.1.1. Default username and password are both <strong>admin</strong>. The setup wizard requires updates to these default credentials immediately.</p>
+              <h3 className="font-bold text-[var(--text-primary)] mb-1">
+                <Link href="/asus-default-password" className="text-[var(--brand-400)] hover:underline">ASUS Default Passwords</Link>
+              </h3>
+              <p>Default login IP is 192.168.1.1. Default username and password are both <strong>admin</strong>. The setup wizard requires updates to these default credentials immediately. Learn more in our dedicated <Link href="/asus-default-password" className="text-[var(--brand-400)] hover:underline">ASUS password guide</Link>.</p>
             </div>
             <div>
-              <h3 className="font-bold text-[var(--text-primary)] mb-1">Netgear Default Passwords</h3>
-              <p>Default login IP is 192.168.1.1. Default username is <strong>admin</strong> and default password is <strong>password</strong>. You will be prompted to change these details during initial setup.</p>
+              <h3 className="font-bold text-[var(--text-primary)] mb-1">
+                <Link href="/netgear-default-password" className="text-[var(--brand-400)] hover:underline">Netgear Default Passwords</Link>
+              </h3>
+              <p>Default login IP is 192.168.1.1. Default username is <strong>admin</strong> and default password is <strong>password</strong>. You will be prompted to change these details during initial setup. Learn more in our dedicated <Link href="/netgear-default-password" className="text-[var(--brand-400)] hover:underline">Netgear password guide</Link>.</p>
+            </div>
+            <div>
+              <h3 className="font-bold text-[var(--text-primary)] mb-1">
+                <Link href="/d-link-default-password" className="text-[var(--brand-400)] hover:underline">D-Link Default Passwords</Link>
+              </h3>
+              <p>Default login IP is 192.168.0.1. Default username is <strong>admin</strong> or <strong>Admin</strong>, and the default password field should be left blank. Learn more in our dedicated <Link href="/d-link-default-password" className="text-[var(--brand-400)] hover:underline">D-Link password guide</Link>.</p>
+            </div>
+            <div>
+              <h3 className="font-bold text-[var(--text-primary)] mb-1">
+                <Link href="/linksys-default-password" className="text-[var(--brand-400)] hover:underline">Linksys Default Passwords</Link>
+              </h3>
+              <p>Default login IP is 192.168.1.1. Default username is <strong>admin</strong> and default password is <strong>admin</strong>. Learn more in our dedicated <Link href="/linksys-default-password" className="text-[var(--brand-400)] hover:underline">Linksys password guide</Link>.</p>
             </div>
           </div>
         </div>

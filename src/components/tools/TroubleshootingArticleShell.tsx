@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, Activity, Wifi, Shield, ArrowRight, Settings, Server, Globe, Info, CheckCircle2, AlertTriangle } from "lucide-react";
+import { BookOpen, Activity, Wifi, Shield, ArrowRight, Settings, Server, Globe, Info, CheckCircle2, AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { APP_URL, ROUTER_BRANDS, COMMON_IPS } from "@/lib/constants";
 import { safeDb } from "@/lib/server/safe-db";
@@ -35,6 +35,18 @@ export interface TroubleshootingArticleShellProps {
   }[];
   whenToContactISP?: string;
   severityLevel?: "low" | "medium" | "high";
+  
+  // Sprint 8: Optimization additions
+  isHubPage?: boolean;
+  disableTechArticle?: boolean;
+  disableFaqs?: boolean;
+  reviewedMetadata?: {
+    lastReviewed: string;
+    reviewedBy: string;
+    testedOn?: string[];
+  };
+  prevPage?: { name: string; url: string };
+  nextPage?: { name: string; url: string };
 }
 
 export default async function TroubleshootingArticleShell({
@@ -50,6 +62,12 @@ export default async function TroubleshootingArticleShell({
   commonCauses,
   whenToContactISP,
   severityLevel,
+  isHubPage = false,
+  disableTechArticle = false,
+  disableFaqs = false,
+  reviewedMetadata,
+  prevPage,
+  nextPage,
 }: TroubleshootingArticleShellProps) {
   const mappedBreadcrumbs = breadcrumbs.map((b) => ({
     label: b.name,
@@ -146,14 +164,18 @@ export default async function TroubleshootingArticleShell({
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      {!isHubPage && !disableTechArticle && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleSchema) }}
+        />
+      )}
+      {!isHubPage && !disableFaqs && faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
@@ -188,9 +210,28 @@ export default async function TroubleshootingArticleShell({
               </span>
             )}
           </div>
+          
           <h1 className="text-3xl md:text-4xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight mb-4">
             {h1}
           </h1>
+
+          {/* EEAT Reviewed Metadata Badges */}
+          {reviewedMetadata && (
+            <div className="flex flex-wrap gap-4 text-xs text-[var(--text-muted)] mb-5 border-b border-[var(--border-subtle)]/30 pb-4">
+              <div>
+                <span className="font-semibold text-[var(--text-secondary)]">Last Reviewed:</span> {reviewedMetadata.lastReviewed}
+              </div>
+              <div>
+                <span className="font-semibold text-[var(--text-secondary)]">Reviewed By:</span> {reviewedMetadata.reviewedBy}
+              </div>
+              {reviewedMetadata.testedOn && reviewedMetadata.testedOn.length > 0 && (
+                <div>
+                  <span className="font-semibold text-[var(--text-secondary)]">Tested On:</span> {reviewedMetadata.testedOn.join(", ")}
+                </div>
+              )}
+            </div>
+          )}
+
           <p className="text-[var(--text-secondary)] text-base md:text-lg leading-relaxed max-w-3xl">
             {intro}
           </p>
@@ -251,32 +292,34 @@ export default async function TroubleshootingArticleShell({
             )}
 
             {/* Structured Troubleshooting Flow */}
-            <section aria-labelledby="steps-title" className="glass-card p-6 border border-[var(--border-subtle)] rounded-2xl">
-              <h2 id="steps-title" className="text-lg font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
-                <Settings size={18} className="text-[var(--brand-400)]" />
-                Step-by-Step Diagnostic Resolution Flow
-              </h2>
-              <ol className="relative border-l border-[var(--border-subtle)] ml-3 space-y-6">
-                {troubleshootingSteps.map((step, idx) => (
-                  <li key={idx} className="mb-0 pl-6">
-                    <span className="absolute -left-3.5 flex items-center justify-center w-7 h-7 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-default)] text-xs font-bold text-[var(--text-primary)] font-mono">
-                      {idx + 1}
-                    </span>
-                    <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-1">
-                      {step.title}
-                    </h3>
-                    <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-2">
-                      {step.description}
-                    </p>
-                    {step.tip && (
-                      <div className="p-3 bg-[var(--bg-elevated)] border-l-2 border-[var(--brand-500)] rounded-r-lg text-[11px] text-[var(--text-muted)] leading-relaxed italic">
-                        <strong>Expert Tip:</strong> {step.tip}
-                      </div>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </section>
+            {troubleshootingSteps && troubleshootingSteps.length > 0 && (
+              <section aria-labelledby="steps-title" className="glass-card p-6 border border-[var(--border-subtle)] rounded-2xl">
+                <h2 id="steps-title" className="text-lg font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                  <Settings size={18} className="text-[var(--brand-400)]" />
+                  Step-by-Step Diagnostic Resolution Flow
+                </h2>
+                <ol className="relative border-l border-[var(--border-subtle)] ml-3 space-y-6">
+                  {troubleshootingSteps.map((step, idx) => (
+                    <li key={idx} className="mb-0 pl-6">
+                      <span className="absolute -left-3.5 flex items-center justify-center w-7 h-7 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-default)] text-xs font-bold text-[var(--text-primary)] font-mono">
+                        {idx + 1}
+                      </span>
+                      <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-1">
+                        {step.title}
+                      </h3>
+                      <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-2">
+                        {step.description}
+                      </p>
+                      {step.tip && (
+                        <div className="p-3 bg-[var(--bg-elevated)] border-l-2 border-[var(--brand-500)] rounded-r-lg text-[11px] text-[var(--text-muted)] leading-relaxed italic">
+                          <strong>Expert Tip:</strong> {step.tip}
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
 
             {/* When To Contact ISP */}
             {whenToContactISP && (
@@ -289,27 +332,64 @@ export default async function TroubleshootingArticleShell({
             )}
 
             {/* Dynamic FAQs */}
-            <section aria-labelledby="faqs-title" className="space-y-4">
-              <h2 id="faqs-title" className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
-                <BookOpen size={18} className="text-[var(--brand-400)]" />
-                Expert Q&A & Troubleshooting Insights
-              </h2>
-              <div className="space-y-4">
-                {faqs.map((faq) => (
-                  <div
-                    key={faq.question}
-                    className="border border-[var(--border-subtle)] rounded-xl p-5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-surface)] transition-all duration-300"
+            {faqs && faqs.length > 0 && (
+              <section aria-labelledby="faqs-title" className="space-y-4">
+                <h2 id="faqs-title" className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+                  <BookOpen size={18} className="text-[var(--brand-400)]" />
+                  Expert Q&A & Troubleshooting Insights
+                </h2>
+                <div className="space-y-4">
+                  {faqs.map((faq) => (
+                    <div
+                      key={faq.question}
+                      className="border border-[var(--border-subtle)] rounded-xl p-5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-surface)] transition-all duration-300"
+                    >
+                      <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-2">
+                        {faq.question}
+                      </h3>
+                      <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Prev/Next Navigation */}
+            {(prevPage || nextPage) && (
+              <nav className="flex justify-between items-center border-t border-[var(--border-subtle)] pt-6 mt-10" aria-label="Guides navigation">
+                {prevPage ? (
+                  <Link
+                    href={prevPage.url}
+                    className="flex items-center gap-2 text-xs text-[var(--text-secondary)] hover:text-[var(--brand-400)] transition-colors p-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-elevated)]"
                   >
-                    <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-2">
-                      {faq.question}
-                    </h3>
-                    <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
+                    <ChevronLeft size={16} />
+                    <div className="text-left">
+                      <span className="text-[10px] text-[var(--text-muted)] block uppercase font-bold tracking-wider">Previous Guide</span>
+                      <span>{prevPage.name}</span>
+                    </div>
+                  </Link>
+                ) : (
+                  <div />
+                )}
+                {nextPage ? (
+                  <Link
+                    href={nextPage.url}
+                    className="flex items-center gap-2 text-xs text-[var(--text-secondary)] hover:text-[var(--brand-400)] transition-colors p-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-right"
+                  >
+                    <div className="text-right">
+                      <span className="text-[10px] text-[var(--text-muted)] block uppercase font-bold tracking-wider">Next Guide</span>
+                      <span>{nextPage.name}</span>
+                    </div>
+                    <ChevronRight size={16} />
+                  </Link>
+                ) : (
+                  <div />
+                )}
+              </nav>
+            )}
+
           </div>
 
           {/* Sidebar (SEO Authority Elements) */}
@@ -373,3 +453,4 @@ export default async function TroubleshootingArticleShell({
     </>
   );
 }
+

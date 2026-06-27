@@ -59,7 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.85,
     },
-    // Router Login Hostnames Cluster (Sprint 7A)
+    // Router Login Hostnames Cluster (Sprint 7A & 7B)
     {
       url: `${APP_URL}/router-login-hostnames`,
       lastModified: now,
@@ -73,7 +73,135 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${APP_URL}/routerlogin.net-not-working`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${APP_URL}/tplinkwifi.net`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/tplinkwifi.net-not-working`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/routerlogin.com-not-working`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/mywifiext.net-not-working`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/orbilogin.com-not-working`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    // Default Passwords Cluster (Sprint 7B)
+    {
+      url: `${APP_URL}/netgear-default-password`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/tp-link-default-password`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/asus-default-password`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/linksys-default-password`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/d-link-default-password`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    // Router Login Recovery & Troubleshooting (Sprint 7C)
+    {
+      url: `${APP_URL}/router-login-recovery`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/forgot-router-password`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/router-admin-password`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/router-cannot-access-settings`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/router-web-interface-not-opening`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/router-login-page-not-loading`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/router-ip-conflict`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/router-no-internet-after-login`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/router-firmware-update-guide`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/change-router-admin-password`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${APP_URL}/secure-router-after-setup`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,

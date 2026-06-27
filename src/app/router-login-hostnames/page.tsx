@@ -208,6 +208,7 @@ export default async function RouterLoginHostnamesPage() {
         troubleshootingSteps={troubleshootingSteps}
         quickFixChecklist={quickFixChecklist}
         severityLevel="low"
+        isHubPage={true}
         warningBanner={{
           title: "Local Network Access Only",
           text: "Router login hostnames such as routerlogin.net and tplinkwifi.net are locally resolved DNS aliases. They only work when your device is connected to the specific router's LAN. Attempting to visit them over mobile data or a VPN will fail.",
@@ -242,7 +243,7 @@ export default async function RouterLoginHostnamesPage() {
             into the router's own private LAN IP address. Unlike public domain
             names registered in global DNS infrastructure, these hostnames
             function exclusively within the router's subnet and have no presence
-            on the open internet.
+            on the open internet. If you are having trouble logging in or need to recover access, visit our <Link href="/router-login-recovery" className="text-[var(--brand-400)] hover:underline">router login recovery</Link> guide. For details on default passwords, see the main <Link href="/router-login" className="text-[var(--brand-400)] hover:underline">router login</Link> manual.
           </p>
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
             Under the hood, router firmware implements one of two resolution
@@ -1131,11 +1132,16 @@ export default async function RouterLoginHostnamesPage() {
               login hostname. Each guide includes default credentials, step-by-step
               setup, and brand-specific troubleshooting procedures.
             </p>
-            <div className="flex flex-wrap gap-2.5">
+             <div className="flex flex-wrap gap-2.5">
               {[
                 { label: "routerlogin.net Guide", href: "/routerlogin.net" },
+                { label: "routerlogin.net Not Working", href: "/routerlogin.net-not-working" },
                 { label: "tplinkwifi.net Guide", href: "/tplinkwifi.net" },
+                { label: "tplinkwifi.net Not Working", href: "/tplinkwifi.net-not-working" },
                 { label: "mywifiext.net Guide", href: "/mywifiext.net" },
+                { label: "mywifiext.net Not Working", href: "/mywifiext.net-not-working" },
+                { label: "routerlogin.com Not Working", href: "/routerlogin.com-not-working" },
+                { label: "orbilogin.com Not Working", href: "/orbilogin.com-not-working" },
                 { label: "Netgear Router Login", href: "/netgear-router-login" },
                 { label: "TP-Link Router Login", href: "/tp-link-router-login" },
                 { label: "Router Login Hub", href: "/router-login" },
