@@ -145,6 +145,9 @@ export default async function TplinkwifiNetPage() {
         <p>
           To view options for other manufacturers, you can browse all brands under our general <Link href="/routers" className="text-[var(--brand-400)] hover:underline font-semibold">Router Brands Directory</Link>, or check brand-specific profiles such as the <Link href="/routers/tp-link" className="text-[var(--brand-400)] hover:underline font-semibold">TP-Link Routers Guide</Link>.
         </p>
+        <p>
+          If you are experiencing issues with the hostname not loading at all, see our dedicated fix guide: <Link href="/tplinkwifi.net-not-working" className="text-[var(--brand-400)] hover:underline font-semibold">tplinkwifi.net Not Working — Complete Fix Guide</Link>. For brand default credentials, visit our <Link href="/tp-link-default-password" className="text-[var(--brand-400)] hover:underline font-semibold">TP-Link Default Password Guide</Link> or our <Link href="/tp-link-router-keeps-disconnecting" className="text-[var(--brand-400)] hover:underline font-semibold">TP-Link Router Keeps Disconnecting Fix</Link>.
+        </p>
       </section>
     </RouterLoginArticleShell>
   );

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Link2, Monitor, AlertCircle, Terminal, Wifi, HardDrive } from "lucide-react";
 import { buildMetadata } from "@/lib/seo/metadata";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
+import RelatedGuides from "@/components/tools/RelatedGuides";
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
@@ -612,30 +613,12 @@ sudo networksetup -setMTU Ethernet 1500`}
         </article>
 
         {/* ── Router Access Cluster Navigation ── */}
-        <div className="mt-2 p-5 glass-card border border-[var(--border-subtle)] rounded-2xl">
-          <h3 className="text-sm font-bold text-[var(--text-primary)] mb-3 flex items-center gap-1.5">
-            <Link2 size={14} className="text-[var(--brand-400)]" />
-            Sprint 7C Troubleshooting Cluster
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {[
-              { label: "Login Not Working", href: "/router-login-not-working" },
-              { label: "Cannot Access Settings", href: "/router-cannot-access-settings" },
-              { label: "Web Interface Not Opening", href: "/router-web-interface-not-opening" },
-              { label: "Forgot Password", href: "/forgot-router-password" },
-              { label: "IP Conflict", href: "/router-ip-conflict" },
-              { label: "Login Recovery Hub", href: "/router-login-recovery" },
-            ].map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-xs bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--brand-800)] px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--brand-400)] hover:bg-[var(--bg-hover)] transition-all font-medium"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
+        <RelatedGuides
+          currentUrl="/router-login-page-not-loading"
+          category="nat"
+          tags={["access", "timeout", "loading"]}
+          maxItems={4}
+        />
 
         {/* ── People Also Search ── */}
         <section

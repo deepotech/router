@@ -172,6 +172,8 @@ export default async function RouterLoginPage() {
         quickFixChecklist={quickFixChecklist}
         severityLevel="low"
         isHubPage={true}
+        disableTechArticle={true}
+        disableFaqs={true}
       >
         {/* Section 1: Featured Snippet Table */}
         <div className="mb-10 p-6 glass-card border border-[var(--border-subtle)] rounded-2xl">

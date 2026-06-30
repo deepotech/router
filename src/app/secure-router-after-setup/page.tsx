@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
+import RelatedGuides from "@/components/tools/RelatedGuides";
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
@@ -334,32 +335,12 @@ export default async function SecureRouterAfterSetupPage() {
         </section>
 
         {/* Related Guides */}
-        <section aria-label="Related Security and Login Guides">
-          <h2 className="text-base font-bold text-[var(--text-primary)] mb-3">Related Guides</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              { text: "Change Router Admin Password", href: "/change-router-admin-password" },
-              { text: "Router Firmware Update Guide", href: "/router-firmware-update-guide" },
-              { text: "WPA3 vs WPA2 Security Comparison", href: "/wpa3-vs-wpa2" },
-              { text: "Wi-Fi Security Guide", href: "/wifi-security" },
-              { text: "Guest Wi-Fi Setup Guide", href: "/guest-wifi-setup" },
-              { text: "Best Secure DNS Servers", href: "/best-secure-dns-servers" },
-              { text: "Router Login Recovery Hub", href: "/router-login-recovery" },
-              { text: "How to Change DNS on Router", href: "/how-to-change-dns-on-router" },
-            ].map(({ text, href }) => (
-              <Link
-                key={href}
-                href={href}
-                className="glass-card p-3 rounded-xl border border-[var(--border-subtle)] flex items-center gap-2 text-xs text-[var(--text-secondary)] hover:text-[var(--brand-400)] hover:border-[var(--brand-500)]/30 transition-colors"
-              >
-                <svg className="w-3 h-3 text-[var(--brand-400)] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                  <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                </svg>
-                {text}
-              </Link>
-            ))}
-          </div>
-        </section>
+        <RelatedGuides
+          currentUrl="/secure-router-after-setup"
+          category="wifi"
+          tags={["security", "setup", "hardening"]}
+          maxItems={4}
+        />
 
       </div>
     </TroubleshootingArticleShell>

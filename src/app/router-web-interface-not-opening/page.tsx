@@ -244,6 +244,7 @@ export default async function RouterWebInterfaceNotOpeningPage() {
           currentUrl="/router-web-interface-not-opening"
           category="nat"
           tags={["access", "browser", "settings"]}
+          maxItems={4}
         />
       </div>
     </TroubleshootingArticleShell>

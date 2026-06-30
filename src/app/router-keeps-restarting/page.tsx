@@ -370,6 +370,16 @@ export default function RouterKeepsRestartingPage() {
                 </a>
               </li>
               <li>
+                <a href="/router-keeps-disconnecting" className="text-[var(--brand-400)] hover:underline">
+                  Router Keeps Disconnecting Guide
+                </a>
+              </li>
+              <li>
+                <a href="/why-is-my-router-so-slow" className="text-[var(--brand-400)] hover:underline">
+                  Why Is My Router So Slow?
+                </a>
+              </li>
+              <li>
                 <a href="/wifi-keeps-disconnecting" className="text-[var(--brand-400)] hover:underline">
                   WiFi Keeps Disconnecting Troubleshooting
                 </a>

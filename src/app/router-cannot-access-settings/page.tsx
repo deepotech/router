@@ -647,6 +647,7 @@ export default async function RouterCannotAccessSettingsPage() {
             currentUrl="/router-cannot-access-settings"
             category="nat"
             tags={["access", "timeout", "settings"]}
+            maxItems={4}
           />
         </article>
       </div>

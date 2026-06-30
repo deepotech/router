@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
+import RelatedGuides from "@/components/tools/RelatedGuides";
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
@@ -293,32 +294,12 @@ export default async function RouterFirmwareUpdateGuidePage() {
         </section>
 
         {/* Related guides */}
-        <section aria-label="Related Router Security Guides">
-          <h2 className="text-base font-bold text-[var(--text-primary)] mb-3">Related Guides</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              { text: "Secure Router After Setup", href: "/secure-router-after-setup" },
-              { text: "Change Router Admin Password", href: "/change-router-admin-password" },
-              { text: "Router Login Recovery Hub", href: "/router-login-recovery" },
-              { text: "Router Settings Page", href: "/router-settings" },
-              { text: "Wi-Fi Security Guide", href: "/wifi-security" },
-              { text: "WPA3 vs WPA2 Comparison", href: "/wpa3-vs-wpa2" },
-              { text: "Router Admin Panel", href: "/router-admin" },
-              { text: "Router Reset Guide", href: "/router-reset" },
-            ].map(({ text, href }) => (
-              <Link
-                key={href}
-                href={href}
-                className="glass-card p-3 rounded-xl border border-[var(--border-subtle)] flex items-center gap-2 text-xs text-[var(--text-secondary)] hover:text-[var(--brand-400)] hover:border-[var(--brand-500)]/30 transition-colors"
-              >
-                <svg className="w-3 h-3 text-[var(--brand-400)] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                  <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                </svg>
-                {text}
-              </Link>
-            ))}
-          </div>
-        </section>
+        <RelatedGuides
+          currentUrl="/router-firmware-update-guide"
+          category="wifi"
+          tags={["firmware", "update", "setup"]}
+          maxItems={4}
+        />
 
       </div>
     </TroubleshootingArticleShell>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { KeyRound, RotateCcw, HelpCircle, AlertTriangle, CheckCircle2, ChevronRight } from "lucide-react";
 import { buildMetadata } from "@/lib/seo/metadata";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
+import RelatedGuides from "@/components/tools/RelatedGuides";
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
@@ -390,30 +391,12 @@ export default async function ForgotRouterPasswordPage() {
         </section>
 
         {/* Related Guides */}
-        <section aria-label="Related Router Login Guides">
-          <h2 className="text-base font-bold text-[var(--text-primary)] mb-3">Related Guides</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              { text: "Router Login Guide", href: "/router-login" },
-              { text: "Router Reset (Factory Reset)", href: "/router-reset" },
-              { text: "Router Admin Password Reference", href: "/router-admin-password" },
-              { text: "Cannot Access Router Settings", href: "/router-cannot-access-settings" },
-              { text: "Change Router Admin Password", href: "/change-router-admin-password" },
-              { text: "Secure Router After Setup", href: "/secure-router-after-setup" },
-              { text: "TP-Link Default Password", href: "/tp-link-default-password" },
-              { text: "Netgear Default Password", href: "/netgear-default-password" },
-            ].map(({ text, href }) => (
-              <Link
-                key={href}
-                href={href}
-                className="glass-card p-3 rounded-xl border border-[var(--border-subtle)] flex items-center gap-2 text-xs text-[var(--text-secondary)] hover:text-[var(--brand-400)] hover:border-[var(--brand-500)]/30 transition-colors"
-              >
-                <ArrowRight className="w-3 h-3 text-[var(--brand-400)] shrink-0" />
-                {text}
-              </Link>
-            ))}
-          </div>
-        </section>
+        <RelatedGuides
+          currentUrl="/forgot-router-password"
+          category="wifi"
+          tags={["password", "recovery", "reset"]}
+          maxItems={4}
+        />
 
         {/* IP Quick Access */}
         <section aria-label="Common Router Login IPs">

@@ -158,6 +158,8 @@ export default async function RouterLoginRecoveryPage() {
         troubleshootingSteps={[]}
         severityLevel="low"
         isHubPage={true}
+        disableTechArticle={true}
+        disableFaqs={true}
       >
         <div className="space-y-8">
           {/* Quick Hub Intro */}

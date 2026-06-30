@@ -209,6 +209,8 @@ export default async function RouterLoginHostnamesPage() {
         quickFixChecklist={quickFixChecklist}
         severityLevel="low"
         isHubPage={true}
+        disableTechArticle={true}
+        disableFaqs={true}
         warningBanner={{
           title: "Local Network Access Only",
           text: "Router login hostnames such as routerlogin.net and tplinkwifi.net are locally resolved DNS aliases. They only work when your device is connected to the specific router's LAN. Attempting to visit them over mobile data or a VPN will fail.",

@@ -83,6 +83,17 @@ const tools = [
     border: "border-cyan-800/30",
     category: "Security",
   },
+  {
+    id: "subnet-calculator",
+    icon: Globe,
+    label: "Subnet Calculator",
+    description: "Calculate subnets, IP ranges, subnet masks, and CIDR values.",
+    color: "text-blue-400",
+    bg: "bg-blue-900/20",
+    border: "border-blue-800/30",
+    category: "Network",
+    href: "/subnet-calculator"
+  },
 ];
 
 const breadcrumbs = [{ label: "Tools", href: "/tools" }];
@@ -105,10 +116,11 @@ export default function ToolsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {tools.map((tool, i) => {
           const Icon = tool.icon;
+          const href = tool.href || `/tools/${tool.id}`;
           return (
             <Link
               key={tool.id}
-              href={`/tools/${tool.id}`}
+              href={href}
               className={`glass-card p-6 hover:border-[var(--border-strong)] hover:-translate-y-0.5 transition-all duration-[var(--transition-base)] group animate-fade-in-up stagger-${Math.min(i + 1, 6)}`}
             >
               <div className="flex items-start gap-4">

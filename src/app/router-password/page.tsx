@@ -239,6 +239,9 @@ export default async function RouterPasswordPage() {
         troubleshootingSteps={troubleshootingSteps}
         quickFixChecklist={quickFixChecklist}
         severityLevel="low"
+        isHubPage={true}
+        disableTechArticle={true}
+        disableFaqs={true}
       >
         {/* Section 1: Default Passwords Table */}
         <div className="mb-10 p-6 glass-card border border-[var(--border-subtle)] rounded-2xl">

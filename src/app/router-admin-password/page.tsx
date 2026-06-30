@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
+import RelatedGuides from "@/components/tools/RelatedGuides";
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
@@ -250,32 +251,12 @@ export default async function RouterAdminPasswordPage() {
         </section>
 
         {/* Related troubleshooting links */}
-        <section aria-label="Related Resources">
-          <h2 className="text-base font-bold text-[var(--text-primary)] mb-3">Related Guides</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              { text: "Forgot Router Password — Recovery Guide", href: "/forgot-router-password" },
-              { text: "Cannot Access Router Settings", href: "/router-cannot-access-settings" },
-              { text: "Change Router Admin Password", href: "/change-router-admin-password" },
-              { text: "Secure Router After Setup", href: "/secure-router-after-setup" },
-              { text: "Router Login Recovery Hub", href: "/router-login-recovery" },
-              { text: "Router Login Not Working", href: "/router-login-not-working" },
-              { text: "Router Login Hostnames", href: "/router-login-hostnames" },
-              { text: "Router Reset Guide", href: "/router-reset" },
-            ].map(({ text, href }) => (
-              <Link
-                key={href}
-                href={href}
-                className="glass-card p-3 rounded-xl border border-[var(--border-subtle)] flex items-center gap-2 text-xs text-[var(--text-secondary)] hover:text-[var(--brand-400)] hover:border-[var(--brand-500)]/30 transition-colors"
-              >
-                <svg className="w-3 h-3 text-[var(--brand-400)] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                  <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                </svg>
-                {text}
-              </Link>
-            ))}
-          </div>
-        </section>
+        <RelatedGuides
+          currentUrl="/router-admin-password"
+          category="wifi"
+          tags={["password", "credentials"]}
+          maxItems={4}
+        />
 
       </div>
     </TroubleshootingArticleShell>

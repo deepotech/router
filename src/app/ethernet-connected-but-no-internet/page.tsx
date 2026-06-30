@@ -749,6 +749,16 @@ sudo systemctl restart NetworkManager`}
                 .
               </li>
               <li>
+                For general troubleshooting of connected devices that have no access, see our{" "}
+                <a
+                  href="/internet-connected-no-access"
+                  className="text-[var(--brand-400)] hover:underline"
+                >
+                  Internet Connected No Access Fix Guide
+                </a>
+                .
+              </li>
+              <li>
                 Verify your public IP address after fixing the connection with the{" "}
                 <a href="/what-is-my-ip" className="text-[var(--brand-400)] hover:underline">
                   IP Address Checker

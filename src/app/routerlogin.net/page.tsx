@@ -155,6 +155,9 @@ export default async function RouterloginNetPage() {
         <p>
           For more details on overall router parameters, review the comprehensive guide on <Link href="/router-settings" className="text-[var(--brand-400)] hover:underline font-semibold">Router Settings</Link> to understand security controls.
         </p>
+        <p>
+          If routerlogin.net is not loading on your browser, see our step-by-step fix: <Link href="/routerlogin.net-not-working" className="text-[var(--brand-400)] hover:underline font-semibold">routerlogin.net Not Working — Complete Troubleshooting Guide</Link>. For Netgear extenders, visit <Link href="/mywifiext.net-not-working" className="text-[var(--brand-400)] hover:underline font-semibold">mywifiext.net Not Working Fix</Link> or the <Link href="/orbilogin.com-not-working" className="text-[var(--brand-400)] hover:underline font-semibold">orbilogin.com Not Working Guide</Link>. For default credentials, check our <Link href="/netgear-default-password" className="text-[var(--brand-400)] hover:underline font-semibold">Netgear Default Password Guide</Link>.
+        </p>
       </section>
     </RouterLoginArticleShell>
   );

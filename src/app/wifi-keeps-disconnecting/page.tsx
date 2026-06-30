@@ -514,6 +514,16 @@ export default function WifiKeepsDisconnectingPage() {
                 </a>
               </li>
               <li>
+                <a href="/slow-wifi-after-update" className="text-[var(--brand-400)] hover:underline">
+                  Slow WiFi After Update Fix
+                </a>
+              </li>
+              <li>
+                <a href="/wifi-connected-but-no-internet-phone" className="text-[var(--brand-400)] hover:underline">
+                  Phone Connected But No Internet Fix
+                </a>
+              </li>
+              <li>
                 <a href="/mesh-wifi" className="text-[var(--brand-400)] hover:underline">
                   Mesh WiFi Complete Guide
                 </a>

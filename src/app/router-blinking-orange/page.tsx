@@ -87,6 +87,8 @@ export default function RouterBlinkingOrangePage() {
             <span className="font-bold text-[var(--text-primary)] block text-xs">Recommended Tools & Quick Links</span>
             <ul className="list-disc pl-4 space-y-1 text-[11px]">
               <li>Read our full guide on <a href="/port-forwarding-guide" className="text-[var(--brand-400)] hover:underline">Port Forwarding Setup</a>.</li>
+              <li>If the modem itself has sync issues, see our guide on <a href="/modem-online-light-blinking" className="text-[var(--brand-400)] hover:underline">Modem Online Light Blinking Fix</a>.</li>
+              <li>For model-specific Asus failures, view our <a href="/asus-router-red-light" className="text-[var(--brand-400)] hover:underline">Asus Router Red Light Guide</a>.</li>
               <li>Perform a detailed query with our <a href="/dns-propagation-checker" className="text-[var(--brand-400)] hover:underline">DNS Propagation Checker</a> to verify resolver health.</li>
               <li>Learn how to fix restrictive NAT settings in our <a href="/nat-type-checker" className="text-[var(--brand-400)] hover:underline">NAT Checker</a>.</li>
             </ul>
