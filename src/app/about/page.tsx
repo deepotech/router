@@ -4,11 +4,13 @@ import { APP_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { buildMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "About RouterVia | Our Mission & Team",
   description: "Learn about the team of network engineers and AI researchers building the world's most advanced router troubleshooting and configuration platform.",
-};
+  canonical: "/about",
+});
 
 export default function AboutPage() {
   const orgSchema = {

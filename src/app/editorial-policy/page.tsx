@@ -1,11 +1,13 @@
 import { JsonLd } from "@/lib/seo/schema";
 import { APP_URL } from "@/lib/constants";
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Editorial & AI Policy | RouterVia",
   description: "Learn how we generate, verify, and govern the networking content published on RouterVia.",
-};
+  canonical: "/editorial-policy",
+});
 
 export default function EditorialPolicyPage() {
   return (
