@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Wifi, Globe } from "lucide-react";
 import { APP_NAME } from "@/lib/constants";
 import { ArticlesService } from "@/server/services/articles.service";
+import { FooterLinks } from "./FooterLinks";
 
 // =============================================================
 // Footer — async Server Component
@@ -170,9 +171,9 @@ export async function Footer() {
     <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Top Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-11 gap-10 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12">
           {/* Brand */}
-          <div className="sm:col-span-2 md:col-span-3 lg:col-span-1">
+          <div className="lg:col-span-3">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-[var(--brand-600)] flex items-center justify-center">
                 <Wifi size={16} className="text-white" aria-hidden="true" />
@@ -207,44 +208,29 @@ export async function Footer() {
             </div>
           </div>
 
-          {/* Static Link Columns */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
+          {/* Static Link Columns (col-span-7) & Dynamic Recent Guides (col-span-2) */}
+          <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-9 gap-8">
+            <div className="md:col-span-7">
+              <FooterLinks footerLinks={footerLinks} />
+            </div>
+            
+            <div className="md:col-span-2 md:border-l md:border-[var(--border-subtle)] md:pl-6">
               <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">
-                {category}
+                Recent Guides
               </h3>
               <ul className="space-y-2.5">
-                {links.map((link) => (
-                  <li key={link.href}>
+                {recentArticles.map((article) => (
+                  <li key={article.id}>
                     <Link
-                      href={link.href}
-                      className="text-sm text-[var(--text-muted)] hover:text-[var(--brand-400)] transition-colors duration-[var(--transition-fast)]"
+                      href={article.href}
+                      className="text-sm text-[var(--text-muted)] hover:text-[var(--brand-400)] transition-colors duration-[var(--transition-fast)] line-clamp-2"
                     >
-                      {link.label}
+                      {article.title}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
-          ))}
-
-          {/* Dynamic Recent Guides Column */}
-          <div>
-            <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">
-              Recent Guides
-            </h3>
-            <ul className="space-y-2.5">
-              {recentArticles.map((article) => (
-                <li key={article.id}>
-                  <Link
-                    href={article.href}
-                    className="text-sm text-[var(--text-muted)] hover:text-[var(--brand-400)] transition-colors duration-[var(--transition-fast)] line-clamp-2"
-                  >
-                    {article.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 

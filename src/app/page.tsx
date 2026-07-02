@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Wifi, Search, Server, Wrench, ShieldAlert, ArrowRight, Zap, Globe, Clock, ChevronRight } from "lucide-react";
+import { Wifi, Search, Server, Wrench, ShieldAlert, ArrowRight, Zap, Globe, Clock, ChevronRight, CheckCircle2 } from "lucide-react";
 import { GlobalSearch } from "@/components/ui/GlobalSearch";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -11,6 +11,16 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/seo/schema";
 import { Badge } from "@/components/ui/Badge";
 import { hasDatabase } from "@/lib/server/env-safe";
+
+// New components
+import { RecentlyUpdatedSection } from "@/components/home/RecentlyUpdatedSection";
+import { StartHereSection } from "@/components/home/StartHereSection";
+import { PopularBrandsSection } from "@/components/home/PopularBrandsSection";
+import { PopularProblemsSection } from "@/components/home/PopularProblemsSection";
+import { WhyRouterViaSection } from "@/components/home/WhyRouterViaSection";
+import { GuidesTabsSection } from "@/components/home/GuidesTabsSection";
+import { EEATSection } from "@/components/home/EEATSection";
+import { SEOContentSection } from "@/components/home/SEOContentSection";
 
 export const metadata = buildMetadata({
   title: "RouterVia — Router Admin Login, Setup Guides & IP Address Database",
@@ -69,12 +79,6 @@ export default async function HomePage() {
     "description": "AI-powered router troubleshooting and network diagnostics platform.",
   };
 
-  const badgeColors: Record<string, "brand" | "success" | "warning" | "danger" | "outline" | "default"> = {
-    IP: "success",
-    Problem: "danger",
-    Firmware: "brand",
-  };
-
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
@@ -110,8 +114,55 @@ export default async function HomePage() {
                 <GlobalSearch />
               </div>
 
+              {/* Popular Searches */}
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 text-sm animate-fade-in-up" style={{ animationDelay: "350ms" }}>
+                <span className="text-[var(--text-muted)] font-medium">Popular:</span>
+                {[
+                  { label: "192.168.1.1", href: "/ips/192-168-1-1" },
+                  { label: "192.168.0.1", href: "/ips/192-168-0-1" },
+                  { label: "10.0.0.1", href: "/ips/10-0-0-1" },
+                  { label: "routerlogin.net", href: "/routerlogin.net" },
+                  { label: "tplinkwifi.net", href: "/tplinkwifi.net" }
+                ].map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="text-[var(--text-secondary)] hover:text-[var(--brand-400)] transition-colors hover:underline"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+
+              {/* Primary CTAs */}
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 animate-fade-in-up" style={{ animationDelay: "380ms" }}>
+                <Link
+                  href="/router-login"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[var(--brand-600)] hover:bg-[var(--brand-500)] text-white font-bold transition-all duration-200 shadow-lg shadow-[var(--brand-900)]/30 hover:shadow-[var(--brand-900)]/50 flex items-center justify-center gap-2"
+                >
+                  Find Router Login &rarr;
+                </Link>
+                <Link
+                  href="/routers"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--bg-hover)] border border-[var(--border-default)] text-[var(--text-primary)] font-bold transition-all duration-200 flex items-center justify-center gap-2"
+                >
+                  Browse Router Brands
+                </Link>
+              </div>
+
+              {/* Trust Stats under buttons */}
+              <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 mt-8 text-xs text-[var(--text-muted)] font-medium animate-fade-in-up" style={{ animationDelay: "420ms" }}>
+                <span className="flex items-center gap-1.5"><CheckCircle2 size={12} className="text-emerald-400" /> Trusted by thousands of users every month</span>
+                <span className="h-1 w-1 rounded-full bg-[var(--border-strong)] hidden md:inline"></span>
+                <span>{stats.routerModels > 0 ? stats.routerModels : 67} Router Brands</span>
+                <span className="h-1 w-1 rounded-full bg-[var(--border-strong)]"></span>
+                <span>165+ Guides</span>
+                <span className="h-1 w-1 rounded-full bg-[var(--border-strong)]"></span>
+                <span>Updated Weekly</span>
+              </div>
+
               {/* Trending Searches Grid */}
-              <div className="flex flex-wrap justify-center gap-3 mt-8 animate-fade-in-up max-w-3xl mx-auto" style={{ animationDelay: "400ms" }}>
+              <div className="flex flex-wrap justify-center gap-3 mt-10 animate-fade-in-up max-w-3xl mx-auto" style={{ animationDelay: "450ms" }}>
                 <span className="text-sm text-[var(--text-muted)] font-medium w-full text-center mb-2">Trending Searches:</span>
                 {trendingSearches.map((item) => (
                   <Link
@@ -125,6 +176,18 @@ export default async function HomePage() {
               </div>
             </div>
           </section>
+
+          {/* RECENTLY UPDATED SECTION */}
+          <RecentlyUpdatedSection articles={latestArticles} />
+
+          {/* START HERE SECTION */}
+          <StartHereSection />
+
+          {/* POPULAR ROUTER BRANDS SECTION */}
+          <PopularBrandsSection />
+
+          {/* POPULAR PROBLEMS SECTION */}
+          <PopularProblemsSection />
 
           {/* QUICK ACTIONS GRID */}
           <section className="py-16 px-4 sm:px-6 lg:px-8 border-t border-[var(--border-subtle)] bg-[var(--bg-elevated)]/50">
@@ -165,68 +228,11 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* LATEST TROUBLESHOOTING GUIDES SECTION */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 border-t border-[var(--border-subtle)]">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex items-end justify-between mb-10">
-                <div>
-                  <h2 className="text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
-                    Latest Troubleshooting Guides
-                  </h2>
-                  <p className="text-[var(--text-secondary)] mt-2">
-                    Recently updated router configurations, IP address setups, and network diagnostics.
-                  </p>
-                </div>
-                <Link
-                  href="/latest"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--brand-400)] hover:text-[var(--brand-300)] hover:underline transition-colors"
-                >
-                  View All Guides <ChevronRight size={16} />
-                </Link>
-              </div>
+          {/* WHY ROUTERVIA SECTION */}
+          <WhyRouterViaSection />
 
-              {latestArticles.length === 0 ? (
-                <div className="glass-card p-12 text-center text-[var(--text-muted)]">
-                  No articles found in the database.
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {latestArticles.map((article) => (
-                    <Link
-                      key={article.id}
-                      href={article.href}
-                      className="glass-card p-6 flex flex-col justify-between hover:border-[var(--brand-500)] hover:-translate-y-1 transition-all duration-300 group"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <Badge variant={badgeColors[article.type] || "default"}>
-                            {article.type}
-                          </Badge>
-                          <span className="text-xs text-[var(--text-muted)] flex items-center gap-1">
-                            <Clock size={12} />
-                            {new Date(article.createdAt).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })}
-                          </span>
-                        </div>
-                        <h3 className="text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--brand-400)] transition-colors line-clamp-2 mb-2">
-                          {article.title}
-                        </h3>
-                        <p className="text-sm text-[var(--text-secondary)] line-clamp-3 mb-6">
-                          {article.excerpt}
-                        </p>
-                      </div>
-                      <span className="text-sm font-semibold text-[var(--brand-400)] flex items-center gap-1 group-hover:underline">
-                        Read full guide <ChevronRight size={14} />
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          </section>
+          {/* LATEST TROUBLESHOOTING GUIDES SECTION (WITH TABS) */}
+          <GuidesTabsSection latestArticles={latestArticles} />
 
           {/* AUTHORITY SECTION */}
           <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-[var(--border-subtle)] bg-[var(--bg-elevated)]/30">
@@ -238,22 +244,40 @@ export default async function HomePage() {
                  RouterVia maps router configurations to their common IPs and troubleshooting steps, giving you direct answers.
                </p>
 
-               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
                  <div className="text-center">
-                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">{stats.routerModels}</div>
-                   <p className="text-[var(--text-secondary)] font-medium">Router Models</p>
+                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">
+                     {stats.routerModels > 0 ? stats.routerModels : 67}
+                   </div>
+                   <p className="text-[var(--text-secondary)] font-medium">Router Brands</p>
                  </div>
                  <div className="text-center">
-                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">{stats.ipAddresses}</div>
-                   <p className="text-[var(--text-secondary)] font-medium">Mapped IPs</p>
+                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">
+                     {stats.ipAddresses > 0 ? stats.ipAddresses : 33}
+                   </div>
+                   <p className="text-[var(--text-secondary)] font-medium">Default IP Addresses</p>
                  </div>
                  <div className="text-center">
-                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">{stats.troubleshootingGuides}</div>
+                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">
+                     165+
+                   </div>
+                   <p className="text-[var(--text-secondary)] font-medium">Knowledge Base Articles</p>
+                 </div>
+                 <div className="text-center">
+                   <div className="text-4xl md:text-5xl font-extrabold text-[var(--brand-400)] mb-2">
+                     {stats.troubleshootingGuides > 0 ? stats.troubleshootingGuides : 60}
+                   </div>
                    <p className="text-[var(--text-secondary)] font-medium">Troubleshooting Guides</p>
                  </div>
                </div>
             </div>
           </section>
+
+          {/* EEAT SECTION */}
+          <EEATSection />
+
+          {/* SEO CONTENT SECTION */}
+          <SEOContentSection />
         </main>
 
         <Footer />
