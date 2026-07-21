@@ -15,49 +15,152 @@ model Brand {
   slug        String        @unique
   logo        String?
   description String?
+  category    BrandCategory @default(MANUFACTURER)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  families    RouterFamily[]
   models      RouterModel[]
 
   @@index([slug])
   @@map("brands")
 }
 
-model RouterModel {
-  id                 Int                  @id @default(autoincrement())
-  brandId            Int
-  name               String
-  slug               String               @unique
-  loginIps           String[]
-  defaultUsername    String               @default("admin")
-  defaultPassword    String               @default("admin")
-  wifiSetupGuide     String
-  resetGuide         String
-  faqs               Json                 @default("[]")
-  imageUrl           String?
-  metaTitle          String?
-  metaDescription    String?
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  diagnosticCategory String?
-  generationMetrics  Json?
-  isPublished        Boolean              @default(false)
-  retrievalSummary   String?
-  semanticIntent     String?
-  status             ContentQualityStatus @default(STAGED)
-  datasetGovernance  Json?
-  decayScore         Float                @default(0.0)
-  lastRefreshedAt    DateTime?
-  locale             String               @default("en")
-  publishScheduledAt DateTime?
-  publishedAt        DateTime?
-  regionConfig       Json?
-  retrievalMetrics   Json?
-  brand              Brand                @relation(fields: [brandId], references: [id], onDelete: Cascade)
+model RouterFamily {
+  id              Int           @id @default(autoincrement())
+  brandId         Int
+  name            String
+  slug            String        @unique
+  description     String?
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  brand           Brand         @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  models          RouterModel[]
 
   @@index([brandId])
   @@index([slug])
+  @@map("router_families")
+}
+
+model RouterModel {
+  id                    Int                  @id @default(autoincrement())
+  brandId               Int
+  familyId              Int?
+  name                  String
+  slug                  String               @unique
+  series                String?              // e.g. "AX Series", "Deco XE Series"
+  deviceType            DeviceType           @default(ROUTER)
+  wifiStandardEnum      WifiStandard         @default(WIFI_6)
+  wifiStandard          String?
+  lifecycle             DeviceLifecycle      @default(ACTIVE_SUPPORT)
+  hardwareVersion       String?
+  hardwareRevisions     String[]             @default([])
+  aliases               String[]             @default([]) // GIN indexed array
+
+  // Login Credentials & Primary Guides
+  loginIps              String[]
+  defaultUsername       String               @default("admin")
+  defaultPassword       String               @default("admin")
+  wifiSetupGuide        String               @default("")
+  resetGuide            String               @default("")
+  faqs                  Json                 @default("[]")
+  imageUrl              String?
+
+  // Timeline & Support Dates
+  releaseDate           DateTime?
+  endOfSupportDate      DateTime?
+  latestFirmwareVersion String?
+
+  // Normalized Technical Specifications (Inlined for single-row fetch)
+  releaseYear           Int?
+  maxSpeedMbps          Int?
+  cpuManufacturer       String?
+  cpuModel              String?
+  cpuFrequencyMHz       Int?
+  cpuCores              Int?
+  ramMB                 Int?
+  flashMB               Int?
+  wanPortSpeedMbps      Int?                 @default(1000)
+  lanPortsCount         Int?                 @default(4)
+  lanPortSpeedMbps      Int?                 @default(1000)
+  usb3PortsCount        Int?                 @default(0)
+  hasUsb3               Boolean              @default(false)
+  hasVpnServer          Boolean              @default(false)
+  hasVpnClient          Boolean              @default(false)
+  hasQos                Boolean              @default(true)
+  supportsWpa3          Boolean              @default(true)
+  supportsVlan          Boolean              @default(false)
+  specifications        Json?
+
+  // Metadata & System Attributes
+  searchPriority        Int                  @default(3)
+  metaTitle             String?
+  metaDescription       String?
+  isPublished           Boolean              @default(false)
+  diagnosticCategory    String?
+  generationMetrics     Json?
+  status                ContentQualityStatus @default(STAGED)
+  datasetGovernance     Json?
+  decayScore            Float                @default(0.0)
+  lastRefreshedAt       DateTime?
+  locale                String               @default("en")
+  publishScheduledAt    DateTime?
+  publishedAt           DateTime?
+  regionConfig          Json?
+  retrievalMetrics      Json?
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+
+  brand                 Brand                @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  family                RouterFamily?        @relation(fields: [familyId], references: [id], onDelete: SetNull)
+  analytics             RouterAnalytics?
+  resources             RouterResource[]
+
+  @@index([brandId])
+  @@index([familyId])
+  @@index([slug])
+  @@index([deviceType])
+  @@index([wifiStandardEnum])
+  @@index([lifecycle])
   @@map("router_models")
+}
+
+model RouterAnalytics {
+  id                       Int         @id @default(autoincrement())
+  routerId                 Int         @unique
+  popularityScore          Float       @default(0.0)
+  evergreenScore           Float       @default(1.0)
+  commercialIntentScore    Float       @default(0.5)
+  informationalIntentScore Float       @default(0.8)
+  monthlyImpressions       Int         @default(0)
+  updatedAt                DateTime    @updatedAt
+
+  router                   RouterModel @relation(fields: [routerId], references: [id], onDelete: Cascade)
+
+  @@map("router_analytics")
+}
+
+model RouterResource {
+  id            Int          @id @default(autoincrement())
+  routerId      Int
+  resourceType  ResourceType @default(USER_MANUAL)
+  title         String
+  fileUrl       String
+  fileFormat    String       @default("pdf")
+  fileSizeBytes BigInt?
+  version       String?      // Used if resourceType == FIRMWARE
+  releaseNotes  String?      // Used if resourceType == FIRMWARE
+  cveFixes      String[]     @default([])
+  language      String       @default("en")
+  createdAt     DateTime     @default(now())
+
+  router        RouterModel  @relation(fields: [routerId], references: [id], onDelete: Cascade)
+
+  @@index([routerId])
+  @@index([resourceType])
+  @@map("router_resources")
 }
 
 model Problem {
@@ -333,7 +436,55 @@ enum ProblemCategory {
   CONNECTION
   SECURITY
   HARDWARE
+  LIGHTS
+  NETWORKING
   OTHER
+}
+
+enum ResourceType {
+  USER_MANUAL
+  QUICK_START_GUIDE
+  DATASHEET
+  FIRMWARE_BINARY
+  DRIVER
+  GPL_SOURCE
+  MOBILE_APP
+}
+
+enum DeviceType {
+  ROUTER
+  ISP_GATEWAY
+  MESH_SYSTEM
+  MODEM
+  ACCESS_POINT
+  SWITCH
+}
+
+enum WifiStandard {
+  WIFI_1
+  WIFI_2
+  WIFI_3
+  WIFI_4
+  WIFI_5
+  WIFI_6
+  WIFI_6E
+  WIFI_7
+  WIFI_8
+  NOT_APPLICABLE
+}
+
+enum DeviceLifecycle {
+  RELEASED
+  ACTIVE_SUPPORT
+  LEGACY
+  END_OF_LIFE
+  DISCONTINUED
+}
+
+enum BrandCategory {
+  MANUFACTURER
+  ISP
+  HYBRID
 }
 
 enum EntityType {

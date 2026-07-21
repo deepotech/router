@@ -1,0 +1,1215 @@
+{
+  "brands": [
+    {
+      "name": "Huawei",
+      "slug": "huawei"
+    },
+    {
+      "name": "Xiaomi",
+      "slug": "xiaomi"
+    },
+    {
+      "name": "ZTE",
+      "slug": "zte"
+    },
+    {
+      "name": "Netgear",
+      "slug": "netgear"
+    },
+    {
+      "name": "D-Link",
+      "slug": "d-link"
+    },
+    {
+      "name": "Linksys",
+      "slug": "linksys"
+    },
+    {
+      "name": "TP-Link",
+      "slug": "tp-link"
+    },
+    {
+      "name": "ASUS",
+      "slug": "asus"
+    },
+    {
+      "name": "Belkin",
+      "slug": "belkin"
+    },
+    {
+      "name": "Tenda",
+      "slug": "tenda"
+    },
+    {
+      "name": "Arris",
+      "slug": "arris"
+    },
+    {
+      "name": "Mercusys",
+      "slug": "mercusys"
+    },
+    {
+      "name": "Cisco",
+      "slug": "cisco"
+    }
+  ],
+  "models": [
+    {
+      "name": "ZXHN H298A",
+      "slug": "zxhn-h298a",
+      "brand": {
+        "name": "ZTE"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "AX73",
+      "slug": "tp-link-ax73",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-AX55",
+      "slug": "asus-rt-ax55",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT3200",
+      "slug": "belkin-rt3200",
+      "brand": {
+        "name": "Belkin"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "R7000",
+      "slug": "netgear-r7000",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-AX58U",
+      "slug": "asus-rt-ax58u",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "AC6",
+      "slug": "tenda-ac6",
+      "brand": {
+        "name": "Tenda"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "AX3000",
+      "slug": "xiaomi-ax3000",
+      "brand": {
+        "name": "Xiaomi"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "Archer AX20",
+      "slug": "archer-ax20",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer AX90",
+      "slug": "archer-ax90",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "AX50",
+      "slug": "tp-link-ax50",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer C6",
+      "slug": "tp-link-archer-c6",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "DIR-825",
+      "slug": "d-link-dir-825",
+      "brand": {
+        "name": "D-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RAX50",
+      "slug": "netgear-rax50",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer C6",
+      "slug": "archer-c6",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "RV340",
+      "slug": "cisco-rv340",
+      "brand": {
+        "name": "Cisco"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "Surfboard SB8200",
+      "slug": "arris-surfboard-sb8200",
+      "brand": {
+        "name": "Arris"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "RX12 Pro",
+      "slug": "tenda-rx12-pro",
+      "brand": {
+        "name": "Tenda"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "Velop",
+      "slug": "linksys-velop",
+      "brand": {
+        "name": "Linksys"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "Archer AX21",
+      "slug": "archer-ax21",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "Nighthawk RS700S",
+      "slug": "rs700s",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": false
+    },
+    {
+      "name": "RT-AX86U",
+      "slug": "rt-ax86u",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer AX55",
+      "slug": "archer-ax55",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer C7",
+      "slug": "archer-c7",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer AX10",
+      "slug": "archer-ax10",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Deco M5",
+      "slug": "deco-m5",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "DIR-842",
+      "slug": "dir-842",
+      "brand": {
+        "name": "D-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer AX6000",
+      "slug": "archer-ax6000",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "TL-WR940N",
+      "slug": "tl-wr940n",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "TL-WR941ND",
+      "slug": "tl-wr941nd",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "TL-WR841N",
+      "slug": "tl-wr841n",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer C9",
+      "slug": "archer-c9",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-AX55",
+      "slug": "rt-ax55",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-AX58U",
+      "slug": "rt-ax58u",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-AX82U",
+      "slug": "rt-ax82u",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-AXE7800",
+      "slug": "rt-axe7800",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-AX88U",
+      "slug": "rt-ax88u",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-AC68U",
+      "slug": "rt-ac68u",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "ZenWiFi AX (XT8)",
+      "slug": "zenwifi-xt8",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "R7000 Nighthawk",
+      "slug": "r7000",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "R6400",
+      "slug": "r6400",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RAX50",
+      "slug": "rax50",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "XR1000",
+      "slug": "xr1000",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Orbi RBK50",
+      "slug": "orbi-rbk50",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "AX2",
+      "slug": "huawei-ax2",
+      "brand": {
+        "name": "Huawei"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "DIR-882",
+      "slug": "dir-882",
+      "brand": {
+        "name": "D-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "AX3 Pro",
+      "slug": "huawei-ax3-pro",
+      "brand": {
+        "name": "Huawei"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "WS5200",
+      "slug": "huawei-ws5200",
+      "brand": {
+        "name": "Huawei"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "DIR-825",
+      "slug": "dir-825",
+      "brand": {
+        "name": "D-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "DIR-3060",
+      "slug": "dir-3060",
+      "brand": {
+        "name": "D-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "DSL-2750U",
+      "slug": "dsl-2750u",
+      "brand": {
+        "name": "D-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "EA6350",
+      "slug": "ea6350",
+      "brand": {
+        "name": "Linksys"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "EA7500",
+      "slug": "ea7500",
+      "brand": {
+        "name": "Linksys"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "MR7350",
+      "slug": "mr7350",
+      "brand": {
+        "name": "Linksys"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "WRT3200ACM",
+      "slug": "wrt3200acm",
+      "brand": {
+        "name": "Linksys"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "AC10",
+      "slug": "tenda-ac10",
+      "brand": {
+        "name": "Tenda"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "AC23",
+      "slug": "tenda-ac23",
+      "brand": {
+        "name": "Tenda"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "F3",
+      "slug": "tenda-f3",
+      "brand": {
+        "name": "Tenda"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Nova MW6",
+      "slug": "tenda-nova-mw6",
+      "brand": {
+        "name": "Tenda"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer AX50",
+      "slug": "archer-ax50",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Deco XE75",
+      "slug": "deco-xe75",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "MR70X",
+      "slug": "mercusys-mr70x",
+      "brand": {
+        "name": "Mercusys"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "AC12",
+      "slug": "mercusys-ac12",
+      "brand": {
+        "name": "Mercusys"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer AX73",
+      "slug": "archer-ax73",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer AX3000",
+      "slug": "archer-ax3000",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Archer C20",
+      "slug": "archer-c20",
+      "brand": {
+        "name": "TP-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-N12",
+      "slug": "rt-n12",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RT-AX3000",
+      "slug": "rt-ax3000",
+      "brand": {
+        "name": "ASUS"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "RAX80",
+      "slug": "rax80",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "XR500 Nighthawk Pro Gaming",
+      "slug": "xr500",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Nighthawk RAX40",
+      "slug": "rax40",
+      "brand": {
+        "name": "Netgear"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "DIR-878",
+      "slug": "dir-878",
+      "brand": {
+        "name": "D-Link"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "Velop MX4200",
+      "slug": "velop-mx4200",
+      "brand": {
+        "name": "Linksys"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "MW325R",
+      "slug": "mw325r",
+      "brand": {
+        "name": "Mercusys"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "HG8245H5",
+      "slug": "hg8245h5",
+      "brand": {
+        "name": "Huawei"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "HG8145V5",
+      "slug": "huawei-hg8145v5",
+      "brand": {
+        "name": "Huawei"
+      },
+      "isPublished": true
+    },
+    {
+      "name": "AX3 (WS7200)",
+      "slug": "huawei-ax3",
+      "brand": {
+        "name": "Huawei"
+      },
+      "isPublished": true
+    }
+  ],
+  "ips": [
+    {
+      "address": "192.168.0.1",
+      "slug": "192-168-0-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.10.1",
+      "slug": "192-168-10-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.11.1",
+      "slug": "192-168-11-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.1.1",
+      "slug": "192-168-1-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.16.1",
+      "slug": "192-168-16-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.123.254",
+      "slug": "192-168-123-254",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.254.254",
+      "slug": "192-168-254-254",
+      "isPublished": true
+    },
+    {
+      "address": "10.0.0.2",
+      "slug": "10-0-0-2",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.1.2",
+      "slug": "192-168-1-2",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.0.10",
+      "slug": "192-168-0-10",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.4.1",
+      "slug": "192-168-4-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.6.1",
+      "slug": "192-168-6-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.7.1",
+      "slug": "192-168-7-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.25.1",
+      "slug": "192-168-25-1",
+      "isPublished": true
+    },
+    {
+      "address": "10.1.1.1",
+      "slug": "10-1-1-1",
+      "isPublished": true
+    },
+    {
+      "address": "10.10.10.1",
+      "slug": "10-10-10-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.31.1",
+      "slug": "192-168-31-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.100.1",
+      "slug": "192-168-100-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.1.254",
+      "slug": "192-168-1-254",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.15.1",
+      "slug": "192-168-15-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.2.1",
+      "slug": "192-168-2-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.1.100",
+      "slug": "192-168-1-100",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.29.1",
+      "slug": "192-168-29-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.20.1",
+      "slug": "192-168-20-1",
+      "isPublished": true
+    },
+    {
+      "address": "172.16.0.1",
+      "slug": "172-16-0-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.5.1",
+      "slug": "192-168-5-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.9.1",
+      "slug": "192-168-9-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.178.1",
+      "slug": "192-168-178-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.3.1",
+      "slug": "192-168-3-1",
+      "isPublished": true
+    },
+    {
+      "address": "10.0.0.1",
+      "slug": "10-0-0-1",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.2.254",
+      "slug": "192-168-2-254",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.0.254",
+      "slug": "192-168-0-254",
+      "isPublished": true
+    },
+    {
+      "address": "192.168.8.1",
+      "slug": "192-168-8-1",
+      "isPublished": true
+    }
+  ],
+  "problems": [
+    {
+      "title": "Netgear TFTP firmware recovery",
+      "slug": "netgear-tftp-firmware-recovery",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "DNS Server Not Responding",
+      "slug": "dns-server-not-responding",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Slow Internet Speed",
+      "slug": "slow-internet",
+      "category": "SPEED",
+      "isPublished": true
+    },
+    {
+      "title": "WiFi Connected But No Internet",
+      "slug": "wifi-connected-no-internet",
+      "category": "WIFI",
+      "isPublished": false
+    },
+    {
+      "title": "5GHz WiFi Missing",
+      "slug": "5ghz-wifi-missing",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Internet Disconnects Randomly",
+      "slug": "internet-disconnects-randomly",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Router Blinking Orange",
+      "slug": "router-blinking-orange",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Slow WiFi Speed",
+      "slug": "slow-wifi-speed",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "WiFi Keeps Disconnecting",
+      "slug": "wifi-keeps-disconnecting",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Default Gateway is Not Available",
+      "slug": "default-gateway-not-available",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Router Login Page Not Opening",
+      "slug": "router-login-page-not-opening",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "WiFi Connected But No Internet",
+      "slug": "wifi-connected-but-no-internet",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "DNS Not Resolving",
+      "slug": "dns-not-resolving",
+      "category": "DNS",
+      "isPublished": true
+    },
+    {
+      "title": "Slow Internet After Router Reset",
+      "slug": "slow-internet-after-router-reset",
+      "category": "SPEED",
+      "isPublished": true
+    },
+    {
+      "title": "Another device is using this IP address",
+      "slug": "another-device-is-using-this-ip-address",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Wireless headset interference with router",
+      "slug": "wireless-headset-interference-with-router",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Optimum DNS probe finished no internet",
+      "slug": "optimum-dns-probe-finished-no-internet",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Crowded WiFi channel overlap",
+      "slug": "crowded-wifi-channel-overlap",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Baby monitor killing WiFi signal",
+      "slug": "baby-monitor-killing-wifi-signal",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "2.4GHz WiFi interference from microwave",
+      "slug": "2-4ghz-wifi-interference-from-microwave",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "WiFi Network Not Showing Up",
+      "slug": "wifi-network-not-showing",
+      "category": "WIFI",
+      "isPublished": true
+    },
+    {
+      "title": "AT&T DNS server down",
+      "slug": "at-t-dns-server-down",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Verizon Fios DNS resolution failed",
+      "slug": "verizon-fios-dns-resolution-failed",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Spectrum DNS server issues",
+      "slug": "spectrum-dns-server-issues",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Comcast Xfinity DNS not resolving",
+      "slug": "comcast-xfinity-dns-not-resolving",
+      "category": "OTHER",
+      "isPublished": false
+    },
+    {
+      "title": "Packet Loss On WiFi",
+      "slug": "packet-loss-on-wifi",
+      "category": "WIFI",
+      "isPublished": true
+    },
+    {
+      "title": "TP-Link firmware upgrade failed",
+      "slug": "tp-link-firmware-upgrade-failed",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Router DHCP pool exhaustion",
+      "slug": "router-dhcp-pool-exhaustion",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "How to rollback router firmware",
+      "slug": "how-to-rollback-router-firmware",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Router bricked during firmware update",
+      "slug": "router-bricked-during-firmware-update",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Asus firmware recovery mode",
+      "slug": "asus-firmware-recovery-mode",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Mesh network node not syncing",
+      "slug": "mesh-network-node-not-syncing",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Google Nest WiFi point flashing yellow",
+      "slug": "google-nest-wifi-point-flashing-yellow",
+      "category": "WIFI",
+      "isPublished": true
+    },
+    {
+      "title": "TP-Link Deco red light no internet",
+      "slug": "tp-link-deco-red-light-no-internet",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Eero mesh node offline",
+      "slug": "eero-mesh-node-offline",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "High Ping On WiFi",
+      "slug": "high-ping-on-wifi",
+      "category": "SPEED",
+      "isPublished": true
+    },
+    {
+      "title": "Windows IP address conflict detected",
+      "slug": "windows-ip-address-conflict-detected",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Static IP vs DHCP conflict",
+      "slug": "static-ip-vs-dhcp-conflict",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Router not assigning IP addresses",
+      "slug": "router-not-assigning-ip-addresses",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Netgear Orbi satellite disconnected",
+      "slug": "netgear-orbi-satellite-disconnected",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Bluetooth devices causing WiFi drops",
+      "slug": "bluetooth-devices-causing-wifi-drops",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Router Not Getting WAN IP",
+      "slug": "router-not-getting-wan-ip",
+      "category": "CONNECTION",
+      "isPublished": true
+    },
+    {
+      "title": "Router Firmware Update Failed",
+      "slug": "router-firmware-update-failed",
+      "category": "HARDWARE",
+      "isPublished": true
+    },
+    {
+      "title": "WiFi Password Not Working",
+      "slug": "wifi-password-not-working",
+      "category": "SECURITY",
+      "isPublished": true
+    },
+    {
+      "title": "NAT Type Strict — Fix for Gaming",
+      "slug": "nat-type-strict-fix",
+      "category": "CONNECTION",
+      "isPublished": true
+    },
+    {
+      "title": "DHCP Server Unavailable",
+      "slug": "dhcp-server-unavailable",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Router Admin Page Not Loading",
+      "slug": "router-admin-page-not-loading",
+      "category": "OTHER",
+      "isPublished": true
+    },
+    {
+      "title": "Slow Upload Speed Fix",
+      "slug": "slow-upload-speed",
+      "category": "SPEED",
+      "isPublished": true
+    },
+    {
+      "title": "Weak WiFi Signal — Causes and Fixes",
+      "slug": "wifi-signal-weak",
+      "category": "WIFI",
+      "isPublished": true
+    },
+    {
+      "title": "WiFi Authentication Error",
+      "slug": "wifi-authentication-error",
+      "category": "WIFI",
+      "isPublished": true
+    },
+    {
+      "title": "Router Connected But No Internet",
+      "slug": "router-connected-but-no-internet",
+      "category": "CONNECTION",
+      "isPublished": true
+    },
+    {
+      "title": "Port Forwarding Not Working — Detailed Fix",
+      "slug": "port-forwarding-not-working-fix",
+      "category": "CONNECTION",
+      "isPublished": true
+    },
+    {
+      "title": "PPPoE Authentication Failed",
+      "slug": "pppoe-authentication-failed",
+      "category": "CONNECTION",
+      "isPublished": true
+    },
+    {
+      "title": "5GHz WiFi Not Appearing",
+      "slug": "5ghz-wifi-not-appearing",
+      "category": "WIFI",
+      "isPublished": true
+    },
+    {
+      "title": "Router Overheating",
+      "slug": "router-overheating",
+      "category": "HARDWARE",
+      "isPublished": true
+    },
+    {
+      "title": "Router Flashing Red Light",
+      "slug": "router-flashing-red-light",
+      "category": "HARDWARE",
+      "isPublished": true
+    },
+    {
+      "title": "Internet Drops Every Few Minutes",
+      "slug": "internet-drops-every-few-minutes",
+      "category": "CONNECTION",
+      "isPublished": true
+    },
+    {
+      "title": "Double NAT — How to Fix It",
+      "slug": "double-nat-fix",
+      "category": "CONNECTION",
+      "isPublished": true
+    },
+    {
+      "title": "Ethernet Connected But No Internet on Windows",
+      "slug": "ethernet-no-internet-windows",
+      "category": "CONNECTION",
+      "isPublished": true
+    },
+    {
+      "title": "WiFi Keeps Dropping Connection",
+      "slug": "wifi-keeps-dropping-connection",
+      "category": "WIFI",
+      "isPublished": true
+    },
+    {
+      "title": "VPN Slowing Down Internet Speed",
+      "slug": "vpn-slow-speed",
+      "category": "SPEED",
+      "isPublished": true
+    },
+    {
+      "title": "Router Keeps Rebooting Randomly",
+      "slug": "router-keeps-rebooting",
+      "category": "HARDWARE",
+      "isPublished": true
+    }
+  ]
+}

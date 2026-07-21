@@ -193,8 +193,10 @@ export class ContentExpansionService {
         loginIps: object.loginIps,
         metaTitle: object.metaTitle,
         metaDescription: object.metaDescription,
-        semanticIntent: object.semanticIntent,
-        retrievalSummary: object.retrievalSummary,
+        retrievalMetrics: {
+          semanticIntent: object.semanticIntent,
+          retrievalSummary: object.retrievalSummary
+        },
         diagnosticCategory: object.diagnosticCategory,
         generationMetrics: { stage1_tokens: usage.totalTokens }
       }
