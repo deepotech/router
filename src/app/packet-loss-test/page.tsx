@@ -3,6 +3,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import TroubleshootingArticleShell from "@/components/tools/TroubleshootingArticleShell";
 import ConnectionOptimizerClient from "@/components/tools/ConnectionOptimizerClient";
+import { JsonLd, buildSoftwareApplicationSchema } from "@/lib/seo/schema";
 
 // Premium SEO Metadata
 export const metadata: Metadata = buildMetadata({
@@ -171,8 +172,17 @@ const quickFixChecklist = [
 ];
 
 export default function PacketLossTestPage() {
+  const schemaData = buildSoftwareApplicationSchema({
+    name: "Packet Loss Test Diagnostic Tool",
+    description: "Run continuous packet loss and ICMP frame discard diagnostics across Windows, macOS, and Linux.",
+    url: "https://routervia.com/packet-loss-test",
+    category: "NetworkingApplication",
+  });
+
   return (
-    <TroubleshootingArticleShell
+    <>
+      <JsonLd data={schemaData} />
+      <TroubleshootingArticleShell
       h1="Packet Loss Test: The Ultimate Engineering Guide to Fixing Lost Packets"
       intro="Packet loss is the silent killer of modern network performance. While high ping causes simple delays, dropped packets corrupt active data streams, triggering in-game rubber-banding, audio dropouts, and connection timeouts. This engineering-grade guide details how to execute a packet loss test, isolate Layer 1 to Layer 4 bottlenecks, and resolve network drops across Windows, macOS, Linux, and all major router platforms."
       category="wifi"
@@ -798,5 +808,6 @@ export default function PacketLossTestPage() {
         </section>
       </div>
     </TroubleshootingArticleShell>
+    </>
   );
 }

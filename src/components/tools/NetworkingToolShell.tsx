@@ -162,7 +162,7 @@ export default function NetworkingToolShell({
   // JSON-LD Schemas
   const webAppSchema = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
+    "@type": ["SoftwareApplication", "WebApplication"],
     "@id": `${APP_URL}/${config.appId}#app`,
     "name": config.appName,
     "applicationCategory": "NetworkingApplication",

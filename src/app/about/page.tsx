@@ -1,6 +1,4 @@
 import { Shield, BookOpen, Users, Award } from "lucide-react";
-import { JsonLd } from "@/lib/seo/schema";
-import { APP_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -13,28 +11,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function AboutPage() {
-  const orgSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "RouterVia",
-    "url": APP_URL,
-    "logo": `${APP_URL}/logo.png`,
-    "sameAs": [
-      "https://twitter.com/routervia",
-      "https://github.com/routervia"
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+1-800-555-0199",
-      "contactType": "customer support"
-    }
-  };
-
   return (
-    <>
-      <JsonLd data={orgSchema} />
-      
-      <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen">
         <Header />
 
         <main className="flex-1 max-w-4xl mx-auto px-4 py-16 w-full">
@@ -91,6 +69,5 @@ export default function AboutPage() {
 
         <Footer />
       </div>
-    </>
   );
 }

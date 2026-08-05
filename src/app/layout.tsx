@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { APP_NAME, APP_DESCRIPTION, APP_URL } from "@/lib/constants";
 import { WebVitals } from "@/components/analytics/WebVitals";
+import { JsonLd, generateWebSiteSchema, generateOrganizationSchema } from "@/lib/seo/schema";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,6 +25,9 @@ export const metadata: Metadata = {
     template: `%s | ${APP_NAME}`,
   },
   description: APP_DESCRIPTION,
+  alternates: {
+    canonical: APP_URL,
+  },
   keywords: [
     "router login",
     "router troubleshooting",
@@ -80,10 +84,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const websiteSchema = generateWebSiteSchema(APP_NAME, APP_URL);
+  const orgSchema = generateOrganizationSchema(APP_NAME, APP_URL);
+
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
         <meta name="msvalidate.01" content="58ACA590DE44B78968BA7E25B8C83CD6" />
+        <JsonLd data={websiteSchema} />
+        <JsonLd data={orgSchema} />
       </head>
       {/* Google Analytics */}
       <Script

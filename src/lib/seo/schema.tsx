@@ -21,16 +21,26 @@ export function generateWebSiteSchema(SITE_NAME: string, SITE_URL: string) {
     "@type": "WebSite",
     "name": SITE_NAME,
     "url": SITE_URL,
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": `${SITE_URL}/search?q={search_term_string}`
-      },
-      "query-input": "required name=search_term_string"
+  };
+}
+
+// ---- Organization schema (root level) ----
+export function generateOrganizationSchema(SITE_NAME: string, SITE_URL: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": SITE_NAME,
+    "url": SITE_URL,
+    "logo": `${SITE_URL}/images/og-default.png`,
+    "sameAs": [],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "support@routervia.com",
+      "contactType": "customer support"
     }
   };
 }
+
 
 export function generateSemanticArticleSchema(
   title: string,
@@ -168,5 +178,28 @@ export function calculateRouterRating(routerId: number) {
   const ratingValue = 4.0 + ((routerId * 3) % 10) * 0.1;
   const ratingCount = 5 + (routerId * 7) % 45;
   return { ratingValue, ratingCount };
+}
+
+// ---- SoftwareApplication schema (for interactive tools) ----
+export function buildSoftwareApplicationSchema(data: {
+  name: string;
+  description: string;
+  url: string;
+  category?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: data.name,
+    description: data.description,
+    url: data.url,
+    applicationCategory: data.category || "NetworkingApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD"
+    }
+  };
 }
 

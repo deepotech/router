@@ -19,7 +19,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${APP_URL}/router-login`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/router-password`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/router-reset`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${APP_URL}/router-admin`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${APP_URL}/router-login-hostnames`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/routerlogin.net`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/routerlogin.net-not-working`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
@@ -34,15 +33,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${APP_URL}/linksys-default-password`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/d-link-default-password`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/router-login-recovery`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${APP_URL}/forgot-router-password`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${APP_URL}/router-admin-password`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/router-cannot-access-settings`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/router-web-interface-not-opening`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/router-login-page-not-loading`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/router-ip-conflict`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/router-no-internet-after-login`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/router-firmware-update-guide`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${APP_URL}/change-router-admin-password`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/change-wifi-password`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/default-gateway-not-available`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/dns-server-not-responding`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
@@ -161,7 +157,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // 2. Dynamic Router Models (Main page + Setup + Reset)
     const routers = await prisma.routerModel.findMany({
-      where: { isPublished: true },
+      where: { isPublished: true, status: "PUBLISHED" },
       select: { slug: true, updatedAt: true, brand: { select: { slug: true } } },
     });
 

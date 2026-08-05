@@ -109,7 +109,36 @@ const nextConfig: NextConfig = {
         destination: "/what-is-my-ip",
         permanent: true,
       },
-
+      {
+        source: "/router-admin",
+        destination: "/router-login",
+        permanent: true,
+      },
+      {
+        source: "/router-settings",
+        destination: "/router-login",
+        permanent: true,
+      },
+      {
+        source: "/router-admin-password",
+        destination: "/router-password",
+        permanent: true,
+      },
+      {
+        source: "/forgot-router-password",
+        destination: "/router-password",
+        permanent: true,
+      },
+      {
+        source: "/change-router-admin-password",
+        destination: "/router-password",
+        permanent: true,
+      },
+      {
+        source: "/problems/router-login-page-not-opening",
+        destination: "/router-login-not-working",
+        permanent: true,
+      },
     ];
   },
 };

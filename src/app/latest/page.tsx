@@ -26,7 +26,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     ...buildMetadata({
       title: `Latest Troubleshooting Guides & Router Setups (Page ${page}) — RouterVia`,
       description: `Stay up to date with the latest router setups, firmware details, network troubleshooting, and IP configurations. Page ${page}.`,
-      canonical: page === 1 ? "/latest" : `/latest?page=${page}`,
+      canonical: "/latest",
     }),
     robots: { index: false, follow: true },
   };

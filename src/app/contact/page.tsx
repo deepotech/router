@@ -19,23 +19,9 @@ export default function ContactPage() {
   ];
   const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, APP_URL);
 
-  const orgSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "RouterVia",
-    "url": APP_URL,
-    "logo": `${APP_URL}/images/og-default.png`,
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "support@routervia.com",
-      "contactType": "customer support"
-    }
-  };
-
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
-      <JsonLd data={orgSchema} />
 
       <div className="flex flex-col min-h-screen">
         <Header />

@@ -6,6 +6,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { Badge } from "@/components/ui/Badge";
 import { JsonLd, buildBreadcrumbSchema } from "@/lib/seo/schema";
+import { InternalLinkingHub } from "@/components/seo/InternalLinkingHub";
 import { APP_URL, PROBLEM_CATEGORIES } from "@/lib/constants";
 import { hasDatabase } from "@/lib/server/env-safe";
 
@@ -106,6 +107,8 @@ export default async function ProblemsPage() {
             <p className="text-[var(--text-muted)]">No guides found yet. Check back soon.</p>
           </div>
         )}
+
+        <InternalLinkingHub category="tools" title="Recommended Diagnostic Tools" />
       </div>
     </>
   );
